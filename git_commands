@@ -1,0 +1,20 @@
+gi.................................
+git init
+git clone <clone url from git>
+...........................
+You changed something ravindra.txt
+
+git status  ................red
+git add .  or git add <file name>
+git status ................ green
+git commit -m "<msg >"
+git push 
+
+
+.........................
+Now suppose merge conflict is there 
+first pull ............... Then it will show you one window ... type :q and press enter
+git pull
+git status :- It should say upto date or something 
+git push 
+........................................
