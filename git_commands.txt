@@ -14,7 +14,9 @@ git push
 .........................
 Now suppose merge conflict is there 
 first pull ............... Then it will show you one window ... type :q and press enter
+git stash...................Stash your uncommitted changes
 git pull
+git stash pop...............Bring back your uncommitted changes
 git status :- It should say upto date or something 
 git push 
 ........................................
