@@ -9,8 +9,8 @@
 <body>
 <p>succesfully registered</p>
 
-<c:out value='${currentUser.username}'/>
-<c:out value='${currentUser.role}'/>
+<c:out value='${username}'/>
+<c:out value='${role}'/>
 
 <form action="logout" method="post">
 <input name="action" value="logout" type="hidden">

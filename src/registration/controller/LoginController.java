@@ -56,6 +56,9 @@ public class LoginController extends HttpServlet {
 		if (userError.getErrorMsg().equals("")) {
 			role = user.getRole(); 
 			session.removeAttribute("errorMsgs");
+			
+			session.setAttribute("username", user.getUsername());
+			session.setAttribute("role", user.getRole());
 			if (role.equals("admin"))
 			{
 //				getServletContext().getRequestDispatcher("/home").forward(request, response);

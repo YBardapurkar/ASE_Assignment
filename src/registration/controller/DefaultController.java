@@ -20,6 +20,6 @@ public class DefaultController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	      response.setStatus(response.SC_MOVED_TEMPORARILY);
-	      response.setHeader("Location", "Registration.jsp");
+	      response.setHeader("Location", "login");
 	}
 }
