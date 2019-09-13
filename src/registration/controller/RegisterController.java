@@ -19,7 +19,8 @@ public class RegisterController extends HttpServlet{
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+		request.getRequestDispatcher("/register.jsp").include(request, response);
 	}
 	
 	private void getuserParam (HttpServletRequest request, User r1) {
@@ -43,13 +44,15 @@ public class RegisterController extends HttpServlet{
 //				if error messages
 				getuserParam(request, newUser);
 				session.setAttribute("errorMsgs", CerrorMsgs);
-				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+				request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+				request.getRequestDispatcher("/register.jsp").include(request, response);
 			}
 			else {
 //				if no error messages
 				registration.data.UserDAO.insertuser(newUser);			
 				newUser.setMessage("data is inserted");
-				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+				request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+				request.getRequestDispatcher("/register.jsp").include(request, response);
 			}
 		}
 	}

@@ -4,13 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Home - Admin</title>
 </head>
 <body>
-<p>homepage</p>
-
-<p><c:out value='${username}'/></p>
-<p><c:out value='${role}'/></p>
-
+Homepage for admin
 </body>
 </html>

@@ -30,7 +30,8 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+		request.getRequestDispatcher("/login.jsp").include(request, response);
 	}
 
 	/**
@@ -59,24 +60,17 @@ public class LoginController extends HttpServlet {
 			
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("role", user.getRole());
-			if (role.equals("admin"))
-			{
-//				getServletContext().getRequestDispatcher("/home").forward(request, response);
+			
+			if (role.equals("admin")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "home");
-			}
-			else if(role.equals("student") || role.equals("faculty") || role.equals("staff"))
-			{
+			} else if(role.equals("student") || role.equals("faculty") || role.equals("staff")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "home");
-			}
-			else if(role.equals("FacilityManager"))
-			{
+			} else if(role.equals("FacilityManager")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "home");
-			}
-			else if (role.equals("repairer"))
-			{
+			} else if (role.equals("repairer")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "home");
 			}

@@ -7,10 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<p>homepage</p>
-
-<p><c:out value='${username}'/></p>
-<p><c:out value='${role}'/></p>
-
+mar form here
 </body>
 </html>

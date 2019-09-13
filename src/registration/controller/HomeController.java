@@ -20,12 +20,34 @@ public class HomeController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		User currentUser = (User) session.getAttribute("login");
-		if (currentUser != null) {
-			System.out.println(currentUser.getRole());
-		} else {
+		
+//		redirect to login if user not found
+		if (currentUser == null) {
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", "login");
+			return;
 		}
-		getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+		String role = currentUser.getRole();
+		
+//		homepage for admin
+		if (role.equals("admin")) {
+			request.getRequestDispatcher("menu_admin.jsp").include(request, response);
+			request.getRequestDispatcher("/home_admin.jsp").include(request, response);	
+		} 
+//		homepage for student/faculty/staff
+		else if(role.equals("student") || role.equals("faculty") || role.equals("staff")) {
+			request.getRequestDispatcher("menu_student.jsp").include(request, response);
+			request.getRequestDispatcher("/home_student.jsp").include(request, response);	
+		} 
+//		homepate for facility manager
+		else if(role.equals("FacilityManager")) {
+			request.getRequestDispatcher("menu_fm.jsp").include(request, response);
+			request.getRequestDispatcher("/home_student.jsp").include(request, response);
+		} 
+//		homepage for repairer
+		else if (role.equals("repairer")) {
+			request.getRequestDispatcher("menu_repairer.jsp").include(request, response);
+			request.getRequestDispatcher("/home_student.jsp").include(request, response);
+		}
 	}
 }
