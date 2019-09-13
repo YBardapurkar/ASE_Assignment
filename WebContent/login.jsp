@@ -26,7 +26,7 @@
     </tr>    	
 
 	<tr>
-    <td> <input name="message" value="<c:out value='${r1.message}'/>" type="text" maxlength="45" >  </td>
+    <td> <input name="message" value="<c:out value='${r1.message}'/>" type="text" maxlength="45" disabled>  </td>
     </tr>
 
 

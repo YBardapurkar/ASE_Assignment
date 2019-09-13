@@ -240,7 +240,7 @@ public class User implements Serializable{
 		{
 			if(action.equals("login"))
 			{
-				if (!UserDAO.login(username).equals(password))
+				if (UserDAO.login(username, password) != null)
 				{
 					result="invalid password";
 				}

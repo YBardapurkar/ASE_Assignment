@@ -22,26 +22,25 @@ public class UserDAO {
 			ResultSet userList = stmt.executeQuery(queryString);
 			while (userList.next()) {
 				
-				User r2 = new User(); 
-				r2.setUsername(userList.getString("username"));
-				r2.setPassword(userList.getString("password"));
-				r2.setFirstname(userList.getString("firstname"));
-				r2.setLastname(userList.getString("lastname"));
-				r2.setUtaId(userList.getString("utaid"));
-				r2.setPhone(userList.getString("phonenumber"));
-				r2.setEmail(userList.getString("email"));
-				r2.setStreet(userList.getString("street"));
-				r2.setCity(userList.getString("city"));
-				r2.setZipcode(userList.getString("state"));
-				r2.setState(userList.getString("zipcode"));
-				r2.setRole(userList.getString("role"));
+				User user = new User(); 
+				user.setUsername(userList.getString("username"));
+				user.setPassword(userList.getString("password"));
+				user.setFirstname(userList.getString("firstname"));
+				user.setLastname(userList.getString("lastname"));
+				user.setUtaId(userList.getString("utaid"));
+				user.setPhone(userList.getString("phonenumber"));
+				user.setEmail(userList.getString("email"));
+				user.setStreet(userList.getString("street"));
+				user.setCity(userList.getString("city"));
+				user.setZipcode(userList.getString("state"));
+				user.setState(userList.getString("zipcode"));
+				user.setRole(userList.getString("role"));
 				
-				
-				usersListInDB.add(r2);	
-				
+				usersListInDB.add(user);	
 			}
-		} catch (SQLException e) {System.out.println(e.getMessage());}
-		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		return usersListInDB;
 	}
 	
@@ -49,11 +48,8 @@ public class UserDAO {
 	private static void StoreListinDB (User r1,String queryString) {
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
-
 		try{
-			
 			stmt = conn.createStatement();
-			
 			String insertuser = queryString + " VALUES ('"  
 					+ r1.getUsername()  +   "','"
 					+ r1.getPassword() + "','"		
@@ -67,59 +63,43 @@ public class UserDAO {
 					+ r1.getCity() + "','"
 					+ r1.getState() + "','"
 					+ r1.getZipcode() + "')";
-			
-
-			
-
 			stmt.executeUpdate(insertuser);	
-		
 			conn.commit(); 
-
-
-		} catch (SQLException e) {System.out.println(e.getMessage());}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
-	public static void insertuser(User r1) {  
-		StoreListinDB(r1,"INSERT INTO registration(username,password,firstname,lastname,role,utaid,phonenumber,email,street,city,state,zipcode) ");
+	public static void insertuser(User user) {  
+		StoreListinDB(user,"INSERT INTO registration(username,password,firstname,lastname,role,utaid,phonenumber,email,street,city,state,zipcode) ");
 	}
 
 	public static Boolean usernameUnique(String username)  {
-		boolean andy = (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"' ORDER BY username").isEmpty());
-		
+//		boolean andy = (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"' ORDER BY username").isEmpty());
 		return (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"'").isEmpty());
-		
-}
-
-	public static String login(String username)  {
-		
-		String password_login = "SELECT * from registration WHERE username = '"+username+"' ORDER BY username";
-		System.out.println("query string "+password_login);
-		Statement stmt = null;
-		String pass = "";
-		Connection conn = SQLConnection.getDBConnection();
-		try{
-			
-			System.out.println("after the try");
-		stmt = conn.createStatement();
-		
-		ResultSet userList = stmt.executeQuery(password_login);
-		System.out.println("after execting the query");
-		
-		User r3 = new User();
-		while (userList.next()) {
-		 
-		r3.setUsername(userList.getString("username"));
-		r3.setPassword(userList.getString("password"));
-		}
-		
-		pass = r3.getPassword();
-		
-		
-		}
-		catch (SQLException e) {System.out.println("this is the error message "+e.getMessage());}
-		System.out.println("value of password in database "+pass);
-		return pass;
 	}
 
-	
+	public static User login(String username, String password)  {
+		String password_login = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"' ORDER BY username";
+		System.out.println("query string "+password_login);
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		User user = new User();
+		try{
+			System.out.println("after the try");
+			stmt = conn.createStatement();
+			
+			ResultSet userList = stmt.executeQuery(password_login);
+			System.out.println("after execting the query");
+			while (userList.next()) {
+				user.setUsername(userList.getString("username"));
+				user.setPassword(userList.getString("password"));
+				user.setRole(userList.getString("role"));
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("this is the error message "+e.getMessage());
+		}
+		return user;
+	}
 }

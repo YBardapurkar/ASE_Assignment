@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import registration.data.UserDAO;
 import registration.model.User;
 import registration.model.UserError;
 
@@ -48,13 +49,12 @@ public class LoginController extends HttpServlet {
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(request.getParameter("password"));
 		
-		session.setAttribute("login",user);
+		user = UserDAO.login(request.getParameter("username"), request.getParameter("password"));
+		
+		session.setAttribute("login", user);
 		
 		if (userError.getErrorMsg().equals("")) {
 			role = user.getRole(); 
-//			todo: fix
-			role = "admin";
-			session.removeAttribute("login");	
 			session.removeAttribute("errorMsgs");
 			if (role.equals("admin"))
 			{
@@ -75,9 +75,7 @@ public class LoginController extends HttpServlet {
 				getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 			}
 			
-		}
-		else
-		{
+		} else {
 			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 			session.removeAttribute("login");
 			session.removeAttribute("errorMsgs");

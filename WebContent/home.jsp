@@ -7,6 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+<p>succesfully registered</p>
+
+<c:out value='${currentUser.username}'/>
+<c:out value='${currentUser.role}'/>
+
+<form action="logout" method="post">
+<input name="action" value="logout" type="hidden">
+<input type="submit" value="logout">
+</form>
 
 </body>
 </html>
