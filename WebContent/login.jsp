@@ -11,7 +11,7 @@
 <table>
   <tr>
    <td>
-    <form name="registrationform" action="/registration/registration_controller?login" method="post">
+    <form name="registrationform" action="login" method="post">
     <table style="width: 1200px; ">
     <tr>
     <td> Username (*): </td>

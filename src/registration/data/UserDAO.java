@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import registration.util.SQLConnection;
-import registration.model.registration_model;
+import registration.model.User;
 
-public class registrationDAO {
+public class UserDAO {
 
 	static SQLConnection DBMgr = SQLConnection.getInstance();
 	
-	private static ArrayList<registration_model> ReturnMatchingUsersList (String queryString) {
-		ArrayList<registration_model> usersListInDB = new ArrayList<registration_model>();
+	private static ArrayList<User> ReturnMatchingUsersList (String queryString) {
+		ArrayList<User> usersListInDB = new ArrayList<User>();
 		
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -22,19 +22,19 @@ public class registrationDAO {
 			ResultSet userList = stmt.executeQuery(queryString);
 			while (userList.next()) {
 				
-				registration_model r2 = new registration_model(); 
-				r2.setusername(userList.getString("username"));
-				r2.setpassword(userList.getString("password"));
-				r2.setfirstname(userList.getString("firstname"));
-				r2.setlastname(userList.getString("lastname"));
-				r2.setutaid(userList.getString("utaid"));
-				r2.setphone(userList.getString("phonenumber"));
-				r2.setemail(userList.getString("email"));
-				r2.setstreet(userList.getString("street"));
-				r2.setcity(userList.getString("city"));
-				r2.setzipcode(userList.getString("state"));
-				r2.setstate(userList.getString("zipcode"));
-				r2.setrole(userList.getString("role"));
+				User r2 = new User(); 
+				r2.setUsername(userList.getString("username"));
+				r2.setPassword(userList.getString("password"));
+				r2.setFirstname(userList.getString("firstname"));
+				r2.setLastname(userList.getString("lastname"));
+				r2.setUtaId(userList.getString("utaid"));
+				r2.setPhone(userList.getString("phonenumber"));
+				r2.setEmail(userList.getString("email"));
+				r2.setStreet(userList.getString("street"));
+				r2.setCity(userList.getString("city"));
+				r2.setZipcode(userList.getString("state"));
+				r2.setState(userList.getString("zipcode"));
+				r2.setRole(userList.getString("role"));
 				
 				
 				usersListInDB.add(r2);	
@@ -46,7 +46,7 @@ public class registrationDAO {
 	}
 	
 	
-	private static void StoreListinDB (registration_model r1,String queryString) {
+	private static void StoreListinDB (User r1,String queryString) {
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 
@@ -55,18 +55,18 @@ public class registrationDAO {
 			stmt = conn.createStatement();
 			
 			String insertuser = queryString + " VALUES ('"  
-					+ r1.getusername()  +   "','"
-					+ r1.getpassword() + "','"		
-					+ r1.getfirstname() + "','"
-					+ r1.getlastname() + "','"
-					+ r1.getrole() + "','"
-					+ r1.getutaid() + "','"
-					+ r1.getphone() + "','"
-					+ r1.getemail() + "','"
-					+ r1.getstreet() + "','"
-					+ r1.getcity() + "','"
-					+ r1.getstate() + "','"
-					+ r1.getzipcode() + "')";
+					+ r1.getUsername()  +   "','"
+					+ r1.getPassword() + "','"		
+					+ r1.getFirstname() + "','"
+					+ r1.getLastname() + "','"
+					+ r1.getRole() + "','"
+					+ r1.getUtaId() + "','"
+					+ r1.getPhone() + "','"
+					+ r1.getEmail() + "','"
+					+ r1.getStreet() + "','"
+					+ r1.getCity() + "','"
+					+ r1.getState() + "','"
+					+ r1.getZipcode() + "')";
 			
 
 			
@@ -79,7 +79,7 @@ public class registrationDAO {
 		} catch (SQLException e) {System.out.println(e.getMessage());}
 	}
 
-	public static void insertuser(registration_model r1) {  
+	public static void insertuser(User r1) {  
 		StoreListinDB(r1,"INSERT INTO registration(username,password,firstname,lastname,role,utaid,phonenumber,email,street,city,state,zipcode) ");
 	}
 
@@ -105,14 +105,14 @@ public class registrationDAO {
 		ResultSet userList = stmt.executeQuery(password_login);
 		System.out.println("after execting the query");
 		
-		registration_model r3 = new registration_model();
+		User r3 = new User();
 		while (userList.next()) {
 		 
-		r3.setusername(userList.getString("username"));
-		r3.setpassword(userList.getString("password"));
+		r3.setUsername(userList.getString("username"));
+		r3.setPassword(userList.getString("password"));
 		}
 		
-		pass = r3.getpassword();
+		pass = r3.getPassword();
 		
 		
 		}

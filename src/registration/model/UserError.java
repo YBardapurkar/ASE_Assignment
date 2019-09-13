@@ -1,6 +1,6 @@
 package registration.model;
 
-public class registration_model_error {
+public class UserError {
 
 	private String errorMsg;
 	private String username_error;
@@ -17,7 +17,7 @@ public class registration_model_error {
 	private String street_error;
 	
 	
-	public registration_model_error() {
+	public UserError() {
 		this.errorMsg = "";
 		
 		this.username_error = "";

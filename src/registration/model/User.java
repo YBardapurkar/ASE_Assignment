@@ -1,18 +1,18 @@
 package registration.model;
 
 import java.io.Serializable;
-import registration.data.registrationDAO;
+import registration.data.UserDAO;
 import java.util.regex.Matcher; 
 import java.util.regex.Pattern; 
 
-public class registration_model implements Serializable{
+public class User implements Serializable{
 
 	private static final long serialVersionUID = 3L;
 	private String username;
 	private String password;
 	private String firstname;
 	private String lastname;
-	private String utaid;
+	private String utaId;
 	private String phone;
 	private String email;
 	private String street;
@@ -26,148 +26,168 @@ public class registration_model implements Serializable{
 	public void setuser(String username, String password,String firstname, String lastname, String role, String utaid,
 			String phone, String email, String street, String city, String state, String zipcode) 
 	{
-		setusername(username);
-		setpassword(password);
-		setfirstname(firstname);
-		setlastname(lastname);
-		setutaid(utaid);
-		setphone(phone);
-		setemail(email);
-		setstreet(street);
-		setcity(city);
-		setstate(state);
-		setzipcode(zipcode);
-		setrole(role);
+		setUsername(username);
+		setPassword(password);
+		setFirstname(firstname);
+		setLastname(lastname);
+		setUtaId(utaid);
+		setPhone(phone);
+		setEmail(email);
+		setStreet(street);
+		setCity(city);
+		setState(state);
+		setZipcode(zipcode);
+		setRole(role);
 	}
-	
-	public String getusername() {
+
+	public String getUsername() {
 		return username;
 	}
-	public void setusername(String username) {
+
+	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	public String getpassword() {
+
+	public String getPassword() {
 		return password;
 	}
-	public void setpassword(String password) {
+
+	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getfirstname() {
+
+	public String getFirstname() {
 		return firstname;
 	}
-	public void setfirstname(String firstname) {
-        this.firstname = firstname;
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
-	
-	public String getlastname() {
+
+	public String getLastname() {
 		return lastname;
 	}
-	public void setlastname(String lastname) {
+
+	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
 
-	public String getrole() {
-		return role;
-	}
-	public void setrole(String role) {
-		this.role = role;
+	public String getUtaId() {
+		return utaId;
 	}
 
-	
-	public String getutaid() {
-		return utaid;
-	}
-	public void setutaid(String utaid) {
-		this.utaid = utaid;
+	public void setUtaId(String utaId) {
+		this.utaId = utaId;
 	}
 
-	
-	public String getphone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setphone(String phone) {
+
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-	
-	public String getemail() {
+	public String getEmail() {
 		return email;
 	}
-	public void setemail(String email) {
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	
-	public String getstreet() {
+	public String getStreet() {
 		return street;
 	}
-	public void setstreet(String street) {
+
+	public void setStreet(String street) {
 		this.street = street;
 	}
 
-	
-	public String getcity() {
+	public String getCity() {
 		return city;
 	}
-	public void setcity(String city) {
+
+	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public String getstate() {
+	public String getState() {
 		return state;
 	}
-	public void setstate(String state) {
+
+	public void setState(String state) {
 		this.state = state;
 	}
 
-	
-	public String getzipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
-	public void setzipcode(String zipcode) {
+
+	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 
-	public String getmessage() {
+	public String getMessage() {
 		return message;
 	}
-	public void setmessage(String message) {
+
+	public void setMessage(String message) {
 		this.message = message;
 	}
 
-	public void setloginuser(String username, String password) 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getFor_password() {
+		return for_password;
+	}
+
+	public void setFor_password(String for_password) {
+		this.for_password = for_password;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setLoginUser(String username, String password) 
 	{
-		setusername(username);
-		setpassword(password);
+		setUsername(username);
+		setPassword(password);
 	
 	}
 	
-	public void validateuser (String action, registration_model r1, registration_model_error errorMsgs) {
+	public void validateuser (String action, User r1, UserError errorMsgs) {
 		if (action.equals("saveuser")) {
-			errorMsgs.setusername_error(validateusername(action,r1.getusername()));
-			errorMsgs.setpassword_error(validatepassword(action,r1.getpassword()));
-			errorMsgs.setfirstname_error(validatefirstname(r1.getfirstname()));
-			errorMsgs.setlastname_error(validatelastname(r1.getlastname()));
-			errorMsgs.setutaid_error(validateutaid(r1.getutaid()));
-			errorMsgs.setrole_error(validaterole(r1.getrole()));
-			errorMsgs.setemail_error(validateemail(r1.getemail()));
-			errorMsgs.setphone_error(validatephone(r1.getphone()));
-			errorMsgs.setstate_error(validatestate(r1.getstate()));
-			errorMsgs.setcity_error(validatecity(r1.getcity()));
-			errorMsgs.setzipcode_error(validatezipcode(r1.getzipcode()));
-			errorMsgs.setstreet_error(validatestreet(r1.getstreet()));
+			errorMsgs.setusername_error(validateusername(action,r1.getUsername()));
+			errorMsgs.setpassword_error(validatepassword(action,r1.getPassword()));
+			errorMsgs.setfirstname_error(validatefirstname(r1.getFirstname()));
+			errorMsgs.setlastname_error(validatelastname(r1.getLastname()));
+			errorMsgs.setutaid_error(validateutaid(r1.getUtaId()));
+			errorMsgs.setrole_error(validaterole(r1.getRole()));
+			errorMsgs.setemail_error(validateemail(r1.getEmail()));
+			errorMsgs.setphone_error(validatephone(r1.getPhone()));
+			errorMsgs.setstate_error(validatestate(r1.getState()));
+			errorMsgs.setcity_error(validatecity(r1.getCity()));
+			errorMsgs.setzipcode_error(validatezipcode(r1.getZipcode()));
+			errorMsgs.setstreet_error(validatestreet(r1.getStreet()));
 			
 			errorMsgs.setErrorMsg();
 		}
 		
 	}
 
-	public void login_validateuser (String action, registration_model r1, registration_model_error errorMsgs) {
+	public void login_validateuser (String action, User r1, UserError errorMsgs) {
 	
 		if (action.equals("login")) {
-			errorMsgs.setusername_error(validateusername(action,r1.getusername()));
-			errorMsgs.setpassword_error(validatepassword(action,r1.getpassword()));
+			errorMsgs.setusername_error(validateusername(action,r1.getUsername()));
+			errorMsgs.setpassword_error(validatepassword(action,r1.getPassword()));
 			errorMsgs.setErrorMsg();
 		}
 	}
@@ -184,7 +204,7 @@ public class registration_model implements Serializable{
 			if(action.equals("saveuser"))
 			{
 				
-					if (!registrationDAO.usernameUnique(username))
+					if (!UserDAO.usernameUnique(username))
 					{
 						System.out.println("inside the usernmeunique");
 						System.out.println("inside the usernmeunique");
@@ -196,7 +216,7 @@ public class registration_model implements Serializable{
 						if(action.equals("login"))
 						{
 		
-							if (registrationDAO.usernameUnique(username))
+							if (UserDAO.usernameUnique(username))
 							{
 								result="username does not exist in database";
 							}
@@ -220,7 +240,7 @@ public class registration_model implements Serializable{
 		{
 			if(action.equals("login"))
 			{
-				if (!registrationDAO.login(username).equals(password))
+				if (!UserDAO.login(username).equals(password))
 				{
 					result="invalid password";
 				}
