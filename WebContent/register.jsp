@@ -11,7 +11,7 @@
 <table>
   <tr>
    <td>
-    <form name="registrationform" action="/registration/registration_controller?saveuser" method="post">
+    <form name="registrationform" action="register" method="post">
     <table style="width: 1200px; ">
     <tr>
     <td> Username (*): </td>
@@ -46,7 +46,7 @@
 
 	<tr>
     <td> UTA id(*): </td>
-    <td> <input name="utaid" value="<c:out value='${r1.utaid}'/>" type="text" maxlength="45" required>  </td>
+    <td> <input name="utaid" value="<c:out value='${r1.utaId}'/>" type="text" maxlength="45" required>  </td>
     <td> <input name="utaid_error"  value="<c:out value='${errorMsgs.utaid_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	

@@ -67,15 +67,18 @@ public class LoginController extends HttpServlet {
 			}
 			else if(role.equals("student") || role.equals("faculty") || role.equals("staff"))
 			{
-				getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "home");
 			}
 			else if(role.equals("FacilityManager"))
 			{
-				getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "home");
 			}
 			else if (role.equals("repairer"))
 			{
-				getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "home");
 			}
 			
 		} else {
