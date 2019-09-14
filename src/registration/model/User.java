@@ -1,13 +1,16 @@
 package registration.model;
 
 import java.io.Serializable;
-import registration.data.UserDAO;
-import java.util.regex.Matcher; 
+import registration.data.UserDAO; 
 import java.util.regex.Pattern; 
 
 public class User implements Serializable{
+	
+	public static final String ACTION_SAVE_USER = "save_user";
+	public static final String ACTION_LOGIN = "login";
 
 	private static final long serialVersionUID = 3L;
+	
 	private String username;
 	private String password;
 	private String firstname;
@@ -163,199 +166,212 @@ public class User implements Serializable{
 	
 	}
 	
-	public void validateuser (String action, User r1, UserError errorMsgs) {
-		if (action.equals("saveuser")) {
-			errorMsgs.setusername_error(validateusername(action,r1.getUsername()));
-			errorMsgs.setpassword_error(validatepassword(action,r1.getPassword()));
-			errorMsgs.setfirstname_error(validatefirstname(r1.getFirstname()));
-			errorMsgs.setlastname_error(validatelastname(r1.getLastname()));
-			errorMsgs.setutaid_error(validateutaid(r1.getUtaId()));
-			errorMsgs.setrole_error(validaterole(r1.getRole()));
-			errorMsgs.setemail_error(validateemail(r1.getEmail()));
-			errorMsgs.setphone_error(validatephone(r1.getPhone()));
-			errorMsgs.setstate_error(validatestate(r1.getState()));
-			errorMsgs.setcity_error(validatecity(r1.getCity()));
-			errorMsgs.setzipcode_error(validatezipcode(r1.getZipcode()));
-			errorMsgs.setstreet_error(validatestreet(r1.getStreet()));
+	public void validateUser (String action, User user, UserError userErrorMsgs) {
+		if (action.equals(ACTION_SAVE_USER)) {
+			userErrorMsgs.setUsernameError(validateusername(action,user.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
+			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
+			userErrorMsgs.setUtaIdError(validateUtaId(user.getUtaId()));
+			userErrorMsgs.setRoleError(validateRole(user.getRole()));
+			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
+			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
+			userErrorMsgs.setStreetError(validatestreet(user.getStreet()));
+			userErrorMsgs.setCityError(validatecity(user.getCity()));
+			userErrorMsgs.setStateError(validateState(user.getState()));
+			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
 			
-			errorMsgs.setErrorMsg();
+			userErrorMsgs.setErrorMsg();
 		}
-		
 	}
 
-	public void login_validateuser (String action, User r1, UserError errorMsgs) {
+	public void login_validateuser (String action, User user, UserError userErrorMsgs) {
 	
-		if (action.equals("login")) {
-			errorMsgs.setusername_error(validateusername(action,r1.getUsername()));
-			errorMsgs.setpassword_error(validatepassword(action,r1.getPassword()));
-			errorMsgs.setErrorMsg();
+		if (action.equals(ACTION_LOGIN)) {
+			userErrorMsgs.setUsernameError(validateusername(action,user.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			userErrorMsgs.setErrorMsg();
 		}
 	}
 	
 	
 	private String validateusername(String action, String username) {
-		String result="";
+		String result;
 		String pattern = "[A-Za-z0-9-_]{6,20}";
-		boolean b3 = Pattern.matches(pattern, username);  
-		System.out.println("inside validate user");
-		if (b3 == false)
-			result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
-		else
-			if(action.equals("saveuser"))
-			{
-				
-					if (!UserDAO.usernameUnique(username))
-					{
-						System.out.println("inside the usernmeunique");
-						System.out.println("inside the usernmeunique");
-						result="username already in database";
-					}
-			}
-					else
-					{
-						if(action.equals("login"))
-						{
 		
-							if (UserDAO.usernameUnique(username))
-							{
-								result="username does not exist in database";
-							}
-							else
-							{
-								
-							}
-						}
-					}
+//		Validate register
+		if(action.equals(ACTION_SAVE_USER)) {
+			if (!Pattern.matches(pattern, username))
+				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
+			else if (!UserDAO.usernameUnique(username)) {
+				result="username already in database";
+			} else {
+				result = "";
+			}
+		} 
+//		validate login
+		else if(action.equals(ACTION_LOGIN)) {
+			if (!Pattern.matches(pattern, username))
+				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
+			else if (UserDAO.usernameUnique(username)) {
+				result="username does not exist in database";
+			} else {
+				result = "";
+			}
+		} 
+//		default
+		else {
+			result = "action not recognized";
+		}
 		return result;
 	}
 	
-	private String validatepassword(String action, String password) {
-		String result="";
-		String pattern2 = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@*#$%^&+=-_])[A-Za-z0-9@#$%*^&+=-_]{6,30}";
-		boolean b3 = Pattern.matches(pattern2, password);
+	private String validatePassword(String action, String password) {
+		String result;
+		String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@*#$%^&+=-_])[A-Za-z0-9@#$%*^&+=-_]{6,30}";
 		
-		if (b3 == false)
-			result="the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character with length between 6 to 30 characters";
-		else
-		{
-			if(action.equals("login"))
-			{
-				if (UserDAO.login(username, password) != null)
-				{
-					result="invalid password";
-				}
-	
+//		Validate register
+		if(action.equals(ACTION_SAVE_USER)) {
+			if (!Pattern.matches(pattern, password))
+				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character with length between 6 to 30 characters";
+			else {
+				result = "";
 			}
-
+		} 
+//		validate login
+		else if(action.equals(ACTION_LOGIN)) {
+			if (UserDAO.login(username, password) != null) {
+				result="invalid password";
+			} else {
+				result = "";
+			}
+		} 
+//		default
+		else {
+			result = "action not recognized";
 		}
+		
 		return result;		
 	}
 	
-	private String validatephone(String phone) {
-		String result="";
-		if (phone.length()!=10)
-			result="Phone number must be 10 digits in length";
-		else
-			if (!isTextAnInteger(phone))
-				result="Phone number must be a number";
+	private String validatePhone(String phone) {
+		String result;
+		
+		if (phone.length() != 10)
+			result = "Phone number must be 10 digits in length";
+		else if (!isTextAnInteger(phone)) {
+			result="Phone number must be a number";
+		} else {
+			result = "";
+		}
+		
 		return result;		
 	}
 	
-	private String validateemail(String email) {
-		String result="",extension="";
+	private String validateEmail(String email) {
+		String result;
+		String extension = email.substring(email.length()-4, email.length());
 		if (!email.contains("@"))
 			result = "Email address needs to contain @";
-		else
-			if (!stringSize(email,7,45))
-				result="Email address must be between 7 and 45 characters long";
-			else {
-				extension = email.substring(email.length()-4, email.length());
-				if (!extension.equals(".org") && !extension.equals(".edu") && !extension.equals(".com") 
-						&& !extension.equals(".net") && !extension.equals(".gov") && !extension.equals(".mil"))
-					result = "Invalid domain name";				
-			}
+		else if (!stringSize(email,7,45))
+			result="Email address must be between 7 and 45 characters long";
+		else if (!extension.equals(".org") && !extension.equals(".edu") && !extension.equals(".com") 
+						&& !extension.equals(".net") && !extension.equals(".gov") && !extension.equals(".mil")) {
+			result = "Invalid domain name";				
+		} else {
+			result = "";
+		}
+		
 		return result;		
 	}
 	
-	
-	private String validatefirstname(String firstname) {
-		String result="";
-		
+	private String validateFirstname(String firstname) {
+		String result;
 		String pattern3 = "[A-Za-z]{3,30}";
 		boolean b3 = Pattern.matches(pattern3, firstname);
+		
 		if (!stringSize(firstname,3,30))
 			result="firstname should be between 3 and 30 characters long";
+		else if (b3 == false)
+			result="firstname should not contain digits";
 		else
-			if (b3 == false)
-				result="firstname should not contain digits";
+			result = "";
+		
 		return result;		
 	}
 	
-	
-	private String validatelastname(String lastname) {
+	private String validateLastname(String lastname) {
 		String result="";
 		String pattern3 = "[A-Za-z]{3,30}";
 		boolean b3 = Pattern.matches(pattern3, lastname);
+		
 		if (!stringSize(lastname,3,30))
 			result="lastname should be between 3 and 30 characters long";
-		else
-			if (b3 == false)
-				result="lastname should not contain digits";
+		else if (b3 == false)
+			result="lastname should not contain digits";
+		else 
+			result = "";
+		
 		return result;		
 	}
 	
-	
-	private String validateutaid(String utaid) {
-		String result="";
-		String extension1="";
+	private String validateUtaId(String utaId) {
+		String result;
+		String extension1= utaId.substring(0,3);
 		String a = "100";
-		if (utaid.length()!=10)
+		
+		if (utaId.length()!=10)
 			result="UTA id must be 10 digits in length";
+		else if (!extension1.equals(a))
+			result="UTA id must start with '100'";
 		else
-		{	
-			extension1= utaid.substring(0,3);
-			if (!extension1.equals(a))
-				result="UTA id must start with '100'";
-		}
+			result = "";
+		
 		return result;		
 	}
 	
-	
-	private String validaterole(String role) {
+	private String validateRole(String role) {
 		String result="";
 		String pattern3 = "[/^[A-Za-z\\S]$/]";
-		boolean b3 = Pattern.matches(pattern3, role);
+//		boolean b3 = Pattern.matches(pattern3, role);
+		
 		if (!stringSize(role,3,30))
 			result="role should be between 3 and 30 characters long";
+		else if (role.matches(pattern3))
+			result="role should not contain digits";
 		else
-			if (role.matches(pattern3))
-				result="role should not contain digits";
+			result = "";
+		
 		return result;		
 	}
 	
-	
-	private String validatestate(String state) {
-		String result="";
+	private String validateState(String state) {
+		String result;
 		String pattern3 = "[/^[A-Za-z\\S]$/]";
-		boolean b3 = Pattern.matches(pattern3, state);
+//		boolean b3 = Pattern.matches(pattern3, state);
+		
 		if (!stringSize(state,3,30))
 			result="state should be between 3 and 30 characters long";
+		else if (state.matches(pattern3))
+			result="state should not contain digits";
 		else
-			if (state.matches(pattern3))
-				result="state should not contain digits";
+			result = "";
+		
 		return result;		
 	}
 	
-
 	private String validatecity(String city) {
 		String result="";
 		String pattern3 = "[/^[A-Za-z\\S]$/]";
-		boolean b3 = Pattern.matches(pattern3, city);
+//		boolean b3 = Pattern.matches(pattern3, city);
+		
 		if (!stringSize(city,3,30))
 			result="city should be between 3 and 30 characters long";
+		else if (city.matches(pattern3))
+			result="city should not contain digits";
 		else
-			if (city.matches(pattern3))
-				result="city should not contain digits";
+			result = "";
+		
 		return result;		
 		
 	}
@@ -387,6 +403,7 @@ public class User implements Serializable{
 	private boolean stringSize(String string, int min, int max) {
 		return string.length()>=min && string.length()<=max;
 	}
+	
 	private boolean isTextAnInteger (String string) {
         boolean result;
 		try

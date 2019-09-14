@@ -3,138 +3,143 @@ package registration.model;
 public class UserError {
 
 	private String errorMsg;
-	private String username_error;
-	private String password_error;
-	private String firstname_error;
-	private String lastname_error;
-	private String utaid_error;
-	private String role_error;
-	private String email_error;
-	private String phone_error;
-	private String state_error;
-	private String city_error;
-	private String zipcode_error;
-	private String street_error;
+	private String usernameError;
+	private String passwordError;
+	private String firstnameError;
+	private String lastnameError;
+	private String utaIdError;
+	private String roleError;
+	private String emailError;
+	private String phoneError;
+	private String stateError;
+	private String cityError;
+	private String zipcodeError;
+	private String streetError;
 	
 	
 	public UserError() {
 		this.errorMsg = "";
 		
-		this.username_error = "";
-		this.password_error= "";
-		this.firstname_error= "";
-		this.lastname_error = "";
+		this.usernameError = "";
+		this.passwordError= "";
+		this.firstnameError= "";
+		this.lastnameError = "";
 		
-		this.utaid_error= "";
-		this.role_error = "";
-		this.email_error = "";
-		this.phone_error = "";
-		this.state_error = "";
-		this.city_error = "";
-		this.zipcode_error = "";
-		this.street_error = "";
+		this.utaIdError= "";
+		this.roleError = "";
+		this.emailError = "";
+		this.phoneError = "";
+		this.stateError = "";
+		this.cityError = "";
+		this.zipcodeError = "";
+		this.streetError = "";
 	}
 
 	public String getErrorMsg() {
 		return errorMsg;
 	}
 	public void setErrorMsg() {
-		if (!username_error.equals("") || !password_error.equals("") || !firstname_error.equals("") || !lastname_error.equals("") || !utaid_error.equals("") || !role_error.equals("") || !email_error.equals("") || 
+		if (!usernameError.equals("") || !passwordError.equals("") || !firstnameError.equals("") || !lastnameError.equals("") || !utaIdError.equals("") || !roleError.equals("") || !emailError.equals("") || 
 				
-		!phone_error.equals("") || !state_error.equals("") || !city_error.equals("") || !zipcode_error.equals("") || !street_error.equals(""))
+		!phoneError.equals("") || !stateError.equals("") || !cityError.equals("") || !zipcodeError.equals("") || !streetError.equals(""))
 			
 			this.errorMsg = "Please correct the following errors";
 	}
-	
-	public String getusername_error() {
-		return username_error;
-	}
-	public void setusername_error(String username_error) {
-		
-		this.username_error = username_error;
-	}
-	
-	
-	public String getpassword_error() {
-		return password_error;
-	}
-	public void setpassword_error(String password_error) {
-		this.password_error = password_error;
-	}
-	
-	
-	public String getfirstname_error() {
-		return firstname_error;
-	}
-	public void setfirstname_error(String firstname_error) {
-		this.firstname_error = firstname_error;
-	}
-	
-	
-	public String getlastname_error() {
-		return lastname_error;
-	}
-	public void setlastname_error(String lastname_error) {
-		this.lastname_error = lastname_error;
-	}
-	
-//till this 
-	
-	public String getutaid_error() {
-		return utaid_error;
-	}
-	public void setutaid_error(String utaid_error) {
-		this.utaid_error = utaid_error;
+
+	public String getUsernameError() {
+		return usernameError;
 	}
 
-	public String getrole_error() {
-		return role_error;
-	}
-	public void setrole_error(String role_error) {
-		this.role_error = role_error;
+	public void setUsernameError(String usernameError) {
+		this.usernameError = usernameError;
 	}
 
-	public String getemail_error() {
-		return email_error;
-	}
-	public void setemail_error(String email_error) {
-		this.email_error = email_error;
+	public String getPasswordError() {
+		return passwordError;
 	}
 
-	public String getphone_error() {
-		return phone_error;
-	}
-	public void setphone_error(String phone_error) {
-		this.phone_error = phone_error;
+	public void setPasswordError(String passwordError) {
+		this.passwordError = passwordError;
 	}
 
-	public String getstate_error() {
-		return state_error;
-	}
-	public void setstate_error(String state_error) {
-		this.state_error = state_error;
+	public String getFirstnameError() {
+		return firstnameError;
 	}
 
-	public String getcity_error() {
-		return city_error;
-	}
-	public void setcity_error(String city_error) {
-		this.city_error = city_error;
+	public void setFirstnameError(String firstnameError) {
+		this.firstnameError = firstnameError;
 	}
 
-	public String getzipcode_error() {
-		return zipcode_error;
-	}
-	public void setzipcode_error(String zipcode_error) {
-		this.zipcode_error = zipcode_error;
+	public String getLastnameError() {
+		return lastnameError;
 	}
 
-	public String getstreet_error() {
-		return street_error;
-	}
-	public void setstreet_error(String street_error) {
-		this.street_error = street_error;
+	public void setLastnameError(String lastnameError) {
+		this.lastnameError = lastnameError;
 	}
 
-	
+	public String getUtaIdError() {
+		return utaIdError;
+	}
+
+	public void setUtaIdError(String utaIdError) {
+		this.utaIdError = utaIdError;
+	}
+
+	public String getRoleError() {
+		return roleError;
+	}
+
+	public void setRoleError(String roleError) {
+		this.roleError = roleError;
+	}
+
+	public String getEmailError() {
+		return emailError;
+	}
+
+	public void setEmailError(String emailError) {
+		this.emailError = emailError;
+	}
+
+	public String getPhoneError() {
+		return phoneError;
+	}
+
+	public void setPhoneError(String phoneError) {
+		this.phoneError = phoneError;
+	}
+
+	public String getStateError() {
+		return stateError;
+	}
+
+	public void setStateError(String stateError) {
+		this.stateError = stateError;
+	}
+
+	public String getCityError() {
+		return cityError;
+	}
+
+	public void setCityError(String cityError) {
+		this.cityError = cityError;
+	}
+
+	public String getZipcodeError() {
+		return zipcodeError;
+	}
+
+	public void setZipcodeError(String zipcodeError) {
+		this.zipcodeError = zipcodeError;
+	}
+
+	public String getStreetError() {
+		return streetError;
+	}
+
+	public void setStreetError(String streetError) {
+		this.streetError = streetError;
+	}
+
 }

@@ -39,27 +39,26 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String role;
-		String action=request.getParameter("action"), url="";
-		System.out.println(action);
 		HttpSession session = request.getSession();
 
 		User user = new User();
-		UserError userError = new UserError();
-		session.setAttribute("errorMsgs",userError);
+		UserError userErrorMsgs = new UserError();
 		
-		user.setUsername(request.getParameter("username"));
-		user.setPassword(request.getParameter("password"));
+		session.removeAttribute("user");
+		session.removeAttribute("errorMsgs");
 		
-		user = UserDAO.login(request.getParameter("username"), request.getParameter("password"));
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		
-		session.setAttribute("login", user);
+		user = UserDAO.login(username, password);
 		
-		if (userError.getErrorMsg().equals("")) {
+		user.login_validateuser("login", user, userErrorMsgs);
+		session.setAttribute("user", user);
+		
+		if (userErrorMsgs.getErrorMsg().equals("")) {
+//			no error messages
 			role = user.getRole(); 
 			session.removeAttribute("errorMsgs");
-			
-			session.setAttribute("username", user.getUsername());
-			session.setAttribute("role", user.getRole());
 			
 			if (role.equals("admin")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -74,11 +73,11 @@ public class LoginController extends HttpServlet {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "home");
 			}
-			
 		} else {
-			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-			session.removeAttribute("login");
-			session.removeAttribute("errorMsgs");
+//			error messages
+			session.setAttribute("errorMsgs", userErrorMsgs);
+			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+			request.getRequestDispatcher("/login.jsp").include(request, response);
 		}
 	}
 

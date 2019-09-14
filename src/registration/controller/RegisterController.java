@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import registration.data.UserDAO;
 import registration.model.User;
 import registration.model.UserError;
 
@@ -23,8 +24,23 @@ public class RegisterController extends HttpServlet{
 		request.getRequestDispatcher("/register.jsp").include(request, response);
 	}
 	
-	private void getuserParam (HttpServletRequest request, User r1) {
-		r1.setuser(request.getParameter("username"), request.getParameter("password"), request.getParameter("firstname"), request.getParameter("lastname"),  request.getParameter("role"), request.getParameter("utaid"), request.getParameter("phone"), request.getParameter("email"), request.getParameter("street"), request.getParameter("city"),  request.getParameter("state"), request.getParameter("zipcode"));	
+	private User getUserParam (HttpServletRequest request) {
+		User user = new User();
+		
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname")); 
+		user.setLastname(request.getParameter("lastname"));
+		user.setRole(request.getParameter("role"));
+		user.setUtaId(request.getParameter("utaid")); 
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street")); 
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state")); 
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
 	}
 	
 	@Override
@@ -32,28 +48,26 @@ public class RegisterController extends HttpServlet{
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		User newUser = new User();
-		UserError CerrorMsgs = new UserError();
+		UserError userErrorMsgs = new UserError();
+		session.removeAttribute("user");
 		session.removeAttribute("errorMsgs");
 		
-		if (action.equalsIgnoreCase("saveuser")) {
-			getuserParam(request, newUser);
-			newUser.validateuser(action, newUser, CerrorMsgs);
-			session.setAttribute("r1", newUser);	
-			
-			if (!CerrorMsgs.getErrorMsg().equals("")) {
-//				if error messages
-				getuserParam(request, newUser);
-				session.setAttribute("errorMsgs", CerrorMsgs);
-				request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-				request.getRequestDispatcher("/register.jsp").include(request, response);
-			}
-			else {
-//				if no error messages
-				registration.data.UserDAO.insertuser(newUser);			
-				newUser.setMessage("data is inserted");
-				request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-				request.getRequestDispatcher("/register.jsp").include(request, response);
-			}
+		newUser = getUserParam(request);
+		newUser.validateUser(action, newUser, userErrorMsgs);
+		session.setAttribute("user", newUser);	
+		
+		if (!userErrorMsgs.getErrorMsg().equals("")) {
+//			if error messages
+			session.setAttribute("errorMsgs", userErrorMsgs);
+			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+			request.getRequestDispatcher("/register.jsp").include(request, response);
+		}
+		else {
+//			if no error messages
+			UserDAO.insertuser(newUser);			
+			newUser.setMessage("data is inserted");
+			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+			request.getRequestDispatcher("/register.jsp").include(request, response);
 		}
 	}
 }

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import registration.util.SQLConnection;
 import registration.model.User;
 
@@ -80,26 +81,22 @@ public class UserDAO {
 	}
 
 	public static User login(String username, String password)  {
-		String password_login = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"' ORDER BY username";
-		System.out.println("query string "+password_login);
+		String query = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"' ORDER BY username";
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 		User user = new User();
 		try{
-			System.out.println("after the try");
 			stmt = conn.createStatement();
-			
-			ResultSet userList = stmt.executeQuery(password_login);
-			System.out.println("after execting the query");
+			ResultSet userList = stmt.executeQuery(query);
 			while (userList.next()) {
 				user.setUsername(userList.getString("username"));
 				user.setPassword(userList.getString("password"));
 				user.setRole(userList.getString("role"));
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("this is the error message "+e.getMessage());
 		}
+		
 		return user;
 	}
 }

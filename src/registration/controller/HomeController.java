@@ -19,7 +19,7 @@ public class HomeController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		User currentUser = (User) session.getAttribute("login");
+		User currentUser = (User) session.getAttribute("user");
 		
 //		redirect to login if user not found
 		if (currentUser == null) {
