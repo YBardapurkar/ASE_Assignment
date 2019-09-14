@@ -168,7 +168,7 @@ public class User implements Serializable{
 	
 	public void validateUser (String action, User user, UserError userErrorMsgs) {
 		if (action.equals(ACTION_SAVE_USER)) {
-			userErrorMsgs.setUsernameError(validateusername(action,user.getUsername()));
+			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
 			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
 			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
 			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
@@ -184,18 +184,8 @@ public class User implements Serializable{
 			userErrorMsgs.setErrorMsg();
 		}
 	}
-
-	public void login_validateuser (String action, User user, UserError userErrorMsgs) {
 	
-		if (action.equals(ACTION_LOGIN)) {
-			userErrorMsgs.setUsernameError(validateusername(action,user.getUsername()));
-			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
-			userErrorMsgs.setErrorMsg();
-		}
-	}
-	
-	
-	private String validateusername(String action, String username) {
+	private String validateUsername(String action, String username) {
 		String result;
 		String pattern = "[A-Za-z0-9-_]{6,20}";
 		
@@ -270,13 +260,12 @@ public class User implements Serializable{
 	
 	private String validateEmail(String email) {
 		String result;
-		String extension = email.substring(email.length()-4, email.length());
-		if (!email.contains("@"))
+		if (!email.contains("@")) {
 			result = "Email address needs to contain @";
-		else if (!stringSize(email,7,45))
+		} else if (!stringSize(email,7,45)) {
 			result="Email address must be between 7 and 45 characters long";
-		else if (!extension.equals(".org") && !extension.equals(".edu") && !extension.equals(".com") 
-						&& !extension.equals(".net") && !extension.equals(".gov") && !extension.equals(".mil")) {
+		} else if (!email.endsWith(".org") && !email.endsWith(".edu") && !email.endsWith(".com") 
+						&& !email.endsWith(".net") && !email.endsWith(".gov") && !email.endsWith(".mil")) {
 			result = "Invalid domain name";				
 		} else {
 			result = "";
@@ -317,14 +306,13 @@ public class User implements Serializable{
 	
 	private String validateUtaId(String utaId) {
 		String result;
-		String extension1= utaId.substring(0,3);
 		String a = "100";
 		
-		if (utaId.length()!=10)
+		if (utaId.length()!=10) {
 			result="UTA id must be 10 digits in length";
-		else if (!extension1.equals(a))
+		} else if (!utaId.substring(0,3).equals(a)) {
 			result="UTA id must start with '100'";
-		else
+		} else 
 			result = "";
 		
 		return result;		

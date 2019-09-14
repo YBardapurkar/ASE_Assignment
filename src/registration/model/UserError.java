@@ -45,6 +45,10 @@ public class UserError {
 			
 			this.errorMsg = "Please correct the following errors";
 	}
+	
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 
 	public String getUsernameError() {
 		return usernameError;

@@ -49,15 +49,21 @@ public class LoginController extends HttpServlet {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
+
+		user.validateUser("login", user, userErrorMsgs);
 		user = UserDAO.login(username, password);
-		
-		user.login_validateuser("login", user, userErrorMsgs);
 		session.setAttribute("user", user);
+		
+		if (user.getRole() == null) {
+			role = "";
+			userErrorMsgs.setErrorMsg("User not Found");
+		} else {
+			role = user.getRole();
+		}
 		
 		if (userErrorMsgs.getErrorMsg().equals("")) {
 //			no error messages
-			role = user.getRole(); 
+			
 			session.removeAttribute("errorMsgs");
 			
 			if (role.equals("admin")) {
