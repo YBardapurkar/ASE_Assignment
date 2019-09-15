@@ -88,7 +88,6 @@ public class MARController extends HttpServlet{
 	private MAR getMarParam (HttpServletRequest request) {
 		MAR mar = new MAR();
 		mar.setFacilityName(request.getParameter("facilityname"));
-		mar.setFacilityType(request.getParameter("facilitytype"));
 		mar.setDescription(request.getParameter("description"));
 		mar.setReportedBy(request.getParameter("reportedby"));
 		System.out.println(sqlNow);
@@ -113,7 +112,7 @@ public class MARController extends HttpServlet{
 
 		newMar = getMarParam(request);
 		newMar.validateMar(action, newMar, userErrorMsgs);
-		session.setAttribute("MAR", newMar);	
+		//session.setAttribute("MAR", newMar);	
 
 		if (!userErrorMsgs.getErrorMsg().equals("")) {
 			//			if error messages
@@ -124,6 +123,8 @@ public class MARController extends HttpServlet{
 			//			if no error messages
 			MARDAO.insertmar(newMar);//Insert into database			
 			newMar.setMessage("mar is created");
+			session.setAttribute("MAR", newMar);	
+			
 			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
 			request.getRequestDispatcher("/mar_form.jsp").include(request, response);
 

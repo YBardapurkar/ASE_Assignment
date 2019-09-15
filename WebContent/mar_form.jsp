@@ -14,12 +14,7 @@
    <td>
     <form name="marform" action="mar" method="post">
     <table style="width: 1200px; ">
-   <%-- <tr>
-    <td> Facility type (*): </td>
-    <td> <input name="facilitytype" value="<c:out value='${mar.facilityType}'/>" type="text" maxlength="16" required> </td>
-    <td> <input name="facilitytype_error"  value="<c:out value='${errorMsgs.facilityTypeError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
-    </tr> --%>
-
+  
     <tr>
     <td> Facility Name (*): </td>
     <td> <input name="facilityname" value="<c:out value='${mar.facilityName}'/>" type="text" maxlength="45" required>  </td>
@@ -52,7 +47,7 @@
     </tr> --%>
 
 	<tr>
-    <td> <input name="message" value="<c:out value='${mar.message}'/>" type="text" maxlength="45" >  </td>
+    <td> <input name="message" value="<c:out value='${MAR.message}'/>" type="text" maxlength="45" >  </td>
     </tr>
 
 

@@ -12,7 +12,7 @@ public class SQLConnection {
 	public static SQLConnection single_instance = null;
 	public SQLConnection() {
 		DB_DRIVER = "com.mysql.jdbc.Driver";
-		DB_CONNECTION  = "jdbc:mysql://localhost:3307/macrepairsys?autoReconnect=true&useSSL=false";
+		DB_CONNECTION = System.getenv("DB_CONNECTION");
 		DB_USER  = System.getenv("DB_USERNAME");
 		DB_PASSWORD = System.getenv("DB_PASSWORD");
 	}
