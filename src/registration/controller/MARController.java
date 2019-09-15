@@ -22,6 +22,8 @@ public class MARController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		session.removeAttribute("MAR");
+		session.removeAttribute("listMAR");
 		session.removeAttribute("errorMsgs");
 		
 //		MAR details
@@ -32,12 +34,33 @@ public class MARController extends HttpServlet{
 			session.setAttribute("MAR", mar);
 			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 		}
-//		List companies
+//		List by assigned status
+		else if (request.getParameter("assigned") != null) {
+			boolean assigned = ("true".equals(request.getParameter("assigned")));
+			List<MAR> marList = new ArrayList<MAR>();
+			if (assigned) {
+				marList.addAll(MARDAO.getAssignedMAR());
+			} else {
+				marList.addAll(MARDAO.getUnassignedMAR());
+			}
+			session.setAttribute("listMAR", marList);				
+			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
+		}
+//		List MAR
 		else {
 			List<MAR> marList = new ArrayList<MAR>();
 			marList.addAll(MARDAO.getAllMAR());
-			session.setAttribute("allMAR", marList);				
+			session.setAttribute("listMAR", marList);				
 			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
 		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.removeAttribute("MAR");
+		session.removeAttribute("allMAR");
+		session.removeAttribute("errorMsgs");
+		
 	}
 }

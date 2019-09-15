@@ -10,6 +10,8 @@ public class MAR {
 	private String description;
 	private String reportedBy;
 	private Date date;
+	private String assignedTo;
+	
 	public int getId() {
 		return id;
 	}
@@ -52,6 +54,11 @@ public class MAR {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
 	
 }
