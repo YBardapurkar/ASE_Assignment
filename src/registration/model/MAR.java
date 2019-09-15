@@ -12,7 +12,6 @@ public class MAR {
 	
 	private int id;
 	private String facilityName;
-	private String facilityType;
 	private String urgency;
 	private String description;
 	private String reportedBy;
@@ -42,12 +41,7 @@ public class MAR {
 	public void setFacilityName(String facilityName) {
 		this.facilityName = facilityName;
 	}
-	public String getFacilityType() {
-		return facilityType;
-	}
-	public void setFacilityType(String facilityType) {
-		this.facilityType = facilityType;
-	}
+	
 	public String getUrgency() {
 		return urgency;
 	}
