@@ -56,6 +56,7 @@ public class MARController extends HttpServlet{
 			MAR mar = MARDAO.getMARByID(id);
 			
 			session.setAttribute("MAR", mar);
+			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
 			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 		}
 //		List by assigned status
@@ -67,14 +68,16 @@ public class MARController extends HttpServlet{
 			} else {
 				marList.addAll(MARDAO.getUnassignedMAR());
 			}
-			session.setAttribute("listMAR", marList);				
+			session.setAttribute("listMAR", marList);
+			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
 			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
 		}
 //		List MAR
 		else {
 			List<MAR> marList = new ArrayList<MAR>();
 			marList.addAll(MARDAO.getAllMAR());
-			session.setAttribute("listMAR", marList);				
+			session.setAttribute("listMAR", marList);
+			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
 			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
 		}
 	}
@@ -121,6 +124,7 @@ public class MARController extends HttpServlet{
 			//			if no error messages
 			MARDAO.insertmar(newMar);//Insert into database			
 			newMar.setMessage("mar is created");
+			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
 			request.getRequestDispatcher("/mar_form.jsp").include(request, response);
 
 		}
