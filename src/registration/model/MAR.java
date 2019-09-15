@@ -16,9 +16,10 @@ public class MAR {
 	private String urgency;
 	private String description;
 	private String reportedBy;
+
 	private String date;
 	private String message;
-//	private Date date;
+
 	
 	public String getMessage() {
 		return message;
@@ -26,6 +27,9 @@ public class MAR {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+//	private Date date;
+	private String assignedTo;
+	
 	public int getId() {
 		return id;
 	}
@@ -75,7 +79,12 @@ public class MAR {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
 	
 	public void validateMar (String action, MAR mar, UserError userErrorMsgs) {
 		if (action.equals(ACTION_SAVE_MAR)) {

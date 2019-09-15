@@ -45,19 +45,40 @@ public class MARController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String action = request.getParameter("action");
+		session.removeAttribute("MAR");
+		session.removeAttribute("listMAR");
 		session.removeAttribute("errorMsgs");
 
-		//		List companies
-		if (action.equalsIgnoreCase("getAllMAR")) {
-			List<MAR> marList = MARDAO.getAllMAR();
-			session.setAttribute("MAR", marList);				
-			getServletContext().getRequestDispatcher("/mar_table.jsp").forward(request, response);
+		
+//		MAR details
+		if (request.getParameter("mar_id") != null) {
+			int id = Integer.parseInt(request.getParameter("mar_id"));
+			MAR mar = MARDAO.getMARByID(id);
+			
+			session.setAttribute("MAR", mar);
+			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 		}
-		else // redirect all other gets to post
-			doPost(request,response);
-
+//		List by assigned status
+		else if (request.getParameter("assigned") != null) {
+			boolean assigned = ("true".equals(request.getParameter("assigned")));
+			List<MAR> marList = new ArrayList<MAR>();
+			if (assigned) {
+				marList.addAll(MARDAO.getAssignedMAR());
+			} else {
+				marList.addAll(MARDAO.getUnassignedMAR());
+			}
+			session.setAttribute("listMAR", marList);				
+			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
+		}
+//		List MAR
+		else {
+			List<MAR> marList = new ArrayList<MAR>();
+			marList.addAll(MARDAO.getAllMAR());
+			session.setAttribute("listMAR", marList);				
+			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
+		}
 	}
+
 
 	//Ajinkya
 
@@ -83,12 +104,13 @@ public class MARController extends HttpServlet{
 
 		UserError userErrorMsgs = new UserError();
 
-		session.removeAttribute("mar");
+		session.removeAttribute("MAR");
+		session.removeAttribute("allMAR");
 		session.removeAttribute("errorMsgs");
 
 		newMar = getMarParam(request);
 		newMar.validateMar(action, newMar, userErrorMsgs);
-		session.setAttribute("mar", newMar);	
+		session.setAttribute("MAR", newMar);	
 
 		if (!userErrorMsgs.getErrorMsg().equals("")) {
 			//			if error messages
