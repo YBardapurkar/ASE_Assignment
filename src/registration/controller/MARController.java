@@ -22,17 +22,22 @@ public class MARController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String action = request.getParameter("action");
 		session.removeAttribute("errorMsgs");
 		
-//		List companies
-		if (action.equalsIgnoreCase("getAllMAR")) {
-			List<MAR> marList = MARDAO.getAllMAR();
-			session.setAttribute("MAR", marList);				
-			getServletContext().getRequestDispatcher("/mar_table.jsp").forward(request, response);
+//		MAR details
+		if (request.getParameter("mar_id") != null) {
+			int id = Integer.parseInt(request.getParameter("mar_id"));
+			MAR mar = MARDAO.getMARByID(id);
+			
+			session.setAttribute("MAR", mar);
+			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 		}
-		else // redirect all other gets to post
-			doPost(request,response);
-		
+//		List companies
+		else {
+			List<MAR> marList = new ArrayList<MAR>();
+			marList.addAll(MARDAO.getAllMAR());
+			session.setAttribute("allMAR", marList);				
+			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
+		}
 	}
 }
