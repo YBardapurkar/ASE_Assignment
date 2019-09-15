@@ -191,9 +191,11 @@ public class User implements Serializable{
 		
 //		Validate register
 		if(action.equals(ACTION_SAVE_USER)) {
-			if (!Pattern.matches(pattern, username))
+			if (username.equals("")) {
+				result = "Username is a required field";
+			} else if (!Pattern.matches(pattern, username)) {
 				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
-			else if (!UserDAO.usernameUnique(username)) {
+			} else if (!UserDAO.usernameUnique(username)) {
 				result="username already in database";
 			} else {
 				result = "";
@@ -201,7 +203,9 @@ public class User implements Serializable{
 		} 
 //		validate login
 		else if(action.equals(ACTION_LOGIN)) {
-			if (!Pattern.matches(pattern, username))
+			if (username.equals("")) {
+				result = "Username is a required field";
+			} else if (!Pattern.matches(pattern, username))
 				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
 			else if (UserDAO.usernameUnique(username)) {
 				result="username does not exist in database";
@@ -222,7 +226,9 @@ public class User implements Serializable{
 		
 //		Validate register
 		if(action.equals(ACTION_SAVE_USER)) {
-			if (!Pattern.matches(pattern, password))
+			if (password.equals("")) {
+				result = "Password is a required field";
+			} else if (!Pattern.matches(pattern, password))
 				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character with length between 6 to 30 characters";
 			else {
 				result = "";
@@ -230,7 +236,9 @@ public class User implements Serializable{
 		} 
 //		validate login
 		else if(action.equals(ACTION_LOGIN)) {
-			if (UserDAO.login(username, password) != null) {
+			if (password.equals("")) {
+				result = "Password is a required field";
+			} else if (UserDAO.login(username, password) != null) {
 				result="invalid password";
 			} else {
 				result = "";
@@ -247,7 +255,9 @@ public class User implements Serializable{
 	private String validatePhone(String phone) {
 		String result;
 		
-		if (phone.length() != 10)
+		if (phone.equals("")) {
+			result = "Phone is a required field";
+		} else if (phone.length() != 10)
 			result = "Phone number must be 10 digits in length";
 		else if (!isTextAnInteger(phone)) {
 			result="Phone number must be a number";
@@ -260,7 +270,9 @@ public class User implements Serializable{
 	
 	private String validateEmail(String email) {
 		String result;
-		if (!email.contains("@")) {
+		if (email.equals("")) {
+			result = "Email is a required field";
+		} else if (!email.contains("@")) {
 			result = "Email address needs to contain @";
 		} else if (!stringSize(email,7,45)) {
 			result="Email address must be between 7 and 45 characters long";
@@ -279,7 +291,9 @@ public class User implements Serializable{
 		String pattern3 = "[A-Za-z]{3,30}";
 		boolean b3 = Pattern.matches(pattern3, firstname);
 		
-		if (!stringSize(firstname,3,30))
+		if (firstname.equals("")) {
+			result = "First name is a required field";
+		} else if (!stringSize(firstname,3,30))
 			result="firstname should be between 3 and 30 characters long";
 		else if (b3 == false)
 			result="firstname should not contain digits";
@@ -294,7 +308,9 @@ public class User implements Serializable{
 		String pattern3 = "[A-Za-z]{3,30}";
 		boolean b3 = Pattern.matches(pattern3, lastname);
 		
-		if (!stringSize(lastname,3,30))
+		if (lastname.equals("")) {
+			result = "Last name is a required field";
+		} else if (!stringSize(lastname,3,30))
 			result="lastname should be between 3 and 30 characters long";
 		else if (b3 == false)
 			result="lastname should not contain digits";
@@ -308,7 +324,9 @@ public class User implements Serializable{
 		String result;
 		String a = "100";
 		
-		if (utaId.length()!=10) {
+		if (utaId.equals("")) {
+			result = "UTA ID is a required field";
+		} else if (utaId.length()!=10) {
 			result="UTA id must be 10 digits in length";
 		} else if (!utaId.substring(0,3).equals(a)) {
 			result="UTA id must start with '100'";
@@ -323,7 +341,9 @@ public class User implements Serializable{
 		String pattern3 = "[/^[A-Za-z\\S]$/]";
 //		boolean b3 = Pattern.matches(pattern3, role);
 		
-		if (!stringSize(role,3,30))
+		if (role.equals("")) {
+			result = "Role is a required field";
+		} else if (!stringSize(role,3,30))
 			result="role should be between 3 and 30 characters long";
 		else if (role.matches(pattern3))
 			result="role should not contain digits";
@@ -338,7 +358,9 @@ public class User implements Serializable{
 		String pattern3 = "[/^[A-Za-z\\S]$/]";
 //		boolean b3 = Pattern.matches(pattern3, state);
 		
-		if (!stringSize(state,3,30))
+		if (state.equals("")) {
+			result = "State is a required field";
+		} else if (!stringSize(state,3,30))
 			result="state should be between 3 and 30 characters long";
 		else if (state.matches(pattern3))
 			result="state should not contain digits";
@@ -353,7 +375,9 @@ public class User implements Serializable{
 		String pattern3 = "[/^[A-Za-z\\S]$/]";
 //		boolean b3 = Pattern.matches(pattern3, city);
 		
-		if (!stringSize(city,3,30))
+		if (city.equals("")) {
+			result = "City is a required field";
+		} else if (!stringSize(city,3,30))
 			result="city should be between 3 and 30 characters long";
 		else if (city.matches(pattern3))
 			result="city should not contain digits";
@@ -364,14 +388,16 @@ public class User implements Serializable{
 		
 	}
 	
-	
 	private String validatezipcode(String zipcode) {
-		String result="";
-		if (zipcode.length()!=5)
+		String result;
+		if (zipcode.equals("")) {
+			result = "Zipcode is a required field";
+		} else if (zipcode.length()!=5)
 			result="zipcode must be 5 digits in length";
+		else if (!isTextAnInteger(phone))
+			result="zip code must be a number";
 		else
-			if (!isTextAnInteger(phone))
-				result="zip code must be a number";
+			result = "";
 		return result;		
 	}
 	
