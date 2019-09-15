@@ -13,79 +13,79 @@
    <td>
     <form name="registrationform" action="register" method="post">
     <table style="width: 1200px; ">
-    <tr>
+   <tr>
     
     <td> Username (*): </td>
     <td> <input name="username" value="<c:out value='${user.username}'/>" type="text" maxlength="16" required> </td>
-    <td> <input name="username_error"  value="<c:out value='${errorMsgs.username_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
+    <td> <input name="username_error"  value="<c:out value='${errorMsgs.usernameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
     </tr>
 
     <tr>
     <td> Password (*): </td>
     <td> <input name="password" value="<c:out value='${user.password}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="password_error"  value="<c:out value='${errorMsgs.password_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="password_error"  value="<c:out value='${errorMsgs.passwordError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
     <tr>
     <td> First name (*): </td>
     <td> <input name="firstname" value="<c:out value='${user.firstname}'/>" type="text" maxlength="16" required>  </td>
-    <td> <input name="firstname_error"  value="<c:out value='${errorMsgs.firstname_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="firstname_error"  value="<c:out value='${errorMsgs.firstnameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
     <tr>
     <td> Last name (*): </td>
     <td> <input name="lastname" value="<c:out value='${user.lastname}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="lastname_error"  value="<c:out value='${errorMsgs.lastname_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="lastname_error"  value="<c:out value='${errorMsgs.lastnameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
 	<tr>
     <td> role (*): </td>
     <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="role_error"  value="<c:out value='${errorMsgs.role_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	
 
 	<tr>
     <td> UTA id(*): </td>
     <td> <input name="utaid" value="<c:out value='${user.utaId}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="utaid_error"  value="<c:out value='${errorMsgs.utaid_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="utaid_error"  value="<c:out value='${errorMsgs.utaIdError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	
 
 	<tr>
     <td> Phone (*): </td>
     <td> <input name="phone" value="<c:out value='${user.phone}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="phone_error"  value="<c:out value='${errorMsgs.phone_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="phone_error"  value="<c:out value='${errorMsgs.phoneError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
 	<tr>
     <td> Email (*): </td>
     <td> <input name="email" value="<c:out value='${user.email}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="email_error"  value="<c:out value='${errorMsgs.email_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="email_error"  value="<c:out value='${errorMsgs.emailError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
 	<tr>
     <td> Street address (*): </td>
     <td> <input name="street" value="<c:out value='${user.street}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="street_error"  value="<c:out value='${errorMsgs.street_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="street_error"  value="<c:out value='${errorMsgs.streetError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
 	<tr>
     <td> city (*): </td>
     <td> <input name="city" value="<c:out value='${user.city}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="city_error"  value="<c:out value='${errorMsgs.city_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="city_error"  value="<c:out value='${errorMsgs.cityError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	
 	<tr>
     <td> state (*): </td>
     <td> <input name="state" value="<c:out value='${user.state}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="state_error"  value="<c:out value='${errorMsgs.state_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="state_error"  value="<c:out value='${errorMsgs.stateError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	
 	<tr>
     <td> Zip code (*): </td>
     <td> <input name="zipcode" value="<c:out value='${user.zipcode}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="zipcode_error"  value="<c:out value='${errorMsgs.zipcode_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="zipcode_error"  value="<c:out value='${errorMsgs.zipcodeError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
 	<tr>

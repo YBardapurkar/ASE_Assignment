@@ -15,6 +15,8 @@ public class UserError {
 	private String cityError;
 	private String zipcodeError;
 	private String streetError;
+	private String descriptionError;
+	private String urgencyError;
 	
 	
 	public UserError() {
@@ -33,6 +35,9 @@ public class UserError {
 		this.cityError = "";
 		this.zipcodeError = "";
 		this.streetError = "";
+		this.descriptionError = "";
+		this.urgencyError = "";
+		
 	}
 
 	public String getErrorMsg() {
@@ -140,6 +145,25 @@ public class UserError {
 
 	public void setStreetError(String streetError) {
 		this.streetError = streetError;
+	}
+	
+	//For MAR 
+	
+	
+	public String getDescriptionError() {
+		return descriptionError;
+	}
+
+	public void setDescriptionError(String descriptionError) {
+		this.descriptionError = descriptionError;
+	}
+
+	public String getUrgencyError() {
+		return urgencyError;
+	}
+
+	public void setUrgencyError(String urgencyError) {
+		this.urgencyError = urgencyError;
 	}
 
 }

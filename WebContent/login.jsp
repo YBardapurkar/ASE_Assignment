@@ -16,13 +16,13 @@
     <tr>
     <td> Username (*): </td>
     <td> <input name="username" value="<c:out value='${r1.username}'/>" type="text" maxlength="16" required> </td>
-    <td> <input name="username_error"  value="<c:out value='${errorMsgs.username_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
+    <td> <input name="username_error"  value="<c:out value='${errorMsgs.usernameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
     </tr>
 
     <tr>
     <td> Password (*): </td>
     <td> <input name="password" value="<c:out value='${r1.password}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="password_error"  value="<c:out value='${errorMsgs.password_error}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="password_error"  value="<c:out value='${errorMsgs.passwordError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
 	<tr>
