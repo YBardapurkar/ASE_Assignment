@@ -13,6 +13,7 @@ import registration.model.User;
 import registration.util.SQLConnection;
 import java.util.Date;
 
+
 public class MARDAO {
 	
 	static SQLConnection DBMgr = SQLConnection.getInstance();
@@ -150,5 +151,35 @@ public class MARDAO {
 			System.out.println(e.getMessage());
 		}
 		return mar;
+	}
+	
+	private static ArrayList<MAR> ReturnMatchingUserList (String queryString) {
+		ArrayList<MAR> marListInDB = new ArrayList<MAR>();
+		Statement stmt = null;
+		final SQLConnection  obj = SQLConnection.getInstance();
+		Connection conn = SQLConnection.getDBConnection();  
+		try {
+			stmt = conn.createStatement();
+			ResultSet marList = stmt.executeQuery(queryString);
+			while (marList.next()) { 
+				MAR mar = new MAR();
+				mar.setId(Integer.parseInt(marList.getString("mar_id")));
+				mar.setDescription(marList.getString("description"));
+				mar.setUrgency(marList.getString("urgency"));
+				mar.setEstimateRepair(marList.getString("estimate_repair"));
+				mar.setFacilityName(marList.getString("facility_name"));
+				marListInDB.add(mar);	
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return marListInDB;
+	}
+	
+
+	public static ArrayList<MAR>  listMARS(String username,MAR mar) {  
+		String selectUser = "select t1.mar_id,assigned_date,estimate_repair,facility_name,urgency,description from macrepairsys.assignment t1 inner join macrepairsys.mar t2 on t1.mar_id = t2.mar_id and t1.assigned_to ='";
+		selectUser+=username+"'";
+		return ReturnMatchingUserList(selectUser);
 	}
 }

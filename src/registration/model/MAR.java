@@ -19,7 +19,14 @@ public class MAR {
 	private String date;
 	private String message;
 
+	private String EstimateRepair;
 	
+	public String getEstimateRepair() {
+		return EstimateRepair;
+	}
+	public void setEstimateRepair(String estimateRepair) {
+		EstimateRepair = estimateRepair;
+	}
 	public String getMessage() {
 		return message;
 	}
