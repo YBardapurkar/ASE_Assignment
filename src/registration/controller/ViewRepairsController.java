@@ -45,10 +45,8 @@ public class ViewRepairsController extends HttpServlet {
 		
 		MAR mar = new MAR();
 		
-		System.out.println(action);
-		System.out.println(action1);
-		System.out.println(action2);
-		
+		UserError ErrorMsgs = new UserError();
+		session.setAttribute("errorMsgs", ErrorMsgs);	
 
 		if(action2!=null)
 		{
@@ -67,6 +65,12 @@ public class ViewRepairsController extends HttpServlet {
 				System.out.println("reserve facility");
 			}
 			
+		}
+		else
+		{
+			ErrorMsgs.setErrorMsg("Radio button needs to be selected for reserving the facility or Viewing the MAR. First select the radio button and then click on reserve or view!!!");
+			getServletContext().getRequestDispatcher("/repairermarlist.jsp").forward(request, response);
+			session.removeAttribute("errorMsgs");
 		}
 	}
 
