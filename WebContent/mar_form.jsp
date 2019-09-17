@@ -17,32 +17,44 @@
   
     <tr>
     <td> Facility Name (*): </td>
-    <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td>
+  	<td><select name ="facilityname" value = "<c:out value='${MAR.facilityName}' />" required>
+    	<option> MR 1-4 </option>
+    	<option> IBBC 1-5 </option>
+    	<option> IVBC 1-9 </option>
+    	<option> SCG </option>
+    	<option> RBC 1-5 </option>
+    	<option> BMC 1-10 </option>
+    	<option> TT1 </option>
+    	<option> CR 1-5 </option>
+    	<option> OVBC 1-2 </option>
+    	<option> OBBC 1-2 </option>
+    </select> </td>
+    <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     <td> <input name="facilityname_error"  value="<c:out value='${errorMsgs.facilityNameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
     <tr>
     <td> Urgency (*): </td>
-    <td><select name ="urgency" value = "<c:out value='${MAR.urgency}'/>">
-    	<option> Urgent </option>
-    	<option> Not Urgent </option>
-    	<option> Very Urgent </option>
+    <td><select name ="urgency" value = "<c:out value='${MAR.urgency}'/>" required>
+    	<option> Unusable </option>
+    	<option> Major </option>
+    	<option> Medium </option>
+    	<option> Minor </option>
     </select> </td>
     
-    
-    <%-- <td> <input name="urgency" sele value="<c:out value='${mar.urgency}'/>" type="text" maxlength="16" required>  </td> --%>
+    <%-- <td> <input name="urgency" value="<c:out value='${mar.urgency}'/>" type="text" maxlength="16" required>  </td> --%>
     <td> <input name="urgency_error"  value="<c:out value='${errorMsgs.urgencyError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
     <tr>
     <td> Description (*): </td>
-    <td> <input name="description" value="<c:out value='${MAR.description}'/>" type="text" maxlength="45" required>  </td>
+    <td> <input name="description" value="<c:out value='${mar.description}'/>" type="text" maxlength="45" required>  </td>
     <td> <input name="description_error"  value="<c:out value='${errorMsgs.descriptionError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
 	<tr>
     <td> Reported By (*): </td>
-    <td> <input name="reportedby" value= "<c:out value='${MAR.reportedBy}'/>" type="text" maxlength="45" required>  </td>
+    <td> <input name="reportedby" value= "<c:out value='${mar.reportedBy}'/>" type="text" maxlength="45" required>  </td>
     <td> <input name="reportedby_error"  value="<c:out value='${errorMsgs.reportedByError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	
