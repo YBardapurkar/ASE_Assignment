@@ -31,7 +31,6 @@ public class RepairerContoller extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("RepairController");
 		HttpSession session = request.getSession();
 		String action = request.getParameter("listmars");
 		//User user = session.getAttribute("user");
