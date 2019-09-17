@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import registration.model.MAR;
-import registration.model.User;
 import registration.util.SQLConnection;
 import java.util.Date;
 
@@ -37,7 +36,7 @@ public class MARDAO {
 				mar.setDescription(result.getString("description"));
 				mar.setUrgency(result.getString("urgency"));
 				mar.setFacilityName(result.getString("facility_name"));
-				mar.setReportedBy(result.getString("reported_by"));
+				mar.setAssignedTo(result.getString("assigned_to"));
 //				mar.setDate(result.getString("creation_date"));
 				
 				marList.add(mar);
@@ -55,6 +54,35 @@ public class MARDAO {
 				+ "from mar "
 				+ "join assignment on mar.mar_id = assignment.mar_id "
 				+ "where assignment.assigned_to is not null;";
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(query);
+			while (result.next()) {
+				MAR mar = new MAR();
+				
+				mar.setId(Integer.parseInt(result.getString("mar_id")));
+				mar.setDescription(result.getString("description"));
+				mar.setUrgency(result.getString("urgency"));
+				mar.setFacilityName(result.getString("facility_name"));
+				mar.setAssignedTo(result.getString("assigned_to"));
+				
+				marList.add(mar);
+			}
+		}  catch (SQLException e) {System.out.println(e.getMessage());}
+		return marList;
+	}
+	
+	
+	public static ArrayList<MAR> getMARByAssignedRepairer (String assignedTo) {
+		ArrayList<MAR> marList = new ArrayList<MAR>();
+		String query = ""
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "from mar "
+				+ "join assignment on mar.mar_id = assignment.mar_id "
+				+ "where assignment.assigned_to = '" + assignedTo + "'";
 		
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();

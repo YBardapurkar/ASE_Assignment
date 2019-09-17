@@ -72,6 +72,15 @@ public class MARController extends HttpServlet{
 			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
 			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
 		}
+//		List by assigned Repairer
+		else if (request.getParameter("assignedTo") != null) {
+			String assignedTo = request.getParameter("assigned");
+			List<MAR> marList = new ArrayList<MAR>();
+			marList.addAll(MARDAO.getMARByAssignedRepairer(assignedTo));
+			session.setAttribute("listMAR", marList);
+			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
+			request.getRequestDispatcher("/mar_table.jsp").include(request, response);
+		}
 //		List MAR
 		else {
 			List<MAR> marList = new ArrayList<MAR>();
