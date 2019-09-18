@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import registration.util.SQLConnection;
+import registration.model.ChangeRole;
 import registration.model.User;
 
 public class UserDAO {
@@ -79,6 +80,9 @@ public class UserDAO {
 //		boolean andy = (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"' ORDER BY username").isEmpty());
 		return (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"'").isEmpty());
 	}
+	
+	
+	
 
 	public static User login(String username, String password)  {
 		String query = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"' ORDER BY username";
@@ -98,5 +102,30 @@ public class UserDAO {
 		}
 		
 		return user;
+	}
+	
+	public static void updateDetails(String username, String role) {
+		String query1 = "UPDATE registration " + "SET " + "role = '" + role + "' "+"WHERE username ='" + username + "'" + ";";
+
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query1);
+			conn.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 }

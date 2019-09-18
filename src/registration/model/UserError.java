@@ -43,6 +43,7 @@ public class UserError {
 	public String getErrorMsg() {
 		return errorMsg;
 	}
+	
 	public void setErrorMsg() {
 		if (!usernameError.equals("") || !passwordError.equals("") || !firstnameError.equals("") || !lastnameError.equals("") || !utaIdError.equals("") || !roleError.equals("") || !emailError.equals("") || 
 				
