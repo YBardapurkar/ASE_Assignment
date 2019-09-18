@@ -3,6 +3,8 @@ package registration.model;
 public class UserError {
 
 	private String errorMsg;
+	private String searcherrorMsg;
+	private String searchError;
 	private String usernameError;
 	private String passwordError;
 	private String firstnameError;
@@ -17,9 +19,11 @@ public class UserError {
 	private String streetError;
 	
 	
+	
 	public UserError() {
 		this.errorMsg = "";
-		
+		this.searcherrorMsg = "";
+		this.searchError = "";
 		this.usernameError = "";
 		this.passwordError= "";
 		this.firstnameError= "";
@@ -46,7 +50,33 @@ public class UserError {
 			this.errorMsg = "Please correct the following errors";
 	}
 	
-	public void setErrorMsg(String errorMsg) {
+	public String getSearchErrorMsg() 
+	{
+		return searcherrorMsg;
+	}
+	
+	public void setSearchErrorMsg() { //final error message for search user
+		
+		if(!searchError.equals(""))
+		{
+			this.searcherrorMsg = "Please Correct the following errors";
+		}
+		
+	}
+	
+	public void setSearchError(String searchError) //setting the search user error message from admin.java
+	{
+		this.searchError = searchError;
+		
+	}
+	
+	public String getSearchError() //returns the search user error message from admin.java
+	{
+		return searchError;
+	}
+	
+	public void setErrorMsg(String errorMsg) 
+	{
 		this.errorMsg = errorMsg;
 	}
 
