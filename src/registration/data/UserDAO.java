@@ -5,9 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import registration.util.SQLConnection;
 import registration.model.User;
+import registration.model.Admin;
 
 public class UserDAO {
 
@@ -99,4 +99,30 @@ public class UserDAO {
 		
 		return user;
 	}
+	
+	public static ArrayList<User> searchUsersByAdmin(String searchField, String filter)  {
+		
+		
+		if(filter.equals("1"))
+		{
+			return (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+searchField+"' "));
+		}
+		
+		else if(filter.equals("2"))
+		{
+			return (ReturnMatchingUsersList(" SELECT * from registration WHERE role = '"+searchField+"' "));
+		}
+		
+		else 
+		{
+			return (ReturnMatchingUsersList("SELECT * from registration ORDER BY username"));			
+		}
+		
+
+}
+	
+	public static ArrayList<User>  listUsers() {  
+		return (ReturnMatchingUsersList(" SELECT * from registration ORDER BY username"));
+}
+
 }

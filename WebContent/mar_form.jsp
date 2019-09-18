@@ -17,13 +17,32 @@
   
     <tr>
     <td> Facility Name (*): </td>
-    <td> <input name="facilityname" value="<c:out value='${mar.facilityName}'/>" type="text" maxlength="45" required>  </td>
+  	<td><select name ="facilityname" value = "<c:out value='${MAR.facilityName}' />" required>
+    	<option> MR 1-4 </option>
+    	<option> IBBC 1-5 </option>
+    	<option> IVBC 1-9 </option>
+    	<option> SCG </option>
+    	<option> RBC 1-5 </option>
+    	<option> BMC 1-10 </option>
+    	<option> TT1 </option>
+    	<option> CR 1-5 </option>
+    	<option> OVBC 1-2 </option>
+    	<option> OBBC 1-2 </option>
+    </select> </td>
+    <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     <td> <input name="facilityname_error"  value="<c:out value='${errorMsgs.facilityNameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
     <tr>
     <td> Urgency (*): </td>
-    <td> <input name="urgency" value="<c:out value='${mar.urgency}'/>" type="text" maxlength="16" required>  </td>
+    <td><select name ="urgency" value = "<c:out value='${MAR.urgency}'/>" required>
+    	<option> Unusable </option>
+    	<option> Major </option>
+    	<option> Medium </option>
+    	<option> Minor </option>
+    </select> </td>
+    
+    <%-- <td> <input name="urgency" value="<c:out value='${mar.urgency}'/>" type="text" maxlength="16" required>  </td> --%>
     <td> <input name="urgency_error"  value="<c:out value='${errorMsgs.urgencyError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
@@ -50,7 +69,7 @@
     <td> <input name="message" value="<c:out value='${MAR.message}'/>" type="text" maxlength="45" >  </td>
     </tr>
 
-
+	
     <tr>
     <td colspan="2">(*) Mandatory field</td>
     </tr>
