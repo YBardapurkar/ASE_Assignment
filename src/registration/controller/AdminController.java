@@ -30,8 +30,8 @@ public class AdminController extends HttpServlet {
 		HttpSession session = request.getSession();   //defining the session parameter
 		
 //		check logged in user role
-//		User currentUser = (User) session.getAttribute("user");
-//		System.out.println(currentUser.getRole());
+		User currentUser = (User) session.getAttribute("user");
+		System.out.println(currentUser.getRole());
 
 				
 //		Show List of All Users

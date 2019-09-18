@@ -77,7 +77,7 @@ public class LoginController extends HttpServlet {
 				response.setHeader("Location", "home");
 			} else if (role.equals("repairer")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
+				response.setHeader("Location", "repairer");
 			}
 		} else {
 //			error messages
