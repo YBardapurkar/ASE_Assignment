@@ -35,20 +35,20 @@ public class UserError {
 	private String descriptionError;
 
 	private String urgencyError;
-	
+
 	private String searcherrorMsg;
 	private String searchError;
 
 
-	
 
-	
+
+
 
 	public UserError() {
 
 		this.errorMsg = "";
 
-		
+
 
 		this.usernameError = "";
 
@@ -58,7 +58,7 @@ public class UserError {
 
 		this.lastnameError = "";
 
-		
+
 
 		this.utaIdError= "";
 
@@ -98,17 +98,17 @@ public class UserError {
 
 		if (!usernameError.equals("") || !passwordError.equals("") || !firstnameError.equals("") || !lastnameError.equals("") || !utaIdError.equals("") || !roleError.equals("") || !emailError.equals("") || 
 
-				
 
-		!phoneError.equals("") || !stateError.equals("") || !cityError.equals("") || !zipcodeError.equals("") || !streetError.equals(""))
 
-			
+				!phoneError.equals("") || !stateError.equals("") || !cityError.equals("") || !zipcodeError.equals("") || !streetError.equals(""))
+
+
 
 			this.errorMsg = "Please correct the following errors";
 
 	}
 
-	
+
 
 	public void setErrorMsg(String errorMsg) {
 
@@ -308,13 +308,13 @@ public class UserError {
 
 	}
 
-	
+
 
 	//For MAR 
 
-	
 
-	
+
+
 
 	public String getDescriptionError() {
 
@@ -350,9 +350,9 @@ public class UserError {
 	{
 		return searcherrorMsg;
 	}
-	
+
 	public void setSearchErrorMsg() { //final error message for search user
-		
+
 		if(!searchError.equals(""))
 		{
 			this.searcherrorMsg = "Please Correct the following errors";
@@ -362,16 +362,12 @@ public class UserError {
 	public void setSearchError(String searchError) //setting the search user error message from admin.java
 	{
 		this.searchError = searchError;
-		
+
 	}
-	
+
 	public String getSearchError() //returns the search user error message from admin.java
 	{
 		return searchError;
 	}
-	
-
-
-
-
 }
+

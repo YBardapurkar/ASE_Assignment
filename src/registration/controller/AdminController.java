@@ -14,7 +14,7 @@ import registration.model.Admin;
 import registration.data.UserDAO;
 import registration.model.UserError;
 
-@WebServlet("/AdminController")
+@WebServlet("/admin")
 public class AdminController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -22,6 +22,63 @@ public class AdminController extends HttpServlet {
 	public void getSearchParam(HttpServletRequest request, Admin admin)
 	{
 		admin.setSearchParam(request.getParameter("searchUser"),request.getParameter("usersearchFilter"));  //setting search parameters
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();   //defining the session parameter
+		
+//		check logged in user role
+		User currentUser = (User) session.getAttribute("user");
+		System.out.println(currentUser.getRole());
+
+				
+//		Show List of All Users
+		if (request.getParameter("listUsers") != null) {
+			ArrayList<User> listUsers = UserDAO.listUsers();
+			session.removeAttribute("USERS");
+			
+			session.setAttribute("USERS", listUsers);
+			request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+			request.getRequestDispatcher("/list_users.jsp").include(request, response);
+			
+		}
+//		Show Selected User Details
+		else if (request.getParameter("listSpecificUser") != null) {
+			session.removeAttribute("error");
+			session.removeAttribute("USERS");
+			
+			User user = UserDAO.getUserByUsername(request.getParameter("listSpecificUser"));
+			if (user != null) {
+				session.setAttribute("USERS", user);
+				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+				request.getRequestDispatcher("/specific_user.jsp").include(request, response);
+			}
+			else { // determine if Submit button was clicked without selecting a user
+				String error =  "User not found";
+				user = new User();
+				session.setAttribute("error",error);
+				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+				request.getRequestDispatcher("/specific_user.jsp").include(request, response);
+			}
+		}
+//		Open Search page
+		else if (request.getParameter("search") != null) {
+			session.removeAttribute("error");
+			session.removeAttribute("USERS");
+			
+			request.getRequestDispatcher("menu_admin.jsp").include(request, response);
+			request.getRequestDispatcher("search_user.jsp").include(request, response);
+		}
+//		Open Admin Home
+		else {
+			session.removeAttribute("error");
+			session.removeAttribute("USERS");
+			
+			request.getRequestDispatcher("menu_admin.jsp").include(request, response);
+			request.getRequestDispatcher("/home_admin.jsp").include(request, response);
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,6 +122,8 @@ public class AdminController extends HttpServlet {
 				}
 				else
 				{
+					request.getRequestDispatcher("menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("search_user.jsp").include(request, response);
 					request.getRequestDispatcher("/list_users.jsp").include(request, response);
 				}
 				

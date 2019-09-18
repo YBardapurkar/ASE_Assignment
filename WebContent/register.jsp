@@ -40,7 +40,14 @@
 
 	<tr>
     <td> role (*): </td>
-    <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>
+    <!-- <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>  -->
+    <td><select name=role>
+		<option value="student" <c:if test = "${user.role == 'student'}">selected</c:if>>Student</option>
+		<option value="faculty" <c:if test = "${user.role == 'faculty'}">selected</c:if>>Faculty</option>
+		<option value="facility_manager" <c:if test = "${user.role == 'facility_manager'}">selected</c:if>>Facility Manager</option>
+		<option value="repairer" <c:if test = "${user.role == 'repairer'}">selected</c:if>>Repairer</option>
+		<option value="admin" <c:if test = "${user.role == 'admin'}">selected</c:if>>Admin</option>
+	</select></td>
     <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	

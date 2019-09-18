@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import registration.util.SQLConnection;
 import registration.model.User;
 import registration.model.Admin;
@@ -79,6 +81,9 @@ public class UserDAO {
 //		boolean andy = (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"' ORDER BY username").isEmpty());
 		return (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"'").isEmpty());
 	}
+	
+	
+	
 
 	public static User login(String username, String password)  {
 		String query = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"' ORDER BY username";
@@ -98,6 +103,32 @@ public class UserDAO {
 		}
 		
 		return user;
+	}
+	
+
+	public static void updateDetails(String username, String role) {
+		String query1 = "UPDATE registration " + "SET " + "role = '" + role + "' "+"WHERE username ='" + username + "'" + ";";
+
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query1);
+			conn.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 	
 	public static ArrayList<User> searchUsersByAdmin(String searchField, String filter)  {
@@ -121,8 +152,18 @@ public class UserDAO {
 
 }
 	
-	public static ArrayList<User>  listUsers() {  
+//	List all users
+	public static ArrayList<User> listUsers() {  
 		return (ReturnMatchingUsersList(" SELECT * from registration ORDER BY username"));
-}
+	}
 
+//	Find user by username
+	public static User getUserByUsername(String username) {  
+		List<User> users = (ReturnMatchingUsersList(" SELECT * from registration where username = '" + username + "'"));
+		if (users.isEmpty()) {
+			return null;
+		} else {
+			return users.get(0);
+		}
+	}
 }

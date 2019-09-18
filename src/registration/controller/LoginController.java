@@ -68,7 +68,7 @@ public class LoginController extends HttpServlet {
 			
 			if (role.equals("admin")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
+				response.setHeader("Location", "admin");
 			} else if(role.equals("student") || role.equals("faculty") || role.equals("staff")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "home");
@@ -77,7 +77,7 @@ public class LoginController extends HttpServlet {
 				response.setHeader("Location", "home");
 			} else if (role.equals("repairer")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
+				response.setHeader("Location", "repairer");
 			}
 		} else {
 //			error messages
