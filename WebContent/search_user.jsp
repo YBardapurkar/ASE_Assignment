@@ -9,7 +9,7 @@
 <body>
 
 
-	<form action="/registration/AdminController" method="post">
+	<form action="/registration/admin" method="post">
 	
 	<label>Search User</label>
 	<input name="searchUser" type="text">

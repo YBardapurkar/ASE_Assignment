@@ -12,7 +12,7 @@
 	<input name="errMsg"  value="<c:out value='${error}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
 
       
- <form action="/registration/AdminController?action=listSpecificUser" method="post">          
+ <form action="/registration/admin?action=listSpecificUser" method="post">          
        <table border="1" class="myTable"> 
 			<tr class="myTableRow"> 
 				<th class="myTableHead" style="width: 20px; ">Select User</th>
@@ -31,6 +31,8 @@
 			<td class="myTableCell" style="padding-right: 20px; "><c:out value="${item.email}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.phone}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.utaId}" /></td>
+			<td class="myTableCell" style="padding-right: 30px; "><a href="admin?listSpecificUser=<c:out value='${item.username}' />">View</a></td>
+			
 
 			</tr>
 		</c:forEach>
