@@ -13,7 +13,7 @@
    <td>
     <form name="registrationform" action="register" method="post">
     <table style="width: 1200px; ">
-    <tr>
+   <tr>
     
     <td> Username (*): </td>
     <td> <input name="username" value="<c:out value='${user.username}'/>" type="text" > </td>

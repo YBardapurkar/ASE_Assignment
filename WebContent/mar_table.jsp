@@ -18,14 +18,16 @@
 				<th class="myTableHead" style="padding-right: 35px; text-align: left">Facility Name</th> 
 				<th class="myTableHead" style="padding-right: 20px; text-align: left">Urgency</th>
 				<th class="myTableHead" style="padding-right: 30px; text-align: left">Description</th> 
+				<th class="myTableHead" style="padding-right: 30px; text-align: left">Assigned to</th> 
 			</tr>
 
- 		<c:forEach items="${allMAR}" var="item" varStatus="status">
+ 		<c:forEach items="${listMAR}" var="item" varStatus="status">
 			<tr class="myTableRow">
 			<td class="myTableCell" style="padding-right: 20px; "><c:out value="${item.id}" /></td>
 			<td class="myTableCell" style="padding-right: 35px; "><c:out value="${item.facilityName}" /></td>
 			<td class="myTableCell" style="padding-right: 20px; "><c:out value="${item.urgency}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.description}" /></td>
+			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.assignedTo}" /></td>
             <td> <a href="mar?mar_id=<c:out value='${item.id}' />">View</a></td>
 			</tr>
 		</c:forEach>

@@ -238,8 +238,6 @@ public class User implements Serializable{
 		else if(action.equals(ACTION_LOGIN)) {
 			if (password.equals("")) {
 				result = "Password is a required field";
-			} else if (UserDAO.login(username, password) != null) {
-				result="invalid password";
 			} else {
 				result = "";
 			}
