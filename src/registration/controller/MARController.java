@@ -58,7 +58,7 @@ public class MARController extends HttpServlet{
 			
 			session.setAttribute("MAR", mar);
 			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
+			request.getRequestDispatcher("/mar_details_user.jsp").include(request, response);
 		}
 //		List by assigned status
 		else if (request.getParameter("assigned") != null) {
