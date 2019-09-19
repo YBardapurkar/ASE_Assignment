@@ -17,7 +17,7 @@
   
     <tr>
     <td> Facility Name (*): </td>
-  	<td><select name ="facilityname" value = "<c:out value='${MAR.facilityName}' />" required>
+  	<td><select name ="facilityname" value = "<c:out value='${MAR.facilityName}' />">
     	<option> MR 1 </option>
     	<option> MR 2 </option>
     	<option> MR 3 </option>
@@ -38,7 +38,7 @@
 
     <tr>
     <td> Urgency (*): </td>
-    <td><select name ="urgency" value = "<c:out value='${MAR.urgency}'/>" required>
+    <td><select name ="urgency" value = "<c:out value='${MAR.urgency}'/>">
     	<option> Unusable </option>
     	<option> Major </option>
     	<option> Medium </option>
@@ -46,19 +46,19 @@
     </select> </td>
     
     <%-- <td> <input name="urgency" value="<c:out value='${mar.urgency}'/>" type="text" maxlength="16" required>  </td> --%>
-    <td> <input name="urgency_error"  value="<c:out value='${errorMsgs.urgencyError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="urgency_error"  value="<c:out value='${errorMsgs.urgencyError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
     </tr>
 
     <tr>
     <td> Description (*): </td>
-    <td> <input name="description" value="<c:out value='${mar.description}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="description_error"  value="<c:out value='${errorMsgs.descriptionError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="description" value="<c:out value='${mar.description}'/>" type="text" >  </td>
+    <td> <input name="description_error"  value="<c:out value='${errorMsgs.descriptionError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
     </tr>
 
 	<tr>
     <td> Reported By (*): </td>
-    <td> <input name="reportedby" value= "<c:out value='${mar.reportedBy}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="reportedby_error"  value="<c:out value='${errorMsgs.reportedByError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> <input name="reportedby" value= "<c:out value='${mar.reportedBy}'/>" type="text">  </td>
+    <td> <input name="reportedby_error"  value="<c:out value='${errorMsgs.reportedByError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
     </tr>
 	
 
@@ -69,7 +69,7 @@
     </tr> --%>
 
 	<tr>
-    <td> <input name="message" value="<c:out value='${MAR.message}'/>" type="text" maxlength="45" >  </td>
+    <td> <input name="message" value="<c:out value='${MAR.message}'/>" type="text">  </td>
     </tr>
 
 	
