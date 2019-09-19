@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import registration.data.AssignmentDAO;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
 import registration.model.MAR;
@@ -77,13 +78,24 @@ public class FacilityManagerController extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String action = (String) request.getAttribute("action");
+		String action = request.getParameter("action");
 		
 		if (action.equals("assignRepairer")) {
-			int estimate = (int) request.getAttribute("estimate");
-			String repairer = (String) request.getAttribute("repairer");
+			int estimate = Integer.parseInt(request.getParameter("estimate"));
+			int marId = Integer.parseInt(request.getParameter("mar_id"));
+			String repairer = (String) request.getParameter("repairer");
 			
+			AssignmentDAO.assignRepairer(repairer, estimate, marId);
 			
+			MAR mar = MARDAO.getMARByID(marId);
+			
+//			redirect
+			session.setAttribute("MAR", mar);
+			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
+			System.out.println(mar.getAssignedTo());
+			if (mar.getAssignedTo() == null)
+				request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
 		}
 	}
 }

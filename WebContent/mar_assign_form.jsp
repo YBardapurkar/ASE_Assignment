@@ -38,7 +38,8 @@ Repair Estimated Time
 
 <tr>
 <td>
-<input name="action" type="hidden" value="assignRepairer">
+<input name="mar_id" type="hidden" value="${MAR.id}" >
+<input name="action" type="hidden" value="assignRepairer" >
 <input type="submit" value="Assign">
 </td>
 </tr>
