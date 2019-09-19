@@ -56,7 +56,7 @@ public class ViewRepairsController extends HttpServlet {
 				mar=MARDAO.getMARByID(Integer.parseInt(action3));
 				
 				session.setAttribute("MAR", mar);	
-				getServletContext().getRequestDispatcher("/mar_details.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/mar_details_repairer.jsp").forward(request, response);
 
 				
 			}
