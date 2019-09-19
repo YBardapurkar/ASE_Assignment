@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import registration.util.SQLConnection;
 import registration.model.User;
 
@@ -150,9 +152,18 @@ public class UserDAO {
 
 }
 	
-	public static ArrayList<User>  listUsers() {  
+//	List all users
+	public static ArrayList<User> listUsers() {  
 		return (ReturnMatchingUsersList(" SELECT * from registration ORDER BY username"));
-}
+	}
 
-
+//	Find user by username
+	public static User getUserByUsername(String username) {  
+		List<User> users = (ReturnMatchingUsersList(" SELECT * from registration where username = '" + username + "'"));
+		if (users.isEmpty()) {
+			return null;
+		} else {
+			return users.get(0);
+		}
+	}
 }

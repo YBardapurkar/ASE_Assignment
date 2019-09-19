@@ -8,6 +8,8 @@
 </head>
 <body>
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
+<td> <input name="message" value="<c:out value='${user.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 300px; size: 30"  disabled="disabled" maxlength="30">  </td>
+
 <table>
   <tr>
    <td>
@@ -42,11 +44,11 @@
     <td> role (*): </td>
     <!-- <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>  -->
     <td><select name=role>
-		<option value="student" <c:if test = "${user.role == 'student'}">selected</c:if>>Student</option>
-		<option value="faculty" <c:if test = "${user.role == 'faculty'}">selected</c:if>>Faculty</option>
-		<option value="facility_manager" <c:if test = "${user.role == 'facility_manager'}">selected</c:if>>Facility Manager</option>
-		<option value="repairer" <c:if test = "${user.role == 'repairer'}">selected</c:if>>Repairer</option>
-		<option value="admin" <c:if test = "${user.role == 'admin'}">selected</c:if>>Admin</option>
+		<option value="Student">Student</option>
+		<option value="Faculty">Faculty</option>
+		<option value="Facility Manager">Facility Manager</option>
+		<option value="Repairer">Repairer</option>
+		<option value="Admin">Admin</option>
 	</select></td>
     <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
@@ -95,10 +97,7 @@
     <td> <input name="zipcode_error"  value="<c:out value='${errorMsgs.zipcodeError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
-	<tr>
-    <td> <input name="message" value="<c:out value='${user.message}'/>" type="text" disabled >  </td>
-    </tr>
-
+	
 
     <tr>
     <td colspan="2">(*) Mandatory field</td>

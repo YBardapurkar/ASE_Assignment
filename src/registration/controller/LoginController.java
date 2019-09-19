@@ -66,19 +66,19 @@ public class LoginController extends HttpServlet {
 			
 			session.removeAttribute("errorMsgs");
 			
-			if (role.equals("admin")) {
+			if (role.equals("Admin")) {
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "admin");
+			} else if(role.equals("Facility Manager")) {
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "facility_manager");
+			} else if (role.equals("Repairer")) {
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "repairer");
+			} else {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "home");
-			} else if(role.equals("student") || role.equals("faculty") || role.equals("staff")) {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
-			} else if(role.equals("FacilityManager")) {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
-			} else if (role.equals("repairer")) {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
-			}
+			} 
 		} else {
 //			error messages
 			session.setAttribute("errorMsgs", userErrorMsgs);

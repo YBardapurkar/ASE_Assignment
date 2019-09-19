@@ -23,7 +23,9 @@ public class MARDAO {
 	
 	public static ArrayList<MAR> getAllMAR () {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
-		String query = " SELECT * from mar";
+		String query = "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "from mar "
+				+ "left outer join assignment on mar.mar_id = assignment.mar_id ";
 		
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -48,6 +50,7 @@ public class MARDAO {
 		return marList;
 	}
 
+//	Get list of assigned MAR
 	public static ArrayList<MAR> getAssignedMAR () {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
@@ -76,7 +79,7 @@ public class MARDAO {
 		return marList;
 	}
 	
-	
+//	Get list of MAR by assigned repairer username
 	public static ArrayList<MAR> getMARByAssignedRepairer (String assignedTo) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
@@ -130,6 +133,7 @@ public class MARDAO {
 	}
 	
 //	Yash
+//	get list of unassigned MAR
 	public static ArrayList<MAR> getUnassignedMAR () {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
@@ -158,6 +162,7 @@ public class MARDAO {
 		return marList;
 	}
 	
+//	get MAR by mar_id
 	public static MAR getMARByID(int id) {
 		MAR mar = new MAR();
 		String query = " SELECT * from mar where mar_id = " + id + ";";
@@ -184,7 +189,7 @@ public class MARDAO {
 	private static ArrayList<MAR> ReturnMatchingUserList (String queryString) {
 		ArrayList<MAR> marListInDB = new ArrayList<MAR>();
 		Statement stmt = null;
-		final SQLConnection  obj = SQLConnection.getInstance();
+//		final SQLConnection  obj = SQLConnection.getInstance();
 		Connection conn = SQLConnection.getDBConnection();  
 		try {
 			stmt = conn.createStatement();

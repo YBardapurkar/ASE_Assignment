@@ -49,7 +49,6 @@ public class RegisterController extends HttpServlet{
 		HttpSession session = request.getSession();
 		User newUser = new User();
 		UserError userErrorMsgs = new UserError();
-		session.removeAttribute("user");
 		session.removeAttribute("errorMsgs");
 		
 		newUser = getUserParam(request);

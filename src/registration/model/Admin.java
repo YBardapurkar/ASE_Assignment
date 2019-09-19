@@ -72,10 +72,10 @@ public class Admin implements Serializable{
 		{
 			if(searchUser.equals("")) 
 				result = "Role should be specified";
-			else if(!(searchUser.equals("facility manager") || searchUser.equals("admin") ||
-					searchUser.equals("repairer") || searchUser.equals("user")))
+			else if(!(searchUser.equals("Student") || searchUser.equals("Faculty") ||
+					searchUser.equals("Facility Manager") || searchUser.equals("Repairer") || searchUser.equals("Admin")))
 			{
-				result="role should be admin, facility manager, repairer or user";
+				result="role should be Student, Faculty, Facility Manager, Repairer or Admin";
 			}
 		
 		}
