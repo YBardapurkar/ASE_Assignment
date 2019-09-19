@@ -9,7 +9,6 @@ import java.util.List;
 
 import registration.util.SQLConnection;
 import registration.model.User;
-import registration.model.Admin;
 
 public class UserDAO {
 
@@ -165,5 +164,10 @@ public class UserDAO {
 		} else {
 			return users.get(0);
 		}
+	}
+	
+//	Find users by role
+	public static ArrayList<User> getUserByRole(String role) {  
+		return ReturnMatchingUsersList(" SELECT * from registration where role = '" + role + "'");
 	}
 }

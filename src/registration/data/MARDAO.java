@@ -165,7 +165,11 @@ public class MARDAO {
 //	get MAR by mar_id
 	public static MAR getMARByID(int id) {
 		MAR mar = new MAR();
-		String query = " SELECT * from mar where mar_id = " + id + ";";
+		String query = ""
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "from mar "
+				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
+				+ "where mar.mar_id = '" + id + "';";
 		
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -178,6 +182,7 @@ public class MARDAO {
 			mar.setFacilityName(result.getString("facility_name"));
 			mar.setDescription(result.getString("description"));
 			mar.setUrgency(result.getString("urgency"));
+			mar.setAssignedTo(result.getString("assigned_to"));
 //			mar.setDate(Date.valueOf(result.getString("creation_date")));
 			
 		}  catch (SQLException e) {
