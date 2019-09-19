@@ -68,15 +68,15 @@ public class AdminController extends HttpServlet {
 			session.removeAttribute("error");
 			session.removeAttribute("USERS");
 			
-			request.getRequestDispatcher("menu_admin.jsp").include(request, response);
-			request.getRequestDispatcher("search_user.jsp").include(request, response);
+			request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+			request.getRequestDispatcher("/search_user.jsp").include(request, response);
 		}
 //		Open Admin Home
 		else {
 			session.removeAttribute("error");
 			session.removeAttribute("USERS");
 			
-			request.getRequestDispatcher("menu_admin.jsp").include(request, response);
+			request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 			request.getRequestDispatcher("/home_admin.jsp").include(request, response);
 		}
 	}
@@ -122,8 +122,8 @@ public class AdminController extends HttpServlet {
 				}
 				else
 				{
-					request.getRequestDispatcher("menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("search_user.jsp").include(request, response);
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/search_user.jsp").include(request, response);
 					request.getRequestDispatcher("/list_users.jsp").include(request, response);
 				}
 				

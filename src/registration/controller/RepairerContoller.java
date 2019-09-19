@@ -44,13 +44,13 @@ public class RepairerContoller extends HttpServlet {
 			
 			session.setAttribute("MARList", marsInDB);
 			
-			request.getRequestDispatcher("menu_repairer.jsp").include(request, response);
-			request.getRequestDispatcher("repairermarlist.jsp").include(request, response);
+			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+			request.getRequestDispatcher("/repairermarlist.jsp").include(request, response);
 //			getServletContext().getRequestDispatcher("/repairermarlist.jsp").forward(request, response);
 		}
 //		Show Repairer Homepage
 		else {
-	    	request.getRequestDispatcher("menu_repairer.jsp").include(request, response);
+	    	request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 			request.getRequestDispatcher("/home.jsp").include(request, response);
 		}
     }
