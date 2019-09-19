@@ -29,25 +29,8 @@ public class HomeController extends HttpServlet{
 		}
 		String role = currentUser.getRole();
 		
-//		homepage for admin
-		if (role.equals("admin")) {
-			request.getRequestDispatcher("menu_admin.jsp").include(request, response);
-			request.getRequestDispatcher("/home_admin.jsp").include(request, response);	
-		} 
 //		homepage for student/faculty/staff
-		else if(role.equals("student") || role.equals("faculty") || role.equals("staff")) {
-			request.getRequestDispatcher("menu_student.jsp").include(request, response);
-			request.getRequestDispatcher("/home_student.jsp").include(request, response);	
-		} 
-//		homepate for facility manager
-		else if(role.equals("FacilityManager")) {
-			request.getRequestDispatcher("menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/home_student.jsp").include(request, response);
-		} 
-//		homepage for repairer
-		else if (role.equals("repairer")) {
-			request.getRequestDispatcher("menu_repairer.jsp").include(request, response);
-			request.getRequestDispatcher("/home_student.jsp").include(request, response);
-		}
+		request.getRequestDispatcher("menu_student.jsp").include(request, response);
+		request.getRequestDispatcher("home_student.jsp").include(request, response);
 	}
 }

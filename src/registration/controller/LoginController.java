@@ -69,16 +69,16 @@ public class LoginController extends HttpServlet {
 			if (role.equals("admin")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "admin");
-			} else if(role.equals("student") || role.equals("faculty") || role.equals("staff")) {
+			} else if(role.equals("facility_manager")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
-			} else if(role.equals("FacilityManager")) {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
+				response.setHeader("Location", "facility_manager");
 			} else if (role.equals("repairer")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "repairer");
-			}
+			} else {
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "home");
+			} 
 		} else {
 //			error messages
 			session.setAttribute("errorMsgs", userErrorMsgs);
