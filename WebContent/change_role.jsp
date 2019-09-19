@@ -62,10 +62,10 @@
     <tr>
     <td> Select a Role  </td>
     <td><select name=role>
-		<option value="Student" <c:if test = "${USERS.role == 'student'}">selected</c:if>>Student</option>
-		<option value="Faculty" <c:if test = "${USERS.role == 'faculty'}">selected</c:if>>Faculty</option>
-		<option value="Facility Manager" <c:if test = "${USERS.role == 'facility_manager'}">selected</c:if>>Facility Manager</option>
-		<option value="Repairer" <c:if test = "${USERS.role == 'repairer'}">selected</c:if>>Repairer</option>
+		<option value="Student" >Student</option>
+		<option value="Faculty" >Faculty</option>
+		<option value="Facility Manager" >Facility Manager</option>
+		<option value="Repairer" >Repairer</option>
 	</select></td>
     
     <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
