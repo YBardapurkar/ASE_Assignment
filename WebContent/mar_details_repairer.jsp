@@ -7,7 +7,7 @@
 <title>MAR details</title>
 </head>
 <body>
-<a href="facility_manager?mar_list">Back</a>
+<a href="repairer?my_mars">Back</a>
 
 <table>
 
