@@ -22,7 +22,7 @@
 
     <tr>
     <td> Password (*): </td>
-    <td> <input name="password" value="<c:out value='${user.password}'/>" type="text" >  </td>
+    <td> <input name="password"  type="password" >  </td>
     <td> <input name="password_error"  value="<c:out value='${errorMsgs.passwordError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
