@@ -62,7 +62,7 @@ public class FacilityManagerController extends HttpServlet{
 			session.setAttribute("listMAR", marList);
 			
 			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_table_fm.jsp").include(request, response);
+			request.getRequestDispatcher("/searchUnassignedMAR.jsp").include(request, response);
 		}
 //		Show Facility Manager Homepage
 		else {

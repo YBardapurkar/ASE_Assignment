@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import registration.data.MARDAO;
 import registration.data.UserDAO;
+import registration.model.Admin;
 import registration.model.MAR;
 import registration.model.MARError;
 import registration.model.User;
@@ -106,7 +107,10 @@ public class MARController extends HttpServlet{
 		return mar;
 	}
 
-
+	public void getSearchParam(HttpServletRequest request, MAR mar)
+	{
+		mar.setSearchParam(request.getParameter("searchunassignedMAR"),request.getParameter("marsearchFilter"));  //setting search parameters
+	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
@@ -139,6 +143,55 @@ public class MARController extends HttpServlet{
 			request.getRequestDispatcher("/mar_form.jsp").include(request, response);
 
 		}
+
+
+		int selectedUserIndex;
+		//session.removeAttribute("admin");
+		//session.removeAttribute("cerrorMsgs");
+		session.removeAttribute("error");
+		
+		MAR mar = new MAR(); //creating object for class admin
+		UserError UserErrors = new UserError();
+		session.setAttribute("MAR", mar);
+		//session.removeAttribute("errorMsgs");
+		
+		ArrayList<User> usersListInDB = new ArrayList<User>();//change var name
+		 
+		if(action.equals("Submit"))  
+		{
+			getSearchParam(request,mar); 
+			mar.validateSearchUser(action,mar, UserErrors);
+			
+			
+			if (!UserErrors.getSearchError().equals("")) {
+//				if error messages
+				session.setAttribute("userErrors", UserErrors);
+				request.getRequestDispatcher("/searchUnassignedMAR.jsp").include(request, response);
+			}
+			
+			else {
+//				if no error messages
+				usersListInDB = UserDAO.searchUsersByAdmin(mar.getUser(),mar.getFilter());	
+				session.setAttribute("USERS", usersListInDB);
+				if(usersListInDB.size() == 0)
+				{
+					session.setAttribute("userErrors", UserErrors);
+					UserErrors.setSearchError("User does not exist");
+					request.getRequestDispatcher("/search_user.jsp").include(request, response);
+					
+				}
+				else
+				{
+					session.removeAttribute("userErrors");
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/search_user.jsp").include(request, response);
+					request.getRequestDispatcher("/list_users.jsp").include(request, response);
+				}
+				
+			}
+			
+		}
+		
 	}
 
 
