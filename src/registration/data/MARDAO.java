@@ -214,6 +214,33 @@ public class MARDAO {
 		return marListInDB;
 	}
 	
+	public static ArrayList<MAR> getMARSubmittedByUser(String username) {
+		ArrayList<MAR> marList = new ArrayList<MAR>();
+		String query = ""
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "from mar "
+				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
+				+ "where mar.reported_by = '" + username + "';";
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(query);
+			while (result.next()) {
+				MAR mar = new MAR();
+				
+				mar.setId(Integer.parseInt(result.getString("mar_id")));
+				mar.setDescription(result.getString("description"));
+				mar.setUrgency(result.getString("urgency"));
+				mar.setFacilityName(result.getString("facility_name"));
+				mar.setAssignedTo(result.getString("assigned_to"));
+				
+				marList.add(mar);
+			}
+		}  catch (SQLException e) {System.out.println(e.getMessage());}
+		return marList;
+	}
 
 	public static ArrayList<MAR>  listMARS(String username,MAR mar) {  
 		String selectUser = "select t1.mar_id,assigned_date,estimate_repair,facility_name,urgency,description from macrepairsys.assignment t1 inner join macrepairsys.mar t2 on t1.mar_id = t2.mar_id and t1.assigned_to ='";

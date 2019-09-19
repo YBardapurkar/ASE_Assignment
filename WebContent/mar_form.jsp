@@ -12,7 +12,7 @@
 <table>
   <tr>
    <td>
-    <form name="marform" action="mar" method="post">
+    <form name="marform" action="home" method="post">
     <table style="width: 1200px; ">
   
     <tr>
@@ -57,7 +57,7 @@
 
 	<tr>
     <td> Reported By (*): </td>
-    <td> <input name="reportedby" value= "<c:out value='${mar.reportedBy}'/>" type="text">  </td>
+    <td> <input name="reportedby" value= "<c:out value='${user.username}'/>" type="text" disabled>  </td>
     <td> <input name="reportedby_error"  value="<c:out value='${errorMsgs.reportedByError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
     </tr>
 	
