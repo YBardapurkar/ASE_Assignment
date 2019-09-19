@@ -66,13 +66,13 @@ public class LoginController extends HttpServlet {
 			
 			session.removeAttribute("errorMsgs");
 			
-			if (role.equals("admin")) {
+			if (role.equals("Admin")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "admin");
-			} else if(role.equals("facility_manager")) {
+			} else if(role.equals("Facility Manager")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "facility_manager");
-			} else if (role.equals("repairer")) {
+			} else if (role.equals("Repairer")) {
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "repairer");
 			} else {
