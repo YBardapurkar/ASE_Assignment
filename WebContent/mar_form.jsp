@@ -18,7 +18,10 @@
     <tr>
     <td> Facility Name (*): </td>
   	<td><select name ="facilityname" value = "<c:out value='${MAR.facilityName}' />" required>
-    	<option> MR 1-4 </option>
+    	<option> MR 1 </option>
+    	<option> MR 2 </option>
+    	<option> MR 3 </option>
+    	<option> MR 4 </option>
     	<option> IBBC 1-5 </option>
     	<option> IVBC 1-9 </option>
     	<option> SCG </option>
