@@ -122,6 +122,7 @@ public class AdminController extends HttpServlet {
 				}
 				else
 				{
+					session.removeAttribute("userErrors");
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/search_user.jsp").include(request, response);
 					request.getRequestDispatcher("/list_users.jsp").include(request, response);

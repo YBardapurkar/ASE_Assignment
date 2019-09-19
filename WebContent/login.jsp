@@ -26,10 +26,7 @@
     <td> <input name="password_error"  value="<c:out value='${errorMsgs.passwordError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
-	<tr>
-    <td> <input name="message" value="<c:out value='${user.message}'/>" type="text" disabled>  </td>
-    </tr>
-
+	
 
     <tr>
     <td colspan="2">(*) Mandatory field</td>
