@@ -87,10 +87,9 @@ public class MAR {
 		this.assignedTo = assignedTo;
 	}
 	
-	public void validateMar (String action, MAR mar, UserError userErrorMsgs) {
+	public void validateMar (String action, MAR mar, MARError marErrorMsgs) {
 		if (action.equals(ACTION_SAVE_MAR)) {
-			userErrorMsgs.setDescriptionError(validateDescription(action,mar.getDescription()));
-			userErrorMsgs.setUrgencyError(validateUrgency(action,mar.getUrgency()));
+			marErrorMsgs.setDescriptionError(validateDescription(action,mar.getDescription()));
 			/*userErrorMsgs.setUrgencyError(validateUrgency(action,mar.getUrgency()));
 			
 			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
@@ -104,8 +103,6 @@ public class MAR {
 			userErrorMsgs.setCityError(validatecity(user.getCity()));
 			userErrorMsgs.setStateError(validateState(user.getState()));
 			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));*/
-			
-			userErrorMsgs.setErrorMsg();
 		}
 	}
 	
@@ -114,21 +111,12 @@ public class MAR {
 	//validateDescription
 	
 	private String validateDescription(String action, String description) {
-		String result;
-		String pattern = "[A-Za-z0-9-_]{1,200}";
-		
-//		Validate facilityName
+		String result ="";
 		if(action.equals(ACTION_SAVE_MAR)) {
-			if (!Pattern.matches(pattern, description)) {
-				result="description should be alphanumeric with size between 1 to 200 characters. '-','_' are allowed";
+			if(description.equals(""))
+			{
+				result = "Description is mandatory field";
 			}
-			 else {
-				result = "";
-			}
-		} 
-//		default
-		else {
-			result = "action not recognized";
 		}
 		return result;
 	}

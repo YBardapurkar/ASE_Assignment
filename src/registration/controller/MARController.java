@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
 import registration.model.MAR;
+import registration.model.MARError;
 import registration.model.User;
 import registration.model.UserError;
 
@@ -113,19 +114,19 @@ public class MARController extends HttpServlet{
 
 		MAR newMar = new MAR();
 
-		UserError userErrorMsgs = new UserError();
+		MARError marErrorMsgs = new MARError();
 
 		session.removeAttribute("MAR");
 		session.removeAttribute("allMAR");
 		session.removeAttribute("errorMsgs");
 
 		newMar = getMarParam(request);
-		newMar.validateMar(action, newMar, userErrorMsgs);
+		newMar.validateMar(action, newMar, marErrorMsgs);
 		//session.setAttribute("MAR", newMar);	
 
-		if (!userErrorMsgs.getErrorMsg().equals("")) {
+		if (!marErrorMsgs.getDescriptionError().equals("")) {
 			//			if error messages
-			session.setAttribute("errorMsgs", userErrorMsgs);
+			session.setAttribute("errorMsgs", marErrorMsgs);
 			request.getRequestDispatcher("/mar_form.jsp").include(request, response);
 		}
 		else {
