@@ -10,7 +10,7 @@ public class User implements Serializable{
 	public static final String ACTION_LOGIN = "login";
 
 	private static final long serialVersionUID = 3L;
-	
+	  
 	private String username;
 	private String password;
 	private String firstname;

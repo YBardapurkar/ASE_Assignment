@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import registration.util.SQLConnection;
 import registration.model.User;
-import registration.model.Admin;
+
 
 public class UserDAO {
 

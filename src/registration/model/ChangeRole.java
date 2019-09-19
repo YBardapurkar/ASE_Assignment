@@ -42,7 +42,7 @@ public class ChangeRole {
 	public void validateChangeRole (String action, ChangeRole changerole, UserError userErrorMsgs) {
 		if (action.equals(ACTION_CHANGE_ROLE)) {
 			
-			userErrorMsgs.setRoleError(validateRole(action, changerole.getRole()));
+			//userErrorMsgs.setRoleError(validateRole(action, changerole.getRole()));
 			userErrorMsgs.setUsernameError(validateUsername(action, changerole.getUsername()));
 			/*userErrorMsgs.setUrgencyError(validateUrgency(action,mar.getUrgency()));
 			
@@ -88,12 +88,12 @@ public class ChangeRole {
 	//validate role
 		private String validateRole(String action, String role) {
 			String result;
-			String pattern = "[A-Za-z0-9-_]{1,200}";
+			String pattern = "[A-Za-z]";
 			
 //			Validate facilityName
 			if(action.equals(ACTION_CHANGE_ROLE)) {
 				if (!Pattern.matches(pattern, role)) {
-					result="role should be alphanumeric with size between 1 to 200 characters. '-','_' are allowed";
+					result="role should be selected";
 				}
 				 else {
 					result = "";

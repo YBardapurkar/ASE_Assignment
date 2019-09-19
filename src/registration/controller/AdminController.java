@@ -94,7 +94,8 @@ public class AdminController extends HttpServlet {
 						usersListInDB.get(selectedUserIndex).getZipcode()
 						);
 				session.setAttribute("USERS", User);
-				request.getRequestDispatcher("/specific_user.jsp").include(request, response);
+				request.getRequestDispatcher("/change_role.jsp").include(request, response);
+				//request.getRequestDispatcher("/specific_user.jsp").include(request, response);
 			}
 			else { // determine if Submit button was clicked without selecting a user
 				if (request.getParameter("ListSelectedUserButton")!=null) {

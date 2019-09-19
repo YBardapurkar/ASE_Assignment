@@ -43,5 +43,6 @@
 </td>
 </tr>
 </table>
+<h3><a href="change_role.jsp"  target="_top"><span>Edit Role</span></a></h3>
 </body>
 </html>

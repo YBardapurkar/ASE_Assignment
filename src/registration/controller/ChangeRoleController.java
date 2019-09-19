@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import registration.data.UserDAO;
 import registration.model.ChangeRole;
+import registration.model.User;
 import registration.model.UserError;
 
 
@@ -50,6 +51,8 @@ public class ChangeRoleController extends HttpServlet {
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		
+		User user =  (User) session.getAttribute("USERS");
+		
 		ChangeRole changerole = new ChangeRole();
 		
 		UserError userErrorMsgs = new UserError();
@@ -74,8 +77,11 @@ public class ChangeRoleController extends HttpServlet {
 			UserDAO.updateDetails(username, role); //update database
 			//MARDAO.insertmar(newMar);//Insert into database	
 			changerole.setMessage("role is updated");
+			
 			//newMar.setMessage("mar is created");
 			//session.setAttribute("MAR", newMar);	
+			user.setRole(role);
+			session.setAttribute("USERS", user);
 			session.setAttribute("changerole", changerole);
 			
 			request.getRequestDispatcher("/menu_admin.jsp").include(request, response);

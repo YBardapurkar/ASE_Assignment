@@ -7,39 +7,75 @@
 <title>Change Role-Form</title>
 </head>
 <body>
-<!-- mar form here -->
+
+<table>
+  <tr>
+   <td>
+         <table border="1" class="myTable"> 
+    <tr>
+    <td> username </td>
+    <td> <c:out value="${USERS.username}" /> </td>
+    </tr>
+
+    <tr>
+    <td> Role: </td>
+    <td> <c:out value="${USERS.role}"/> </td>
+    </tr>
+
+    <tr>
+    <td> Phone: </td>
+    <td> <c:out value="${USERS.phone}" /> </td>
+    </tr>
+
+    <tr>
+    <td> Email: </td>
+    <td> <c:out value="${USERS.email}" /> </td>
+    </tr>
+
+	<tr>
+    <td> UTAID </td>
+    <td> <c:out value="${USERS.utaId}" /> </td>
+    </tr>
+
+    <tr>
+    </tr>
+    </table>
+</td>
+</tr>
+</table>
+
+<!-- change role form here -->
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
+<h3>Please change the role here:</h3>
 <table>
   <tr>
    <td>
     <form name="changeroleform" action="changeRole" method="post">
     <table style="width: 1200px; ">
   
-  	<tr>
+  	 <tr>
     <td> User Name (*): </td>
-    <td> <input name="username" value= "<c:out value='${changerole.username}'/>" type="text" maxlength="45" required>  </td>
+    <td> <input name="username" value= "<c:out value='${USERS.username}'/>" type="text" maxlength="45" type="hidden">  </td>
     <td> <input name="username_error"  value="<c:out value='${errorMsgs.usernameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
-    </tr>
+    </tr> 
     
     <tr>
     <td> Select a Role  </td>
-  	<td><select name ="role" value = "<c:out value='${changerole.role}' />" required>
-    	<option> User </option>
-    	<option> Facility Manager </option>
-    	<option> Repairer </option>
-    </select> </td>
+    <td><select name=role>
+		<option value="Student" <c:if test = "${USERS.role == 'student'}">selected</c:if>>Student</option>
+		<option value="Faculty" <c:if test = "${USERS.role == 'faculty'}">selected</c:if>>Faculty</option>
+		<option value="Facility Manager" <c:if test = "${USERS.role == 'facility_manager'}">selected</c:if>>Facility Manager</option>
+		<option value="Repairer" <c:if test = "${USERS.role == 'repairer'}">selected</c:if>>Repairer</option>
+	</select></td>
+    
     <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
 
 	<tr>
-    <td> <input name="message" value="<c:out value='${changerole.message}'/>" type="text" maxlength="45" >  </td>
-    </tr>
+    <td> <input name="message" value="<c:out value='${changerole.message}'/>" type="text" maxlength="45" type="hidden">  </td>
+    </tr> 
 
-	
-    <tr>
-    <td colspan="2">(*) Mandatory field</td>
-    </tr>
     </table>
     <input name="action" value="change_role" type="hidden">
     <input type="submit" value="Update">
