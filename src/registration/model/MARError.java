@@ -3,6 +3,7 @@ package registration.model;
 public class MARError {
 	private String descriptionError;
 	private String errorMsg;
+	private String message;
 	
 	public MARError() {
 		this.descriptionError = "";
@@ -27,4 +28,14 @@ public class MARError {
 			this.errorMsg = "Please correct the following errors";
 		}
 	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	
 }

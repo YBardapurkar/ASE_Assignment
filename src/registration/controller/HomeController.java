@@ -45,6 +45,7 @@ public class HomeController extends HttpServlet{
 		}
 //		add mar page
 		else if (request.getParameter("add_mar") != null) {
+			session.removeAttribute("MAR");
 			request.getRequestDispatcher("menu_student.jsp").include(request, response);
 			request.getRequestDispatcher("mar_form.jsp").include(request, response);
 		}
@@ -79,6 +80,7 @@ public class HomeController extends HttpServlet{
 
 			if (!marErrorMsgs.getDescriptionError().equals("")) {
 				//			if error messages
+				session.setAttribute("MAR", newMar);
 				session.setAttribute("errorMsgs", marErrorMsgs);
 				
 				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
@@ -87,8 +89,7 @@ public class HomeController extends HttpServlet{
 			else {
 				//			if no error messages
 				MARDAO.insertmar(newMar);//Insert into database			
-				newMar.setMessage("mar is created");
-				session.setAttribute("MAR", newMar);	
+				newMar.setMessage("mar is created");	
 				
 				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_form.jsp").include(request, response);

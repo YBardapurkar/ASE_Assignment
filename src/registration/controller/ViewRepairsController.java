@@ -68,8 +68,9 @@ public class ViewRepairsController extends HttpServlet {
 		}
 		else
 		{
-			ErrorMsgs.setErrorMsg("Radio button needs to be selected for reserving the facility or Viewing the MAR. First select the radio button and then click on reserve or view!!!");
-			getServletContext().getRequestDispatcher("/repairermarlist.jsp").forward(request, response);
+			ErrorMsgs.setErrorMsg("Radio button needs to be selected for reserving the facility or Viewing the MAR. First select the radio button and then reserve or view");
+			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+			request.getRequestDispatcher("/repairermarlist.jsp").include(request, response);
 			session.removeAttribute("errorMsgs");
 		}
 	}
