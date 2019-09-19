@@ -38,7 +38,7 @@
 <input name="action" value = "${status.count}" type="hidden">
 	<input name="repairs" type="submit" value="Reserve"> 
 	
-<td><input name ="view" type="submit" value="view"></td>
+<input name ="view" type="submit" value="view">
 	<br>
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
  </form>
