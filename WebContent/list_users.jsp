@@ -12,7 +12,7 @@
 	<input name="errMsg"  value="<c:out value='${error}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
 
       
- <form action="/registration/admin?action=listSpecificUser" method="post">          
+ <form action="admin?action=listSpecificUser" method="post">          
        <table border="1" class="myTable"> 
 			<tr class="myTableRow"> 
 				<th class="myTableHead" style="width: 20px; ">Select User</th>
