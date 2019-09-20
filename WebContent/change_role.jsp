@@ -73,7 +73,7 @@
 
 
 	<%-- <tr>
-    <td> <input name="message" value="<c:out value='${changerole.message}'/>" type="text" maxlength="45" type="hidden">  </td>
+    <td> <input name="message" value="<c:out value='${changerole.message}'/>" type="text area">  </td>
     </tr> --%> 
 
     </table>

@@ -1,6 +1,7 @@
 package registration.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -73,6 +74,25 @@ public class ChangeRoleController extends HttpServlet {
 			request.getRequestDispatcher("/change_role.jsp").include(request, response);
 		}
 		else {
+			
+			ArrayList<User> roleCheck = new ArrayList<User>();
+			roleCheck = UserDAO.getUserByRole(role);
+			System.out.println(role);
+			System.out.println(roleCheck.size());
+			
+			if(role.equals("Facility Manager") && roleCheck.size() > 0)
+			{
+				changerole.setMessage("A Facility Manager alrerady exists in the system. Cannot update role for this user");
+				session.setAttribute("USERS", user);
+				session.setAttribute("changerole", changerole);
+				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+				request.getRequestDispatcher("/specific_role.jsp").include(request, response);
+				
+			}
+			
+			
+			else
+			{
 			//			if no error messages
 			UserDAO.updateDetails(username, role); //update database
 			//MARDAO.insertmar(newMar);//Insert into database	
@@ -86,7 +106,7 @@ public class ChangeRoleController extends HttpServlet {
 			
 			request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 			request.getRequestDispatcher("/specific_role.jsp").include(request, response);
-
+			}
 		}
 		
 	}
