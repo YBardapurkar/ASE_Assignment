@@ -9,19 +9,42 @@
 <body>
 
 
-	<form action="/registration/MARController" method="post">
+	<form action="mar" method="post">
 	
 	<label>Search Unassigned MARS</label>
-	<input name="searchunassignedMAR" type="text">
-	<input name="action" type="hidden" value="Submit">
+	<br>
+	<br>
+	    <td> Facility Name: </td>
+  	<td><select name ="searchunassignedMAR" value = "">
+    	<option> MR 1 </option>
+    	<option> MR 2 </option>
+    	<option> MR 3 </option>
+    	<option> MR 4 </option>
+    	<option> IBBC 1-5 </option>
+    	<option> IVBC 1-9 </option>
+    	<option> SCG </option>
+    	<option> RBC 1-5 </option>
+    	<option> BMC 1-10 </option>
+    	<option> TT1 </option>
+    	<option> CR 1-5 </option>
+    	<option> OVBC 1-2 </option>
+    	<option> OBBC 1-2 </option>
+    </select> </td>
+        <td> Urgency: </td>
+    <td><select name ="urgency" value = "">
+    	<option> Unusable </option>
+    	<option> Major </option>
+    	<option> Medium </option>
+    	<option> Minor </option>
+    </select> </td>
+	<input name="action" type="hidden" value="searchUnassignedMAR">
 	<input name= "searchUnassignedMAR" type="submit" value="Submit">
 	
 	
 	
 	<p>
 	<input type="radio" name="marsearchFilter" value="1" />Facility Name
-	<input type="radio" name="marsearchFilter" value="2" />Facility Type
-	<input type="radio" name="marsearchFilter" value="3" checked="checked"/>Urgency
+	<input type="radio" name="marsearchFilter" value="2" checked="checked"/>Urgency
 	</p>
 	  
   	<input name="searchErrorMsgs"  value="<c:out value='${userErrors.searchError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> 
