@@ -19,48 +19,10 @@
     <td> Facility Name (*): </td>
   	<td><select name ="facilityname" value = "<c:out value='${MAR.facilityName}' />">
     	<option>BMC 1</option>
-<option>BMC 2</option>
-<option>BMC 3</option>
-<option>BMC 4</option>
-<option>BMC 5</option>
-<option>BMC 6</option>
-<option>BMC 7</option>
-<option>BMC 8</option>
-<option>BMC 9</option>
-<option>CR 1</option>
-<option>CR 2</option>
-<option>CR 3</option>
-<option>CR 4</option>
-<option>CR 5</option>
-<option>IBBC 1</option>
-<option>IBBC 2</option>
-<option>IBBC 3</option>
-<option>IBBC 4</option>
-<option>IBBC 5</option>
-<option>IVBC 1</option>
-<option>IVBC 2</option>
-<option>IVBC 3</option>
-<option>IVBC 4</option>
-<option>IVBC 5</option>
-<option>IVBC 6</option>
-<option>IVBC 7</option>
-<option>IVBC 8</option>
-<option>IVBC 9</option>
 <option>MR 1</option> 
 <option>MR 2</option> 
 <option>MR 3</option> 
 <option>MR 4</option> 
-<option>OBBC 1</option>
-<option>OBBC 2</option>
-<option>OVBC 1</option>
-<option>OVBC 2</option>
-<option>RBC 1</option>
-<option>RBC 2</option>
-<option>RBC 3</option>
-<option>RBC 4</option>
-<option>RBC 5</option>
-<option>SCG</option>
-<option>TT1</option>
     </select> </td>
     <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     </tr>    	
