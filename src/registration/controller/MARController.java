@@ -131,7 +131,7 @@ public class MARController extends HttpServlet{
 
 			newMar = getMarParam(request);
 			newMar.validateMar(action, newMar, marErrorMsgs);
-			//session.setAttribute("MAR", newMar);	
+			session.setAttribute("MAR", newMar);	
 
 			if (!marErrorMsgs.getDescriptionError().equals("")) {
 				//			if error messages
@@ -142,8 +142,7 @@ public class MARController extends HttpServlet{
 				//			if no error messages
 				MARDAO.insertmar(newMar);//Insert into database			
 				newMar.setMessage("mar is created");
-				session.setAttribute("MAR", newMar);	
-				
+				System.out.println("Hello");
 				request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_form.jsp").include(request, response);
 

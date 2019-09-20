@@ -90,8 +90,8 @@ public class HomeController extends HttpServlet{
 				//			if no error messages
 				MARDAO.insertmar(newMar);//Insert into database			
 				newMar.setMessage("mar is created");	
-				
-				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
+				session.setAttribute("MAR", newMar);
+				System.out.println(newMar.getMessage());				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_form.jsp").include(request, response);
 
 			}

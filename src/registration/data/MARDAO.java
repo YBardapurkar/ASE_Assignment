@@ -126,6 +126,7 @@ public class MARDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		System.out.println("in db");
 	}
 
 	public static void insertmar(MAR mar) {  
