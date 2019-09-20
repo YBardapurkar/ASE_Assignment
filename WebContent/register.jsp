@@ -24,7 +24,7 @@
 
     <tr>
     <td> Password (*): </td>
-    <td> <input name="password" value="<c:out value='${user.password}'/>" type="text" >  </td>
+    <td> <input name="password" value="<c:out value='${user.password}'/>" type="password" >  </td>
     <td> <input name="password_error"  value="<c:out value='${errorMsgs.passwordError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>    	
 
@@ -44,11 +44,9 @@
     <td> role (*): </td>
     <!-- <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>  -->
     <td><select name=role>
-		<option value="Student">Student</option>
-		<option value="Faculty">Faculty</option>
-		<option value="Facility Manager">Facility Manager</option>
-		<option value="Repairer">Repairer</option>
-		<option value="Admin">Admin</option>
+    	<c:forEach items="${role_dropdown}" var="item" varStatus="status">
+    	<option value="${item}">${item}</option>
+    	</c:forEach>
 	</select></td>
     <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
