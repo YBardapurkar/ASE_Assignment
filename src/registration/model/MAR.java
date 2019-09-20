@@ -225,8 +225,7 @@ public class MAR {
 			
 	}
 	
-	public UserError validateSearch(String usersearchFilter) {
-		MAR mar = new MAR();
+	public UserError validateSearch(MAR mar,String usersearchFilter) {
 		UserError err = new UserError();
 		
 		if(usersearchFilter.equals("1"))
