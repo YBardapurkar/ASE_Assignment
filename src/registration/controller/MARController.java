@@ -167,7 +167,7 @@ public class MARController extends HttpServlet{
 			
 			System.out.println("Hello");
 			getSearchParam(request,mar); 
-			UserErrors = mar.validateSearch(request.getParameter("marsearchFilter"));
+			UserErrors = mar.validateSearch(mar,request.getParameter("marsearchFilter"));
 			
 			
 			if (!UserErrors.getSearchError().equals("")) {
