@@ -106,6 +106,7 @@ public class AdminController extends HttpServlet {
 			if (!UserErrors.getSearchError().equals("")) {
 //				if error messages
 				session.setAttribute("userErrors", UserErrors);
+
 				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 				request.getRequestDispatcher("/search_user.jsp").include(request, response);
 			}
@@ -117,7 +118,8 @@ public class AdminController extends HttpServlet {
 				if(usersListInDB.size() == 0)
 				{
 					session.setAttribute("userErrors", UserErrors);
-					UserErrors.setSearchError("User does not exist");
+					UserErrors.setSearchError("No Users found");
+
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/search_user.jsp").include(request, response);
 					
