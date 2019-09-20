@@ -46,7 +46,7 @@
 	<tr>
     <td> role (*): </td>
     <!-- <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>  -->
-    <td><select name=role>
+    <td><select name="role">
     	<c:forEach items="${role_dropdown}" var="item" varStatus="status">
     	<option value="${item}">${item}</option>
     	</c:forEach>
