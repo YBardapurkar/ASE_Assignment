@@ -168,7 +168,7 @@ public class MARController extends HttpServlet{
 			
 			System.out.println("Hello");
 			getSearchParam(request,mar); 
-			mar.validateSearch(request.getParameter("marsearchFilter"));
+			UserErrors = mar.validateSearch(request.getParameter("marsearchFilter"));
 			
 			
 			if (!UserErrors.getSearchError().equals("")) {
@@ -181,13 +181,15 @@ public class MARController extends HttpServlet{
 //				if no error messages
 				
 				usersListInDB = MARDAO.searchUnassignedMAR(mar.getUser(),mar.getFilter(), mar.getUrg()) ;
-				System.out.println(usersListInDB.get(0).getId());
+
 				session.setAttribute("listMAR", usersListInDB);
-				
+				System.out.println("outside function");
 				if(usersListInDB.size() == 0)
 				{
 					session.setAttribute("userErrors", UserErrors);
-					UserErrors.setSearchError("User does not exist");
+					System.out.println("inside function");
+					System.out.println(UserErrors.getSearchError());
+
 					request.getRequestDispatcher("/searchUnassignedMAR.jsp").include(request, response);
 					
 				}

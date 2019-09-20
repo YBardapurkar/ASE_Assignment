@@ -20,6 +20,7 @@
 	<br>
 	    <td> Facility Name: </td>
   	<td><select name ="searchunassignedMAR" value = "">
+  		<option value= "">None</option>
     	<option> MR 1 </option>
     	<option> MR 2 </option>
     	<option> MR 3 </option>
@@ -36,6 +37,7 @@
     </select> </td>
         <td> Urgency: </td>
     <td><select name ="urgency" value = "">
+    	<option value= "">None</option>
     	<option> Unusable </option>
     	<option> Major </option>
     	<option> Medium </option>

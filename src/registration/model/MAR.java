@@ -195,42 +195,49 @@ public class MAR {
 	
 	
 	
-	public void validateSearchUser(MAR mar, UserError userErrorMsgs) //validating the search user field
+	public UserError validateSearchUser(MAR mar, UserError userErrorMsgs) //validating the search user field
 	{
 			String error = "";
+			System.out.println("user");
+			System.out.println(mar.getUser() );
 			if (mar.getUser() == null)
 			{
 				error = "Facility type should be selected";
+				System.out.println(error);
+				userErrorMsgs.setSearchError(error);
+				System.out.println("Set urg message");
 			}
-			userErrorMsgs.setSearchError(error);
-			userErrorMsgs.setSearchErrorMsg();
 			
+			return userErrorMsgs;
 	}
 	
-	public void validateUrgency(MAR mar, UserError userErrorMsgs) //validating the search user field
+	public UserError validateUrgency(MAR mar, UserError userErrorMsgs) //validating the search user field
 	{
 			String error = "";
 			if (mar.getUrg() == null)
 			{
 				error = "Urgency should be selected";
+				userErrorMsgs.setSearchError(error);
+				System.out.println("Set urg message");
+				
 			}
-			userErrorMsgs.setSearchError(error);
-			userErrorMsgs.setSearchErrorMsg();
+			return userErrorMsgs;
 			
 	}
 	
-	public void validateSearch(String usersearchFilter) {
+	public UserError validateSearch(String usersearchFilter) {
 		MAR mar = new MAR();
 		UserError err = new UserError();
 		
 		if(usersearchFilter.equals("1"))
 		{
-			validateSearchUser(mar,err);
+			err = validateSearchUser(mar,err);
 		}
 		else if(usersearchFilter.equals("2"))
 		{
-				validateUrgency(mar,err);
+				err = validateUrgency(mar,err);
 		}
+		return err;
 		}
 	
 	
