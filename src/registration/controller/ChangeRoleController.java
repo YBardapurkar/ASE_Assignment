@@ -85,7 +85,7 @@ public class ChangeRoleController extends HttpServlet {
 			session.setAttribute("changerole", changerole);
 			
 			request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-			request.getRequestDispatcher("/change_role.jsp").include(request, response);
+			request.getRequestDispatcher("/specific_role.jsp").include(request, response);
 
 		}
 		

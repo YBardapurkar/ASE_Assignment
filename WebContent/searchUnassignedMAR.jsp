@@ -9,7 +9,11 @@
 <body>
 
 
+
 	<form action="mar" method="post">
+
+	<form action="MARController" method="post">
+
 	
 	<label>Search Unassigned MARS</label>
 	<br>

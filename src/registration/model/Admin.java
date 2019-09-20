@@ -50,7 +50,7 @@ public class Admin implements Serializable{
 	
 	public void validateSearchUser(String action, Admin admin, UserError userErrorMsgs) //validating the search user field
 	{
-			userErrorMsgs.setSearchError(validateSearch(admin.getUser(),admin.getFilter()));
+//			userErrorMsgs.setSearchError(validateSearch(admin.getUser(),admin.getFilter()));
 			userErrorMsgs.setSearchErrorMsg();
 			
 	}
