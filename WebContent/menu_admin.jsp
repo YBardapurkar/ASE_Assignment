@@ -1,5 +1,5 @@
 <div>
-	<a href="admin?listUsers">List of Users</a>
+	<a href="admin?list_users">List of Users</a>
 	<a href="admin?search">Search Users</a>
 	<a href="admin?search">Update Role</a>
 	

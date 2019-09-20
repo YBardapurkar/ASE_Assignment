@@ -4,12 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Specific User</title>
+<title>User Details</title>
 </head>
     
 <body>
-<input name="message" value="<c:out value='${changerole.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 800px; size: 30"  disabled="disabled" maxlength="30"> 
 
+<h1>User Details</h1>
+<input name="message" value="<c:out value='${changerole.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 800px; size: 30"  disabled="disabled" maxlength="30"> 
 <table>
   <tr>
    <td>

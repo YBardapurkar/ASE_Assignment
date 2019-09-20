@@ -9,11 +9,12 @@
 <body>
 
 
-	<form action="admin" method="post">
+	<form action="admin?search" method="post">
 	
 	<label>Search User</label>
 	<input name="searchUser" type="text">
-	<input name="action" type="hidden" value="Submit">
+	
+	<input name="action" type="hidden" value="search_user">
 	<input name= "search_user" type="submit" value="Submit">
 	
 	

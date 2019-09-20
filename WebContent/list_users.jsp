@@ -31,7 +31,7 @@
 			<td class="myTableCell" style="padding-right: 20px; "><c:out value="${item.email}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.phone}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.utaId}" /></td>
-			<td class="myTableCell" style="padding-right: 30px; "><a href="admin?listSpecificUser=<c:out value='${item.username}' />">View</a></td>
+			<td class="myTableCell" style="padding-right: 30px; "><a href="admin?user_details=<c:out value='${item.username}' />">View</a></td>
 			
 
 			</tr>
