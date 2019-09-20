@@ -24,18 +24,7 @@ public class RegisterController extends HttpServlet{
 		
 		HttpSession session = request.getSession();
 		
-		ArrayList<String> roles = new ArrayList<String>();
-		roles.add("Student");
-		roles.add("Faculty");
-		roles.add("Repairer");
-		if (UserDAO.getUserByRole("Facility Manager").isEmpty()) {
-			roles.add("Facility Manager");
-		}
-		if (UserDAO.getUserByRole("Admin").isEmpty()) {
-			roles.add("Admin");
-		}
-		
-		session.setAttribute("role_dropdown", roles);
+		session.setAttribute("role_dropdown", getRoles());
 		
 		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 		request.getRequestDispatcher("/register.jsp").include(request, response);
@@ -80,10 +69,26 @@ public class RegisterController extends HttpServlet{
 		}
 		else {
 //			if no error messages
-			UserDAO.insertuser(newUser);			
+			UserDAO.insertuser(newUser);
+			session.setAttribute("role_dropdown", getRoles());
+			
 			newUser.setMessage("data is inserted");
 			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 			request.getRequestDispatcher("/register.jsp").include(request, response);
 		}
+	}
+	
+	private ArrayList<String> getRoles() {
+		ArrayList<String> roles = new ArrayList<String>();
+		roles.add("Student");
+		roles.add("Faculty");
+		roles.add("Repairer");
+		if (UserDAO.getUserByRole("Facility Manager").isEmpty()) {
+			roles.add("Facility Manager");
+		}
+		if (UserDAO.getUserByRole("Admin").isEmpty()) {
+			roles.add("Admin");
+		}
+		return roles;
 	}
 }
