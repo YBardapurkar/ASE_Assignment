@@ -126,6 +126,7 @@ public class MARDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		System.out.println("in db");
 	}
 
 	public static void insertmar(MAR mar) {  
@@ -247,4 +248,50 @@ public class MARDAO {
 		selectUser+=username+"'";
 		return ReturnMatchingUserList(selectUser);
 	}
+	
+	
+	private static ArrayList<MAR> ReturnMatchingMARList (String queryString) {
+		 ArrayList<MAR> usersListInDB = new ArrayList<MAR>();
+		 
+		 Statement stmt = null;
+		 Connection conn = SQLConnection.getDBConnection();
+		 try {
+		  stmt = conn.createStatement();
+		  ResultSet result = stmt.executeQuery(queryString);
+		  while (result.next()) {
+		   
+		   MAR mar = new MAR(); 
+		   mar.setId(Integer.parseInt(result.getString("mar_id")));
+			mar.setDescription(result.getString("description"));
+			mar.setUrgency(result.getString("urgency"));
+			mar.setFacilityName(result.getString("facility_name"));
+			mar.setAssignedTo(result.getString("assigned_to"));
+		   
+		   usersListInDB.add(mar); 
+		  }
+		 } catch (SQLException e) {
+		  System.out.println(e.getMessage());
+		 }
+		 return usersListInDB;
+		}
+	
+	public static ArrayList<MAR> searchUnassignedMAR(String searchField, String filter, String Urg)  {
+		 
+		 
+		 if(filter.equals("1"))
+		 {
+		  return (ReturnMatchingMARList("SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to from mar left outer join assignment on mar.mar_id = assignment.mar_id  where assignment.assigned_to is null and facility_name ='"+searchField+"' "));
+		 }
+		 
+		 else 
+		 {
+		  return (ReturnMatchingMARList("SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to from mar left outer join assignment on mar.mar_id = assignment.mar_id where assignment.assigned_to is null and mar.urgency='"+Urg+"' "));   
+		 }
+		 
+
+		}
+
+
+		
+
 }

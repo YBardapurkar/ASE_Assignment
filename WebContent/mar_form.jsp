@@ -53,13 +53,7 @@
     <td> <input name="description_error"  value="<c:out value='${errorMsgs.descriptionError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
     </tr>
 
-	<tr>
-    <td> Reported By (*): </td>
 
-    <td> <input name="reportedby" value= "<c:out value='${mar.reportedBy}'/>" type="text">  </td>
-
-
-    </tr>
 	
 
 	<%-- <tr>
@@ -69,7 +63,7 @@
     </tr> --%>
 
 	<tr>
-    <td> <input name="message" value="<c:out value='${MAR.message}'/>" type="text">  </td>
+    <td> <input name="message" value="<c:out value='${MAR.message}'/>" type="text" style ="background-color: white; color: red; border: none; width: 200px"   disabled="disabled" maxlength="60">  </td>
     </tr>
 
 	

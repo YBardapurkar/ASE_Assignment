@@ -148,14 +148,24 @@ public class MAR {
 	//Search unassigned repairs
 	private String searchuser;
 	private String usersearchFilter;
+	private String urg;
 	
-	
-	public void setSearchParam(String searchUser, String usersearchFilter)
+	public void setSearchParam(String searchUser, String usersearchFilter, String urg)
 	{
 		setUser(searchUser);
 		setFilter(usersearchFilter);
+		setUrg(urg);
 	}
 	
+	public String getUrg()
+	{
+		return urg;
+	}
+	
+	public void setUrg(String urg)
+	{
+		this.urg = urg;
+	}
 	
 	public String getUser()
 	{
@@ -185,47 +195,49 @@ public class MAR {
 	
 	
 	
-	public void validateSearchUser(String action, MAR mar, UserError userErrorMsgs) //validating the search user field
+	public UserError validateSearchUser(MAR mar, UserError userErrorMsgs) //validating the search user field
 	{
-			userErrorMsgs.setSearchError(validateSearch(mar.getUser(),mar.getFilter()));
-			userErrorMsgs.setSearchErrorMsg();
+			String error = "";
+			System.out.println("user");
+			System.out.println(mar.getUser() );
+			if (mar.getUser() == null)
+			{
+				error = "Facility type should be selected";
+				System.out.println(error);
+				userErrorMsgs.setSearchError(error);
+				System.out.println("Set urg message");
+			}
+			
+			return userErrorMsgs;
+	}
+	
+	public UserError validateUrgency(MAR mar, UserError userErrorMsgs) //validating the search user field
+	{
+			String error = "";
+			if (mar.getUrg() == null)
+			{
+				error = "Urgency should be selected";
+				userErrorMsgs.setSearchError(error);
+				System.out.println("Set urg message");
+				
+			}
+			return userErrorMsgs;
 			
 	}
 	
-	private String validateSearch(String searchUser, String usersearchFilter) {
-		String result = "";
-		String pattern = "[A-Za-z0-9-_]{6,20}";
+	public UserError validateSearch(String usersearchFilter) {
+		MAR mar = new MAR();
+		UserError err = new UserError();
 		
 		if(usersearchFilter.equals("1"))
 		{
-			if (searchUser.equals("")) 
-				result = "Username should be specified";
-			else if (!Pattern.matches(pattern, searchUser))
-				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
-			
+			err = validateSearchUser(mar,err);
 		}
-		
 		else if(usersearchFilter.equals("2"))
 		{
-			if(searchUser.equals("")) 
-				result = "Role should be specified";
-			else if(!(searchUser.equals("Student") || searchUser.equals("Faculty") ||
-					searchUser.equals("Facility Manager") || searchUser.equals("Repairer") || searchUser.equals("Admin")))
-			{
-				result="role should be Student, Faculty, Facility Manager, Repairer or Admin";
-			}
-		
+				err = validateUrgency(mar,err);
 		}
-		else if(usersearchFilter.equals("3"))
-			{
-				if(!searchUser.equals(""))
-				{
-					result = "search user field should be empty";
-				}
-			}
-			
-		
-		return result;
+		return err;
 		}
 	
 	
