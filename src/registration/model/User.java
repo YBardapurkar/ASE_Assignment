@@ -185,6 +185,8 @@ public class User implements Serializable{
 		} else if (action.equals(ACTION_LOGIN)) {
 			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
 			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			
+			userErrorMsgs.setErrorMsg();
 		}
 	}
 	
