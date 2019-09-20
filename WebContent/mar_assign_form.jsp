@@ -44,6 +44,7 @@ Repair Estimated Time
 </td>
 </tr>
 </table>
+<td> <input name="username_error"  value="<c:out value='${message.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
 
 </form>
 

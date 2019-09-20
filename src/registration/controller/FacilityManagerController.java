@@ -1,6 +1,7 @@
 package registration.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import registration.data.AssignmentDAO;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
+import registration.model.AssignmentMessage;
 import registration.model.MAR;
 import registration.model.User;
 
@@ -80,22 +82,34 @@ public class FacilityManagerController extends HttpServlet{
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		
+		AssignmentMessage assignmentMessage = new AssignmentMessage();
+		
 		if (action.equals("assignRepairer")) {
 			int estimate = Integer.parseInt(request.getParameter("estimate"));
 			int marId = Integer.parseInt(request.getParameter("mar_id"));
 			String repairer = (String) request.getParameter("repairer");
+
+			if (AssignmentDAO.getAssignmentCountByDay(repairer, new Date(System.currentTimeMillis())) < 5) { 
+//				Less than 5, can assign
+				AssignmentDAO.assignRepairer(repairer, estimate, marId);
+				
+			} else {
+//				Cannot assign
+				assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer.");
+			}
 			
-			AssignmentDAO.assignRepairer(repairer, estimate, marId);
-			
+//			save in session
 			MAR mar = MARDAO.getMARByID(marId);
+			session.setAttribute("MAR", mar);
+			session.setAttribute("message", assignmentMessage);
 			
 //			redirect
-			session.setAttribute("MAR", mar);
 			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
-			System.out.println(mar.getAssignedTo());
+			request.getRequestDispatcher("/mar_details_user.jsp").include(request, response);
 			if (mar.getAssignedTo() == null)
 				request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
+			
+			session.removeAttribute("message");
 		}
 	}
 }
