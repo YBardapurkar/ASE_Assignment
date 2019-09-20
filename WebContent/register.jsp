@@ -7,6 +7,7 @@
 <title>Registration Form</title>
 </head>
 <body>
+
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:200px" disabled="disabled">
 <br>
 <br>
@@ -45,7 +46,7 @@
 	<tr>
     <td> role (*): </td>
     <!-- <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>  -->
-    <td><select name=role>
+    <td><select name="role">
     	<c:forEach items="${role_dropdown}" var="item" varStatus="status">
     	<option value="${item}">${item}</option>
     	</c:forEach>
