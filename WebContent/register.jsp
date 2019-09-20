@@ -8,7 +8,7 @@
 </head>
 <body>
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
-<td> <input name="message" value="<c:out value='${user.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 300px; size: 30"  disabled="disabled" maxlength="30">  </td>
+<input name="message" value="<c:out value='${user.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 300px; size: 30"  disabled="disabled" maxlength="30"> 
 
 <table>
   <tr>

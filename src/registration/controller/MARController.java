@@ -20,10 +20,13 @@ import registration.model.User;
 import registration.model.UserError;
 
 
+
 //Ajinkya
 
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
+
+
 
 /* Author : Ajinkya Vadane 
  * Controller : MAR
@@ -109,58 +112,63 @@ public class MARController extends HttpServlet{
 
 	public void getSearchParam(HttpServletRequest request, MAR mar)
 	{
-		mar.setSearchParam(request.getParameter("searchunassignedMAR"),request.getParameter("marsearchFilter"));  //setting search parameters
+		
+		mar.setSearchParam(request.getParameter("searchunassignedMAR"),request.getParameter("marsearchFilter"), request.getParameter("urgency"));  //setting search parameters
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 
-		MAR newMar = new MAR();
+		if (action.equals("save_mar")) {
+			MAR newMar = new MAR();
 
-		MARError marErrorMsgs = new MARError();
+			MARError marErrorMsgs = new MARError();
 
-		session.removeAttribute("MAR");
-		session.removeAttribute("allMAR");
-		session.removeAttribute("errorMsgs");
+			session.removeAttribute("MAR");
+			session.removeAttribute("allMAR");
+			session.removeAttribute("errorMsgs");
 
-		newMar = getMarParam(request);
-		newMar.validateMar(action, newMar, marErrorMsgs);
-		//session.setAttribute("MAR", newMar);	
+			newMar = getMarParam(request);
+			newMar.validateMar(action, newMar, marErrorMsgs);
+			//session.setAttribute("MAR", newMar);	
 
-		if (!marErrorMsgs.getDescriptionError().equals("")) {
-			//			if error messages
-			session.setAttribute("errorMsgs", marErrorMsgs);
-			request.getRequestDispatcher("/mar_form.jsp").include(request, response);
+			if (!marErrorMsgs.getDescriptionError().equals("")) {
+				//			if error messages
+				session.setAttribute("errorMsgs", marErrorMsgs);
+				request.getRequestDispatcher("/mar_form.jsp").include(request, response);
+			}
+			else {
+				//			if no error messages
+				MARDAO.insertmar(newMar);//Insert into database			
+				newMar.setMessage("mar is created");
+				session.setAttribute("MAR", newMar);	
+				
+				request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_form.jsp").include(request, response);
+
+			}
 		}
-		else {
-			//			if no error messages
-			MARDAO.insertmar(newMar);//Insert into database			
-			newMar.setMessage("mar is created");
-			session.setAttribute("MAR", newMar);	
-			
-			request.getRequestDispatcher("/menu_mar.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_form.jsp").include(request, response);
-
-		}
-
-
-		int selectedUserIndex;
-		//session.removeAttribute("admin");
-		//session.removeAttribute("cerrorMsgs");
-		session.removeAttribute("error");
 		
-		MAR mar = new MAR(); //creating object for class admin
-		UserError UserErrors = new UserError();
-		session.setAttribute("MAR", mar);
-		//session.removeAttribute("errorMsgs");
-		
-		ArrayList<User> usersListInDB = new ArrayList<User>();//change var name
-		 
-		if(action.equals("Submit"))  
+		else if(action.equals("searchUnassignedMAR"))  
 		{
+			int selectedUserIndex;
+			//session.removeAttribute("admin");
+			//session.removeAttribute("cerrorMsgs");
+			session.removeAttribute("error");
+			
+			MAR mar = new MAR();
+			MARDAO mardao =  new MARDAO();
+	 		//creating object for class admin
+			UserError UserErrors = new UserError();
+			session.setAttribute("MAR", mar);
+			//session.removeAttribute("errorMsgs");
+			
+			ArrayList<MAR> usersListInDB = new ArrayList<MAR>();//change var name
+			
+			System.out.println("Hello");
 			getSearchParam(request,mar); 
-			mar.validateSearchUser(action,mar, UserErrors);
+			UserErrors = mar.validateSearch(request.getParameter("marsearchFilter"));
 			
 			
 			if (!UserErrors.getSearchError().equals("")) {
@@ -171,21 +179,25 @@ public class MARController extends HttpServlet{
 			
 			else {
 //				if no error messages
-				usersListInDB = UserDAO.searchUsersByAdmin(mar.getUser(),mar.getFilter());	
-				session.setAttribute("USERS", usersListInDB);
+				
+				usersListInDB = MARDAO.searchUnassignedMAR(mar.getUser(),mar.getFilter(), mar.getUrg()) ;
+
+				session.setAttribute("listMAR", usersListInDB);
+				System.out.println("outside function");
 				if(usersListInDB.size() == 0)
 				{
 					session.setAttribute("userErrors", UserErrors);
-					UserErrors.setSearchError("User does not exist");
-					request.getRequestDispatcher("/search_user.jsp").include(request, response);
+					System.out.println("inside function");
+					System.out.println(UserErrors.getSearchError());
+
+					request.getRequestDispatcher("/searchUnassignedMAR.jsp").include(request, response);
 					
 				}
 				else
 				{
 					session.removeAttribute("userErrors");
-					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/search_user.jsp").include(request, response);
-					request.getRequestDispatcher("/list_users.jsp").include(request, response);
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/searchUnassignedMArList.jsp").include(request, response);
 				}
 				
 			}

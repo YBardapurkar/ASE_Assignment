@@ -106,9 +106,8 @@ public class AdminController extends HttpServlet {
 			if (!UserErrors.getSearchError().equals("")) {
 //				if error messages
 				session.setAttribute("userErrors", UserErrors);
-				
+
 				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-				request.getRequestDispatcher("/search_user.jsp").include(request, response);
 				request.getRequestDispatcher("/search_user.jsp").include(request, response);
 			}
 			
@@ -120,7 +119,7 @@ public class AdminController extends HttpServlet {
 				{
 					session.setAttribute("userErrors", UserErrors);
 					UserErrors.setSearchError("No Users found");
-					
+
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/search_user.jsp").include(request, response);
 					
@@ -159,14 +158,16 @@ public class AdminController extends HttpServlet {
 						usersListInDB.get(selectedUserIndex).getZipcode()
 						);
 				session.setAttribute("USERS", User);
-				request.getRequestDispatcher("/change_role.jsp").include(request, response);
-				//request.getRequestDispatcher("/specific_user.jsp").include(request, response);
+				//request.getRequestDispatcher("/change_role.jsp").include(request, response);
+				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+				request.getRequestDispatcher("/specific_user.jsp").include(request, response);
 			}
 			else { // determine if Submit button was clicked without selecting a user
 				if (request.getParameter("ListSelectedUserButton")!=null) {
 					String error =  "Please select a User";
 					
 					session.setAttribute("error",error);
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/list_users.jsp").include(request, response);
 					
 					}
