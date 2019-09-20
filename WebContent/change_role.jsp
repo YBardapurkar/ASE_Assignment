@@ -72,9 +72,9 @@
     </tr>    	
 
 
-	<tr>
+	<%-- <tr>
     <td> <input name="message" value="<c:out value='${changerole.message}'/>" type="text" maxlength="45" type="hidden">  </td>
-    </tr> 
+    </tr> --%> 
 
     </table>
     <input name="action" value="change_role" type="hidden">
