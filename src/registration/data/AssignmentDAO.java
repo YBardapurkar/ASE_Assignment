@@ -5,12 +5,36 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.sql.Date;
+import java.sql.ResultSet;
 
 import registration.util.SQLConnection;
 
 public class AssignmentDAO {
 	static SQLConnection DBMgr = SQLConnection.getInstance();
 	
+//	get count of mars assigned to a repairer on a given date
+	public static int getAssignmentCountByDay(String username, Date date)
+	{
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		int result = 0;
+		
+		String day = date.toString().split(" ")[0];
+		String queryString = "SELECT count(*) FROM macrepairsys.assignment "
+				+ "where date(assigned_date) = '" + day + "' and assigned_to = '" + username + "'";
+		try{
+			stmt = conn.createStatement();
+			ResultSet resultSet = stmt.executeQuery(queryString); 
+			resultSet.next();
+			result = resultSet.getInt(1);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+	
+//	assign a repairer to the given mar
 	public static void assignRepairer(String username, int duration, int marId) {
 		
 		Statement stmt = null;
@@ -18,7 +42,6 @@ public class AssignmentDAO {
 		
 		LocalDateTime now = LocalDateTime.now();
 		Timestamp sqlNow = Timestamp.valueOf(now);
-		
 		String queryString = "insert into assignment (mar_id, assigned_to, assigned_date, estimate_repair) ";
 		try{
 			stmt = conn.createStatement();
