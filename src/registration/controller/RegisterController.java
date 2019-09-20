@@ -72,7 +72,7 @@ public class RegisterController extends HttpServlet{
 			UserDAO.insertuser(newUser);
 			session.setAttribute("role_dropdown", getRoles());
 			
-			newUser.setMessage("data is inserted");
+			newUser.setMessage("Registration is successful");
 			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 			request.getRequestDispatcher("/register.jsp").include(request, response);
 		}
