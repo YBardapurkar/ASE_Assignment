@@ -353,19 +353,19 @@ public class User implements Serializable{
 	
 	private String validateState(String state) {
 		String result;
-		String pattern3 = "[/^[A-Za-z\\S]$/]";
-//		boolean b3 = Pattern.matches(pattern3, state);
+		
+
 		
 		if (state.equals("")) {
 			result = "State is a required field";
-		} else if (!stringSize(state,3,30))
-			result="state should be between 3 and 30 characters long";
-		else if (state.matches(pattern3))
-			result="state should not contain digits";
+			return result;	
+		}
 		else
+		{
 			result = "";
+			return result;
+		}
 		
-		return result;		
 	}
 	
 	private String validatecity(String city) {
