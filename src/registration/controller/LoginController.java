@@ -29,10 +29,7 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		session.removeAttribute("errorMsgs");
-		
+		// TODO Auto-generated method stub
 		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 		request.getRequestDispatcher("/login.jsp").include(request, response);
 	}

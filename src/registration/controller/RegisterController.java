@@ -23,8 +23,6 @@ public class RegisterController extends HttpServlet{
 		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		session.removeAttribute("errorMsgs");
 		
 		session.setAttribute("role_dropdown", getRoles());
 		
