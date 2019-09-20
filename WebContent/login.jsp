@@ -7,7 +7,7 @@
 <title>LOG IN</title>
 </head>
 <body>
-<!-- <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">  -->
+<input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
 <table>
   <tr>
    <td>

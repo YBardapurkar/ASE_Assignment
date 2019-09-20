@@ -54,7 +54,7 @@ public class LoginController extends HttpServlet {
 		user.validateUser("login", user, userErrorMsgs);
 
 		user = UserDAO.login(user.getUsername(), user.getPassword());
-		if (UserDAO.usernameUnique(user.getUsername())) {
+		if (user.getUsername() == null && user.getPassword() == null) {
 			String result="username does not exist in database";
 			
 			userErrorMsgs.setErrorMsg(result);
