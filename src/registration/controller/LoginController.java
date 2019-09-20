@@ -46,17 +46,28 @@ public class LoginController extends HttpServlet {
 		
 		session.removeAttribute("user");
 		session.removeAttribute("errorMsgs");
-		
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		//String username = request.getParameter("username");
+		//String password = request.getParameter("password");
 
 		user.validateUser("login", user, userErrorMsgs);
-		user = UserDAO.login(username, password);
+
+		user = UserDAO.login(user.getUsername(), user.getPassword());
+		if (UserDAO.usernameUnique(user.getUsername())) {
+			String result="username does not exist in database";
+			
+			userErrorMsgs.setErrorMsg(result);
+			System.out.println(userErrorMsgs.getErrorMsg());
+		} 
+		
+		
 		session.setAttribute("user", user);
+		
 		
 		if (user.getRole() == null) {
 			role = "";
-			userErrorMsgs.setErrorMsg("User not Found");
+			//userErrorMsgs.setErrorMsg("User not Found");
 		} else {
 			role = user.getRole();
 		}
@@ -84,6 +95,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("errorMsgs", userErrorMsgs);
 			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 			request.getRequestDispatcher("/login.jsp").include(request, response);
+			session.removeAttribute("errorMsgs");
 		}
 	}
 

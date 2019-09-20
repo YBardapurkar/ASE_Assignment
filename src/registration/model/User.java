@@ -205,14 +205,14 @@ public class User implements Serializable{
 			}
 		} 
 //		validate login
-		else if(action.equals(ACTION_LOGIN)) {
+		if(action.equals(ACTION_LOGIN)) {
+			System.out.println(username);
+			
 			if (username == null || username.equals("")) {
 				result = "Username is a required field";
 			} else if (!Pattern.matches(pattern, username))
 				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
-			else if (UserDAO.usernameUnique(username)) {
-				result="username does not exist in database";
-			} else {
+			else {
 				result = "";
 			}
 		} 
