@@ -222,14 +222,14 @@ public class User implements Serializable{
 	
 	private String validatePassword(String action, String password) {
 		String result;
-		String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@*#$%^&+=-_])[A-Za-z0-9@#$%*^&+=-_]{6,30}";
+		String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@*#$%^/?&+=-_])[A-Za-z0-9!@#$%*^?/&+=-_]{6,30}";
 		
 //		Validate register
 		if(action.equals(ACTION_SAVE_USER)) {
 			if (password.equals("")) {
 				result = "Password is a required field";
 			} else if (!Pattern.matches(pattern, password))
-				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character with length between 6 to 30 characters";
+				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
 			else {
 				result = "";
 			}
@@ -375,8 +375,8 @@ public class User implements Serializable{
 		
 		if (city.equals("")) {
 			result = "City is a required field";
-		} else if (!stringSize(city,3,30))
-			result="city should be between 3 and 30 characters long";
+		} else if (!stringSize(city,2,15))
+			result="city should be between 2 and 15 characters long";
 		else if (city.matches(pattern3))
 			result="city should not contain digits";
 		else
