@@ -170,4 +170,6 @@ public class UserDAO {
 	public static ArrayList<User> getUserByRole(String role) {  
 		return ReturnMatchingUsersList(" SELECT * from registration where role = '" + role + "'");
 	}
+	
+	
 }

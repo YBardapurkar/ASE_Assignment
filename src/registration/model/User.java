@@ -182,6 +182,9 @@ public class User implements Serializable{
 			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
+		} else if (action.equals(ACTION_LOGIN)) {
+			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
 		}
 	}
 	
@@ -203,7 +206,7 @@ public class User implements Serializable{
 		} 
 //		validate login
 		else if(action.equals(ACTION_LOGIN)) {
-			if (username.equals("")) {
+			if (username == null || username.equals("")) {
 				result = "Username is a required field";
 			} else if (!Pattern.matches(pattern, username))
 				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
@@ -236,7 +239,7 @@ public class User implements Serializable{
 		} 
 //		validate login
 		else if(action.equals(ACTION_LOGIN)) {
-			if (password.equals("")) {
+			if (password == null || password.equals("")) {
 				result = "Password is a required field";
 			} else {
 				result = "";
