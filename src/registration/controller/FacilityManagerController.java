@@ -28,51 +28,57 @@ public class FacilityManagerController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		session.removeAttribute("MAR");
-		session.removeAttribute("listMAR");
-		session.removeAttribute("errorMsgs");
+		session.removeAttribute("mar");				// single MAR object
+		session.removeAttribute("list_mar");		// list of MAR objects
+		session.removeAttribute("errorMsgs");		// single MAR message
+		session.removeAttribute("list_repairers");	// list of repairer users
 		
-		User currentUser = (User) session.getAttribute("user");
+		User currentUser = (User) session.getAttribute("current_user");
+		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
 		
-		session.setAttribute("listRepairers", UserDAO.getUsersByRole("Repairer"));
-
-//		SHow MAR details
-		if (request.getParameter("mar_id") != null) {
-			int id = Integer.parseInt(request.getParameter("mar_id"));
-			MAR mar = MARDAO.getMARByID(id);
+//		user not logged in
+		if (currentUser == null) {
 			
-			session.setAttribute("MAR", mar);
-			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_details.jsp").include(request, response);
-			System.out.println(mar.getAssignedTo());
-			if (mar.getAssignedTo() == null)
-				request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
+			response.sendRedirect("login");
 		}
-//		Show All MAR
-		else if (request.getParameter("mar_list") != null) {
-			List<MAR> marList = new ArrayList<MAR>();
-			marList.addAll(MARDAO.getAllMAR());
-			session.setAttribute("listMAR", marList);
-			
-			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_table_fm.jsp").include(request, response);
-		}
-//		Show unassigned MAR
-		else if (request.getParameter("unassigned_mar") != null) {
-			List<MAR> marList = new ArrayList<MAR>();
-			marList.addAll(MARDAO.getUnassignedMAR());
-			session.setAttribute("listMAR", marList);
-			
-			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_table_fm.jsp").include(request, response);
-		}
-//		Show Facility Manager Homepage
+//		logged in
 		else {
-			session.removeAttribute("MAR");
-			session.removeAttribute("listMAR");
-			
-			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/home_fm.jsp").include(request, response);
+
+//			SHow MAR details
+			if (request.getParameter("mar_id") != null) {
+				int id = Integer.parseInt(request.getParameter("mar_id"));
+				MAR mar = MARDAO.getMARByID(id);
+				session.setAttribute("mar", mar);
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+				if (mar.getAssignedTo() == null)
+					request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
+			}
+//			Show All MAR
+			else if (request.getParameter("mar_list") != null) {
+				List<MAR> marList = new ArrayList<MAR>();
+				marList.addAll(MARDAO.getAllMAR());
+				session.setAttribute("list_mar", marList);
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
+			}
+//			Show unassigned MAR
+			else if (request.getParameter("unassigned_mar") != null) {
+				List<MAR> marList = new ArrayList<MAR>();
+				marList.addAll(MARDAO.getUnassignedMAR());
+				session.setAttribute("list_mar", marList);
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
+			}
+//			Show Facility Manager Homepage
+			else {
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/home_fm.jsp").include(request, response);
+			}
 		}
 	}
 	
@@ -80,36 +86,51 @@ public class FacilityManagerController extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		session.removeAttribute("mar");				// single MAR object
+		session.removeAttribute("list_mar");		// list of MAR objects
+		session.removeAttribute("errorMsgs");		// single MAR message
+		session.removeAttribute("list_repairers");	// list of repairer users
+		
 		String action = request.getParameter("action");
 		
+		User currentUser = (User) session.getAttribute("current_user");
 		AssignmentMessage assignmentMessage = new AssignmentMessage();
 		
-		if (action.equals("assignRepairer")) {
-			int estimate = Integer.parseInt(request.getParameter("estimate"));
-			int marId = Integer.parseInt(request.getParameter("mar_id"));
-			String repairer = (String) request.getParameter("repairer");
-
-			if (AssignmentDAO.getAssignmentCountByDay(repairer, new Date(System.currentTimeMillis())) < 5) { 
-//				Less than 5, can assign
-				AssignmentDAO.assignRepairer(repairer, estimate, marId);
+//		user not logged in
+		if (currentUser == null) {
+			
+			response.sendRedirect("login");
+		}
+//		logged in
+		else {
+			
+//			Assign a repairer to a mar
+			if (action.equals("assign_repairer")) {
+				int estimate = Integer.parseInt(request.getParameter("estimate"));
+				int marId = Integer.parseInt(request.getParameter("mar_id"));
+				String repairer = (String) request.getParameter("repairer");
+	
+				if (AssignmentDAO.getAssignmentCountByDay(repairer, new Date(System.currentTimeMillis())) >= 5) { 
+//					More than 5 in a day, cannot assign
+					assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer.");
+				} else {
+//					can assign
+					AssignmentDAO.assignRepairer(repairer, estimate, marId);
+				}
 				
-			} else {
-//				Cannot assign
-				assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer.");
+//				save in session
+				MAR mar = MARDAO.getMARByID(marId);
+				session.setAttribute("mar", mar);
+				session.setAttribute("message", assignmentMessage);
+				
+//				redirect
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+				if (mar.getAssignedTo() == null)
+					request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
+				
+				session.removeAttribute("message");
 			}
-			
-//			save in session
-			MAR mar = MARDAO.getMARByID(marId);
-			session.setAttribute("MAR", mar);
-			session.setAttribute("message", assignmentMessage);
-			
-//			redirect
-			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/mar_details_user.jsp").include(request, response);
-			if (mar.getAssignedTo() == null)
-				request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
-			
-			session.removeAttribute("message");
 		}
 	}
 }

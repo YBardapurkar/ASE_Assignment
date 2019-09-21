@@ -7,7 +7,7 @@
 <title>MAR details</title>
 </head>
 <body>
-<a href="home?list_mar">Back</a>
+<!-- <a href="mar">Back</a> -->
 
 <table>
 
@@ -29,6 +29,11 @@
 <tr>
 <th>Urgency</th>
 <td><c:out value="${mar.urgency}"></c:out></td>
+</tr>
+
+<tr>
+<th>Assigned to</th>
+<td><c:out value="${mar.assignedTo}"></c:out></td>
 </tr>
 
 </table>

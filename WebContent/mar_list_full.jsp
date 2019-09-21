@@ -9,31 +9,28 @@
 <body>
 
 <input name="errMsg"  value="<c:out value='${errorMsgs}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
-     <div class="mainbar"><div class="submb"></div></div>
+    <div class="mainbar"><div class="submb"></div></div>
       
- <form action="mar" method="post">          
-       <table border="1" class="myTable"> 
-			<tr class="myTableRow"> 
-				<th class="myTableHead" style="padding-right: 20px; text-align: left">ID</th>
-				<th class="myTableHead" style="padding-right: 35px; text-align: left">Facility Name</th> 
-				<th class="myTableHead" style="padding-right: 20px; text-align: left">Urgency</th>
-				<th class="myTableHead" style="padding-right: 30px; text-align: left">Description</th> 
-				<th class="myTableHead" style="padding-right: 30px; text-align: left">Assigned to</th> 
-			</tr>
+	<table border="1" class="myTable"> 
+		<tr class="myTableRow"> 
+			<th class="myTableHead" style="padding-right: 20px; text-align: left">ID</th>
+			<th class="myTableHead" style="padding-right: 35px; text-align: left">Facility Name</th> 
+			<th class="myTableHead" style="padding-right: 20px; text-align: left">Urgency</th>
+			<th class="myTableHead" style="padding-right: 30px; text-align: left">Description</th> 
+			<th class="myTableHead" style="padding-right: 30px; text-align: left">Assigned to</th> 
+		</tr>
 
- 		<c:forEach items="${listMAR}" var="item" varStatus="status">
-			<tr class="myTableRow">
+ 		<c:forEach items="${list_mar}" var="item" varStatus="status">
+		<tr class="myTableRow">
 			<td class="myTableCell" style="padding-right: 20px; "><c:out value="${item.id}" /></td>
 			<td class="myTableCell" style="padding-right: 35px; "><c:out value="${item.facilityName}" /></td>
 			<td class="myTableCell" style="padding-right: 20px; "><c:out value="${item.urgency}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.description}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.assignedTo}" /></td>
             <td> <a href="facility_manager?mar_id=<c:out value='${item.id}' />">View</a></td>
-			</tr>
+		</tr>
 		</c:forEach>
  </table>
-<!-- <input name="ListMARButton" type="submit" value="Submit"> -->
- </form>
  
 </body>
 </html>

@@ -29,7 +29,10 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		session.removeAttribute("errorMsgs");
+		
 		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 		request.getRequestDispatcher("/login.jsp").include(request, response);
 	}
@@ -38,14 +41,15 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String role;
 		HttpSession session = request.getSession();
-
-		User user = new User();
-		UserError userErrorMsgs = new UserError();
 		
 		session.removeAttribute("user");
 		session.removeAttribute("errorMsgs");
+
+		String role;
+		User user = new User();
+		UserError userErrorMsgs = new UserError();
+		
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(request.getParameter("password"));
 		//String username = request.getParameter("username");
@@ -62,7 +66,7 @@ public class LoginController extends HttpServlet {
 		} 
 		
 		
-		session.setAttribute("user", user);
+		session.setAttribute("current_user", user);
 		
 		
 		if (user.getRole() == null) {
@@ -78,17 +82,13 @@ public class LoginController extends HttpServlet {
 			session.removeAttribute("errorMsgs");
 			
 			if (role.equals("Admin")) {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "admin");
+				response.sendRedirect("admin");
 			} else if(role.equals("Facility Manager")) {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "facility_manager");
+				response.sendRedirect("facility_manager");
 			} else if (role.equals("Repairer")) {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "repairer");
+				response.sendRedirect("repairer");
 			} else {
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home");
+				response.sendRedirect("home");
 			} 
 		} else {
 //			error messages

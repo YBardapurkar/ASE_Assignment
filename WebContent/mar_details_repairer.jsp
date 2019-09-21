@@ -13,22 +13,22 @@
 
 <tr>
 <th>ID</th>
-<td><c:out value="${MAR.id}"></c:out></td>
+<td><c:out value="${mar.id}"></c:out></td>
 </tr>
 
 <tr>
 <th>Facility Name</th>
-<td><c:out value="${MAR.facilityName}"></c:out></td>
+<td><c:out value="${mar.facilityName}"></c:out></td>
 </tr>
 
 <tr>
 <th>Description</th>
-<td><c:out value="${MAR.description}"></c:out></td>
+<td><c:out value="${mar.description}"></c:out></td>
 </tr>
 
 <tr>
 <th>Urgency</th>
-<td><c:out value="${MAR.urgency}"></c:out></td>
+<td><c:out value="${mar.urgency}"></c:out></td>
 </tr>
 
 </table>

@@ -24,7 +24,7 @@ public class AdminController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();   //defining the session parameter
-		User currentUser = (User) session.getAttribute("user");
+		User currentUser = (User) session.getAttribute("current_user");
 		
 		session.removeAttribute("error");
 		session.removeAttribute("USERS");
@@ -89,7 +89,7 @@ public class AdminController extends HttpServlet {
 
 		String action = request.getParameter("action");  //defining the action parameter
 		HttpSession session = request.getSession();   //defining the session parameter
-		User currentUser = (User) session.getAttribute("user");
+		User currentUser = (User) session.getAttribute("current_user");
 		
 		session.removeAttribute("error");
 		session.removeAttribute("USERS");

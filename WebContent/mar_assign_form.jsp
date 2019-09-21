@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h2>Assign a Repairer</h2>
+<h3>Assign a Repairer</h3>
 <form action="facility_manager" method="post" >
 <table>
 
@@ -39,7 +39,7 @@ Repair Estimated Time
 <tr>
 <td>
 <input name="mar_id" type="hidden" value="${MAR.id}" >
-<input name="action" type="hidden" value="assignRepairer" >
+<input name="action" type="hidden" value="assign_repairer" >
 <input type="submit" value="Assign">
 </td>
 </tr>
