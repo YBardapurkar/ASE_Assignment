@@ -20,14 +20,47 @@ public class RegisterController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
 		HttpSession session = request.getSession();
+		session.removeAttribute("user");			// single User object
+		session.removeAttribute("current_user");	// logged in user
+		session.removeAttribute("errorMsgs");		// single User message object
 		
 		session.setAttribute("role_dropdown", getRoles());
 		
 		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 		request.getRequestDispatcher("/register.jsp").include(request, response);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");			// single User object
+		session.removeAttribute("current_user");	// logged in user
+		session.removeAttribute("errorMsgs");		// single User message object
+		
+		User newUser = new User();
+		UserError userErrorMsgs = new UserError();
+		
+		newUser = getUserParam(request);
+		newUser.validateUser(action, newUser, userErrorMsgs);
+		
+		if (!userErrorMsgs.getErrorMsg().equals("")) {
+//			if error messages
+			session.setAttribute("user", newUser);	
+			session.setAttribute("errorMsgs", userErrorMsgs);
+			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+			request.getRequestDispatcher("/register.jsp").include(request, response);
+		}
+		else {
+//			if no error messages
+			UserDAO.insertUser(newUser);
+			session.setAttribute("role_dropdown", getRoles());
+			
+			newUser.setMessage("Registration is successful");
+			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+			request.getRequestDispatcher("/register.jsp").include(request, response);
+		}
 	}
 	
 	private User getUserParam (HttpServletRequest request) {
@@ -47,35 +80,6 @@ public class RegisterController extends HttpServlet{
 		user.setZipcode(request.getParameter("zipcode"));
 		
 		return user;
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-		HttpSession session = request.getSession();
-		User newUser = new User();
-		UserError userErrorMsgs = new UserError();
-		session.removeAttribute("errorMsgs");
-		
-		newUser = getUserParam(request);
-		newUser.validateUser(action, newUser, userErrorMsgs);
-		session.setAttribute("user", newUser);	
-		
-		if (!userErrorMsgs.getErrorMsg().equals("")) {
-//			if error messages
-			session.setAttribute("errorMsgs", userErrorMsgs);
-			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-			request.getRequestDispatcher("/register.jsp").include(request, response);
-		}
-		else {
-//			if no error messages
-			UserDAO.insertuser(newUser);
-			session.setAttribute("role_dropdown", getRoles());
-			
-			newUser.setMessage("Registration is successful");
-			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-			request.getRequestDispatcher("/register.jsp").include(request, response);
-		}
 	}
 	
 	private ArrayList<String> getRoles() {

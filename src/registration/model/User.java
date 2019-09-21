@@ -207,7 +207,7 @@ public class User implements Serializable{
 			}
 		} 
 //		validate login
-		if(action.equals(ACTION_LOGIN)) {
+		else if(action.equals(ACTION_LOGIN)) {
 			System.out.println(username);
 			
 			if (username == null || username.equals("")) {

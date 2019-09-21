@@ -72,7 +72,7 @@ public class UserDAO {
 		}
 	}
 
-	public static void insertuser(User user) {  
+	public static void insertUser(User user) {  
 		StoreListinDB(user,"INSERT INTO registration(username,password,firstname,lastname,role,utaid,phonenumber,email,street,city,state,zipcode) ");
 	}
 
@@ -81,9 +81,9 @@ public class UserDAO {
 		return (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+username+"'").isEmpty());
 	}
 	
-	
-	
-
+//	to check if the user is present in the database or not.
+//	if user is present, the username and role fields will be set
+//	otherwise they will be null
 	public static User login(String username, String password)  {
 		String query = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"' ORDER BY username";
 		Statement stmt = null;
@@ -104,7 +104,7 @@ public class UserDAO {
 		return user;
 	}
 	
-
+//	Update role
 	public static void updateDetails(String username, String role) {
 		String query1 = "UPDATE registration " + "SET " + "role = '" + role + "' "+"WHERE username ='" + username + "'" + ";";
 
@@ -125,38 +125,15 @@ public class UserDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
-
 	}
-	
-	public static ArrayList<User> searchUsersByAdmin(String searchField, String filter)  {
-		
-		
-		if(filter.equals("1"))
-		{
-			return (ReturnMatchingUsersList(" SELECT * from registration WHERE username = '"+searchField+"' "));
-		}
-		
-		else if(filter.equals("2"))
-		{
-			return (ReturnMatchingUsersList(" SELECT * from registration WHERE role = '"+searchField+"' "));
-		}
-		
-		else 
-		{
-			return (ReturnMatchingUsersList("SELECT * from registration ORDER BY username"));			
-		}
-		
 
-}
-	
 //	List all users
 	public static ArrayList<User> listUsers() {  
 		return (ReturnMatchingUsersList(" SELECT * from registration ORDER BY username"));
 	}
 
-//	Find user by username
+//	Find user by username (exact match)
 	public static User getUserByUsername(String username) {  
 		List<User> users = (ReturnMatchingUsersList(" SELECT * from registration where username = '" + username + "'"));
 		if (users.isEmpty()) {
@@ -166,7 +143,7 @@ public class UserDAO {
 		}
 	}
 	
-//	Find users by role
+//	Find users by role (exact match)
 	public static ArrayList<User> getUsersByRole(String role) {  
 		return ReturnMatchingUsersList(" SELECT * from registration where role = '" + role + "'");
 	}
@@ -174,12 +151,10 @@ public class UserDAO {
 //	Search users by matching username
 	public static ArrayList<User> searchUsersByUsername(String username) {  
 		return ReturnMatchingUsersList(" SELECT * from registration where username like '%" + username + "%'");
-
 	}
 	
 //	Search users by matching role
 	public static ArrayList<User> searchUsersByRole(String role) {  
 		return ReturnMatchingUsersList(" SELECT * from registration where role like '%" + role + "%'");
 	}
-	
 }

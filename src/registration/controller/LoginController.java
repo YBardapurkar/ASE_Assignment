@@ -30,8 +30,9 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		session.removeAttribute("errorMsgs");
+		session.removeAttribute("user");			// single User object
+		session.removeAttribute("current_user");	// logged in user
+		session.removeAttribute("errorMsgs");		// single User message object
 		
 		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 		request.getRequestDispatcher("/login.jsp").include(request, response);
@@ -42,60 +43,50 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
-		session.removeAttribute("user");
-		session.removeAttribute("errorMsgs");
+		session.removeAttribute("user");			// single User object
+		session.removeAttribute("current_user");	// logged in user
+		session.removeAttribute("errorMsgs");		// single User message object
 
-		String role;
 		User user = new User();
 		UserError userErrorMsgs = new UserError();
 		
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(request.getParameter("password"));
-		//String username = request.getParameter("username");
-		//String password = request.getParameter("password");
 
 		user.validateUser("login", user, userErrorMsgs);
-
-		user = UserDAO.login(user.getUsername(), user.getPassword());
-		if (user.getUsername() == null && user.getPassword() == null) {
-			String result="username does not exist in database";
-			
-			userErrorMsgs.setErrorMsg(result);
-			System.out.println(userErrorMsgs.getErrorMsg());
-		} 
-		
-		
-		session.setAttribute("current_user", user);
-		
-		
-		if (user.getRole() == null) {
-			role = "";
-			//userErrorMsgs.setErrorMsg("User not Found");
-		} else {
-			role = user.getRole();
-		}
-		
+		user.setPassword("");
+		session.setAttribute("user", user);
 		if (userErrorMsgs.getErrorMsg().equals("")) {
 //			no error messages
 			
-			session.removeAttribute("errorMsgs");
+			User loginUser = UserDAO.login(user.getUsername(), user.getPassword());
 			
-			if (role.equals("Admin")) {
-				response.sendRedirect("admin");
-			} else if(role.equals("Facility Manager")) {
-				response.sendRedirect("facility_manager");
-			} else if (role.equals("Repairer")) {
-				response.sendRedirect("repairer");
-			} else {
-				response.sendRedirect("home");
+//			User does not exist in the database
+			if (loginUser.getUsername() == null && loginUser.getRole() == null) {
+				String result="username does not exist in database";
+				userErrorMsgs.setErrorMsg(result);
+				session.setAttribute("errorMsgs", userErrorMsgs);
+				request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+				request.getRequestDispatcher("/login.jsp").include(request, response);
 			} 
+//			User found in database
+			else {
+				session.setAttribute("current_user", loginUser);
+				if (loginUser.getRole().equals("Admin")) {
+					response.sendRedirect("admin");
+				} else if(loginUser.getRole().equals("Facility Manager")) {
+					response.sendRedirect("facility_manager");
+				} else if (loginUser.getRole().equals("Repairer")) {
+					response.sendRedirect("repairer");
+				} else {
+					response.sendRedirect("home");
+				} 
+			}
 		} else {
 //			error messages
 			session.setAttribute("errorMsgs", userErrorMsgs);
 			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 			request.getRequestDispatcher("/login.jsp").include(request, response);
-			session.removeAttribute("errorMsgs");
 		}
 	}
 
