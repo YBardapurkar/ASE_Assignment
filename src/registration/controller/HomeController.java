@@ -16,7 +16,6 @@ import registration.data.MARDAO;
 import registration.model.MAR;
 import registration.model.MARError;
 import registration.model.User;
-import registration.model.UserError;
 
 @WebServlet("/home")
 public class HomeController extends HttpServlet{
@@ -26,74 +25,102 @@ public class HomeController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		User currentUser = (User) session.getAttribute("user");
+		session.removeAttribute("mar");				// single MAR object
+		session.removeAttribute("list_mar");		// list of MAR objects
+		session.removeAttribute("errorMsgs");		// single MAR message object
 		
-//		redirect to login if user not found
+		User currentUser = (User) session.getAttribute("current_user");
+		session.setAttribute("current_role", "home");
+    	
+//		user not logged in
 		if (currentUser == null) {
-			response.setStatus(response.SC_MOVED_TEMPORARILY);
-			response.setHeader("Location", "login");
-			return;
-		}
-		
-//		list submitted mars
-		if (request.getParameter("list_mar") != null) {
-			ArrayList<MAR> marList = MARDAO.getMARSubmittedByUser(currentUser.getUsername());
-			session.setAttribute("listMAR", marList);
 			
-			request.getRequestDispatcher("menu_student.jsp").include(request, response);
-			request.getRequestDispatcher("mar_table.jsp").include(request, response);
+			response.sendRedirect("login");
 		}
-//		add mar page
-		else if (request.getParameter("add_mar") != null) {
-			session.removeAttribute("MAR");
-			request.getRequestDispatcher("menu_student.jsp").include(request, response);
-			request.getRequestDispatcher("mar_form.jsp").include(request, response);
-		}
-		
-//		homepage for student/faculty/staff
+//		logged in
 		else {
-			request.getRequestDispatcher("menu_student.jsp").include(request, response);
-			request.getRequestDispatcher("home_student.jsp").include(request, response);
+
+//			list submitted mars
+			if (request.getParameter("list_mar") != null) {
+				ArrayList<MAR> marList = MARDAO.getMARSubmittedByUser(currentUser.getUsername());
+				session.setAttribute("list_mar", marList);
+				
+				request.getRequestDispatcher("menu_student.jsp").include(request, response);
+				request.getRequestDispatcher("mar_list.jsp").include(request, response);
+			}
+//			Show MAR details
+			else if (request.getParameter("mar_id") != null) {
+				int id = Integer.parseInt(request.getParameter("mar_id"));
+				MAR mar = MARDAO.getMARByID(id);
+				session.setAttribute("mar", mar);
+				
+				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_details.jsp").include(request, response);
+			}
+//			add mar page
+			else if (request.getParameter("add_mar") != null) {
+				
+				request.getRequestDispatcher("menu_student.jsp").include(request, response);
+				request.getRequestDispatcher("mar_create_form.jsp").include(request, response);
+			}
+			
+//			homepage for student/faculty/staff
+			else {
+				request.getRequestDispatcher("menu_student.jsp").include(request, response);
+				request.getRequestDispatcher("home_student.jsp").include(request, response);
+			}
 		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
-		User currentUser = (User) session.getAttribute("user");
+		session.removeAttribute("mar");				// single MAR object
+		session.removeAttribute("list_mar");		// list of MAR objects
+		session.removeAttribute("errorMsgs");		// single MAR message object
+		
+		String action = request.getParameter("action");
+		User currentUser = (User) session.getAttribute("current_user");
+		session.setAttribute("current_role", "home");
+		
+//		user not logged in
+		if (currentUser == null) {
+			
+			response.sendRedirect("login");
+		}
+//		logged in
+		else {
 
-		if (action.equals("save_mar")) {
-			MAR newMar = new MAR();
-
-			MARError marErrorMsgs = new MARError();
-
-			session.removeAttribute("MAR");
-			session.removeAttribute("listMAR");
-			session.removeAttribute("errorMsgs");
-
-			newMar = getMarParam(request);
-			newMar.setReportedBy(currentUser.getUsername());
-			newMar.validateMar(action, newMar, marErrorMsgs);
-			//session.setAttribute("MAR", newMar);	
-
-			if (!marErrorMsgs.getDescriptionError().equals("")) {
-				//			if error messages
-				session.setAttribute("MAR", newMar);
-				session.setAttribute("errorMsgs", marErrorMsgs);
-				
-				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
-				request.getRequestDispatcher("/mar_form.jsp").include(request, response);
-			}
-			else {
-				//			if no error messages
-				MARDAO.insertmar(newMar);//Insert into database			
-				newMar.setMessage("mar is created");	
-				session.setAttribute("MAR", newMar);
-				System.out.println(newMar.getMessage());				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
-				request.getRequestDispatcher("/mar_form.jsp").include(request, response);
-
+			if (action.equals("save_mar")) {
+				MAR newMar = new MAR();
+	
+				MARError marErrorMsgs = new MARError();
+	
+				session.removeAttribute("mar");
+				session.removeAttribute("list_mar");
+				session.removeAttribute("errorMsgs");
+	
+				newMar = getMarParam(request);
+				newMar.setReportedBy(currentUser.getUsername());
+				newMar.validateMar(action, newMar, marErrorMsgs);
+	
+				if (!marErrorMsgs.getDescriptionError().equals("")) {
+					//			if error messages
+					session.setAttribute("mar", newMar);
+					session.setAttribute("errorMsgs", marErrorMsgs);
+					
+					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_create_form.jsp").include(request, response);
+				}
+				else {
+					//			if no error messages
+					MARDAO.insertmar(newMar);//Insert into database			
+					newMar.setMessage("mar is created");	
+					session.setAttribute("mar", newMar);
+					
+					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_create_form.jsp").include(request, response);
+				}
 			}
 		}
 	}
@@ -101,9 +128,8 @@ public class HomeController extends HttpServlet{
 	//Ajinkya
 	private MAR getMarParam (HttpServletRequest request) {
 		MAR mar = new MAR();
-		mar.setFacilityName(request.getParameter("facilityname"));
+		mar.setFacilityName(request.getParameter("facility_name"));
 		mar.setDescription(request.getParameter("description"));
-		mar.setReportedBy(request.getParameter("reportedby"));
 		LocalDateTime now = LocalDateTime.now();
 		Timestamp sqlNow = Timestamp.valueOf(now);
 		System.out.println(sqlNow);

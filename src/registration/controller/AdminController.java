@@ -25,6 +25,7 @@ public class AdminController extends HttpServlet {
 		
 		HttpSession session = request.getSession();   //defining the session parameter
 		User currentUser = (User) session.getAttribute("current_user");
+		session.setAttribute("current_role", "admin");
 		
 		session.removeAttribute("error");
 		session.removeAttribute("USERS");
@@ -90,6 +91,7 @@ public class AdminController extends HttpServlet {
 		String action = request.getParameter("action");  //defining the action parameter
 		HttpSession session = request.getSession();   //defining the session parameter
 		User currentUser = (User) session.getAttribute("current_user");
+		session.setAttribute("current_role", "admin");
 		
 		session.removeAttribute("error");
 		session.removeAttribute("USERS");

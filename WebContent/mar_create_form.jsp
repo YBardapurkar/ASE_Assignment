@@ -17,19 +17,19 @@
   
     <tr>
     <td> Facility Name (*): </td>
-  	<td><select name ="facilityname" value = "<c:out value='${MAR.facilityName}' />">
+  	<td><select name ="facility_name" value = "<c:out value='${mar.facilityName}' />">
     	<option>BMC 1</option>
-<option>MR 1</option> 
-<option>MR 2</option> 
-<option>MR 3</option> 
-<option>MR 4</option> 
+		<option>MR 1</option> 
+		<option>MR 2</option> 
+		<option>MR 3</option> 
+		<option>MR 4</option> 
     </select> </td>
     <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     </tr>    	
 
     <tr>
     <td> Urgency (*): </td>
-    <td><select name ="urgency" value = "<c:out value='${MAR.urgency}'/>">
+    <td><select name ="urgency" value = "<c:out value='${mar.urgency}'/>">
     	<option> Minor </option>
     	<option> Major </option>
     	<option> Medium </option>
@@ -45,20 +45,10 @@
     <td> <input name="description_error"  value="<c:out value='${errorMsgs.descriptionError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
     </tr>
 
-
-	
-
-	<%-- <tr>
-    <td> Date(*): </td>
-    <td> <input name="date" value="<c:out value='${mar.date}'/>" type="text" maxlength="45" required>  </td>
-    <td> <input name="date_error"  value="<c:out value='${errorMsgs.dateError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
-    </tr> --%>
-
 	<tr>
     <td> <input name="message" value="<c:out value='${MAR.message}'/>" type="text" style ="background-color: white; color: red; border: none; width: 200px"   disabled="disabled" maxlength="60">  </td>
     </tr>
 
-	
     <tr>
     <td colspan="2">(*) Mandatory field</td>
     </tr>

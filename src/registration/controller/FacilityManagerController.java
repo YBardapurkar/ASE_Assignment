@@ -34,9 +34,8 @@ public class FacilityManagerController extends HttpServlet{
 		session.removeAttribute("list_repairers");	// list of repairer users
 		
 		User currentUser = (User) session.getAttribute("current_user");
-		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
-		
 		session.setAttribute("current_role", "facility_manager");
+		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -96,6 +95,7 @@ public class FacilityManagerController extends HttpServlet{
 		String action = request.getParameter("action");
 		
 		User currentUser = (User) session.getAttribute("current_user");
+		session.setAttribute("current_role", "facility_manager");
 		AssignmentMessage assignmentMessage = new AssignmentMessage();
 		
 //		user not logged in
