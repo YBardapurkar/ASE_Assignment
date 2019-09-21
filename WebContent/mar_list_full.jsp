@@ -27,7 +27,7 @@
 			<td class="myTableCell" style="padding-right: 20px; "><c:out value="${item.urgency}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.description}" /></td>
 			<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.assignedTo}" /></td>
-            <td> <a href="facility_manager?mar_id=<c:out value='${item.id}' />">View</a></td>
+            <td> <a href="${current_role}?mar_id=<c:out value='${item.id}' />">View</a></td>
 		</tr>
 		</c:forEach>
  </table>

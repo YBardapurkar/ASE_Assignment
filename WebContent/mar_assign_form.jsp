@@ -11,7 +11,7 @@ Repairer
 </td>
 <td>
 <select name="repairer">
-	<c:forEach items="${listRepairers}" var="item" varStatus="status">
+	<c:forEach items="${list_repairers}" var="item" varStatus="status">
 		<option value="${item.username}">
 			<c:out value="${item.username}"></c:out>
 		</option>
@@ -38,13 +38,13 @@ Repair Estimated Time
 
 <tr>
 <td>
-<input name="mar_id" type="hidden" value="${MAR.id}" >
+<input name="mar_id" type="hidden" value="${mar.id}" >
 <input name="action" type="hidden" value="assign_repairer" >
 <input type="submit" value="Assign">
 </td>
 </tr>
 </table>
-<td> <input name="username_error"  value="<c:out value='${message.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
+<input name="username_error"  value="<c:out value='${message.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60">
 
 </form>
 

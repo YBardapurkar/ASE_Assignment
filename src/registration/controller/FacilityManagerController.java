@@ -36,6 +36,8 @@ public class FacilityManagerController extends HttpServlet{
 		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
 		
+		session.setAttribute("current_role", "facility_manager");
+		
 //		user not logged in
 		if (currentUser == null) {
 			

@@ -12,66 +12,56 @@ import javax.servlet.http.HttpSession;
 
 import registration.data.MARDAO;
 import registration.model.*;
-/**
- * Servlet implementation class RepairerContoller
- */
+
 @WebServlet("/repairer")
 public class RepairerContoller extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RepairerContoller() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession();
+    	session.removeAttribute("list_mar");		// list of MAR objects
+    	session.removeAttribute("mar");				// list of MAR objects
     	
-    	User currentUser = (User) session.getAttribute("user");
+    	User currentUser = (User) session.getAttribute("current_user");
+    	session.setAttribute("current_role", "repairer");
     	
-//    	Display list of assigned MAR to repairer
-		if (request.getParameter("my_mars") != null) {
-			String username = currentUser.getUsername();
-			System.out.println(username);
-			MAR mar = new MAR();
+//		user not logged in
+		if (currentUser == null) {
 			
-			ArrayList<MAR> marsInDB = new ArrayList<MAR>();
-			marsInDB=MARDAO.listMARS(username, mar);
-			
-			session.setAttribute("MARList", marsInDB);
-			
-			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-			request.getRequestDispatcher("/repairermarlist.jsp").include(request, response);
-//			getServletContext().getRequestDispatcher("/repairermarlist.jsp").forward(request, response);
+			response.sendRedirect("login");
 		}
-//		Show Repairer Homepage
+//		logged in
 		else {
-	    	request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-			request.getRequestDispatcher("/home.jsp").include(request, response);
+    	
+//	    	Display list of assigned MAR to repairer
+			if (request.getParameter("my_mars") != null) {
+				String username = currentUser.getUsername();
+				
+				ArrayList<MAR> listMAR = new ArrayList<MAR>();
+				listMAR = MARDAO.getMARByAssignedRepairer(username);
+				session.setAttribute("list_mar", listMAR);
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
+			}
+			
+//			SHow MAR details
+			else if (request.getParameter("mar_id") != null) {
+				int id = Integer.parseInt(request.getParameter("mar_id"));
+				MAR mar = MARDAO.getMARByID(id);
+				session.setAttribute("mar", mar);
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+			}
+			
+//			Show Repairer Homepage
+			else {
+		    	request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/home_repairer.jsp").include(request, response);
+			}
 		}
     }
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User currentUser = (User) session.getAttribute("user");
-		
-		String action = request.getParameter("listmars");
-		//User user = session.getAttribute("user");
-		String username = currentUser.getUsername();
-		MAR mar = new MAR();
-		if (action.equalsIgnoreCase("List of my MARs")) {
-			ArrayList<MAR> marsInDB = new ArrayList<MAR>();
-			marsInDB=MARDAO.listMARS(username, mar);
-			session.setAttribute("MARList", marsInDB);	
-			getServletContext().getRequestDispatcher("/repairermarlist.jsp").forward(request, response);
-		}
-	}
-
 }
