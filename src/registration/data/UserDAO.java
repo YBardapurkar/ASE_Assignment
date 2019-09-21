@@ -167,9 +167,19 @@ public class UserDAO {
 	}
 	
 //	Find users by role
-	public static ArrayList<User> getUserByRole(String role) {  
+	public static ArrayList<User> getUsersByRole(String role) {  
 		return ReturnMatchingUsersList(" SELECT * from registration where role = '" + role + "'");
 	}
 	
+//	Search users by matching username
+	public static ArrayList<User> searchUsersByUsername(String username) {  
+		return ReturnMatchingUsersList(" SELECT * from registration where username like '%" + username + "%'");
+
+	}
+	
+//	Search users by matching role
+	public static ArrayList<User> searchUsersByRole(String role) {  
+		return ReturnMatchingUsersList(" SELECT * from registration where role like '%" + role + "%'");
+	}
 	
 }

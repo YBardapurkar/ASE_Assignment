@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import registration.data.MARDAO;
 import registration.data.UserDAO;
-import registration.model.Admin;
+import registration.model.UserSearch;
 import registration.model.MAR;
 import registration.model.MARError;
 import registration.model.User;
@@ -36,7 +36,7 @@ import java.sql.Timestamp;
  * */
 
 
-
+@Deprecated
 @WebServlet("/mar")
 public class MARController extends HttpServlet{
 

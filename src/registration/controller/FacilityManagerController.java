@@ -34,7 +34,7 @@ public class FacilityManagerController extends HttpServlet{
 		
 		User currentUser = (User) session.getAttribute("user");
 		
-		session.setAttribute("listRepairers", UserDAO.getUserByRole("Repairer"));
+		session.setAttribute("listRepairers", UserDAO.getUsersByRole("Repairer"));
 
 //		SHow MAR details
 		if (request.getParameter("mar_id") != null) {

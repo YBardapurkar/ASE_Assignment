@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import registration.model.User;
-import registration.model.Admin;
+import registration.model.UserSearch;
 import registration.model.ChangeRole;
 import registration.data.UserDAO;
 import registration.model.UserError;
@@ -19,11 +19,6 @@ import registration.model.UserError;
 public class AdminController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
-	public void getSearchParam(HttpServletRequest request, Admin admin)
-	{
-		admin.setSearchParam(request.getParameter("searchUser"),request.getParameter("usersearchFilter"));  //setting search parameters
-	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,6 +29,7 @@ public class AdminController extends HttpServlet {
 		session.removeAttribute("error");
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
+		session.removeAttribute("user_search");
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -49,7 +45,7 @@ public class AdminController extends HttpServlet {
 				
 				session.setAttribute("USERS", listUsers);
 				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-				request.getRequestDispatcher("/list_users.jsp").include(request, response);
+				request.getRequestDispatcher("/users_list.jsp").include(request, response);
 				
 			}
 			
@@ -98,6 +94,7 @@ public class AdminController extends HttpServlet {
 		session.removeAttribute("error");
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
+		session.removeAttribute("user_search");
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -108,19 +105,15 @@ public class AdminController extends HttpServlet {
 			
 //			search user
 			if(action.equals("search_user")) {
-				Admin admin = new Admin();
+				UserSearch userSearch = getSearchParam(request); 
 				UserError UserErrors = new UserError();
+				ArrayList<User> listUsers = new ArrayList<User>();
 				
-				getSearchParam(request,admin); 
-				admin.validateSearchUser(action,admin, UserErrors);
-				
-				session.setAttribute("Admin", admin);
-				
-				ArrayList<User> usersListInDB = new ArrayList<User>();
+				userSearch.validateSearchUser(action, userSearch, UserErrors);
 				
 				if (!UserErrors.getSearchError().equals("")) {
 //					set error messages
-					session.setAttribute("userErrors", UserErrors);
+					session.setAttribute("error", UserErrors);
 	
 //					set jsp pages
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
@@ -129,29 +122,30 @@ public class AdminController extends HttpServlet {
 				
 				else {
 //					if no error messages
-//					TODO replace the dao method
-					usersListInDB = UserDAO.searchUsersByAdmin(admin.getUser(),admin.getFilter());	
-					session.setAttribute("USERS", usersListInDB);
 					
-//					if no results
-					if(usersListInDB.size() == 0) {
-						
-//						set session
-						UserErrors.setSearchError("No Users found");
-						session.setAttribute("userErrors", UserErrors);
-	
-//						set jsp pages
-						request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-						request.getRequestDispatcher("/user_search_form.jsp").include(request, response);
-						
-					} 
-//					if results
+//					search by username
+					if(userSearch.getUserSearchFilter().equals("1")) {
+						listUsers.addAll(UserDAO.searchUsersByUsername(userSearch.getUserSearchText()));
+						session.setAttribute("user_search", userSearch);
+					}
+//					search by role
+					else if(userSearch.getUserSearchFilter().equals("2")) {
+						listUsers.addAll(UserDAO.searchUsersByRole(userSearch.getUserSearchText()));
+						session.setAttribute("user_search", userSearch);
+					}
+//					show all
 					else {
+						listUsers.addAll(UserDAO.listUsers());
+					}
 						
-//						set jsp pages
-						request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-						request.getRequestDispatcher("/user_search_form.jsp").include(request, response);
-						request.getRequestDispatcher("/list_users.jsp").include(request, response);
+					session.setAttribute("USERS", listUsers);
+					
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/user_search_form.jsp").include(request, response);
+					if(listUsers.isEmpty()) {
+						request.getRequestDispatcher("/users_list_empty.jsp").include(request, response);
+					} else {
+						request.getRequestDispatcher("/users_list.jsp").include(request, response);
 					}
 				}
 			}
@@ -184,10 +178,10 @@ public class AdminController extends HttpServlet {
 					user = UserDAO.getUserByUsername(username);
 					
 //					check if facility manager exists
-					if(newRole.equals("Facility Manager") & !UserDAO.getUserByRole("Facility Manager").isEmpty()) {
+					if(newRole.equals("Facility Manager") & !UserDAO.getUsersByRole("Facility Manager").isEmpty()) {
 						changeRole.setMessage("A Facility Manager already exists in the system.");
 						session.setAttribute("USERS", user);
-						session.setAttribute("changerole", changeRole);
+						session.setAttribute("change_role", changeRole);
 						
 						request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 						request.getRequestDispatcher("/user_details.jsp").include(request, response);
@@ -209,6 +203,15 @@ public class AdminController extends HttpServlet {
 				}
 			}
 		}
+	}
+	
+	public UserSearch getSearchParam(HttpServletRequest request){
+		UserSearch userSearch = new UserSearch();
+		
+		userSearch.setUserSearchText(request.getParameter("search_text"));
+		userSearch.setUserSearchFilter(request.getParameter("search_filter"));
+
+		return userSearch; 
 	}
 	
 	private ChangeRole getChangeRoleParam (HttpServletRequest request) {

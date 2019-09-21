@@ -83,10 +83,10 @@ public class RegisterController extends HttpServlet{
 		roles.add("Student");
 		roles.add("Faculty");
 		roles.add("Repairer");
-		if (UserDAO.getUserByRole("Facility Manager").isEmpty()) {
+		if (UserDAO.getUsersByRole("Facility Manager").isEmpty()) {
 			roles.add("Facility Manager");
 		}
-		if (UserDAO.getUserByRole("Admin").isEmpty()) {
+		if (UserDAO.getUsersByRole("Admin").isEmpty()) {
 			roles.add("Admin");
 		}
 		return roles;

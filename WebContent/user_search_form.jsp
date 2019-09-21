@@ -8,31 +8,23 @@
 </head>
 <body>
 
-
 	<form action="admin?search" method="post">
 	
-	<label>Search User</label>
-	<input name="searchUser" type="text">
+	<label>Search User by:</label>
+
+	<p>
+	<input type="radio" name="search_filter" value="1" />Username
+	<input type="radio" name="search_filter" value="2" />Role
+	<input type="radio" name="search_filter" value="3" checked="checked"/>All Users
+	</p>
 	
+	<input name="search_text" type="text" value="${user_search.userSearchText}">
 	<input name="action" type="hidden" value="search_user">
 	<input name= "search_user" type="submit" value="Submit">
-	
-	
-	
-	<p>
-	<input type="radio" name="usersearchFilter" value="1" />username
-	<input type="radio" name="usersearchFilter" value="2" />role
-	<input type="radio" name="usersearchFilter" value="3" checked="checked"/>all users
-	</p>
 	  
   	<input name="searchErrorMsgs"  value="<c:out value='${userErrors.searchError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> 
-   
   
 	</form>      
-   
-   
-
-
 
 </body>
 </html>
