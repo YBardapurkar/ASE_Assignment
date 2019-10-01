@@ -25,7 +25,8 @@ public class MARDAO {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
-				+ "left outer join assignment on mar.mar_id = assignment.mar_id ";
+				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
+				+ "order by mar.mar_id";
 		
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -107,6 +108,36 @@ public class MARDAO {
 		}  catch (SQLException e) {System.out.println(e.getMessage());}
 		return marList;
 	}
+	
+//	Search list of MAR by assigned repairer username
+	public static ArrayList<MAR> searchMARByAssignedRepairer (String assignedTo) {
+		ArrayList<MAR> marList = new ArrayList<MAR>();
+		String query = ""
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "from mar "
+				+ "join assignment on mar.mar_id = assignment.mar_id "
+				+ "where assignment.assigned_to like '%" + assignedTo + "%' "
+				+ "order by mar.mar_id;";
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(query);
+			while (result.next()) {
+				MAR mar = new MAR();
+				
+				mar.setId(Integer.parseInt(result.getString("mar_id")));
+				mar.setDescription(result.getString("description"));
+				mar.setUrgency(result.getString("urgency"));
+				mar.setFacilityName(result.getString("facility_name"));
+				mar.setAssignedTo(result.getString("assigned_to"));
+				
+				marList.add(mar);
+			}
+		}  catch (SQLException e) {System.out.println(e.getMessage());}
+		return marList;
+	}
 		
 	//Ajinkya
 	
@@ -141,7 +172,8 @@ public class MARDAO {
 				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
-				+ "where assignment.assigned_to is null;";
+				+ "where assignment.assigned_to is null "
+				+ "order by mar.mar_id;";
 		
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -170,7 +202,8 @@ public class MARDAO {
 				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
-				+ "where mar.mar_id = '" + id + "';";
+				+ "where mar.mar_id = '" + id + "' "
+				+ "order by mar.mar_id;";
 		
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -260,7 +293,35 @@ public class MARDAO {
 		 
 
 		}
-
+	
+	public static ArrayList<MAR> searchMARByFacilityName(String facilityName) {
+		ArrayList<MAR> marList = new ArrayList<MAR>();
+		String query = ""
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "from mar "
+				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
+				+ "where mar.facility_name like '%" + facilityName + "%' "
+				+ "order by mar.mar_id;";
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(query);
+			while (result.next()) {
+				MAR mar = new MAR();
+				
+				mar.setId(Integer.parseInt(result.getString("mar_id")));
+				mar.setDescription(result.getString("description"));
+				mar.setUrgency(result.getString("urgency"));
+				mar.setFacilityName(result.getString("facility_name"));
+				mar.setAssignedTo(result.getString("assigned_to"));
+				
+				marList.add(mar);
+			}
+		}  catch (SQLException e) {System.out.println(e.getMessage());}
+		return marList;
+	}
 
 		
 

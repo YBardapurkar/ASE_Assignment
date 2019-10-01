@@ -54,7 +54,7 @@ public class LoginController extends HttpServlet {
 		user.setPassword(request.getParameter("password"));
 
 		user.validateUser("login", user, userErrorMsgs);
-		user.setPassword("");
+//		user.setPassword("");
 		session.setAttribute("user", user);
 		if (userErrorMsgs.getErrorMsg().equals("")) {
 //			no error messages

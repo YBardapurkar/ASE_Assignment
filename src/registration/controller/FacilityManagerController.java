@@ -17,6 +17,8 @@ import registration.data.MARDAO;
 import registration.data.UserDAO;
 import registration.model.AssignmentMessage;
 import registration.model.MAR;
+import registration.model.MARSearch;
+import registration.model.MARSearchMessage;
 import registration.model.User;
 
 @WebServlet("/facility_manager")
@@ -28,10 +30,12 @@ public class FacilityManagerController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		session.removeAttribute("mar");				// single MAR object
-		session.removeAttribute("list_mar");		// list of MAR objects
-		session.removeAttribute("errorMsgs");		// single MAR message
-		session.removeAttribute("list_repairers");	// list of repairer users
+		session.removeAttribute("mar");					// single MAR object
+		session.removeAttribute("list_mar");			// list of MAR objects
+		session.removeAttribute("errorMsgs");			// single MAR message
+		session.removeAttribute("list_repairers");		// list of repairer users
+		session.removeAttribute("mar_search");			// single mar search object
+		session.removeAttribute("mar_search_message"); 	// single mar search message object
 		
 		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "facility_manager");
@@ -44,6 +48,7 @@ public class FacilityManagerController extends HttpServlet{
 		}
 //		logged in
 		else {
+			session.setAttribute("current_user", currentUser);
 
 //			SHow MAR details
 			if (request.getParameter("mar_id") != null) {
@@ -64,6 +69,12 @@ public class FacilityManagerController extends HttpServlet{
 				
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
+			}
+//			Show search MAR page
+			else if (request.getParameter("search_mar") != null) {
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/mar_search_form.jsp").include(request, response);
 			}
 //			Show unassigned MAR
 			else if (request.getParameter("unassigned_mar") != null) {
@@ -87,10 +98,12 @@ public class FacilityManagerController extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		session.removeAttribute("mar");				// single MAR object
-		session.removeAttribute("list_mar");		// list of MAR objects
-		session.removeAttribute("errorMsgs");		// single MAR message
-		session.removeAttribute("list_repairers");	// list of repairer users
+		session.removeAttribute("mar");					// single MAR object
+		session.removeAttribute("list_mar");			// list of MAR objects
+		session.removeAttribute("errorMsgs");			// single MAR message
+		session.removeAttribute("list_repairers");		// list of repairer users
+		session.removeAttribute("mar_search");			// single mar search object
+		session.removeAttribute("mar_search_message"); 	// single mar search message object
 		
 		String action = request.getParameter("action");
 		
@@ -105,6 +118,7 @@ public class FacilityManagerController extends HttpServlet{
 		}
 //		logged in
 		else {
+			session.setAttribute("current_user", currentUser);
 			
 //			Assign a repairer to a mar
 			if (action.equals("assign_repairer")) {
@@ -133,6 +147,69 @@ public class FacilityManagerController extends HttpServlet{
 				
 				session.removeAttribute("message");
 			}
+			
+//			Search MAR
+			else if(action.equals("search_mar")) {
+				
+				MARSearch marSearch = getSearchParam(request);
+				MARSearchMessage marSearchMessage = new MARSearchMessage();
+				ArrayList<MAR> listMAR = new ArrayList<MAR>();
+				
+				marSearch.validateMARSearch(action, marSearch, marSearchMessage);
+				
+				if (!marSearchMessage.getSearchErrorMessage().equals("")) {
+//							set error messages
+					session.setAttribute("mar_search_message", marSearchMessage);
+	
+//					set jsp pages
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_search_form.jsp").include(request, response);
+				}
+				
+				else {
+//					if no error messages
+					
+//					by facility name
+					if(marSearch.getSearchFilter().equals("1")) {
+						listMAR.addAll(MARDAO.searchMARByFacilityName(marSearch.getSearchText()));
+					}
+//					by assigned repairer
+					else if(marSearch.getSearchFilter().equals("2")) {
+						listMAR.addAll(MARDAO.searchMARByAssignedRepairer(marSearch.getSearchText()));
+					}
+//					unassigned
+					else if(marSearch.getSearchFilter().equals("3")) {
+						listMAR.addAll(MARDAO.getUnassignedMAR());
+						marSearch.setSearchText("");
+					}
+//					all
+					else {
+						listMAR.addAll(MARDAO.getAllMAR());
+						marSearch.setSearchText("");
+					}
+						
+					session.setAttribute("list_mar", listMAR);
+					session.setAttribute("mar_search", marSearch);
+					
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_search_form.jsp").include(request, response);
+					if(listMAR.isEmpty()) {
+						request.getRequestDispatcher("/mar_list_empty.jsp").include(request, response);
+					} else {
+						request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
+					}
+				}
+			}
+					
 		}
+	}
+	
+	public MARSearch getSearchParam(HttpServletRequest request){
+		MARSearch marSearch = new MARSearch();
+		
+		marSearch.setSearchText(request.getParameter("search_text"));
+		marSearch.setSearchFilter(request.getParameter("search_filter"));
+
+		return marSearch; 
 	}
 }
