@@ -7,7 +7,8 @@
 <title>MAR details</title>
 </head>
 <body>
-<a href="mar">Back</a>
+
+<h2>MAR details</h2>
 
 <table>
 
@@ -24,11 +25,6 @@
 <tr>
 <th>Description</th>
 <td><c:out value="${mar.description}"></c:out></td>
-</tr>
-
-<tr>
-<th>Urgency</th>
-<td><c:out value="${mar.urgency}"></c:out></td>
 </tr>
 
 </table>

@@ -9,6 +9,8 @@
 <body>
 <!-- <a href="mar">Back</a> -->
 
+<h2>MAR details</h2>
+
 <table>
 
 <tr>
@@ -37,6 +39,8 @@
 </tr>
 
 </table>
+
+<input name="assign_success"  value="<c:out value='${message.successMessage}'/>" type="text"  style ="background-color: white; color: blue; border: none; width: 800px" disabled="disabled">
 
 </body>
 </html>

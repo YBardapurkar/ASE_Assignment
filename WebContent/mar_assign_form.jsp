@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h3>Assign a Repairer</h3>
+<h2>Assign a Repairer</h2>
 <form action="facility_manager" method="post" >
 <table>
 
@@ -18,6 +18,17 @@ Repairer
 	</c:forEach>
 	</select>
 </td>
+</tr>
+
+<tr>
+<td> Urgency (*): </td>
+<td><select name ="urgency" value = "<c:out value='${mar.urgency}'/>">
+	<option> Minor </option>
+	<option> Major </option>
+	<option> Unusable </option>
+</select>
+</td>
+<td> <input name="urgency_error"  value="<c:out value='${message.urgencyError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled"> </td>
 </tr>
 
 <tr>

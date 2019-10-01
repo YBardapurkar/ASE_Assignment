@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.sql.Date;
 import java.sql.ResultSet;
 
+import registration.model.Assignment;
 import registration.util.SQLConnection;
 
 public class AssignmentDAO {
@@ -50,6 +51,29 @@ public class AssignmentDAO {
 					+ username + "','"		
 					+ sqlNow.toString() + "','"
 					+ duration + "')";
+			stmt.executeUpdate(insertuser);	
+			conn.commit(); 
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+public static void assignRepairer(Assignment assignment) {
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		
+		LocalDateTime now = LocalDateTime.now();
+		Timestamp sqlNow = Timestamp.valueOf(now);
+		String queryString = "insert into assignment (mar_id, assigned_to, assigned_date, urgency, estimate_repair) ";
+		try{
+			stmt = conn.createStatement();
+			String insertuser = queryString + " VALUES ('"  
+					+ assignment.getMarId()  +   "','"
+					+ assignment.getAssignedTo() + "','"		
+					+ sqlNow.toString() + "','"
+					+ assignment.getUrgency() + "','"
+					+ assignment.getEstimate() + "')";
 			stmt.executeUpdate(insertuser);	
 			conn.commit(); 
 		} catch (SQLException e) {

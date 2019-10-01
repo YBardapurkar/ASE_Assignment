@@ -11,7 +11,7 @@
 	<form action="facility_manager?search_mar" method="post">
 	
 	<h2>Search MAR:</h2>
-	<input name="searchErrorMsgs" value="<c:out value='${mar_search_message.searchErrorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled"> 
+	<input name="searchErrorMsgs" value="<c:out value='${message.searchErrorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled"> 
 
 	<p>
 	<input type="radio" name="search_filter" value="1" <c:if test = "${mar_search.searchFilter == '1'}">checked</c:if> />By Facility
@@ -22,7 +22,7 @@
 	
 	<input name="search_text" type="text" value="${mar_search.searchText}">
 	<input name="action" type="hidden" value="search_mar">
-	<input name="searchErrorMsgs"  value="<c:out value='${mar_search_message.searchTextMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled">
+	<input name="searchErrorMsgs"  value="<c:out value='${message.searchTextMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled">
 	<br>
 	<input name= "search_mar" type="submit" value="Submit">
 

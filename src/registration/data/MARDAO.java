@@ -23,7 +23,7 @@ public class MARDAO {
 	
 	public static ArrayList<MAR> getAllMAR () {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
-		String query = "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+		String query = "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
 				+ "order by mar.mar_id";
@@ -55,7 +55,7 @@ public class MARDAO {
 	public static ArrayList<MAR> getAssignedMAR () {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "join assignment on mar.mar_id = assignment.mar_id "
 				+ "where assignment.assigned_to is not null;";
@@ -84,7 +84,7 @@ public class MARDAO {
 	public static ArrayList<MAR> getMARByAssignedRepairer (String assignedTo) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "join assignment on mar.mar_id = assignment.mar_id "
 				+ "where assignment.assigned_to = '" + assignedTo + "'";
@@ -113,7 +113,7 @@ public class MARDAO {
 	public static ArrayList<MAR> searchMARByAssignedRepairer (String assignedTo) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "join assignment on mar.mar_id = assignment.mar_id "
 				+ "where assignment.assigned_to like '%" + assignedTo + "%' "
@@ -169,7 +169,7 @@ public class MARDAO {
 	public static ArrayList<MAR> getUnassignedMAR () {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
 				+ "where assignment.assigned_to is null "
@@ -199,7 +199,7 @@ public class MARDAO {
 	public static MAR getMARByID(int id) {
 		MAR mar = new MAR();
 		String query = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
 				+ "where mar.mar_id = '" + id + "' "
@@ -228,7 +228,7 @@ public class MARDAO {
 	public static ArrayList<MAR> getMARSubmittedByUser(String username) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
 				+ "where mar.reported_by = '" + username + "';";
@@ -283,12 +283,12 @@ public class MARDAO {
 		 
 		 if(filter.equals("1"))
 		 {
-		  return (ReturnMatchingMARList("SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to from mar left outer join assignment on mar.mar_id = assignment.mar_id  where assignment.assigned_to is null and facility_name ='"+searchField+"' "));
+		  return (ReturnMatchingMARList("SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to from mar left outer join assignment on mar.mar_id = assignment.mar_id  where assignment.assigned_to is null and facility_name ='"+searchField+"' "));
 		 }
 		 
 		 else 
 		 {
-		  return (ReturnMatchingMARList("SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to from mar left outer join assignment on mar.mar_id = assignment.mar_id where assignment.assigned_to is null and mar.urgency='"+Urg+"' "));   
+		  return (ReturnMatchingMARList("SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to from mar left outer join assignment on mar.mar_id = assignment.mar_id where assignment.assigned_to is null and assignment.urgency='"+Urg+"' "));   
 		 }
 		 
 
@@ -297,7 +297,7 @@ public class MARDAO {
 	public static ArrayList<MAR> searchMARByFacilityName(String facilityName) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String query = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name, mar.urgency, mar.creation_date, assignment.assigned_to "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
 				+ "left outer join assignment on mar.mar_id = assignment.mar_id "
 				+ "where mar.facility_name like '%" + facilityName + "%' "

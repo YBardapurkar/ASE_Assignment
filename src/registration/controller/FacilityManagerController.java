@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import registration.data.AssignmentDAO;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
+import registration.model.Assignment;
 import registration.model.AssignmentMessage;
 import registration.model.MAR;
 import registration.model.MARSearch;
@@ -32,10 +33,9 @@ public class FacilityManagerController extends HttpServlet{
 		HttpSession session = request.getSession();
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
-		session.removeAttribute("errorMsgs");			// single MAR message
+		session.removeAttribute("message");	// single MAR message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
-		session.removeAttribute("mar_search_message"); 	// single mar search message object
 		
 		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "facility_manager");
@@ -57,9 +57,12 @@ public class FacilityManagerController extends HttpServlet{
 				session.setAttribute("mar", mar);
 				
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-				if (mar.getAssignedTo() == null)
+				if (mar.getAssignedTo() == null) {
+					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
+				} else {
+					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+				}
 			}
 //			Show All MAR
 			else if (request.getParameter("mar_list") != null) {
@@ -100,10 +103,9 @@ public class FacilityManagerController extends HttpServlet{
 		HttpSession session = request.getSession();
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
-		session.removeAttribute("errorMsgs");			// single MAR message
+		session.removeAttribute("message");	// single MAR assign message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
-		session.removeAttribute("mar_search_message"); 	// single mar search message object
 		
 		String action = request.getParameter("action");
 		
@@ -122,30 +124,44 @@ public class FacilityManagerController extends HttpServlet{
 			
 //			Assign a repairer to a mar
 			if (action.equals("assign_repairer")) {
-				int estimate = Integer.parseInt(request.getParameter("estimate"));
-				int marId = Integer.parseInt(request.getParameter("mar_id"));
-				String repairer = (String) request.getParameter("repairer");
-	
-				if (AssignmentDAO.getAssignmentCountByDay(repairer, new Date(System.currentTimeMillis())) >= 5) { 
-//					More than 5 in a day, cannot assign
-					assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer.");
-				} else {
-//					can assign
-					AssignmentDAO.assignRepairer(repairer, estimate, marId);
-				}
+				Assignment assignment = getAssignmentParam(request);
+				assignment.validateAssignment("assign_mar", assignmentMessage);
 				
-//				save in session
-				MAR mar = MARDAO.getMARByID(marId);
-				session.setAttribute("mar", mar);
-				session.setAttribute("message", assignmentMessage);
-				
-//				redirect
-				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-				if (mar.getAssignedTo() == null)
+				if (!assignmentMessage.getErrorMessage().equals("")) {
+//					error messages
+					session.setAttribute("message", assignmentMessage);
+					
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
-				
-				session.removeAttribute("message");
+				} else {
+//					no error
+					if (AssignmentDAO.getAssignmentCountByDay(assignment.getAssignedTo(), new Date(System.currentTimeMillis())) >= 5) { 
+//						More than 5 in a day, cannot assign
+						assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer today.");
+					} else {
+//						can assign
+						AssignmentDAO.assignRepairer(assignment);
+						assignmentMessage.setSuccessMessage("MAR Assigned");
+					}
+					
+//					save in session
+					MAR mar = MARDAO.getMARByID(assignment.getMarId());
+					session.setAttribute("mar", mar);
+					session.setAttribute("message", assignmentMessage);
+					
+//					redirect
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					
+					if (mar.getAssignedTo() == null) {
+						request.getRequestDispatcher("/mar_details.jsp").include(request, response);
+						request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
+					} else {
+						request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+					}
+					
+					session.removeAttribute("message");
+				}
 			}
 			
 //			Search MAR
@@ -159,7 +175,7 @@ public class FacilityManagerController extends HttpServlet{
 				
 				if (!marSearchMessage.getSearchErrorMessage().equals("")) {
 //							set error messages
-					session.setAttribute("mar_search_message", marSearchMessage);
+					session.setAttribute("message", marSearchMessage);
 	
 //					set jsp pages
 					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
@@ -202,6 +218,17 @@ public class FacilityManagerController extends HttpServlet{
 			}
 					
 		}
+	}
+	
+	public Assignment getAssignmentParam(HttpServletRequest request){
+		Assignment assignment = new Assignment();
+		
+		assignment.setMarId(Integer.parseInt(request.getParameter("mar_id")));
+		assignment.setEstimate(Integer.parseInt(request.getParameter("estimate")));
+		assignment.setAssignedTo(request.getParameter("repairer"));
+		assignment.setUrgency(request.getParameter("urgency"));
+
+		return assignment; 
 	}
 	
 	public MARSearch getSearchParam(HttpServletRequest request){
