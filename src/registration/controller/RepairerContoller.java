@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import registration.data.MARDAO;
 import registration.model.*;
+import registration.util.DateUtils;
 
 @WebServlet("/repairer")
 public class RepairerContoller extends HttpServlet {
@@ -55,6 +56,9 @@ public class RepairerContoller extends HttpServlet {
 				
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+				if (mar.getAssignedTo().equals(currentUser.getUsername())) {
+					request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
+				}
 			}
 			
 //			Show Repairer Homepage
@@ -64,4 +68,43 @@ public class RepairerContoller extends HttpServlet {
 			}
 		}
     }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession();
+    	session.removeAttribute("list_mar");		// list of MAR objects
+    	session.removeAttribute("mar");				// list of MAR objects
+    	
+    	User currentUser = (User) session.getAttribute("current_user");
+    	session.setAttribute("current_role", "repairer");
+    	
+    	String action = request.getParameter("action");
+    	
+//		user not logged in
+		if (currentUser == null) {
+			
+			response.sendRedirect("login");
+		}
+//		logged in
+		else {
+			
+//			reserve facility
+			if (action.equals("reserve_facility")) {
+//				TODO this method
+				
+				
+			}
+		}
+    }
+    
+    public Reservation getReservationParam(HttpServletRequest request) {
+    	Reservation reservation = new Reservation();
+		
+		reservation.setMarId(Integer.parseInt(request.getParameter("mar_id")));
+		reservation.setFacilityName(request.getParameter("facility_name"));
+		reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time")));
+		reservation.setEndTime(DateUtils.getSqlDate(request.getParameter("end_time")));
+
+		return reservation; 
+	}
 }
