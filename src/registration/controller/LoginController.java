@@ -33,7 +33,6 @@ public class LoginController extends HttpServlet {
 		session.removeAttribute("user");			// single User object
 		session.removeAttribute("current_user");	// logged in user
 		session.removeAttribute("errorMsgs");		// single User message object
-		
 		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 		request.getRequestDispatcher("/login.jsp").include(request, response);
 	}
@@ -60,10 +59,10 @@ public class LoginController extends HttpServlet {
 //			no error messages
 			
 			User loginUser = UserDAO.login(user.getUsername(), user.getPassword());
-			
+						
 //			User does not exist in the database
 			if (loginUser.getUsername() == null && loginUser.getRole() == null) {
-				String result="username does not exist in database";
+				String result="Username doesnot exist or Password mismatch, please try again";
 				userErrorMsgs.setErrorMsg(result);
 				session.setAttribute("errorMsgs", userErrorMsgs);
 				request.getRequestDispatcher("/menu_login.jsp").include(request, response);

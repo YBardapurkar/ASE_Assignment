@@ -85,7 +85,7 @@ public class UserDAO {
 //	if user is present, the username and role fields will be set
 //	otherwise they will be null
 	public static User login(String username, String password)  {
-		String query = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"' ORDER BY username";
+		String query = "SELECT * from registration WHERE username = '"+username+"' and password = '"+password+"'";
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 		User user = new User();
