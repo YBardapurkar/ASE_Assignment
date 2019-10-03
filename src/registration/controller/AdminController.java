@@ -3,11 +3,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import registration.model.User;
 import registration.model.UserSearch;
@@ -15,16 +18,27 @@ import registration.model.ChangeRole;
 import registration.data.UserDAO;
 import registration.model.UserError;
 
+@WebListener
 @WebServlet("/admin")
-public class AdminController extends HttpServlet {
+public class AdminController extends HttpServlet implements HttpSessionListener {
 
 	private static final long serialVersionUID = 1L;
+	HttpSession session;
+	User currentUser;
+	
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		session = request.getSession();   //defining the session parameter
+		if (session.getAttribute("current_user") != null)
+			currentUser = (User) session.getAttribute("current_user");
+		
+		super.service(request, response);
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();   //defining the session parameter
-		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "admin");
 		
 		session.removeAttribute("error");
@@ -83,14 +97,15 @@ public class AdminController extends HttpServlet {
 				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 				request.getRequestDispatcher("/home_admin.jsp").include(request, response);
 			}
+			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String action = request.getParameter("action");  //defining the action parameter
-		HttpSession session = request.getSession();   //defining the session parameter
-		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "admin");
 		
 		session.removeAttribute("error");
@@ -204,7 +219,17 @@ public class AdminController extends HttpServlet {
 					}
 				}
 			}
+			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}
+	}
+	
+	@Override
+	public void sessionDestroyed(HttpSessionEvent se) {
+		// TODO Auto-generated method stub
+		currentUser = null;
+		HttpSessionListener.super.sessionDestroyed(se);
 	}
 	
 	public UserSearch getSearchParam(HttpServletRequest request){

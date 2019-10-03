@@ -9,23 +9,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import registration.data.MARDAO;
 import registration.model.*;
 import registration.util.DateUtils;
 
 @WebServlet("/repairer")
-public class RepairerContoller extends HttpServlet {
-	
+public class RepairerContoller extends HttpServlet implements HttpSessionListener {
+
 	private static final long serialVersionUID = 1L;
+	HttpSession session;
+	User currentUser;
+	
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		session = request.getSession();   //defining the session parameter
+		if (session.getAttribute("current_user") != null)
+			currentUser = (User) session.getAttribute("current_user");
+		
+		super.service(request, response);
+	}
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession();
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");				// list of MAR objects
     	
-    	User currentUser = (User) session.getAttribute("current_user");
     	session.setAttribute("current_role", "repairer");
     	
 //		user not logged in
@@ -66,16 +78,17 @@ public class RepairerContoller extends HttpServlet {
 		    	request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/home_repairer.jsp").include(request, response);
 			}
+			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}
     }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession();
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");				// list of MAR objects
     	
-    	User currentUser = (User) session.getAttribute("current_user");
     	session.setAttribute("current_role", "repairer");
     	
     	String action = request.getParameter("action");
@@ -94,8 +107,18 @@ public class RepairerContoller extends HttpServlet {
 				
 				
 			}
+			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}
     }
+    
+    @Override
+	public void sessionDestroyed(HttpSessionEvent se) {
+		// TODO Auto-generated method stub
+		currentUser = null;
+		HttpSessionListener.super.sessionDestroyed(se);
+	}
     
     public Reservation getReservationParam(HttpServletRequest request) {
     	Reservation reservation = new Reservation();
