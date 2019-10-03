@@ -53,7 +53,6 @@ public class HomeController extends HttpServlet{
 				int id = Integer.parseInt(request.getParameter("mar_id"));
 				MAR mar = MARDAO.getMARByID(id);
 				session.setAttribute("mar", mar);
-				
 				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 			}
@@ -114,12 +113,13 @@ public class HomeController extends HttpServlet{
 				}
 				else {
 					//			if no error messages
-					MARDAO.insertmar(newMar);//Insert into database			
-					newMar.setMessage("mar is created");	
+					MARDAO.insertmar(newMar);//Insert into database		
 					session.setAttribute("mar", newMar);
-					
+					MARError errorMsgs = new MARError();
+					errorMsgs.setMessage("MAR has been created!!");
+					session.setAttribute("errorMsgs", errorMsgs);
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
-					request.getRequestDispatcher("/mar_create_form.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 				}
 			}
 		}
