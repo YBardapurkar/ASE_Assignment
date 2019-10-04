@@ -106,7 +106,7 @@ public class UserDAO {
 	
 //	Update role
 	public static void updateDetails(String username, String role) {
-		String query1 = "UPDATE registration " + "SET " + "role = '" + role + "' "+"WHERE username ='" + username + "'" + ";";
+		String query1 = "UPDATE registration " + "SET " + "role = '" + role + "' "+", username = '"+ username + "' "+"WHERE username ='" + username + "'" + ";";
 
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -126,6 +126,37 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	// Update All Details except role
+	
+	public static void updateProfile(String username, String password, String firstname, String lastname, String utaid, String phonenumber, String email,
+			  String street, String city, String zipcode) {
+		String query1 = "UPDATE registration " + "SET " + "username = '" + username + "', " + "password = '" +
+				password + "'," + "firstname = '" + firstname + "'," + "lastname = '" + lastname + "'," + "utaid = '" + utaid +
+				"'," + "phonenumber = '" + phonenumber + "'," + "email = '" + email + "'," + "street = '" + street + "'," + "city = '"
+				+ city + "'," + "zipcode = '" + zipcode + "'" +" "+"WHERE username ='" + username + "'" + ";";
+
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query1);
+			conn.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 //	List all users

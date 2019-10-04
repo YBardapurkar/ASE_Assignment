@@ -31,6 +31,7 @@ public class AdminController extends HttpServlet {
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
 		session.removeAttribute("user_search");
+		session.removeAttribute("UPDATEUSER");
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -60,12 +61,33 @@ public class AdminController extends HttpServlet {
 					request.getRequestDispatcher("/user_details.jsp").include(request, response);
 					request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
 				}
+				
 				else { // determine if Submit button was clicked without selecting a user
 					String error =  "User not found";
 					user = new User();
 					session.setAttribute("error",error);
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/user_details.jsp").include(request, response);
+					
+				}
+			}
+			
+			else if (request.getParameter("admin_profile") != null) {
+				
+				User user = UserDAO.getUserByUsername(request.getParameter("admin_profile"));
+				if (user != null) {
+					session.setAttribute("UPDATEUSER", user);
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_student.jsp").include(request, response);
+				}
+				
+				else { // determine if Submit button was clicked without selecting a user
+					String error =  "User not found";
+					user = new User();
+					session.setAttribute("error",error);
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
 					
 				}
 			}
@@ -97,13 +119,14 @@ public class AdminController extends HttpServlet {
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
 		session.removeAttribute("user_search");
+		session.removeAttribute("UPDATEUSER");
 		
 //		user not logged in
-		if (currentUser == null) {
+		/*if (currentUser == null) {
 			response.sendRedirect("login");
-		}
+		}*/
 //		logged in
-		else {
+		//else {
 			
 //			search user
 			if(action.equals("search_user")) {
@@ -204,7 +227,66 @@ public class AdminController extends HttpServlet {
 					}
 				}
 			}
-		}
+			else if(action.equals("update_profile")) {
+				
+				User user = new User();
+				User updateuser = new User();
+				UserError userErrorMsgs = new UserError();
+				
+				String username, password, firstname, lastname, utaid, phone, email, address, city, state, zipcode;
+				
+				//System.out.println("I am here");
+				
+				
+				updateuser = getUpdateProfileParam(request);
+				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				
+				if (!userErrorMsgs.getErrorMsg().equals("")) {
+ //					if error messages
+					session.setAttribute("errorMsgs", userErrorMsgs);
+
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_student.jsp").include(request, response);
+				}
+				else {
+//					if no error messages
+					username = updateuser.getUsername();
+					password = updateuser.getPassword();
+					firstname = updateuser.getFirstname();
+					lastname = updateuser.getLastname();
+					utaid = updateuser.getUtaId();
+					phone = updateuser.getPhone();
+					email = updateuser.getEmail();
+					address = updateuser.getStreet();
+					city = updateuser.getCity();
+					//state = updateuser.getState();
+					zipcode = updateuser.getZipcode();
+					
+					//update database except role
+					UserDAO.updateProfile(username, password, firstname, lastname, utaid, phone, email, address, city, zipcode); 
+					updateuser.setMessage("Student Profile is updated");
+					updateuser.setUsername(username);
+					updateuser.setPassword(password);
+					updateuser.setFirstname(firstname);
+					updateuser.setLastname(lastname);
+					updateuser.setUtaId(utaid);
+					updateuser.setPhone(phone);
+					updateuser.setEmail(email);
+					updateuser.setStreet(address);
+					updateuser.setCity(city);
+					//updateuser.setState(state);
+					updateuser.setZipcode(zipcode);
+					
+					//session.setAttribute("USERS", user);
+					session.setAttribute("UPDATEUSER", updateuser);
+					
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
+					//request.getRequestDispatcher("/update_profile_student.jsp").include(request, response);
+				}
+				
+			}
+		//}
 	}
 	
 	public UserSearch getSearchParam(HttpServletRequest request){
@@ -223,5 +305,23 @@ public class AdminController extends HttpServlet {
 		changerole.setRole(request.getParameter("role"));
 				
 		return changerole;
+	}
+	
+	private User getUpdateProfileParam(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname"));
+		user.setLastname(request.getParameter("lastname"));
+		user.setUtaId(request.getParameter("utaid"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street"));
+		user.setCity(request.getParameter("city"));
+		//user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
 	}
 }
