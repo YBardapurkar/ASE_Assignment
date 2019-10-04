@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import registration.data.MARDAO;
 import registration.model.MAR;
@@ -18,18 +20,28 @@ import registration.model.MARError;
 import registration.model.User;
 
 @WebServlet("/home")
-public class HomeController extends HttpServlet{
+public class HomeController extends HttpServlet implements HttpSessionListener {
 
 	private static final long serialVersionUID = 1L;
-
+	HttpSession session;
+	User currentUser;
+	
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		session = request.getSession();   //defining the session parameter
+		if (session.getAttribute("current_user") != null)
+			currentUser = (User) session.getAttribute("current_user");
+		
+		super.service(request, response);
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
 		session.removeAttribute("mar");				// single MAR object
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
 		
-		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "home");
     	
 //		user not logged in
@@ -53,7 +65,6 @@ public class HomeController extends HttpServlet{
 				int id = Integer.parseInt(request.getParameter("mar_id"));
 				MAR mar = MARDAO.getMARByID(id);
 				session.setAttribute("mar", mar);
-				
 				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 			}
@@ -69,18 +80,19 @@ public class HomeController extends HttpServlet{
 				request.getRequestDispatcher("menu_student.jsp").include(request, response);
 				request.getRequestDispatcher("home_student.jsp").include(request, response);
 			}
+			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
 		session.removeAttribute("mar");				// single MAR object
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
 		
 		String action = request.getParameter("action");
-		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "home");
 		
 //		user not logged in
@@ -114,15 +126,26 @@ public class HomeController extends HttpServlet{
 				}
 				else {
 					//			if no error messages
-					MARDAO.insertmar(newMar);//Insert into database			
-					newMar.setMessage("mar is created");	
+					MARDAO.insertmar(newMar);//Insert into database		
 					session.setAttribute("mar", newMar);
-					
+					MARError errorMsgs = new MARError();
+					errorMsgs.setMessage("MAR has been created!!");
+					session.setAttribute("errorMsgs", errorMsgs);
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
-					request.getRequestDispatcher("/mar_create_form.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 				}
 			}
+			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}
+	}
+	
+	@Override
+	public void sessionDestroyed(HttpSessionEvent se) {
+		// TODO Auto-generated method stub
+		currentUser = null;
+		HttpSessionListener.super.sessionDestroyed(se);
 	}
 	
 	//Ajinkya

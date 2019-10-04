@@ -7,13 +7,13 @@
 <title>MAR details</title>
 </head>
 <body>
-
+<input name="errMsg"  value="<c:out value='${errorMsgs.message}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
 <h2>MAR details</h2>
 
 <table>
 
 <tr>
-<th>ID</th>
+<th>MAR ID</th>
 <td><c:out value="${mar.id}"></c:out></td>
 </tr>
 
@@ -25,6 +25,11 @@
 <tr>
 <th>Description</th>
 <td><c:out value="${mar.description}"></c:out></td>
+</tr>
+
+<tr>
+<th>Date of creation</th>
+<td><c:out value="${mar.date}"></c:out></td>
 </tr>
 
 </table>
