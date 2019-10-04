@@ -15,7 +15,7 @@ public class MAR {
 	private String urgency;
 	private String description;
 	private String reportedBy;
-
+	private String facilityType;
 	private String date;
 	private String message;
 
@@ -80,7 +80,9 @@ public class MAR {
 		return date;
 	}
 	public void setDate(String date) {
-		this.date = date;
+		String[] tempArray;
+		tempArray = date.split(" ");
+		this.date = tempArray[0];
 	}
 	public String getAssignedTo() {
 		return assignedTo;
