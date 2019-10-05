@@ -11,11 +11,11 @@ public class AddFacility implements Serializable{
 	
 	private static final long serialVersionUID = 3L;
 	  
-	private String FacilityName;
+	private String facilityName;
 	public String facilityType;
 	private String interval;
-	private String duration;
-	private String venue;
+	private String facilityDuration;
+	private String facilityVenue;
 	private int count;
 	private String interval_hours;
 	String message = "New facility added successfully";
@@ -35,12 +35,12 @@ public class AddFacility implements Serializable{
 	
 	public void setFacilityName(String FacilityName) 
 	{
-		this.FacilityName = FacilityName;
+		this.facilityName = FacilityName;
 	}
 
 	public String getFacilityName()
 	{
-		return FacilityName;
+		return facilityName;
 	}
 
 	public void setinterval_hours(String interval) 
@@ -68,23 +68,23 @@ public class AddFacility implements Serializable{
 	
 	public void setFacilityDuration(String duration) 
 	{
-		this.duration = duration;
+		this.facilityDuration = duration;
 	}
 
 	public String getFacilityDuration()
 	{
-		return duration;
+		return facilityDuration;
 	}
 
 	
 	public void setFacilityVenue(String venue) 
 	{
-		this.venue = venue;
+		this.facilityVenue = venue;
 	}
 
 	public String getFacilityVenue()
 	{
-		return venue;
+		return facilityVenue;
 	}
 
 	
