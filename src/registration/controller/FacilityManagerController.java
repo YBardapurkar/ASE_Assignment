@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import registration.data.AssignmentDAO;
+import registration.data.FacilityDAO;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
+import registration.model.AddFacility;
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
 import registration.model.MAR;
@@ -40,6 +42,10 @@ public class FacilityManagerController extends HttpServlet{
 		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "facility_manager");
 		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
+		String action = request.getParameter("action");
+
+		AddFacility newFacility = new AddFacility();
+
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -88,12 +94,21 @@ public class FacilityManagerController extends HttpServlet{
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
 			}
+			
+			else if (request.getParameter("addFacility") != null) {
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/add_facility.jsp").include(request, response);
+				
+			}
+			
+			
 //			Show Facility Manager Homepage
 			else {
 				
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/home_fm.jsp").include(request, response);
 			}
+			
 		}
 	}
 	
@@ -106,12 +121,20 @@ public class FacilityManagerController extends HttpServlet{
 		session.removeAttribute("message");	// single MAR assign message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
+		session.removeAttribute("newFacility");			
+
 		
 		String action = request.getParameter("action");
 		
 		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "facility_manager");
 		AssignmentMessage assignmentMessage = new AssignmentMessage();
+
+		int count1;
+		
+		AddFacility newFacility = new AddFacility();
+		session.setAttribute("newFacility",newFacility);
+
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -217,7 +240,50 @@ public class FacilityManagerController extends HttpServlet{
 				}
 			}
 					
+		}		
+		
+		if(action.equals("addFacility"))
+		{
+			
+			newFacility.setFacilityType(request.getParameter("facilityType"));
+			System.out.println(request);
+			int count = FacilityDAO.settingFacilityCount(newFacility.getFacilityType());
+			ArrayList<AddFacility> addFacility = new ArrayList<AddFacility>();
+			
+			//int count = addFacility.size() ;
+			
+			count1 = count - 1 ;
+			
+			//System.out.println(count);
+			addFacility = FacilityDAO.settingFacilityAttributes(newFacility.getFacilityType());
+		
+			String newFacilityName = addFacility.get(count1).getFacilityName();
+		
+			//System.out.println(newFacilityName);
+			
+			String incrementedFacilityName = newFacility.incrementFacilityName(newFacilityName, count);
+			
+			FacilityDAO.insertNewFacility(incrementedFacilityName,addFacility.get(count1).getFacilityType(),
+					addFacility.get(count1).getFacilityInterval(),addFacility.get(count1).getFacilityDuration(),
+					addFacility.get(count1).getFacilityVenue());
+			
+			
+			String message = "New facility added successfully";
+			
+			newFacility.setFacilityName(incrementedFacilityName);
+			newFacility.setinterval_hours(addFacility.get(count1).getFacilityInterval());
+			newFacility.setFacilityDuration(addFacility.get(count1).getFacilityDuration());
+			newFacility.setFacilityVenue(addFacility.get(count1).getFacilityVenue());
+			
+			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+			request.getRequestDispatcher("/facility_details.jsp").include(request, response);
+
+			
 		}
+		
+		
+		
+
 	}
 	
 	public Assignment getAssignmentParam(HttpServletRequest request){

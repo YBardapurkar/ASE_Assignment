@@ -396,7 +396,7 @@ public class User implements Serializable{
 			result = "Zipcode is a required field";
 		} else if (zipcode.length()!=5)
 			result="zipcode must be 5 digits in length";
-		else if (!isTextAnInteger(phone))
+		else if (!isTextAnInteger(zipcode))
 			result="zip code must be a number";
 		else
 			result = "";
