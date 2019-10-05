@@ -78,12 +78,11 @@ static int count;
 	public static int settingFacilityCount(String facilityType)
 	{
 		ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
-		return count;
 	}
-	
+
 	public static void insertNewFacility(String incrementedFacilityName,String FacilityType,String Interval,String FacilityDuration,String FacilityVenue)
 	{
-		StoreListinDB("insert into facility(FacilityName,facilityType,facility_interval,duration,venue) values('" +incrementedFacilityName+"','"+FacilityType+"','"+Interval+"','"+FacilityDuration+"','"+FacilityVenue+"')");
+		StoreListinDB("insert into facility(facility_name,facility_type,facility_interval,duration,venue) values('" +incrementedFacilityName+"','"+FacilityType+"','"+Interval+"','"+FacilityDuration+"','"+FacilityVenue+"')");
 	}
 
 	

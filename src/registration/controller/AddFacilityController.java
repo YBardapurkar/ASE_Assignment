@@ -33,6 +33,10 @@ public class AddFacilityController extends HttpServlet{
 		
 		request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 		request.getRequestDispatcher("/add_facility.jsp").include(request, response);
+
+		//session.removeAttribute("newf");			// single User object
+		
+		
 		
 	}
 	
@@ -50,7 +54,11 @@ public class AddFacilityController extends HttpServlet{
 		AddFacility newFacility = new AddFacility();
 		session.setAttribute("newFacility",newFacility);
 		
-		
+		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
+		//session.removeAttribute("facilityNew");			
+		int count1;
+	
 		if(action.equals("addFacility"))
 		{
 			
@@ -64,8 +72,8 @@ public class AddFacilityController extends HttpServlet{
 			count1 = count - 1 ;
 			
 			//System.out.println(count);
-			addFacility = FacilityDAO.settingFacilityAttributes(newFacility.getFacilityType());
-		
+			addFacility = FacilityDAO.settingFacilityAttributes(newfacility.getFacilityType());
+			System.out.println(addFacility);
 			String newFacilityName = addFacility.get(count1).getFacilityName();
 		
 			//System.out.println(newFacilityName);
@@ -86,7 +94,6 @@ public class AddFacilityController extends HttpServlet{
 			
 			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 			request.getRequestDispatcher("/facility_details.jsp").include(request, response);
-
 			
 		}
 		

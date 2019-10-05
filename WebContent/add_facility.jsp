@@ -33,15 +33,13 @@
     <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     </tr>    	
     	
-   <tr>
     
     
 
-    <tr>
+   <tr>
     <td colspan="2">(*) Mandatory field</td>
     </tr>
     </table>
-    
     <input name="action" type="hidden" value="addFacility">
 	<input name= "addFacility" type="submit" value="Add Facility">
 	

@@ -17,27 +17,27 @@
          <table border="1" class="myTable"> 
     <tr>
     <td> Facility Type: </td>
-    <td> <c:out value="${newFacility.getFacilityType()}" /> </td>
+    <td> <c:out value="${newfacility.facility_type}" /> </td>
     </tr>
 
     <tr>
     <td> Facility Name: </td>
-    <td> <c:out value="${newFacility.getFacilityName()}"/> </td>
+    <td> <c:out value="${newfacility.facility_name}"/> </td>
     </tr>
 
     <tr>
     <td> Interval: </td>
-    <td> <c:out value="${newFacility.getInterval_hours()}" /> </td>
+    <td> <c:out value="${newfacility.interval}" /> </td>
     </tr>
 
     <tr>
     <td> Duration: </td>
-    <td> <c:out value="${newFacility.getFacilityDuration()}" /> </td>
+    <td> <c:out value="${newfacility.duration}" /> </td>
     </tr>
 
 	<tr>
     <td> Venue: </td>
-    <td> <c:out value="${newFacility.getFacilityVenue()}" /> </td>
+    <td> <c:out value="${newfacility.venue}" /> </td>
     </tr>
 
     <tr>

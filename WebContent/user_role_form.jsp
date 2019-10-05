@@ -13,11 +13,10 @@
 <td>Select New Role</td>
 <td><input name="username" value= "<c:out value='${USERS.username}'/>" type="hidden"></td>
 <td>
-<select name=role>
-	<option value="Student" >Student</option>
-	<option value="Faculty" >Faculty</option>
-	<option value="Facility Manager" >Facility Manager</option>
-	<option value="Repairer" >Repairer</option>
+<select name="role">
+   	<c:forEach items="${role_dropdown}" var="item" varStatus="status">
+   	<option value="${item}">${item}</option>
+   	</c:forEach>
 </select>
 </td>
 <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>

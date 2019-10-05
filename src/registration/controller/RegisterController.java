@@ -1,7 +1,6 @@
 package registration.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import registration.data.UserDAO;
 import registration.model.User;
 import registration.model.UserError;
+import registration.util.DropdownUtils;
 
 @WebServlet("/register")
 public class RegisterController extends HttpServlet{
@@ -25,7 +25,8 @@ public class RegisterController extends HttpServlet{
 		session.removeAttribute("current_user");	// logged in user
 		session.removeAttribute("errorMsgs");		// single User message object
 		
-		session.setAttribute("role_dropdown", getRoles());
+		session.setAttribute("role_dropdown", DropdownUtils.getRoleDropdown());
+		session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
 		
 		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 		request.getRequestDispatcher("/register.jsp").include(request, response);
@@ -55,12 +56,14 @@ public class RegisterController extends HttpServlet{
 		else {
 //			if no error messages
 			UserDAO.insertUser(newUser);
-			session.setAttribute("role_dropdown", getRoles());
+//			session.setAttribute("role_dropdown", getRoles());
 			session.setAttribute("user", newUser);	
 			session.setAttribute("errorMsgs", userErrorMsgs);
 			userErrorMsgs.setErrorMsg("Registration is successful, please login to continue");
-			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-			request.getRequestDispatcher("/login.jsp").include(request, response);
+//			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+//			request.getRequestDispatcher("/login.jsp").include(request, response);
+			
+			response.sendRedirect("login");
 		}
 	}
 	
@@ -81,19 +84,5 @@ public class RegisterController extends HttpServlet{
 		user.setZipcode(request.getParameter("zipcode"));
 		
 		return user;
-	}
-	
-	private ArrayList<String> getRoles() {
-		ArrayList<String> roles = new ArrayList<String>();
-		roles.add("Student");
-		roles.add("Faculty");
-		roles.add("Repairer");
-		if (UserDAO.getUsersByRole("Facility Manager").isEmpty()) {
-			roles.add("Facility Manager");
-		}
-		if (UserDAO.getUsersByRole("Admin").isEmpty()) {
-			roles.add("Admin");
-		}
-		return roles;
 	}
 }

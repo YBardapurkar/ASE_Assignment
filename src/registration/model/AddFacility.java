@@ -100,12 +100,13 @@ public class AddFacility implements Serializable{
 		{
 			System.out.println("inside the pattern if");
 	        arrOfStr = updateFacilityName.split("\\s");
-			
+			System.out.println(updateFacilityName);
 	        int a = Integer.parseInt(arrOfStr[1]);
 	        a = a + 1;
 	        arrOfStr[1] = Integer.toString(a);
 	    
 	        incrementFacilityName = arrOfStr[0] + " " +  arrOfStr[1];    
+	        System.out.println("incrementFacilityName");
 		}
 		
 		else

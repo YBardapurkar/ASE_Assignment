@@ -21,21 +21,12 @@ Facility
 </td>
 </tr>
 
-<!-- Ajinkya -->
- <tr>
-    <td> Start Time (*): </td>
-    <td> <input name="start_time1" value="<c:out value='${reservation.startTime}'/>" type="datetime-local">  </td>
-    <td> <input name="start_time_error"  value="<c:out value='${errorMsgs.startTime}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
- </tr>
-
-
-
 <tr>
 <td>
 Time Slot: (fix this)
 </td>
 <td>
-<select name="interval">
+<select name="start_time">
 	<option value="1">1 hour</option>
 	<option value="2">2 hours</option>
 	<option value="5">5 hours</option>
@@ -50,7 +41,7 @@ Time Slot: (fix this)
 <td>
 <input name="mar_id" type="hidden" value="${mar.id}" >
 <input name="action" type="hidden" value="reserve_facility" >
-<input type="submit" value="Reserve">
+<input type="submit" value="Update Reservation"> <!-- Update Reservation -->
 </td>
 </tr>
 </table>

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import registration.data.AssignmentDAO;
 import registration.data.FacilityDAO;
@@ -25,21 +27,31 @@ import registration.model.MARSearchMessage;
 import registration.model.User;
 
 @WebServlet("/facility_manager")
-public class FacilityManagerController extends HttpServlet{
+public class FacilityManagerController extends HttpServlet implements HttpSessionListener {
 
 	private static final long serialVersionUID = 1L;
+	HttpSession session;
+	User currentUser;
+	
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		session = request.getSession();   //defining the session parameter
+		if (session.getAttribute("current_user") != null)
+			currentUser = (User) session.getAttribute("current_user");
+		
+		super.service(request, response);
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
 		session.removeAttribute("message");	// single MAR message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
 		
-		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "facility_manager");
 		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
 		String action = request.getParameter("action");
@@ -109,13 +121,13 @@ public class FacilityManagerController extends HttpServlet{
 				request.getRequestDispatcher("/home_fm.jsp").include(request, response);
 			}
 			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
 		session.removeAttribute("message");	// single MAR assign message
@@ -125,8 +137,6 @@ public class FacilityManagerController extends HttpServlet{
 
 		
 		String action = request.getParameter("action");
-		
-		User currentUser = (User) session.getAttribute("current_user");
 		session.setAttribute("current_role", "facility_manager");
 		AssignmentMessage assignmentMessage = new AssignmentMessage();
 
@@ -238,6 +248,9 @@ public class FacilityManagerController extends HttpServlet{
 						request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
 					}
 				}
+				
+				if (session.getAttribute("current_user") == null)
+					session.setAttribute("current_user", currentUser);
 			}
 					
 		}		
@@ -284,6 +297,13 @@ public class FacilityManagerController extends HttpServlet{
 		
 		
 
+	}
+	
+	@Override
+	public void sessionDestroyed(HttpSessionEvent se) {
+		// TODO Auto-generated method stub
+		currentUser = null;
+		HttpSessionListener.super.sessionDestroyed(se);
 	}
 	
 	public Assignment getAssignmentParam(HttpServletRequest request){
