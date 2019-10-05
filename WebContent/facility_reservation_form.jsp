@@ -35,7 +35,7 @@ Facility
 Time Slot: (fix this)
 </td>
 <td>
-<select name="start_time">
+<select name="interval">
 	<option value="1">1 hour</option>
 	<option value="2">2 hours</option>
 	<option value="5">5 hours</option>
