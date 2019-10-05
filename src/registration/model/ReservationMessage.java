@@ -27,9 +27,16 @@ public class ReservationMessage {
 	
 	public void setErrorMessage() {
 		if (this.getStartTimeMessage().isEmpty()) {
-			this.setErrorMessage("Please correct the following errors");
-		} else {
 			this.setErrorMessage("");
 		}
+		else {
+			this.setErrorMessage("Please correct the following errors");
+		}
+		
+//		if (this.getStartTimeMessage().isEmpty()) {
+//			this.setErrorMessage("Please correct the following errors");
+//		} else {
+//			this.setErrorMessage("");
+//		}
 	}
 }

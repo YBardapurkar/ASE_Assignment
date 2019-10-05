@@ -130,11 +130,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    	}
     	    	else {
     	    		//TODO : Create Dao Layer Ajinkya
-    	    		ReservationDAO.insertReservation(newReservation);
-    	    		session.setAttribute("reservation", newReservation);	
-    	    		session.setAttribute("errorMsgs", reservationMessage);
-
-    	    		if (request.getParameter("my_mars") != null) {
+    	    		
     	    			String username = currentUser.getUsername();
 
     	    			ArrayList<MAR> listMAR = new ArrayList<MAR>();
@@ -143,6 +139,10 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     	    			int id = Integer.parseInt(request.getParameter("mar_id"));
     	    			MAR mar = MARDAO.getMARByID(id);
+    	    			newReservation.setMarId(id);
+    	    			ReservationDAO.insertReservation(newReservation);
+        	    		session.setAttribute("reservation", newReservation);	
+        	    		session.setAttribute("errorMsgs", reservationMessage);
     	    			session.setAttribute("mar", mar);
 
     	    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -160,7 +160,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		}
     	}
 
-    }
     
     @Override
 	public void sessionDestroyed(HttpSessionEvent se) {
