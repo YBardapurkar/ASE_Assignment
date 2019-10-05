@@ -3,7 +3,7 @@
 	<a href="admin?search">Search Users</a>
 	<a href="admin?search">Update Role</a>
 	
-	<a href="admin?">Profile</a>
+	<a href="admin?profile">Profile</a>
 	<form action="logout" method="post">
 		<input type="submit" value="logout">
 	</form>

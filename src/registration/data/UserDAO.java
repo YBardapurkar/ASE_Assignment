@@ -34,8 +34,8 @@ public class UserDAO {
 				user.setEmail(userList.getString("email"));
 				user.setStreet(userList.getString("street"));
 				user.setCity(userList.getString("city"));
-				user.setZipcode(userList.getString("state"));
-				user.setState(userList.getString("zipcode"));
+				user.setZipcode(userList.getString("zipcode"));
+				user.setState(userList.getString("state"));
 				user.setRole(userList.getString("role"));
 				
 				usersListInDB.add(user);	
@@ -131,11 +131,20 @@ public class UserDAO {
 	// Update All Details except role
 	
 	public static void updateProfile(String username, String password, String firstname, String lastname, String utaid, String phonenumber, String email,
-			  String street, String city, String zipcode) {
-		String query1 = "UPDATE registration " + "SET " + "username = '" + username + "', " + "password = '" +
-				password + "'," + "firstname = '" + firstname + "'," + "lastname = '" + lastname + "'," + "utaid = '" + utaid +
-				"'," + "phonenumber = '" + phonenumber + "'," + "email = '" + email + "'," + "street = '" + street + "'," + "city = '"
-				+ city + "'," + "zipcode = '" + zipcode + "'" +" "+"WHERE username ='" + username + "'" + ";";
+			  String street, String city, String state, String zipcode) {
+		String query1 = "UPDATE registration " + "SET " + 
+			  "username = '" + username + "', " + 
+				"password = '" + password + "'," + 
+			  "firstname = '" + firstname + "'," + 
+				"lastname = '" + lastname + "'," + 
+			  "utaid = '" + utaid + "'," + 
+			  "phonenumber = '" + phonenumber + "'," + 
+			  "email = '" + email + "'," + 
+			  "street = '" + street + "'," + 
+			  "city = '" + city + "'," +
+			  "state = '" + state + "'," +
+			  "zipcode = '" + zipcode + "'" +
+			  " "+"WHERE username ='" + username + "'" + ";";
 
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
