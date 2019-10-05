@@ -1,6 +1,7 @@
 package registration.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -121,7 +122,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     			
     			if (!reservationMessage.getErrorMessage().equals("")) {
     	    		//			if error messages
-    	    		session.setAttribute("newReservation", newReservation);	
+    	    		session.setAttribute("reservation", newReservation);	
     	    		session.setAttribute("errorMsgs", reservationMessage);
     	    		request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
     	    		//request.getRequestDispatcher("/menu_login.jsp").include(request, response);
@@ -147,7 +148,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
     	    			request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
     	    			if (mar.getAssignedTo().equals(currentUser.getUsername())) {
-    	    				request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
+    	    				request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); //Ajinkya check this
     	    			}
 
     	    			//    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -155,7 +156,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    		}
 
     	    	}
-
 
     		}
     	}
@@ -173,8 +173,10 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	Reservation reservation = new Reservation();
 		reservation.setMarId(Integer.parseInt(request.getParameter("mar_id")));
 		//reservation.setFacilityName(request.getParameter("facility_name"));
-		reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time")));
-		reservation.setEndTime(DateUtils.getSqlDate(request.getParameter("end_time")));
+		//reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time1")));
+		String datetimeLocal = request.getParameter("start_time1");
+		System.out.println(Timestamp.valueOf(datetimeLocal.replace("T"," ")));
+		//reservation.setEndTime(DateUtils.getSqlDate(request.getParameter("end_time")));
 
 		return reservation; 
 	}
