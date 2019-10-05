@@ -78,6 +78,7 @@ static int count;
 	public static int settingFacilityCount(String facilityType)
 	{
 		ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
+		return count;
 	}
 
 	public static void insertNewFacility(String incrementedFacilityName,String FacilityType,String Interval,String FacilityDuration,String FacilityVenue)

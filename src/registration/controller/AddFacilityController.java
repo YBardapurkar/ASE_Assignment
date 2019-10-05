@@ -54,10 +54,7 @@ public class AddFacilityController extends HttpServlet{
 		AddFacility newFacility = new AddFacility();
 		session.setAttribute("newFacility",newFacility);
 		
-		String action = request.getParameter("action");
-		HttpSession session = request.getSession();
 		//session.removeAttribute("facilityNew");			
-		int count1;
 	
 		if(action.equals("addFacility"))
 		{
@@ -72,7 +69,7 @@ public class AddFacilityController extends HttpServlet{
 			count1 = count - 1 ;
 			
 			//System.out.println(count);
-			addFacility = FacilityDAO.settingFacilityAttributes(newfacility.getFacilityType());
+			addFacility = FacilityDAO.settingFacilityAttributes(newFacility.getFacilityType());
 			System.out.println(addFacility);
 			String newFacilityName = addFacility.get(count1).getFacilityName();
 		
