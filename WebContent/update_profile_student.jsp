@@ -14,7 +14,7 @@
 <table>
   <tr>
    <td>
-    <form name="updateprofile_form" action="admin?admin_profile=${UPDATEUSER.username}" method="post">
+    <form name="updateprofile_form" action="${current_role}?profile" method="post">
     <table style="width: 1200px; ">
     <tr>
     
@@ -195,6 +195,12 @@
 <td> <input name="state_error"  value="<c:out value='${errorMsgs.stateError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr> --%>
 	
+	<tr>
+    <td> State (*): </td>
+    <td> <input name="state" value="<c:out value='${UPDATEUSER.state}'/>" type="text" >  </td>
+    <td> <input name="state_error"  value="<c:out value='${errorMsgs.stateError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    </tr> 
+    
 	<tr>
     <td> Zip code (*): </td>
     <td> <input name="zipcode" value="<c:out value='${UPDATEUSER.zipcode}'/>" type="text" >  </td>

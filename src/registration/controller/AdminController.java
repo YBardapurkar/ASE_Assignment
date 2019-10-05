@@ -86,24 +86,24 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				}
 			}
 			
-			else if (request.getParameter("admin_profile") != null) {
+			else if (request.getParameter("profile") != null) {
 				
-				User user = UserDAO.getUserByUsername(request.getParameter("admin_profile"));
-				if (user != null) {
+				User user = UserDAO.getUserByUsername(currentUser.getUsername());
+//				if (session.getAttribute("current_user") == null) {
 					session.setAttribute("UPDATEUSER", user);
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
+//					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
 					request.getRequestDispatcher("/update_profile_student.jsp").include(request, response);
-				}
-				
-				else { // determine if Submit button was clicked without selecting a user
-					String error =  "User not found";
-					user = new User();
-					session.setAttribute("error",error);
-					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
-					
-				}
+//				}
+//				
+//				else { // determine if Submit button was clicked without selecting a user
+//					String error =  "User not found";
+//					user = new User();
+//					session.setAttribute("error",error);
+//					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+//					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
+//					
+//				}
 			}
 			
 //			Open Search page
@@ -275,11 +275,11 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					email = updateuser.getEmail();
 					address = updateuser.getStreet();
 					city = updateuser.getCity();
-					//state = updateuser.getState();
+					state = updateuser.getState();
 					zipcode = updateuser.getZipcode();
 					
 					//update database except role
-					UserDAO.updateProfile(username, password, firstname, lastname, utaid, phone, email, address, city, zipcode); 
+					UserDAO.updateProfile(username, password, firstname, lastname, utaid, phone, email, address, city, state, zipcode); 
 					updateuser.setMessage("Student Profile is updated");
 					updateuser.setUsername(username);
 					updateuser.setPassword(password);
@@ -290,7 +290,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					updateuser.setEmail(email);
 					updateuser.setStreet(address);
 					updateuser.setCity(city);
-					//updateuser.setState(state);
+					updateuser.setState(state);
 					updateuser.setZipcode(zipcode);
 					
 					//session.setAttribute("USERS", user);
@@ -345,7 +345,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		user.setEmail(request.getParameter("email"));
 		user.setStreet(request.getParameter("street"));
 		user.setCity(request.getParameter("city"));
-		//user.setState(request.getParameter("state"));
+		user.setState(request.getParameter("state"));
 		user.setZipcode(request.getParameter("zipcode"));
 		
 		return user;
