@@ -171,12 +171,22 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     
     public Reservation getReservationParam(HttpServletRequest request) {
     	Reservation reservation = new Reservation();
+    	//singe day repair
     	int interval = 0;
     	String datetimeLocal = "";
     	String time_substring = "";
     	String end_time_String = "";
     	int start_time = 0;
     	int end_time = 0;
+    	String startTime = "";
+    	
+    	//multiday repair
+    	String day_substring = "";
+    	int start_date = 0;
+    	int end_date = 0;
+    	String start_day_String = "";
+    	String end_day_String = "";
+    	
     	
 		reservation.setMarId(Integer.parseInt(request.getParameter("mar_id")));
 		//reservation.setFacilityName(request.getParameter("facility_name"));
@@ -186,7 +196,11 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		System.out.println(Timestamp.valueOf(datetimeLocal.replace("T"," ")));
 		time_substring = datetimeLocal.substring(11, 13);
 		start_time = Integer.parseInt(time_substring);
-		
+		if(start_time < 10) {
+			startTime = "0" +start_time; //Append 0
+			start_time = Integer.parseInt(startTime);
+		}
+		//start_time = Integer.parseInt(startTime);
 		System.out.println("Time_substring "+time_substring);
 		reservation.setStartTime(Timestamp.valueOf(datetimeLocal.replace("T"," ")));
 		
@@ -197,16 +211,48 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		if(interval <= 10) {
 			//Single day repair
 			end_time = start_time + interval;
-			System.out.println("endtime is "+end_time);
-			
-			end_time_String = datetimeLocal.substring(0,11) + end_time + datetimeLocal.substring(13);
+			System.out.println("endtime is "+end_time);			
+			end_time_String = datetimeLocal.substring(0,11) + end_time + datetimeLocal.substring(13); //create a new end time string
 			System.out.println("end_time_String" + end_time_String);
 			//reservation.setStartTime(Timestamp.valueOf(datetimeLocal.replace("T"," ")));
-				
+			reservation.setEndTime(Timestamp.valueOf(end_time_String.replace("T", " ")));
 		}
-		
+		else{
+			//Mulitday repair
+			day_substring = datetimeLocal.substring(8, 10);
+			start_date = Integer.parseInt(day_substring);
+			String startDate = "";
+			start_date = start_date +1; //Start from next day
+			if(start_date < 10) {
+				startDate = "0" +start_date; //Append 0
+				//start_date = Integer.parseInt(startDate);
+			}
+			start_day_String = datetimeLocal.substring(0,8) + startDate + datetimeLocal.substring(10); //create a new start time string
+			System.out.println("start_day_String"+start_day_String);
+			reservation.setStartTime(Timestamp.valueOf(start_day_String.replace("T"," ")));
+			
+			//end date logic
+			String endDate = "";
+			int addDay = 0;
+			
+			if(interval == 18) {
+				addDay = 1;
+			}
+			else {
+				addDay = 2;
+			}
+			
+			end_date = start_date + addDay;
+			if(end_date < 10) {
+				endDate = "0" +end_date; //Append 0
+				//start_date = Integer.parseInt(startDate);
+			}
+			end_day_String = datetimeLocal.substring(0,8) + endDate + datetimeLocal.substring(10); //create a new start time string
+			System.out.println("end_day_String"+end_day_String);
+			reservation.setEndTime(Timestamp.valueOf(end_day_String.replace("T", " ")));
+			
+		}
 		//reservation.setEndTime(Timestamp.valueOf(datetimeLocal_udpated.replace("T"," "))); //need to change this
-
 		return reservation; 
 	}
 }
