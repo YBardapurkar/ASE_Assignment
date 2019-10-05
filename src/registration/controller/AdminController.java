@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import registration.model.User;
 import registration.model.UserSearch;
+import registration.util.DropdownUtils;
 import registration.model.ChangeRole;
 import registration.data.UserDAO;
 import registration.model.UserError;
@@ -71,6 +72,8 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				User user = UserDAO.getUserByUsername(request.getParameter("user_details"));
 				if (user != null) {
 					session.setAttribute("USERS", user);
+					session.setAttribute("role_dropdown", DropdownUtils.getRoleDropdown());
+					
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/user_details.jsp").include(request, response);
 					request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
@@ -245,7 +248,6 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 
 			else if(action.equals("update_profile")) {
 				
-				User user = new User();
 				User updateuser = new User();
 				UserError userErrorMsgs = new UserError();
 				
