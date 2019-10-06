@@ -16,9 +16,12 @@
     <table style="width: 1200px; ">
   
     <tr>
-    <td> Facility Name (*): </td>
-  	<td><select name ="facility_name" value = "<c:out value='${mar.facilityName}' />">
-		<option>MR 1</option> 
+    <td> Facility Name (*): </td> 
+  	<td><select name ="facility_name" value = "">
+  		<c:forEach var="item" items="${marList}">
+    	<option value="${item}"><c:out value="${item}" /></option>
+		</c:forEach>
+		<%-- option>MR 1</option> 
 		<option>MR 2</option> 
 		<option>MR 3</option> 
 		<option>MR 4</option> 
@@ -61,7 +64,7 @@
 		<option>OVBC 1</option>
 		<option>OVBC 2</option>
 		<option>OBBC 1</option>
-		<option>OBBC 2</option>
+		<option>OBBC 2</option--%>
     </select> </td>
     <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     </tr>    	

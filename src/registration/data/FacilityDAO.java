@@ -86,5 +86,24 @@ static int count;
 		StoreListinDB("insert into facility(facility_name,facility_type,facility_interval,duration,venue) values('" +incrementedFacilityName+"','"+FacilityType+"','"+Interval+"','"+FacilityDuration+"','"+FacilityVenue+"')");
 	}
 
+	public static ArrayList<String> getFacilityName()
+	{
+		ArrayList<String> FacilityListInDB = new ArrayList<>();
+
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			count = 0;
+			stmt = conn.createStatement();
+			ResultSet facilityList = stmt.executeQuery("SELECT facility_name FROM macrepairsys.facility");
+			
+			while (facilityList.next()) {		
+				FacilityListInDB.add(facilityList.getString("facility_name"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return FacilityListInDB;
+	}
 	
 }
