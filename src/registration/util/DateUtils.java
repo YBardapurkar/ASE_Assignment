@@ -8,13 +8,14 @@ import java.util.Calendar;
 
 public class DateUtils {
 	
-	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	private static DateFormat timestampFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	
 //	get java.sql.Date from value in database
 	public static Date getSqlDate(String dateString) {
         Date sqlDate;
         try {
-			sqlDate = new Date(dateFormat.parse(dateString).getTime());
+			sqlDate = new Date(timestampFormat.parse(dateString).getTime());
 		} catch (ParseException e) {
 			e.printStackTrace();
 			sqlDate = now();
@@ -40,6 +41,18 @@ public class DateUtils {
 		
 		c.set(Calendar.HOUR, hour);
 		return new Date(c.getTimeInMillis());
+	}
+	
+//	check if string is valid date, yyyy/MM/dd
+	public static boolean isValidDate(String dateString) {
+		boolean isDate = false;
+		try{
+			dateFormat.parse(dateString);
+			isDate = true;
+		} catch (ParseException e) {
+			isDate = false;
+		}
+		return isDate;
 	}
 	
 //	get end date for corresponding start time and duration

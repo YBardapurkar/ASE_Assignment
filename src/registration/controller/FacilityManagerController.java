@@ -209,6 +209,10 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 						listMAR.addAll(MARDAO.getUnassignedMAR());
 						marSearch.setSearchText("");
 					}
+//					by date
+					else if (marSearch.getSearchFilter().equals("4")) {
+						listMAR.addAll(MARDAO.getMARByDate(marSearch.getSearchText()));
+					}
 //					all
 					else {
 						listMAR.addAll(MARDAO.getAllMAR());

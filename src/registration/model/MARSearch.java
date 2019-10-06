@@ -1,6 +1,8 @@
 package registration.model;
 
-import java.io.Serializable; 
+import java.io.Serializable;
+
+import registration.util.DateUtils; 
 
 public class MARSearch implements Serializable{
 	
@@ -63,8 +65,18 @@ public class MARSearch implements Serializable{
 			result = "";
 		}
 		
+//		by date
+		else if (searchFilter.equals("4")) {
+			if(searchText.equals("")) {
+				result = "Search Field is Empty";
+			} else if (!DateUtils.isValidDate(searchText)){
+				result = "Date should match the format 'yyyy/MM/dd'";
+			} else {
+				result = "";
+			}
+		}
 //		all
-		else if(searchFilter.equals("4")) {
+		else if(searchFilter.equals("5")) {
 			result = "";
 		}
 		
