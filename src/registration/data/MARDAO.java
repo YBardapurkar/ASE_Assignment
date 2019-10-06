@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import registration.model.MAR;
 import registration.util.SQLConnection;
 import java.util.Date;
@@ -64,10 +63,24 @@ public class MARDAO {
 					+ mar.getReportedBy() + "')";
 			stmt.executeUpdate(insertmar);	
 			conn.commit(); 
-		} catch (SQLException e) {
+			
+			//Extracting mar id
+			
+			
+			stmt = conn.createStatement();
+			String idForMar = "SELECT MAX(mar_id) as recent_id FROM macrepairsys.mar ORDER BY mar_id";
+			ResultSet resultId = stmt.executeQuery(idForMar);
+			
+			while (resultId.next()) {
+				
+				
+				mar.setId(Integer.parseInt(resultId.getString("recent_id")));
+			
+		} 
+		}catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println("in db");
+		
 	}
 
 	public static void insertmar(MAR mar) {  
