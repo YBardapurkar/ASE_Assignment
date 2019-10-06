@@ -98,7 +98,7 @@ public class MARDAO {
 	public static MAR getMARByID(int id) {
 		MAR mar = new MAR();
 		ArrayList<MAR> marList = new ArrayList<MAR>();
-		marList.addAll(getMARList("where mar.mar_id = '" + id + "' "));
+		marList.addAll(getMARListFacilityManager("where mar.mar_id = '" + id + "' "));
 		return marList.isEmpty() ? mar : marList.get(0);
 	}
 	
@@ -136,6 +136,7 @@ public class MARDAO {
 		Connection conn = SQLConnection.getDBConnection();
 		try {
 			stmt = conn.createStatement();
+			
 			System.out.println(querySelect + queryWhere + queryOrder);
 			ResultSet result = stmt.executeQuery(querySelect + queryWhere + queryOrder);
 			while (result.next()) {
