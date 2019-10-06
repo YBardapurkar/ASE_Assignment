@@ -1,7 +1,8 @@
 package registration.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.UnmarshallingContext.State;
 
 import registration.util.DateUtils;
 
@@ -44,16 +45,20 @@ public class Reservation {
 		this.endTime = endTime;
 	}
 	
-	public void validateReservation(String action, ReservationMessage reservationMessage) {
-		reservationMessage.setStartTimeMessage(validateStartTime(action, this.getStartTime()));
+	public void validateReservation(String action, ReservationMessage reservationMessage, String startTime) {
+		reservationMessage.setStartTimeMessage(validateStartTime(action, this.getStartTime(), startTime));
 		reservationMessage.setErrorMessage();
 	}
 	
-	public String validateStartTime(String action, Timestamp startDate) {
+	public String validateStartTime(String action, Timestamp startDate , String startTime) {
 		String result;
-		if (DateUtils.now().after(startDate)) {
+		if(startTime.length() != 16 ) {
+			result = "Start time should be in mm/dd/yyyy hh:ss AM/PM format";	
+		}
+		else if (DateUtils.now().after(startDate)) {
 			result = "Start date cannot be before current time";
-		} else {
+		}
+		else {
 			result = "";
 		}
 		return result;

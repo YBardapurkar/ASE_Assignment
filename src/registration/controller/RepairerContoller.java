@@ -104,8 +104,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	Reservation newReservation = new Reservation();
     	ReservationMessage reservationMessage = new ReservationMessage();
 
-    	newReservation = getReservationParam(request);
-    	newReservation.validateReservation(action,reservationMessage);
+    	
 
     
     	//		user not logged in
@@ -118,18 +117,32 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     		//			reserve facility
     		if (action.equals("reserve_facility")) {
+    			String validateStartTime = request.getParameter("start_time1");
+    			if(validateStartTime.length()==16) {
+    			newReservation = getReservationParam(request); //if it is a valid time stamp
+    			}
+    			newReservation.validateReservation(action,reservationMessage,validateStartTime);
+    			   	    	
     			//				TODO this method
     			
     			if (!reservationMessage.getErrorMessage().equals("")) {
     	    		//			if error messages
     	    		session.setAttribute("reservation", newReservation);	
     	    		session.setAttribute("errorMsgs", reservationMessage);
-    	    		request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
-    	    		//request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-    	    		//request.getRequestDispatcher("/register.jsp").include(request, response);
+    	    		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+    	    		int id = Integer.parseInt(request.getParameter("mar_id"));
+	    			MAR mar = MARDAO.getMARByID(id);
+	    			newReservation.setMarId(id);
+	    			session.setAttribute("mar", mar);
+    	    		
+	    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+	    			request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+    	    		request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);    	    		
     	    	}
+    						
     	    	else {
     	    		//TODO : Create Dao Layer Ajinkya
+    	    			
     	    		
     	    			String username = currentUser.getUsername();
 
@@ -156,6 +169,17 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    		}
 
     	    	}
+    		
+    		
+    		
+    		//For udpating reservation  facility
+    		
+    		//TODO For udpating reservation  facility
+    		
+    			if(action.equals("reserved_selected_facility")) {
+    				System.out.println("I am in reserved_selected_facility");
+    	
+    			}
 
     		}
     	}
