@@ -23,7 +23,7 @@ public class MARDAO {
 //	get all mar
 	public static ArrayList<MAR> getAllMAR () {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
-		marList.addAll(getMARList(""));
+		marList.addAll(getMARListFacilityManager(""));
 		return marList;
 	}
 
@@ -98,7 +98,7 @@ public class MARDAO {
 	public static MAR getMARByID(int id) {
 		MAR mar = new MAR();
 		ArrayList<MAR> marList = new ArrayList<MAR>();
-		marList.addAll(getMARList("where mar.mar_id = '" + id + "' "));
+		marList.addAll(getMARListFacilityManager("where mar.mar_id = '" + id + "' "));
 		return marList.isEmpty() ? mar : marList.get(0);
 	}
 	
@@ -136,6 +136,8 @@ public class MARDAO {
 		Connection conn = SQLConnection.getDBConnection();
 		try {
 			stmt = conn.createStatement();
+			
+			System.out.println(querySelect + queryWhere + queryOrder);
 			ResultSet result = stmt.executeQuery(querySelect + queryWhere + queryOrder);
 			while (result.next()) {
 				MAR mar = new MAR();
@@ -146,6 +148,37 @@ public class MARDAO {
 				mar.setFacilityName(result.getString("facility_name"));
 				mar.setAssignedTo(result.getString("assigned_to"));
 				mar.setDate(result.getString("creation_date"));
+				
+				marList.add(mar);
+			}
+		} catch (SQLException e) {System.out.println(e.getMessage());}
+		return marList;
+	}
+	
+	
+	private static ArrayList<MAR> getMARListFacilityManager (String queryWhere) {
+		ArrayList<MAR> marList = new ArrayList<MAR>();
+		String querySelect = ""
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to FROM mar\r\n" + 
+				"LEFT JOIN assignment ON mar.mar_id = assignment.mar_id ";
+				
+		String queryOrder = "order by mar.mar_id;";
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			System.out.println(querySelect + queryWhere + queryOrder);
+			ResultSet result = stmt.executeQuery(querySelect + queryWhere + queryOrder);
+			while (result.next()) {
+				MAR mar = new MAR();
+				
+				mar.setId(Integer.parseInt(result.getString("mar_id")));
+				mar.setDescription(result.getString("description"));
+				mar.setUrgency(result.getString("urgency"));
+				mar.setFacilityName(result.getString("facility_name"));
+				mar.setDate(result.getString("creation_date"));
+				mar.setAssignedTo(result.getString("assigned_to"));
 				
 				marList.add(mar);
 			}
