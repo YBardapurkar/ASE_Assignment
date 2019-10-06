@@ -10,19 +10,22 @@
 
 	<form action="admin?search" method="post">
 	
-	<label>Search User by:</label>
+	<h2>Search User by:</h2>
+	<input name="searchErrorMsgs" value="<c:out value='${message.searchErrorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled"> 
 
 	<p>
-	<input type="radio" name="search_filter" value="1" />Username
-	<input type="radio" name="search_filter" value="2" />Role
-	<input type="radio" name="search_filter" value="3" checked="checked"/>All Users
+	<input type="radio" name="search_filter" value="1" <c:if test = "${user_search.searchFilter == '1'}">checked</c:if> />Username
+	<input type="radio" name="search_filter" value="2" <c:if test = "${user_search.searchFilter == '2'}">checked</c:if> />Role
+	<input type="radio" name="search_filter" value="3" <c:if test = "${user_search.searchFilter == '3' || empty user_search.searchFilter}">checked</c:if> />All Users
 	</p>
 	
-	<input name="search_text" type="text" value="${user_search.userSearchText}">
+	<input name="search_text" type="text" value="${user_search.searchText}">
 	<input name="action" type="hidden" value="search_user">
+	<input name="searchErrorMsgs"  value="<c:out value='${message.searchTextMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled">
+	<br>
 	<input name= "search_user" type="submit" value="Submit">
 	  
-  	<input name="searchErrorMsgs"  value="<c:out value='${userErrors.searchError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> 
+  	
   
 	</form>      
 

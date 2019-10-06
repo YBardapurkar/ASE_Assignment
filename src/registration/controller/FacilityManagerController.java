@@ -22,8 +22,8 @@ import registration.model.AddFacility;
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
 import registration.model.MAR;
-import registration.model.MARSearch;
-import registration.model.MARSearchMessage;
+import registration.model.Search;
+import registration.model.SearchMessage;
 import registration.model.User;
 
 @WebServlet("/facility_manager")
@@ -200,11 +200,11 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 //			Search MAR
 			else if(action.equals("search_mar")) {
 				
-				MARSearch marSearch = getSearchParam(request);
-				MARSearchMessage marSearchMessage = new MARSearchMessage();
+				Search marSearch = getSearchParam(request);
+				SearchMessage marSearchMessage = new SearchMessage();
 				ArrayList<MAR> listMAR = new ArrayList<MAR>();
 				
-				marSearch.validateMARSearch(action, marSearch, marSearchMessage);
+				marSearch.validateSearch(action, marSearch, marSearchMessage);
 				
 				if (!marSearchMessage.getSearchErrorMessage().equals("")) {
 //							set error messages
@@ -321,8 +321,8 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 		return assignment; 
 	}
 	
-	public MARSearch getSearchParam(HttpServletRequest request){
-		MARSearch marSearch = new MARSearch();
+	public Search getSearchParam(HttpServletRequest request){
+		Search marSearch = new Search();
 		
 		marSearch.setSearchText(request.getParameter("search_text"));
 		marSearch.setSearchFilter(request.getParameter("search_filter"));

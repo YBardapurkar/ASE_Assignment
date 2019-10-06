@@ -13,9 +13,10 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import registration.model.User;
-import registration.model.UserSearch;
 import registration.util.DropdownUtils;
 import registration.model.ChangeRole;
+import registration.model.Search;
+import registration.model.SearchMessage;
 import registration.data.UserDAO;
 import registration.model.UserError;
 
@@ -43,6 +44,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		session.setAttribute("current_role", "admin");
 		
 		session.removeAttribute("error");
+		session.removeAttribute("message");
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
 		session.removeAttribute("user_search");
@@ -134,6 +136,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		session.setAttribute("current_role", "admin");
 		
 		session.removeAttribute("error");
+		session.removeAttribute("message");
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
 		session.removeAttribute("user_search");
@@ -148,15 +151,15 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 			
 //			search user
 			if(action.equals("search_user")) {
-				UserSearch userSearch = getSearchParam(request); 
-				UserError UserErrors = new UserError();
+				Search userSearch = getSearchParam(request); 
+				SearchMessage userSearchMessage = new SearchMessage();
 				ArrayList<User> listUsers = new ArrayList<User>();
 				
-				userSearch.validateSearchUser(action, userSearch, UserErrors);
-				
-				if (!UserErrors.getSearchError().equals("")) {
+				userSearch.validateSearch(action, userSearch, userSearchMessage);
+				if (!userSearchMessage.getSearchErrorMessage().equals("")) {
 //					set error messages
-					session.setAttribute("error", UserErrors);
+					session.setAttribute("user_search", userSearch);
+					session.setAttribute("message", userSearchMessage);
 	
 //					set jsp pages
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
@@ -167,20 +170,19 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 //					if no error messages
 					
 //					search by username
-					if(userSearch.getUserSearchFilter().equals("1")) {
-						listUsers.addAll(UserDAO.searchUsersByUsername(userSearch.getUserSearchText()));
-						session.setAttribute("user_search", userSearch);
+					if(userSearch.getSearchFilter().equals("1")) {
+						listUsers.addAll(UserDAO.searchUsersByUsername(userSearch.getSearchText()));
 					}
 //					search by role
-					else if(userSearch.getUserSearchFilter().equals("2")) {
-						listUsers.addAll(UserDAO.searchUsersByRole(userSearch.getUserSearchText()));
-						session.setAttribute("user_search", userSearch);
+					else if(userSearch.getSearchFilter().equals("2")) {
+						listUsers.addAll(UserDAO.searchUsersByRole(userSearch.getSearchText()));
 					}
 //					show all
 					else {
 						listUsers.addAll(UserDAO.listUsers());
+						userSearch.setSearchText("");
 					}
-						
+					session.setAttribute("user_search", userSearch);
 					session.setAttribute("USERS", listUsers);
 					
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
@@ -317,11 +319,11 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		HttpSessionListener.super.sessionDestroyed(se);
 	}
 	
-	public UserSearch getSearchParam(HttpServletRequest request){
-		UserSearch userSearch = new UserSearch();
+	public Search getSearchParam(HttpServletRequest request){
+		Search userSearch = new Search();
 		
-		userSearch.setUserSearchText(request.getParameter("search_text"));
-		userSearch.setUserSearchFilter(request.getParameter("search_filter"));
+		userSearch.setSearchText(request.getParameter("search_text"));
+		userSearch.setSearchFilter(request.getParameter("search_filter"));
 
 		return userSearch; 
 	}

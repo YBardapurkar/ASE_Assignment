@@ -1,6 +1,6 @@
 package registration.model;
 
-public class MARSearchMessage {
+public class SearchMessage {
 	
 	private String searchTextMessage = "";
 	private String searchFilterMessage = "";
