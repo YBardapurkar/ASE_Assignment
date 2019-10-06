@@ -130,21 +130,18 @@ public class UserDAO {
 	
 	// Update All Details except role
 	
-	public static void updateProfile(String username, String password, String firstname, String lastname, String utaid, String phonenumber, String email,
-			  String street, String city, String state, String zipcode) {
-		String query1 = "UPDATE registration " + "SET " + 
-			  "username = '" + username + "', " + 
-				"password = '" + password + "'," + 
-			  "firstname = '" + firstname + "'," + 
-				"lastname = '" + lastname + "'," + 
-			  "utaid = '" + utaid + "'," + 
-			  "phonenumber = '" + phonenumber + "'," + 
-			  "email = '" + email + "'," + 
-			  "street = '" + street + "'," + 
-			  "city = '" + city + "'," +
-			  "state = '" + state + "'," +
-			  "zipcode = '" + zipcode + "'" +
-			  " "+"WHERE username ='" + username + "'" + ";";
+	public static void updateProfile(User user) {
+		String query1 = "UPDATE registration SET " + 
+			"password = '" + user.getPassword() + "', " + 
+			"firstname = '" + user.getFirstname() + "', " + 
+			"lastname = '" + user.getLastname() + "', " +
+			"phonenumber = '" + user.getPhone() + "', " + 
+			"email = '" + user.getEmail() + "', " + 
+			"street = '" + user.getStreet() + "', " + 
+			"city = '" + user.getCity() + "', " +
+			"state = '" + user.getState() + "', " +
+			"zipcode = '" + user.getZipcode() + "' " +
+			"WHERE username = '" + user.getUsername() + "';";
 
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
@@ -155,17 +152,7 @@ public class UserDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				stmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 		}
-
 	}
 
 //	List all users

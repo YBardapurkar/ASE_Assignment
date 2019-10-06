@@ -90,25 +90,14 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					
 				}
 			}
-			
+//			Open profile
 			else if (request.getParameter("profile") != null) {
-				
 				User user = UserDAO.getUserByUsername(currentUser.getUsername());
-//				if (session.getAttribute("current_user") == null) {
-					session.setAttribute("UPDATEUSER", user);
-					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-//					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_student.jsp").include(request, response);
-//				}
-//				
-//				else { // determine if Submit button was clicked without selecting a user
-//					String error =  "User not found";
-//					user = new User();
-//					session.setAttribute("error",error);
-//					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-//					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
-//					
-//				}
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 			}
 			
 //			Open Search page
@@ -252,57 +241,26 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				
 				User updateuser = new User();
 				UserError userErrorMsgs = new UserError();
-				
-				String username, password, firstname, lastname, utaid, phone, email, address, city, state, zipcode;
-				
-				//System.out.println("I am here");
-				
-				
+
 				updateuser = getUpdateProfileParam(request);
 				updateuser.validateUser(action, updateuser, userErrorMsgs);
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
  //					if error messages
-					session.setAttribute("errorMsgs", userErrorMsgs);
+					session.setAttribute("error", userErrorMsgs);
 
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_student.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 				}
 				else {
 //					if no error messages
-					username = updateuser.getUsername();
-					password = updateuser.getPassword();
-					firstname = updateuser.getFirstname();
-					lastname = updateuser.getLastname();
-					utaid = updateuser.getUtaId();
-					phone = updateuser.getPhone();
-					email = updateuser.getEmail();
-					address = updateuser.getStreet();
-					city = updateuser.getCity();
-					state = updateuser.getState();
-					zipcode = updateuser.getZipcode();
-					
+
 					//update database except role
-					UserDAO.updateProfile(username, password, firstname, lastname, utaid, phone, email, address, city, state, zipcode); 
-					updateuser.setMessage("Student Profile is updated");
-					updateuser.setUsername(username);
-					updateuser.setPassword(password);
-					updateuser.setFirstname(firstname);
-					updateuser.setLastname(lastname);
-					updateuser.setUtaId(utaid);
-					updateuser.setPhone(phone);
-					updateuser.setEmail(email);
-					updateuser.setStreet(address);
-					updateuser.setCity(city);
-					updateuser.setState(state);
-					updateuser.setZipcode(zipcode);
-					
-					//session.setAttribute("USERS", user);
+					UserDAO.updateProfile(updateuser); 
 					session.setAttribute("UPDATEUSER", updateuser);
 					
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/studentprofile_updatedetails.jsp").include(request, response);
-					//request.getRequestDispatcher("/update_profile_student.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 				}
 				
 			}
@@ -344,7 +302,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		user.setPassword(request.getParameter("password"));
 		user.setFirstname(request.getParameter("firstname"));
 		user.setLastname(request.getParameter("lastname"));
-		user.setUtaId(request.getParameter("utaid"));
+		user.setUtaId(request.getParameter("utaId"));
 		user.setPhone(request.getParameter("phone"));
 		user.setEmail(request.getParameter("email"));
 		user.setStreet(request.getParameter("street"));

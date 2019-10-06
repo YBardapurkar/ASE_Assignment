@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Update Admin Profile Form</title>
+<title>Profile</title>
 </head>
 <body>
-<h2>Edit Admin Profile </h2>
+<h2>Profile </h2>
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:200px" disabled="disabled">
 <input name="message" value="<c:out value='${user.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30"> 
 
@@ -18,9 +18,8 @@
     <table style="width: 1200px; ">
     <tr>
     
-    <td> Username (*): </td>
-    <td> <input name="username" value="<c:out value='${UPDATEUSER.username}'/>" type="text" > </td>
-    <td> <input name="username_error"  value="<c:out value='${errorMsgs.usernameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> </td>
+    <td> Username: </td>
+    <td> <input name="username" value="<c:out value='${UPDATEUSER.username}'/>" type="text" readonly > </td>
     </tr>
 
      <tr>
@@ -41,25 +40,20 @@
     <td> <input name="lastname_error"  value="<c:out value='${errorMsgs.lastnameError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 
-	<%-- <tr>
-    <td> role (*): </td>
-    <!-- <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>  -->
-    <td><select name="role">
-    	<c:forEach items="${role_dropdown}" var="item" varStatus="status">
-    	<option value="${item}">${item}</option>
-    	</c:forEach>
-	</select></td>
-    <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
-    </tr> --%>
-	
+	<tr>
+    <td> Role: </td>
+    <td> <input name="utaid" value="<c:out value='${UPDATEUSER.role}'/>" type="text" readonly >  </td>
+    </tr>
 
 	<tr>
-    <td> UTA id(*): </td>
-    <td> <input name="utaid" value="<c:out value='${UPDATEUSER.utaId}'/>" type="text" >  </td>
-    <td> <input name="utaid_error"  value="<c:out value='${errorMsgs.utaIdError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
+    <td> UTA id: </td>
+    <td> <input name="utaid" value="<c:out value='${UPDATEUSER.utaId}'/>" type="text" readonly>  </td>
     </tr>
 	
-
+	<tr>
+	<td colspan=3><h3><br>Contact Info</h3></td>
+	</tr>
+	
 	<tr>
     <td> Phone (*): </td>
     <td> <input name="phone" value="<c:out value='${UPDATEUSER.phone}'/>" type="text" >  </td>
@@ -73,6 +67,10 @@
     </tr>
 
 	<tr>
+	<td colspan = 3><h3><br></>Address</h3></td>
+	</tr>
+	
+	<tr>
     <td> Street address (*): </td>
     <td> <input name="street" value="<c:out value='${UPDATEUSER.street}'/>" type="text" >  </td>
     <td> <input name="street_error"  value="<c:out value='${errorMsgs.streetError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
@@ -84,120 +82,15 @@
     <td> <input name="city_error"  value="<c:out value='${errorMsgs.cityError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	
-	<%-- <tr>
-    <td> state (*): </td>
-    <td><select name="state">
-	<option value="">none</option>
-	<option value="AL">Alabama</option>
-
-	<option value="AK">Alaska</option>
-
-	<option value="AZ">Arizona</option>
-
-	<option value="AR">Arkansas</option>
-
-	<option value="CA">California</option>
-
-	<option value="CO">Colorado</option>
-
-	<option value="CT">Connecticut</option>
-
-	<option value="DE">Delaware</option>
-
-	<option value="DC">District of Columbia</option>
-
-	<option value="FL">Florida</option>
-
-	<option value="GA">Georgia</option>
-
-	<option value="HI">Hawaii</option>
-
-	<option value="ID">Idaho</option>
-
-	<option value="IL">Illinois</option>
-
-	<option value="IN">Indiana</option>
-
-	<option value="IA">Iowa</option>
-
-	<option value="KS">Kansas</option>
-
-	<option value="KY">Kentucky</option>
-
-	<option value="LA">Louisiana</option>
-
-	<option value="ME">Maine</option>
-
-	<option value="MD">Maryland</option>
-
-	<option value="MA">Massachusetts</option>
-
-	<option value="MI">Michigan</option>
-
-	<option value="MN">Minnesota</option>
-
-	<option value="MS">Mississippi</option>
-
-	<option value="MO">Missouri</option>
-
-	<option value="MT">Montana</option>
-
-	<option value="NE">Nebraska</option>
-
-	<option value="NV">Nevada</option>
-
-	<option value="NH">New Hampshire</option>
-
-	<option value="NJ">New Jersey</option>
-
-	<option value="NM">New Mexico</option>
-
-	<option value="NY">New York</option>
-
-	<option value="NC">North Carolina</option>
-
-	<option value="ND">North Dakota</option>
-
-	<option value="OH">Ohio</option>
-
-	<option value="OK">Oklahoma</option>
-
-	<option value="OR">Oregon</option>
-
-	<option value="PA">Pennsylvania</option>
-
-	<option value="RI">Rhode Island</option>
-
-	<option value="SC">South Carolina</option>
-
-	<option value="SD">South Dakota</option>
-
-	<option value="TN">Tennessee</option>
-
-	<option value="TX">Texas</option>
-
-	<option value="UT">Utah</option>
-
-	<option value="VT">Vermont</option>
-
-	<option value="VA">Virginia</option>
-
-	<option value="WA">Washington</option>
-
-	<option value="WV">West Virginia</option>
-
-	<option value="WI">Wisconsin</option>
-
-	<option value="WY">Wyoming</option>
-
-</select></td>
-
-<td> <input name="state_error"  value="<c:out value='${errorMsgs.stateError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
-    </tr> --%>
-	
 	<tr>
     <td> State (*): </td>
-    <td> <input name="state" value="<c:out value='${UPDATEUSER.state}'/>" type="text" >  </td>
+    <td>
+    <select name="state">
+		<c:forEach items="${state_dropdown}" var="item" varStatus="status">
+    	<option value="${item}" <c:if test='${item == UPDATEUSER.state}'>selected</c:if>>${item}</option>
+    	</c:forEach>
+	</select>
+	</td>
     <td> <input name="state_error"  value="<c:out value='${errorMsgs.stateError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr> 
     
@@ -207,12 +100,11 @@
     <td> <input name="zipcode_error"  value="<c:out value='${errorMsgs.zipcodeError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr> 
 
-	
-
     <tr>
     <td colspan="2">(*) Mandatory field</td>
     </tr> 
     </table>
+    <br>
     <input name="action" value="update_profile" type="hidden">
     <input type="submit" value="Update">
     </form>

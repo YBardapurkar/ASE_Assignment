@@ -185,6 +185,20 @@ public class User implements Serializable{
 		} else if (action.equals(ACTION_LOGIN)) {
 			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
 			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			
+			userErrorMsgs.setErrorMsg();
+		} else if (action.equals("update_user")) {
+			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
+			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
+			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
+			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
+			userErrorMsgs.setStreetError(validatestreet(user.getStreet()));
+			userErrorMsgs.setCityError(validatecity(user.getCity()));
+			userErrorMsgs.setStateError(validateState(user.getState()));
+			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
+			
 			userErrorMsgs.setErrorMsg();
 		}
 	}
@@ -217,6 +231,16 @@ public class User implements Serializable{
 				result = "";
 			}
 		} 
+//		update profile
+		else if(action.equals("update_profile")) {
+			System.out.println(username);
+			
+			if (username == null || username.equals("")) {
+				result = "Username is a required field";
+			} else {
+				result = "";
+			}
+		} 
 //		default
 		else {
 			result = "action not recognized";
@@ -240,6 +264,14 @@ public class User implements Serializable{
 		} 
 //		validate login
 		else if(action.equals(ACTION_LOGIN)) {
+			if (password == null || password.equals("")) {
+				result = "Password is a required field";
+			} else {
+				result = "";
+			}
+		} 
+//		update profile
+		else if(action.equals("update_user")) {
 			if (password == null || password.equals("")) {
 				result = "Password is a required field";
 			} else {

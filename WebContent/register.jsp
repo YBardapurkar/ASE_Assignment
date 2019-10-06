@@ -59,6 +59,9 @@
     <td> <input name="utaid_error"  value="<c:out value='${errorMsgs.utaIdError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
 	
+	<tr>
+	<td colspan=3><h3><br>Contact Info</h3></td>
+	</tr>
 
 	<tr>
     <td> Phone (*): </td>
@@ -71,6 +74,10 @@
     <td> <input name="email" value="<c:out value='${user.email}'/>" type="text" >  </td>
     <td> <input name="email_error"  value="<c:out value='${errorMsgs.emailError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
     </tr>
+    
+    <tr>
+	<td colspan = 3><h3><br></>Address</h3></td>
+	</tr>
 
 	<tr>
     <td> Street address (*): </td>
@@ -106,6 +113,8 @@
     <td colspan="2">(*) Mandatory field</td>
     </tr>
     </table>
+    <br>
+    
     <input name="action" value="save_user" type="hidden">
     <input type="submit" value="Register">
     </form>
