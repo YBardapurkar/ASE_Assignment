@@ -23,32 +23,45 @@ import registration.model.User;
 public class AddFacilityController extends HttpServlet{
 	
 
+	
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		session.removeAttribute("newFacility");			// single User object
+		
+		request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+		request.getRequestDispatcher("/add_facility.jsp").include(request, response);
+
 		//session.removeAttribute("newf");			// single User object
 		
 		
-		request.getRequestDispatcher("/facility_details.jsp").include(request, response);
 		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//request.getRequestDispatcher("/add_facility.jsp").include(request, response);
+		
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
-		//session.removeAttribute("facilityNew");			
+		session.removeAttribute("newFacility");			
+	
 		int count1;
 	
-		AddFacility newfacility = new AddFacility();
-		session.setAttribute("facilityNew",newfacility);
+		AddFacility newFacility = new AddFacility();
+		session.setAttribute("newFacility",newFacility);
 		
+		//session.removeAttribute("facilityNew");			
+	
 		if(action.equals("addFacility"))
 		{
 			
-			newfacility.setFacilityType(request.getParameter("facility_type"));
-			int count = FacilityDAO.settingFacilityCount(newfacility.getFacilityType());
+			newFacility.setFacilityType(request.getParameter("facilityType"));
+			System.out.println(request);
+			int count = FacilityDAO.settingFacilityCount(newFacility.getFacilityType());
 			ArrayList<AddFacility> addFacility = new ArrayList<AddFacility>();
 			
 			//int count = addFacility.size() ;
@@ -56,13 +69,13 @@ public class AddFacilityController extends HttpServlet{
 			count1 = count - 1 ;
 			
 			//System.out.println(count);
-			addFacility = FacilityDAO.settingFacilityAttributes(newfacility.getFacilityType());
+			addFacility = FacilityDAO.settingFacilityAttributes(newFacility.getFacilityType());
 			System.out.println(addFacility);
 			String newFacilityName = addFacility.get(count1).getFacilityName();
 		
 			//System.out.println(newFacilityName);
 			
-			String incrementedFacilityName = newfacility.incrementFacilityName(newFacilityName, count);
+			String incrementedFacilityName = newFacility.incrementFacilityName(newFacilityName, count);
 			
 			FacilityDAO.insertNewFacility(incrementedFacilityName,addFacility.get(count1).getFacilityType(),
 					addFacility.get(count1).getFacilityInterval(),addFacility.get(count1).getFacilityDuration(),
@@ -71,13 +84,13 @@ public class AddFacilityController extends HttpServlet{
 			
 			String message = "New facility added successfully";
 			
-			newfacility.setFacilityName(incrementedFacilityName);
-			newfacility.setinterval_hours(addFacility.get(count1).getFacilityInterval());
-			newfacility.setFacilityDuration(addFacility.get(count1).getFacilityDuration());
-			newfacility.setFacilityVenue(addFacility.get(count1).getFacilityVenue());
+			newFacility.setFacilityName(incrementedFacilityName);
+			newFacility.setinterval_hours(addFacility.get(count1).getFacilityInterval());
+			newFacility.setFacilityDuration(addFacility.get(count1).getFacilityDuration());
+			newFacility.setFacilityVenue(addFacility.get(count1).getFacilityVenue());
 			
-			//request.getRequestDispatcher("/facility_details.jsp").include(request, response);
-
+			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+			request.getRequestDispatcher("/facility_details.jsp").include(request, response);
 			
 		}
 		

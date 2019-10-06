@@ -69,18 +69,18 @@ static int count;
 	}
 	
 	
-	public static ArrayList<AddFacility> settingFacilityAttributes(String facility_type)
+	public static ArrayList<AddFacility> settingFacilityAttributes(String facilityType)
 	{
-		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facility_type+"' order by length(facility_name),facility_name");
+		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
 		
 	}
 	
-	public static int settingFacilityCount(String facility_type)
+	public static int settingFacilityCount(String facilityType)
 	{
-		ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facility_type+"' order by length(facility_name),facility_name");
+		ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
 		return count;
 	}
-	
+
 	public static void insertNewFacility(String incrementedFacilityName,String FacilityType,String Interval,String FacilityDuration,String FacilityVenue)
 	{
 		StoreListinDB("insert into facility(facility_name,facility_type,facility_interval,duration,venue) values('" +incrementedFacilityName+"','"+FacilityType+"','"+Interval+"','"+FacilityDuration+"','"+FacilityVenue+"')");

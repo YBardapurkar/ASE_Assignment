@@ -11,36 +11,36 @@ public class AddFacility implements Serializable{
 	
 	private static final long serialVersionUID = 3L;
 	  
-	public String facility_name;
-	public String facility_type;
-	public String interval;
-	public String duration;
-	public String venue;
-	public int count;
-	public String interval_hours;
+	private String facilityName;
+	public String facilityType;
+	private String interval;
+	private String facilityDuration;
+	private String facilityVenue;
+	private int count;
+	private String interval_hours;
 	String message = "New facility added successfully";
 	
-	public void setFacilityType(String facility_type) 
+	public void setFacilityType(String facilityType) 
 	{
-		this.facility_type = facility_type;
+		this.facilityType = facilityType;
 	}
 
 	public String getFacilityType()
 	{
-		return facility_type;
+		return facilityType;
 	}
 	
 	/***********************************/
 	
 	
-	public void setFacilityName(String facility_name) 
+	public void setFacilityName(String FacilityName) 
 	{
-		this.facility_name = facility_name;
+		this.facilityName = FacilityName;
 	}
 
 	public String getFacilityName()
 	{
-		return facility_name;
+		return facilityName;
 	}
 
 	public void setinterval_hours(String interval) 
@@ -68,23 +68,23 @@ public class AddFacility implements Serializable{
 	
 	public void setFacilityDuration(String duration) 
 	{
-		this.duration = duration;
+		this.facilityDuration = duration;
 	}
 
 	public String getFacilityDuration()
 	{
-		return duration;
+		return facilityDuration;
 	}
 
 	
 	public void setFacilityVenue(String venue) 
 	{
-		this.venue = venue;
+		this.facilityVenue = venue;
 	}
 
 	public String getFacilityVenue()
 	{
-		return venue;
+		return facilityVenue;
 	}
 
 	
@@ -96,7 +96,6 @@ public class AddFacility implements Serializable{
 		String incrementFacilityName;
 		//str.matches(".*\\d.*")
 		String[] arrOfStr;
-		System.out.println(count);
 		if(updateFacilityName.matches(".*\\d.*"))
 		{
 			System.out.println("inside the pattern if");
@@ -108,20 +107,14 @@ public class AddFacility implements Serializable{
 	    
 	        incrementFacilityName = arrOfStr[0] + " " +  arrOfStr[1];    
 	        System.out.println("incrementFacilityName");
-	        System.out.println(incrementFacilityName);
 		}
 		
 		else
 		{
 			incrementFacilityName = updateFacilityName + " " + "2";
-			System.out.println("incrementFacilityName");
-	        System.out.println(incrementFacilityName);
 		}
 		
-		System.out.println("incrementFacilityName");
-        System.out.println(incrementFacilityName);
 		return incrementFacilityName;
-		
 	}
 
 

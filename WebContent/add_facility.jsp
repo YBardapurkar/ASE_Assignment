@@ -13,12 +13,12 @@
 <table>
   <tr>
    <td>
-    <form action="facility/addFacility" method="post">
+    <form action="facility_manager" method="post">
     <table style="width: 1200px; ">
 
    <tr>
     <td> Facility Type (*): </td>
-  	<td><select name ="facility_type" value = "<c:out value='${newfacility.facility_type}' />">
+  	<td><select name ="facilityType" value = "<c:out value='${newFacility.facilityType}' />">
 		<option>Multipurpose room</option> 
 		<option>Indoor basketball court</option> 
 		<option>Volleyball court</option> 
@@ -32,8 +32,11 @@
 		    </select> </td>
     <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     </tr>    	
+    	
+    
+    
+
    <tr>
-    <tr>
     <td colspan="2">(*) Mandatory field</td>
     </tr>
     </table>
