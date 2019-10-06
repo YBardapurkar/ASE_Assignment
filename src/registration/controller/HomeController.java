@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import registration.data.MARDAO;
+import registration.data.FacilityDAO;
+import registration.model.AddFacility;
 import registration.model.MAR;
 import registration.model.MARError;
 import registration.model.User;
@@ -70,6 +72,9 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 			}
 //			add mar page
 			else if (request.getParameter("add_mar") != null) {
+				ArrayList<String> MARList = new ArrayList<>();
+				MARList = FacilityDAO.getFacilityName();
+				session.setAttribute("marList",MARList);
 				
 				request.getRequestDispatcher("menu_student.jsp").include(request, response);
 				request.getRequestDispatcher("mar_create_form.jsp").include(request, response);
