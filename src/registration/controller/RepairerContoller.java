@@ -17,9 +17,11 @@ import com.sun.xml.internal.bind.v2.TODO;
 
 import registration.data.MARDAO;
 import registration.data.ReservationDAO;
+import registration.data.UserDAO;
 import registration.model.*;
 import registration.util.DateUtils;
 import registration.data.FacilityDAO;
+import registration.util.DropdownUtils;
 
 @WebServlet("/repairer")
 public class RepairerContoller extends HttpServlet implements HttpSessionListener {
@@ -40,9 +42,13 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	
+    	
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");				// list of MAR objects
     	session.removeAttribute("searchFacility");  //search facility object	
+    	session.removeAttribute("UPDATEUSER");
     	
     	session.setAttribute("current_role", "repairer");
     	
@@ -83,6 +89,15 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			else if(request.getParameter("search_facility") != null)
 			{
 				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
+			}	
+//			Open profile
+			else if (request.getParameter("profile") != null) {
+				User user = UserDAO.getUserByUsername(currentUser.getUsername());
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 			}
 			
 //			Show Repairer Homepage
@@ -98,9 +113,12 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");
     	session.removeAttribute("reservation");
+    	session.removeAttribute("UPDATEUSER");
 
     	User currentUser = (User) session.getAttribute("current_user");
 
@@ -112,8 +130,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	Reservation newReservation = new Reservation();
     	ReservationMessage reservationMessage = new ReservationMessage();
 
-    	newReservation = getReservationParam(request);
-    	newReservation.validateReservation(action,reservationMessage);
+    	
 
     	AddFacility searchFacility = new AddFacility(); //add facility object
     	ArrayList<AddFacility> availableFacilites = new ArrayList<AddFacility>(); //arraylist for search facilities
@@ -132,6 +149,12 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		
     		//			reserve facility
     		if (action.equals("reserve_facility")) {
+    			String validateStartTime = request.getParameter("start_time1");
+    			if(validateStartTime.length()==16) {
+    			newReservation = getReservationParam(request); //if it is a valid time stamp
+    			}
+    			newReservation.validateReservation(action,reservationMessage,validateStartTime);
+    			   	    	
     			//				TODO this method
     		
     			
@@ -139,12 +162,20 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    		//			if error messages
     	    		session.setAttribute("reservation", newReservation);	
     	    		session.setAttribute("errorMsgs", reservationMessage);
-    	    		request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
-    	    		//request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-    	    		//request.getRequestDispatcher("/register.jsp").include(request, response);
+    	    		request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+    	    		int id = Integer.parseInt(request.getParameter("mar_id"));
+	    			MAR mar = MARDAO.getMARByID(id);
+	    			newReservation.setMarId(id);
+	    			session.setAttribute("mar", mar);
+    	    		
+	    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+	    			request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+    	    		request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);    	    		
     	    	}
+    						
     	    	else {
     	    		//TODO : Create Dao Layer Ajinkya
+    	    			
     	    		
     	    			String username = currentUser.getUsername();
 
@@ -238,6 +269,46 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		}*/
     		
     		
+    		
+    		//For udpating reservation  facility
+    		
+    		//TODO For udpating reservation  facility
+    		
+    			if(action.equals("reserved_selected_facility")) {
+    				System.out.println("I am in reserved_selected_facility");
+    	
+    			}
+    			
+    			else if(action.equals("update_profile")) {
+    				
+    				User updateuser = new User();
+    				UserError userErrorMsgs = new UserError();
+
+    				updateuser = getUpdateProfileParam(request);
+    				updateuser.validateUser(action, updateuser, userErrorMsgs);
+    				
+    				if (!userErrorMsgs.getErrorMsg().equals("")) {
+     //					if error messages
+    					session.setAttribute("error", userErrorMsgs);
+
+    					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+    				}
+    				else {
+//    					if no error messages
+
+    					//update database except role
+    					UserDAO.updateProfile(updateuser); 
+    					session.setAttribute("UPDATEUSER", updateuser);
+    					
+    					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+    				}
+    				
+    			}
+    			
+    			if (session.getAttribute("current_user") == null)
+    				session.setAttribute("current_user", currentUser);
 
     		}
     	}
@@ -336,4 +407,23 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		//reservation.setEndTime(Timestamp.valueOf(datetimeLocal_udpated.replace("T"," "))); //need to change this
 		return reservation; 
 	}
+    
+    private User getUpdateProfileParam(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname"));
+		user.setLastname(request.getParameter("lastname"));
+		user.setUtaId(request.getParameter("utaId"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street"));
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
+	}
+
 }

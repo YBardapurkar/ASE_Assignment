@@ -3,29 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h2>Reserve Facility</h2>
-<form action="repairer" method="post" >
+<form action="repairer" method="post" novalidate>
 <table>
-
-<tr>
-<td>
-Facility
-</td>
-<td>
-<select name="facility_name">
-	<c:forEach items="${list_facilities}" var="item" varStatus="status">
-		<option value="${item.facilityName}">
-			<c:out value="${item.facilityName}"></c:out>
-		</option>
-	</c:forEach>
-	</select>
-</td>
-</tr>
 
 <!-- Ajinkya -->
  <tr>
     <td> Start Time (*): </td>
     <td> <input name="start_time1" value="<c:out value='${reservation.startTime}'/>" type="datetime-local">  </td>
-    <td> <input name="start_time_error"  value="<c:out value='${errorMsgs.startTime}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
+    <td> <input name="start_time_error"  value="<c:out value='${errorMsgs.startTimeMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled"> </td>
  </tr>
 
 
@@ -54,6 +39,6 @@ Time Slot: (fix this)
 </td>
 </tr>
 </table>
-<input name="reservation_error"  value="<c:out value='${message.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60">
+<input name="reservation_error"  value="<c:out value='${errorMsgs.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60">
 
 </form>

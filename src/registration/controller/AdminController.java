@@ -33,7 +33,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		// TODO Auto-generated method stub
 		session = request.getSession();   //defining the session parameter
 		if (session.getAttribute("current_user") != null)
-			currentUser = (User) session.getAttribute("current_user");
+			currentUser =  (User) session.getAttribute("current_user");
 		
 		super.service(request, response);
 	}

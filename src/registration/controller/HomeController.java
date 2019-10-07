@@ -15,11 +15,14 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import registration.data.MARDAO;
+import registration.data.UserDAO;
 import registration.data.FacilityDAO;
 import registration.model.AddFacility;
 import registration.model.MAR;
 import registration.model.MARError;
 import registration.model.User;
+import registration.model.UserError;
+import registration.util.DropdownUtils;
 
 @WebServlet("/home")
 public class HomeController extends HttpServlet implements HttpSessionListener {
@@ -43,6 +46,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		session.removeAttribute("mar");				// single MAR object
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
+		session.removeAttribute("UPDATEUSER");     // profile update object
 		
 		session.setAttribute("current_role", "home");
     	
@@ -80,6 +84,16 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 				request.getRequestDispatcher("mar_create_form.jsp").include(request, response);
 			}
 			
+//			Open profile
+			else if (request.getParameter("profile") != null) {
+				User user = UserDAO.getUserByUsername(currentUser.getUsername());
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_student.jsp").include(request, response);
+				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+			}
+			
 //			homepage for student/faculty/staff
 			else {
 				request.getRequestDispatcher("menu_student.jsp").include(request, response);
@@ -96,6 +110,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		session.removeAttribute("mar");				// single MAR object
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
+		session.removeAttribute("UPDATEUSER");      // profile update object
 		
 		String action = request.getParameter("action");
 		session.setAttribute("current_role", "home");
@@ -141,6 +156,34 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 				}
 			}
 			
+			else if(action.equals("update_profile")) {
+				
+				User updateuser = new User();
+				UserError userErrorMsgs = new UserError();
+
+				updateuser = getUpdateProfileParam(request);
+				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				
+				if (!userErrorMsgs.getErrorMsg().equals("")) {
+ //					if error messages
+					session.setAttribute("error", userErrorMsgs);
+
+					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				}
+				else {
+//					if no error messages
+
+					//update database except role
+					UserDAO.updateProfile(updateuser); 
+					session.setAttribute("UPDATEUSER", updateuser);
+					
+					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				}
+				
+			}
+			
 			if (session.getAttribute("current_user") == null)
 				session.setAttribute("current_user", currentUser);
 		}
@@ -165,4 +208,23 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		mar.setUrgency(request.getParameter("urgency"));		
 		return mar;
 	}
+	
+private User getUpdateProfileParam(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname"));
+		user.setLastname(request.getParameter("lastname"));
+		user.setUtaId(request.getParameter("utaId"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street"));
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
+	}
+
 }

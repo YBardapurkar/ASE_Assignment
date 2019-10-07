@@ -6,20 +6,6 @@
 <form action="repairer" method="post" >
 <table>
 
-<tr>
-<td>
-Facility
-</td>
-<td>
-<select name="facility_name">
-	<c:forEach items="${list_facilities}" var="item" varStatus="status">
-		<option value="${item.facilityName}">
-			<c:out value="${item.facilityName}"></c:out>
-		</option>
-	</c:forEach>
-	</select>
-</td>
-</tr>
 
 <tr>
 <td>
@@ -40,7 +26,8 @@ Time Slot: (fix this)
 <tr>
 <td>
 <input name="mar_id" type="hidden" value="${mar.id}" >
-<input name="action" type="hidden" value="reserve_facility" >
+<input name="mar_reservation" type="hidden" value="1" > <!--making it hardcode for test--> 
+<input name="action" type="hidden" value="reserved_selected_facility" >
 <input type="submit" value="Update Reservation"> <!-- Update Reservation -->
 </td>
 </tr>
