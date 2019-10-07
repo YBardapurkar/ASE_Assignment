@@ -5,7 +5,7 @@
 	<a href="repairer?my_mars">View my assigned repairs</a>
 	<a href="repairer?my_mars_modify">Modify Mar</a>
 	
-	<a href="repairer">Profile</a>
+	<a href="repairer?profile">Profile</a>
 	
 	<form action="logout" method="post">
 		<input type="submit" value="logout">

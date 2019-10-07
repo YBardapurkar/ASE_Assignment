@@ -25,6 +25,8 @@ import registration.model.MAR;
 import registration.model.Search;
 import registration.model.SearchMessage;
 import registration.model.User;
+import registration.model.UserError;
+import registration.util.DropdownUtils;
 
 @WebServlet("/facility_manager")
 public class FacilityManagerController extends HttpServlet implements HttpSessionListener {
@@ -46,15 +48,20 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
 		session.removeAttribute("message");	// single MAR message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
+		session.removeAttribute("UPDATEUSER");
 		
 		session.setAttribute("current_role", "facility_manager");
 		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
+		session.setAttribute("current_role", "facility_manager");
+		
 		String action = request.getParameter("action");
+		
 
 		AddFacility newFacility = new AddFacility();
 
@@ -113,6 +120,16 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				
 			}
 			
+//			Open profile
+			else if (request.getParameter("profile") != null) {
+				User user = UserDAO.getUserByUsername(currentUser.getUsername());
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+			}
+			
 			
 //			Show Facility Manager Homepage
 			else {
@@ -128,12 +145,15 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
 		session.removeAttribute("message");	// single MAR assign message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
-		session.removeAttribute("newFacility");			
+		session.removeAttribute("newFacility");		
+		session.removeAttribute("UPDATEUSER");
 
 		
 		String action = request.getParameter("action");
@@ -256,7 +276,39 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				if (session.getAttribute("current_user") == null)
 					session.setAttribute("current_user", currentUser);
 			}
+			
+			// update profile
+			else if(action.equals("update_profile")) {
+				
+				User updateuser = new User();
+				UserError userErrorMsgs = new UserError();
+
+				updateuser = getUpdateProfileParam(request);
+				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				
+				if (!userErrorMsgs.getErrorMsg().equals("")) {
+ //					if error messages
+					session.setAttribute("error", userErrorMsgs);
+
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				}
+				else {
+//					if no error messages
+
+					//update database except role
+					UserDAO.updateProfile(updateuser); 
+					session.setAttribute("UPDATEUSER", updateuser);
 					
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				}
+				
+			}
+			
+			
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}		
 		
 		if(action.equals("addFacility"))
@@ -296,10 +348,8 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 			request.getRequestDispatcher("/facility_details.jsp").include(request, response);
 
 			
-		}
-		
-		
-		
+		} 
+			
 
 	}
 	
@@ -329,4 +379,23 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 		return marSearch; 
 	}
+	
+	private User getUpdateProfileParam(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname"));
+		user.setLastname(request.getParameter("lastname"));
+		user.setUtaId(request.getParameter("utaId"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street"));
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
+	}
+
 }

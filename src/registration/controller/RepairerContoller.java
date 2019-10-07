@@ -17,8 +17,10 @@ import com.sun.xml.internal.bind.v2.TODO;
 
 import registration.data.MARDAO;
 import registration.data.ReservationDAO;
+import registration.data.UserDAO;
 import registration.model.*;
 import registration.util.DateUtils;
+import registration.util.DropdownUtils;
 
 @WebServlet("/repairer")
 public class RepairerContoller extends HttpServlet implements HttpSessionListener {
@@ -39,8 +41,12 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	
+    	
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");				// list of MAR objects
+    	session.removeAttribute("UPDATEUSER");
     	
     	session.setAttribute("current_role", "repairer");
     	
@@ -77,6 +83,16 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				}
 			}
 			
+//			Open profile
+			else if (request.getParameter("profile") != null) {
+				User user = UserDAO.getUserByUsername(currentUser.getUsername());
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+			}
+			
 //			Show Repairer Homepage
 			else {
 		    	request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -90,9 +106,12 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");
     	session.removeAttribute("reservation");
+    	session.removeAttribute("UPDATEUSER");
 
     	User currentUser = (User) session.getAttribute("current_user");
 
@@ -180,6 +199,37 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     				System.out.println("I am in reserved_selected_facility");
     	
     			}
+    			
+    			else if(action.equals("update_profile")) {
+    				
+    				User updateuser = new User();
+    				UserError userErrorMsgs = new UserError();
+
+    				updateuser = getUpdateProfileParam(request);
+    				updateuser.validateUser(action, updateuser, userErrorMsgs);
+    				
+    				if (!userErrorMsgs.getErrorMsg().equals("")) {
+     //					if error messages
+    					session.setAttribute("error", userErrorMsgs);
+
+    					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+    				}
+    				else {
+//    					if no error messages
+
+    					//update database except role
+    					UserDAO.updateProfile(updateuser); 
+    					session.setAttribute("UPDATEUSER", updateuser);
+    					
+    					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+    				}
+    				
+    			}
+    			
+    			if (session.getAttribute("current_user") == null)
+    				session.setAttribute("current_user", currentUser);
 
     		}
     	}
@@ -278,4 +328,23 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		//reservation.setEndTime(Timestamp.valueOf(datetimeLocal_udpated.replace("T"," "))); //need to change this
 		return reservation; 
 	}
+    
+    private User getUpdateProfileParam(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname"));
+		user.setLastname(request.getParameter("lastname"));
+		user.setUtaId(request.getParameter("utaId"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street"));
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
+	}
+
 }
