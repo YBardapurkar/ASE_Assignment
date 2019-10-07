@@ -19,6 +19,7 @@ import registration.data.MARDAO;
 import registration.data.ReservationDAO;
 import registration.model.*;
 import registration.util.DateUtils;
+import registration.data.FacilityDAO;
 
 @WebServlet("/repairer")
 public class RepairerContoller extends HttpServlet implements HttpSessionListener {
@@ -41,6 +42,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");				// list of MAR objects
+    	session.removeAttribute("searchFacility");  //search facility object	
     	
     	session.setAttribute("current_role", "repairer");
     	
@@ -77,6 +79,12 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				}
 			}
 			
+//			SHOW search facilities
+			else if(request.getParameter("search_facility") != null)
+			{
+				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
+			}
+			
 //			Show Repairer Homepage
 			else {
 		    	request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -107,7 +115,9 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	newReservation = getReservationParam(request);
     	newReservation.validateReservation(action,reservationMessage);
 
-    
+    	AddFacility searchFacility = new AddFacility(); //add facility object
+    	ArrayList<AddFacility> availableFacilites = new ArrayList<AddFacility>(); //arraylist for search facilities
+    	
     	//		user not logged in
     	if (currentUser == null) {
 
@@ -116,9 +126,14 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	//		logged in
     	else {
 
+    		//search for facilities
+    		
+    		//
+    		
     		//			reserve facility
     		if (action.equals("reserve_facility")) {
     			//				TODO this method
+    		
     			
     			if (!reservationMessage.getErrorMessage().equals("")) {
     	    		//			if error messages
@@ -156,6 +171,73 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    		}
 
     	    	}
+    		
+    		
+    		/*if(action.equals("search_facility"))
+    		{
+    			
+    			System.out.println("inside the controller");
+    			DateUtils DateUtils = new DateUtils();
+    			String incrementDate[] = DateUtils.getSevenDays();
+    			//String incrementDate1[] = {incrementDate[0]};
+    			//incrementDate1[] = {"incrementDate[0]"};
+    			searchFacility.setIncrementDate(incrementDate);
+    			//System.out.println("7 days function"+searchFacility.getIncrementDate());
+    			
+    			session.setAttribute("searchFacility", searchFacility);
+    			searchFacility.setSearchTime(request.getParameter("searchDate"));
+    			searchFacility.setSearchDate(request.getParameter("searchTime"));
+    			searchFacility.setFacilityType(request.getParameter("facilityType"));
+    			availableFacilites = FacilityDAO.searchFacilityByDate(searchFacility.getFacilityType());
+    			//System.out.println("get console facility type"+request.getParameter("facilityType"));
+    			//System.out.println("get facility type"+searchFacility.getFacilityType());
+    			//System.out.println(availableFacilites.size());
+    			
+    			
+    			//System.out.println(availableFacilites.get(0).getFacilityDuration()+"size of the duration");
+    			
+    			if(availableFacilites.get(0).getFacilityDuration().equals("Same day")) //get dates
+    			{
+    				String incrementDate1[] = {incrementDate[0]};
+    				searchFacility.setIncrementDate1(incrementDate1);
+    			}
+    			
+    			else
+    			{
+    				String incrementDate1[] = incrementDate;
+    				searchFacility.setIncrementDate1(incrementDate1);
+    			
+    			}
+    			
+    			
+    			System.out.println(availableFacilites.get(0).getFacilityInterval());
+    			
+    			if(availableFacilites.get(0).getFacilityInterval().equals("1"))
+    			{
+    				String incrementTime[] = DateUtils.listTimes(17,"1");
+    				searchFacility.setIncrementTime(incrementTime);
+    				
+    			}
+    			
+    			else if(availableFacilites.get(0).getFacilityInterval().equals("2"))
+    			{
+    				String incrementTime[] = DateUtils.listTimes(8,"2");
+    				searchFacility.setIncrementTime(incrementTime);
+    				
+    			}
+    			
+    			else 
+    			{
+    				String incrementTime[] = DateUtils.listTimes1(34);
+    				searchFacility.setIncrementTime(incrementTime);
+    				
+    			}
+    			
+    			request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
+    			
+    		}*/
+    		
+    		
 
     		}
     	}

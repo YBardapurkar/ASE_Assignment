@@ -31,7 +31,10 @@ static int count;
 			while (facilityList.next()) {
 				
 				AddFacility newFacility = new AddFacility(); 
+//				System.out.println("facility name" +facilityList.getString("facility_name"));
 				newFacility.setFacilityName(facilityList.getString("facility_name"));
+//				System.out.println("facility name" +facilityList.getString("facility_name"));
+				
 				newFacility.setFacilityType(facilityList.getString("facility_type"));
 				newFacility.setFacilityInterval(facilityList.getString("facility_interval"));
 				newFacility.setFacilityDuration(facilityList.getString("duration"));
@@ -105,5 +108,13 @@ static int count;
 		}
 		return FacilityListInDB;
 	}
+	
+	
+	public static ArrayList<AddFacility> searchFacilityByDate(String facilityType) //displaying same day facilities
+	{
+		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"'");
+		
+	}
+	
 	
 }
