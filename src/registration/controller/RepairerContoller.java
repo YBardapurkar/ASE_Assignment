@@ -13,14 +13,11 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 import registration.data.MARDAO;
 import registration.data.ReservationDAO;
 import registration.data.UserDAO;
 import registration.model.*;
 import registration.util.DateUtils;
-import registration.data.FacilityDAO;
 import registration.util.DropdownUtils;
 
 @WebServlet("/repairer")
@@ -85,6 +82,9 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			
 //			SHOW search facilities
 			else if(request.getParameter("search_facility") != null) {
+				session.setAttribute("list_facility_types", DropdownUtils.getFacilityTypeDropdown());
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
 			}	
 //			Open profile
@@ -125,16 +125,13 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     	Reservation newReservation = new Reservation();
     	ReservationMessage reservationMessage = new ReservationMessage();
-
-    	Facility searchFacility = new Facility(); //add facility object
-    	ArrayList<Facility> availableFacilites = new ArrayList<Facility>(); //arraylist for search facilities
     	
-    	//		user not logged in
+//		user not logged in
     	if (currentUser == null) {
 
     		response.sendRedirect("login");
     	}
-    	//		logged in
+//		logged in
     	else {
 
     		//search for facilities
@@ -197,46 +194,35 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		
     		
     		else if(action.equals("search_facility")) {
+    			int facilityIndex = Integer.parseInt(request.getParameter("facilityType"));
     			
+    			Facility searchFacility = DropdownUtils.getFacilityTypeDropdown().get(facilityIndex);		// dummy object
+    	    	
     			System.out.println("inside the controller");
-    			DateUtils DateUtils = new DateUtils();
     			String incrementDate[] = DateUtils.getSevenDays();
     			//String incrementDate1[] = {incrementDate[0]};
     			//incrementDate1[] = {"incrementDate[0]"};
     			searchFacility.setIncrementDate(incrementDate);
-    			//System.out.println("7 days function"+searchFacility.getIncrementDate());
     			
     			session.setAttribute("searchFacility", searchFacility);
     			searchFacility.setSearchTime(request.getParameter("searchDate"));
     			searchFacility.setSearchDate(request.getParameter("searchTime"));
-    			searchFacility.setFacilityType(request.getParameter("facilityType"));
-    			availableFacilites = FacilityDAO.searchFacilityByDate(searchFacility.getFacilityType());
-    			//System.out.println("get console facility type"+request.getParameter("facilityType"));
-    			//System.out.println("get facility type"+searchFacility.getFacilityType());
-    			//System.out.println(availableFacilites.size());
     			
-    			
-    			//System.out.println(availableFacilites.get(0).getFacilityDuration()+"size of the duration");
-    			
-    			if(availableFacilites.get(0).getFacilityDuration().equals("Same day")) //get dates
-    			{
+//    			check if same day or 7 day
+    			if(searchFacility.getFacilityDuration().equals("Same day")) {
     				String incrementDate1[] = {incrementDate[0]};
     				searchFacility.setIncrementDate1(incrementDate1);
-    			}
-    			
-    			else {
+    			} else {
     				String incrementDate1[] = incrementDate;
     				searchFacility.setIncrementDate1(incrementDate1);
     			}
     			
-    			System.out.println(availableFacilites.get(0).getFacilityInterval());
-    			
-    			if(availableFacilites.get(0).getFacilityInterval().equals("1")) {
+    			if(searchFacility.getFacilityInterval().equals("1")) {
     				String incrementTime[] = DateUtils.listTimes(17,"1");
     				searchFacility.setIncrementTime(incrementTime);
     			}
     			
-    			else if(availableFacilites.get(0).getFacilityInterval().equals("2")) {
+    			else if(searchFacility.getFacilityInterval().equals("2")) {
     				String incrementTime[] = DateUtils.listTimes(8,"2");
     				searchFacility.setIncrementTime(incrementTime);
     			}
@@ -245,7 +231,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     				String incrementTime[] = DateUtils.listTimes1(34);
     				searchFacility.setIncrementTime(incrementTime);
     			}
-    			
+    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
     			request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
     			
     		}

@@ -14,19 +14,15 @@
 
 	
 <table>	
+	<tr>
 	    <td> Facility Type: </td>
-  		<td><select name ="facilityType" value = "<c:out value='${searchFacility.facilityType}' />">
-		<option>Multipurpose room</option> 
-		<option>Indoor basketball court</option> 
-		<option>Volleyball court</option> 
-		<option>Indoor soccer gymnasium</option> 
-		<option>Racquetball court</option>
-		<option>Badminton court</option>
-		<option>Table Tennis</option>
-		<option>Conference room</option>
-		<option>Outdoor Volleyball Court</option>
-		<option>Outdoor Basketball Court</option>
-		    </select> </td>
+  		<td>
+  		<select name ="facilityType" value = "<c:out value='${newFacility.facilityType}' />">
+			<c:forEach items="${list_facility_types}" var="item" varStatus="status">
+			<option value="${status.index}"><c:out value="${item.facilityType}" > </c:out></option>
+			</c:forEach>
+		</select> 
+  		</td>
     </tr>    	
  
    
