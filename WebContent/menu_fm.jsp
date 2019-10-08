@@ -1,5 +1,5 @@
 <div>
-	<a href="facility_manager?addFacility">Add Facility</a>
+	<a href="facility_manager?add_facility">Add Facility</a>
 	<a href="facility_manager">List of Facilities</a>
 	<a href="facility_manager?repairers_list">List of Repairers</a>
 	<a href="facility_manager?mar_list">List of MARs</a>

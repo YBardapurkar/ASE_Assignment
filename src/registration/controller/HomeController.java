@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSessionListener;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
 import registration.data.FacilityDAO;
-import registration.model.AddFacility;
 import registration.model.MAR;
 import registration.model.MARError;
 import registration.model.User;

@@ -12,8 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import registration.data.FacilityDAO;
 
-import registration.model.AddFacility;
-import registration.model.AddFacilityErrorMsgs;
+import registration.model.FacilityMessage;
 import registration.model.User;
 import registration.util.DateUtils;
 
@@ -45,7 +44,7 @@ public class AddFacilityController extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//request.getRequestDispatcher("/add_facility.jsp").include(request, response);
-		
+		/*
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		session.removeAttribute("newFacility");			
@@ -163,7 +162,7 @@ public class AddFacilityController extends HttpServlet{
 			
 		}
 		
-		
+		*/
 		
 		
 		

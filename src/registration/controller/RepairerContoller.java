@@ -43,8 +43,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	
-    	
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");				// list of MAR objects
     	session.removeAttribute("searchFacility");  //search facility object	
@@ -86,8 +84,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			}
 			
 //			SHOW search facilities
-			else if(request.getParameter("search_facility") != null)
-			{
+			else if(request.getParameter("search_facility") != null) {
 				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
 			}	
 //			Open profile
@@ -126,14 +123,11 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     	String action = request.getParameter("action");
 
-
     	Reservation newReservation = new Reservation();
     	ReservationMessage reservationMessage = new ReservationMessage();
 
-    	
-
-    	AddFacility searchFacility = new AddFacility(); //add facility object
-    	ArrayList<AddFacility> availableFacilites = new ArrayList<AddFacility>(); //arraylist for search facilities
+    	Facility searchFacility = new Facility(); //add facility object
+    	ArrayList<Facility> availableFacilites = new ArrayList<Facility>(); //arraylist for search facilities
     	
     	//		user not logged in
     	if (currentUser == null) {
@@ -144,10 +138,8 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	else {
 
     		//search for facilities
-    		
-    		//
-    		
-    		//			reserve facility
+
+//    		reserve facility
     		if (action.equals("reserve_facility")) {
     			String validateStartTime = request.getParameter("start_time1");
     			if(validateStartTime.length()==16) {
@@ -204,8 +196,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    	}
     		
     		
-    		if(action.equals("search_facility"))
-    		{
+    		else if(action.equals("search_facility")) {
     			
     			System.out.println("inside the controller");
     			DateUtils DateUtils = new DateUtils();
@@ -233,35 +224,26 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     				searchFacility.setIncrementDate1(incrementDate1);
     			}
     			
-    			else
-    			{
+    			else {
     				String incrementDate1[] = incrementDate;
     				searchFacility.setIncrementDate1(incrementDate1);
-    			
     			}
-    			
     			
     			System.out.println(availableFacilites.get(0).getFacilityInterval());
     			
-    			if(availableFacilites.get(0).getFacilityInterval().equals("1"))
-    			{
+    			if(availableFacilites.get(0).getFacilityInterval().equals("1")) {
     				String incrementTime[] = DateUtils.listTimes(17,"1");
     				searchFacility.setIncrementTime(incrementTime);
-    				
     			}
     			
-    			else if(availableFacilites.get(0).getFacilityInterval().equals("2"))
-    			{
+    			else if(availableFacilites.get(0).getFacilityInterval().equals("2")) {
     				String incrementTime[] = DateUtils.listTimes(8,"2");
     				searchFacility.setIncrementTime(incrementTime);
-    				
     			}
     			
-    			else 
-    			{
+    			else {
     				String incrementTime[] = DateUtils.listTimes1(34);
     				searchFacility.setIncrementTime(incrementTime);
-    				
     			}
     			
     			request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
@@ -316,7 +298,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     
     @Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		// TODO Auto-generated method stub
 		currentUser = null;
 		HttpSessionListener.super.sessionDestroyed(se);
 	}

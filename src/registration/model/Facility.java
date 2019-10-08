@@ -6,7 +6,7 @@ import registration.data.UserDAO;
 import java.util.regex.Pattern; 
 
 
-public class AddFacility implements Serializable{
+public class Facility implements Serializable{
 
 	
 	private static final long serialVersionUID = 3L;
@@ -22,6 +22,16 @@ public class AddFacility implements Serializable{
 	private String incrementTime[];
 	private String searchDate;
 	private String searchTime;
+	
+	public Facility() {}
+	
+	public Facility(String facilityName, String facilityType, String interval, String facilityDuration, String facilityVenue) {
+		this.facilityName = facilityName;
+		this.facilityType = facilityType;
+		this.interval = interval;
+		this.facilityDuration = facilityDuration;
+		this.facilityVenue = facilityVenue;
+	}
 	
 	private String interval_hours;
 	String message = "New facility added successfully";
@@ -96,6 +106,11 @@ public class AddFacility implements Serializable{
 	public void setFacilityInterval(String interval) 
 	{
 		this.interval = interval;
+		if (interval.equals("0.5")) {
+			this.interval_hours = "30 minutes";
+		} else {
+			this.interval_hours = interval + " hours";
+		}
 	}
 
 	public String getFacilityInterval()

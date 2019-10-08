@@ -5,10 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
-import registration.model.AddFacility;
-import registration.model.User;
+import registration.model.Facility;
 import registration.util.SQLConnection;
 
 
@@ -18,31 +15,25 @@ static SQLConnection DBMgr = SQLConnection.getInstance();
 	
 static int count;
 
-	private static ArrayList<AddFacility> ReturnMatchingFacilitysList (String queryString) {
-		ArrayList<AddFacility> FacilityListInDB = new ArrayList<AddFacility>();
+	private static ArrayList<Facility> ReturnMatchingFacilitysList (String queryString) {
+		ArrayList<Facility> FacilityListInDB = new ArrayList<Facility>();
 
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 		try {
-			count = 0;
 			stmt = conn.createStatement();
 			ResultSet facilityList = stmt.executeQuery(queryString);
 			
 			while (facilityList.next()) {
 				
-				AddFacility newFacility = new AddFacility(); 
-//				System.out.println("facility name" +facilityList.getString("facility_name"));
+				Facility newFacility = new Facility(); 
 				newFacility.setFacilityName(facilityList.getString("facility_name"));
-//				System.out.println("facility name" +facilityList.getString("facility_name"));
-				
 				newFacility.setFacilityType(facilityList.getString("facility_type"));
 				newFacility.setFacilityInterval(facilityList.getString("facility_interval"));
 				newFacility.setFacilityDuration(facilityList.getString("duration"));
 				newFacility.setFacilityVenue(facilityList.getString("venue"));
 				
 				FacilityListInDB.add(newFacility);
-				count = count + 1;
-				
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -72,7 +63,7 @@ static int count;
 	}
 	
 	
-	public static ArrayList<AddFacility> settingFacilityAttributes(String facilityType)
+	public static ArrayList<Facility> getFacilitiesByFacilityType(String facilityType)
 	{
 		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
 		
@@ -84,9 +75,14 @@ static int count;
 		return count;
 	}
 
-	public static void insertNewFacility(String incrementedFacilityName,String FacilityType,String Interval,String FacilityDuration,String FacilityVenue)
-	{
-		StoreListinDB("insert into facility(facility_name,facility_type,facility_interval,duration,venue) values('" +incrementedFacilityName+"','"+FacilityType+"','"+Interval+"','"+FacilityDuration+"','"+FacilityVenue+"')");
+	public static void insertNewFacility(Facility facility) {
+		String query = "insert into facility(facility_name,facility_type,facility_interval,duration,venue) values('" 
+				+ facility.getFacilityName() + "', '"
+				+ facility.getFacilityType() + "', '"
+				+ facility.getFacilityInterval() + "', '"
+				+ facility.getFacilityDuration() + "', '"
+				+ facility.getFacilityVenue()+"')";
+		StoreListinDB(query);
 	}
 
 	public static ArrayList<String> getFacilityName()
@@ -110,7 +106,7 @@ static int count;
 	}
 	
 	
-	public static ArrayList<AddFacility> searchFacilityByDate(String facilityType) //displaying same day facilities
+	public static ArrayList<Facility> searchFacilityByDate(String facilityType) //displaying same day facilities
 	{
 		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"'");
 		
