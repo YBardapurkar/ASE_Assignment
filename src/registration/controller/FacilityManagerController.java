@@ -51,7 +51,9 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 		
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
-		session.removeAttribute("message");	// single MAR message
+		session.removeAttribute("facility");			// single facility object
+		session.removeAttribute("list_facilities");		// list of facility objects
+		session.removeAttribute("message");				// single MAR message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
 		session.removeAttribute("UPDATEUSER");
@@ -124,6 +126,15 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/facility_list.jsp").include(request, response);
 			}
+//			SHow Facility details
+			else if (request.getParameter("facility_name") != null) {
+				String facilityName = request.getParameter("facility_name");
+				Facility facility = FacilityDAO.getFacilityByFacilityName(facilityName);
+				session.setAttribute("facility", facility);
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/facility_details.jsp").include(request, response);
+			}
 //			Open profile
 			else if (request.getParameter("profile") != null) {
 				User user = UserDAO.getUserByUsername(currentUser.getUsername());
@@ -153,10 +164,11 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 		
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
-		session.removeAttribute("message");	// single MAR assign message
+		session.removeAttribute("facility");			// single facility object
+		session.removeAttribute("list_facilities");		// list of facility objects
+		session.removeAttribute("message");				// single MAR assign message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
-		session.removeAttribute("newFacility");		
 		session.removeAttribute("UPDATEUSER");
 
 		
@@ -315,10 +327,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				
 				FacilityDAO.insertNewFacility(newFacility);
 				
-				session.setAttribute("newFacility", newFacility);
-				
-				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				request.getRequestDispatcher("/facility_details.jsp").include(request, response);
+				response.sendRedirect("facility_manager?facility_name=" + newFacilityName);
 
 				
 			} 

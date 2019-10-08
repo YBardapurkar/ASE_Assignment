@@ -57,6 +57,12 @@ static int count;
 		return ReturnMatchingFacilitysList(" SELECT * from facility");
 	}
 	
+	public static Facility getFacilityByFacilityName(String facilityName) {
+		Facility facility = new Facility();
+		ArrayList<Facility> facilityList =  ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_name = '" + facilityName + "' order by facility_name");
+		return facilityList.isEmpty() ? facility : facilityList.get(0);
+	}
+	
 	public static ArrayList<Facility> getFacilitiesByFacilityType(String facilityType) {
 		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
 	}
