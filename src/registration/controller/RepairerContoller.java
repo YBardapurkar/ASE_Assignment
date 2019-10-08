@@ -142,8 +142,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     						
     	    	else {
     	    		//TODO : Create Dao Layer Ajinkya
-    	    			
-    	    		
+    	    			 	    		
     	    			String username = currentUser.getUsername();
 
     	    			ArrayList<MAR> listMAR = new ArrayList<MAR>();
