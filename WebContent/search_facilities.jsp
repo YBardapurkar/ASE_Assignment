@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<form action="facility" method="post">
+	<form action="repairer" method="post">
 	
 	<h1>Search User by:</h1>
 

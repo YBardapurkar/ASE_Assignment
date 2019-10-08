@@ -204,7 +204,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    	}
     		
     		
-    		/*if(action.equals("search_facility"))
+    		if(action.equals("search_facility"))
     		{
     			
     			System.out.println("inside the controller");
@@ -266,7 +266,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     			
     			request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
     			
-    		}*/
+    		}
     		
     		
     		
