@@ -40,6 +40,6 @@ Time Slot: (fix this)
 </td>
 </tr>
 </table>
-<input name="reservation_error"  value="<c:out value='${message.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60">
+<input name="reservation_error"  value="<c:out value='${errorMsgs.message}'/>" type="text"  style ="background-color: white; color: blue; border: none; width: 800px"  disabled="disabled" maxlength="60">
 
 </form>

@@ -188,7 +188,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    			//    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
     	    			//    			request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
     	    		}
-
     	    	}
     		
     		
