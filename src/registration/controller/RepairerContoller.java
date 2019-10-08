@@ -241,10 +241,42 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		
     		//TODO For udpating reservation  facility
     		
-    			if(action.equals("reserved_selected_facility")) {
-    				System.out.println("I am in reserved_selected_facility");
-    	
+    		else if(action.equals("reserved_selected_facility")) {
+    			String validateStartTime = request.getParameter("start_time1");
+    			if(validateStartTime.length()==16) {
+    			newReservation = getReservationParam(request); //if it is a valid time stamp
     			}
+    			newReservation.validateReservation(action,reservationMessage,validateStartTime);
+    				System.out.println("I am in reserved_selected_facility");
+    				
+    				
+    				//Need to verify this 
+    				
+    				String username = currentUser.getUsername();
+	    			ArrayList<MAR> listMAR = new ArrayList<MAR>();
+	    			listMAR = MARDAO.getMARByAssignedRepairer(username);
+	    			session.setAttribute("list_mar", listMAR);
+
+	    			int id = Integer.parseInt(request.getParameter("mar_id"));
+	    			MAR mar = MARDAO.getMARByID(id);
+	    			newReservation.setMarId(id);
+	    			ReservationDAO.updateReservation(newReservation);
+    	    		session.setAttribute("reservation", newReservation);
+    	    		
+	    			session.setAttribute("mar", mar);
+
+	    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+	    			request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+	    			if (mar.getAssignedTo().equals(currentUser.getUsername())) {
+	    				reservationMessage.setMessage("Reservation modified Successfully");
+	    	    		session.setAttribute("errorMsgs", reservationMessage);
+	    				request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); //Ajinkya check this
+	    			}
+
+	    			//    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+	    			//    			request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
+	    		}
+    	
     			
     			else if(action.equals("update_profile")) {
     				
@@ -364,6 +396,10 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			if(end_date < 10) {
 				endDate = "0" +end_date; //Append 0
 				//start_date = Integer.parseInt(startDate);
+			}
+			else {
+				endDate = Integer.toString(end_date);
+				
 			}
 			end_day_String = datetimeLocal.substring(0,8) + endDate + datetimeLocal.substring(10); //create a new start time string
 			System.out.println("end_day_String"+end_day_String);

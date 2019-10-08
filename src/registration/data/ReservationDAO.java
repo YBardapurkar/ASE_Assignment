@@ -30,5 +30,29 @@ public class ReservationDAO {
 	public static void insertReservation(Reservation reservation) {  
 		StoreListinDB(reservation,"INSERT INTO reservation(mar_id,start_timestamp,end_timestamp) ");
 	}
+	
+	
+	public static void updateReservation(Reservation reservation) {
+		String query1 = "UPDATE reservation " + "SET " + "start_timestamp = '" + reservation.getStartTime() + "' "+", end_timestamp = '"+ reservation.getEndTime() + "' "+"WHERE mar_id ='" + reservation.getMarId() + "'" + ";";
+
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query1);
+			conn.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
