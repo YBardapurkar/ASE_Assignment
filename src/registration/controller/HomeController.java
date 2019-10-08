@@ -1,8 +1,6 @@
 package registration.controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -21,6 +19,7 @@ import registration.model.MAR;
 import registration.model.MARError;
 import registration.model.User;
 import registration.model.UserError;
+import registration.util.DateUtils;
 import registration.util.DropdownUtils;
 
 @WebServlet("/home")
@@ -200,10 +199,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		MAR mar = new MAR();
 		mar.setFacilityName(request.getParameter("facility_name"));
 		mar.setDescription(request.getParameter("description"));
-		LocalDateTime now = LocalDateTime.now();
-		Timestamp sqlNow = Timestamp.valueOf(now);
-		System.out.println(sqlNow);
-		mar.setDate(sqlNow.toString());
+		mar.setDate(DateUtils.nowTimeStamp());
 		mar.setUrgency(request.getParameter("urgency"));		
 		return mar;
 	}

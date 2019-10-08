@@ -2,6 +2,7 @@ package registration.util;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -98,6 +99,12 @@ public static String[] listTimes1(int count) {
 		String strDate = dateFormat.format(today);
 		return strDate;
 	}
+
+//	get current timestamp
+	public static String nowTimeStamp() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		return timestamp.toString();
+	}
 	
 //	get next available start time
 	public static Date getStartDate(int duration) {
@@ -132,6 +139,31 @@ public static String[] listTimes1(int count) {
 		c.setTime(startDate); 
 		c.add(Calendar.HOUR, duration);
 		c.add(Calendar.SECOND, -1);
+		return new Date(c.getTimeInMillis());
+	}
+	
+//	get start of week
+	public static Date getCurrentWeekStart() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		
+		return new Date(c.getTimeInMillis());
+	}
+	
+	public static Date getCurrentWeekEnd() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		c.add(Calendar.DAY_OF_WEEK, 7);
+		c.add(Calendar.SECOND, -1);
+		
 		return new Date(c.getTimeInMillis());
 	}
 }

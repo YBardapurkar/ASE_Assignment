@@ -202,6 +202,9 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 					if (AssignmentDAO.getAssignmentCountByDay(assignment.getAssignedTo(), new Date(System.currentTimeMillis())) >= 5) { 
 //						More than 5 in a day, cannot assign
 						assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer today.");
+					} else if (AssignmentDAO.getAssignmentCountByWeek(assignment.getAssignedTo()) >= 10) {
+//						More than 10 in a week, cannot assign
+						assignmentMessage.setErrorMessage("Cannot assign more than 10 MARs to this repairer in this week.");
 					} else {
 //						can assign
 						AssignmentDAO.assignRepairer(assignment);
