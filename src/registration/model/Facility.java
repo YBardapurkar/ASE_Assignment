@@ -6,19 +6,67 @@ import registration.data.UserDAO;
 import java.util.regex.Pattern; 
 
 
-public class AddFacility implements Serializable{
+public class Facility implements Serializable{
 
 	
 	private static final long serialVersionUID = 3L;
 	  
 	private String facilityName;
 	public String facilityType;
-	private String interval;
+	private String facilityInterval;
 	private String facilityDuration;
 	private String facilityVenue;
-	private int count;
+
+	private String incrementDate[];
+	private String incrementDate1[];
+	private String incrementTime[];
+	private String searchDate;
+	private String searchTime;
+	
+	public Facility() {}
+	
+	public Facility(String facilityName, String facilityType, String interval, String facilityDuration, String facilityVenue) {
+		this.facilityName = facilityName;
+		this.facilityType = facilityType;
+		this.facilityInterval = interval;
+		this.facilityDuration = facilityDuration;
+		this.facilityVenue = facilityVenue;
+	}
+	
 	private String interval_hours;
 	String message = "New facility added successfully";
+
+	public void setIncrementDate(String incrementDate[]) 
+	{
+		this.incrementDate = incrementDate;
+	}
+
+	public String[] getIncrementDate()
+	{
+		return incrementDate;
+	}
+
+	public void setIncrementDate1(String incrementDate1[]) 
+	{
+		this.incrementDate1 = incrementDate1;
+	}
+
+	public String[] getIncrementTime()
+	{
+		return incrementTime;
+	}
+
+	public void setIncrementTime(String incrementTime[]) 
+	{
+		this.incrementTime = incrementTime;
+	}
+
+	
+	public String[] getIncrementDate1()
+	{
+		return incrementDate1;
+	}
+
 	
 	public void setFacilityType(String facilityType) 
 	{
@@ -57,12 +105,17 @@ public class AddFacility implements Serializable{
 	
 	public void setFacilityInterval(String interval) 
 	{
-		this.interval = interval;
+		this.facilityInterval = interval;
+		if (interval.equals("0.5")) {
+			this.interval_hours = "30 minutes";
+		} else {
+			this.interval_hours = interval + " hours";
+		}
 	}
 
 	public String getFacilityInterval()
 	{
-		return interval;
+		return facilityInterval;
 	}
 
 	
@@ -86,6 +139,7 @@ public class AddFacility implements Serializable{
 	{
 		return facilityVenue;
 	}
+
 
 	
 	
@@ -140,6 +194,25 @@ public class AddFacility implements Serializable{
 	
 	
 	
+	public void setSearchDate(String searchDate) 
+	{
+		this.searchDate = searchDate;
+	}
+
+	public String getSearchDate()
+	{
+		return searchDate;
+	}
+
+	public void setSearchTime(String searchTime) 
+	{
+		this.searchTime = searchTime;
+	}
+
+	public String getSearchTime()
+	{
+		return searchTime;
+	}
 	
 	
 	

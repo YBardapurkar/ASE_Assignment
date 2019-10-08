@@ -28,7 +28,7 @@ Repairer
 	<option> Unusable </option>
 </select>
 </td>
-<td> <input name="urgency_error"  value="<c:out value='${message.urgencyError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled"> </td>
+<td> <input name="urgency_error"  value="<c:out value='${message.urgencyMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled"> </td>
 </tr>
 
 <tr>

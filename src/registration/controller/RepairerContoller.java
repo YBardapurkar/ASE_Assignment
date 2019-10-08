@@ -13,12 +13,12 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 import registration.data.MARDAO;
 import registration.data.ReservationDAO;
+import registration.data.UserDAO;
 import registration.model.*;
 import registration.util.DateUtils;
+import registration.util.DropdownUtils;
 
 @WebServlet("/repairer")
 public class RepairerContoller extends HttpServlet implements HttpSessionListener {
@@ -39,8 +39,11 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");				// list of MAR objects
+    	session.removeAttribute("searchFacility");  //search facility object	
+    	session.removeAttribute("UPDATEUSER");
     	
     	session.setAttribute("current_role", "repairer");
     	
@@ -77,6 +80,23 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				}
 			}
 			
+//			SHOW search facilities
+			else if(request.getParameter("search_facility") != null) {
+				session.setAttribute("list_facility_types", DropdownUtils.getFacilityTypeDropdown());
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
+			}	
+//			Open profile
+			else if (request.getParameter("profile") != null) {
+				User user = UserDAO.getUserByUsername(currentUser.getUsername());
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+			}
+			
 //			Show Repairer Homepage
 			else {
 		    	request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -90,9 +110,12 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	
     	session.removeAttribute("list_mar");		// list of MAR objects
     	session.removeAttribute("mar");
     	session.removeAttribute("reservation");
+    	session.removeAttribute("UPDATEUSER");
 
     	User currentUser = (User) session.getAttribute("current_user");
 
@@ -100,22 +123,20 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     	String action = request.getParameter("action");
 
-
     	Reservation newReservation = new Reservation();
     	ReservationMessage reservationMessage = new ReservationMessage();
-
     	
-
-    
-    	//		user not logged in
+//		user not logged in
     	if (currentUser == null) {
 
     		response.sendRedirect("login");
     	}
-    	//		logged in
+//		logged in
     	else {
 
-    		//			reserve facility
+    		//search for facilities
+
+//    		reserve facility
     		if (action.equals("reserve_facility")) {
     			String validateStartTime = request.getParameter("start_time1");
     			if(validateStartTime.length()==16) {
@@ -124,6 +145,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     			newReservation.validateReservation(action,reservationMessage,validateStartTime);
     			   	    	
     			//				TODO this method
+    		
     			
     			if (!reservationMessage.getErrorMessage().equals("")) {
     	    		//			if error messages
@@ -170,6 +192,50 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    	}
     		
     		
+    		else if(action.equals("search_facility")) {
+    			int facilityIndex = Integer.parseInt(request.getParameter("facilityType"));
+    			
+    			Facility searchFacility = DropdownUtils.getFacilityTypeDropdown().get(facilityIndex);		// dummy object
+    	    	
+    			System.out.println("inside the controller");
+    			String incrementDate[] = DateUtils.getSevenDays();
+    			//String incrementDate1[] = {incrementDate[0]};
+    			//incrementDate1[] = {"incrementDate[0]"};
+    			searchFacility.setIncrementDate(incrementDate);
+    			
+    			session.setAttribute("searchFacility", searchFacility);
+    			searchFacility.setSearchTime(request.getParameter("searchDate"));
+    			searchFacility.setSearchDate(request.getParameter("searchTime"));
+    			
+//    			check if same day or 7 day
+    			if(searchFacility.getFacilityDuration().equals("Same day")) {
+    				String incrementDate1[] = {incrementDate[0]};
+    				searchFacility.setIncrementDate1(incrementDate1);
+    			} else {
+    				String incrementDate1[] = incrementDate;
+    				searchFacility.setIncrementDate1(incrementDate1);
+    			}
+    			
+    			if(searchFacility.getFacilityInterval().equals("1")) {
+    				String incrementTime[] = DateUtils.listTimes(17,"1");
+    				searchFacility.setIncrementTime(incrementTime);
+    			}
+    			
+    			else if(searchFacility.getFacilityInterval().equals("2")) {
+    				String incrementTime[] = DateUtils.listTimes(8,"2");
+    				searchFacility.setIncrementTime(incrementTime);
+    			}
+    			
+    			else {
+    				String incrementTime[] = DateUtils.listTimes1(34);
+    				searchFacility.setIncrementTime(incrementTime);
+    			}
+    			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    			request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
+    			
+    		}
+    		
+    		
     		
     		//For udpating reservation  facility
     		
@@ -179,6 +245,37 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     				System.out.println("I am in reserved_selected_facility");
     	
     			}
+    			
+    			else if(action.equals("update_profile")) {
+    				
+    				User updateuser = new User();
+    				UserError userErrorMsgs = new UserError();
+
+    				updateuser = getUpdateProfileParam(request);
+    				updateuser.validateUser(action, updateuser, userErrorMsgs);
+    				
+    				if (!userErrorMsgs.getErrorMsg().equals("")) {
+     //					if error messages
+    					session.setAttribute("error", userErrorMsgs);
+
+    					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+    				}
+    				else {
+//    					if no error messages
+
+    					//update database except role
+    					UserDAO.updateProfile(updateuser); 
+    					session.setAttribute("UPDATEUSER", updateuser);
+    					
+    					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+    				}
+    				
+    			}
+    			
+    			if (session.getAttribute("current_user") == null)
+    				session.setAttribute("current_user", currentUser);
 
     		}
     	}
@@ -186,7 +283,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     
     @Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		// TODO Auto-generated method stub
 		currentUser = null;
 		HttpSessionListener.super.sessionDestroyed(se);
 	}
@@ -277,4 +373,23 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		//reservation.setEndTime(Timestamp.valueOf(datetimeLocal_udpated.replace("T"," "))); //need to change this
 		return reservation; 
 	}
+    
+    private User getUpdateProfileParam(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname"));
+		user.setLastname(request.getParameter("lastname"));
+		user.setUtaId(request.getParameter("utaId"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street"));
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
+	}
+
 }

@@ -18,13 +18,15 @@ import registration.data.AssignmentDAO;
 import registration.data.FacilityDAO;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
-import registration.model.AddFacility;
+import registration.model.Facility;
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
 import registration.model.MAR;
 import registration.model.Search;
 import registration.model.SearchMessage;
 import registration.model.User;
+import registration.model.UserError;
+import registration.util.DropdownUtils;
 
 @WebServlet("/facility_manager")
 public class FacilityManagerController extends HttpServlet implements HttpSessionListener {
@@ -46,18 +48,19 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
-		session.removeAttribute("message");	// single MAR message
+		session.removeAttribute("facility");			// single facility object
+		session.removeAttribute("list_facilities");		// list of facility objects
+		session.removeAttribute("message");				// single MAR message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
+		session.removeAttribute("UPDATEUSER");
 		
 		session.setAttribute("current_role", "facility_manager");
 		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
-		String action = request.getParameter("action");
-
-		AddFacility newFacility = new AddFacility();
-
+		session.setAttribute("current_role", "facility_manager");
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -106,11 +109,40 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
 			}
-			
-			else if (request.getParameter("addFacility") != null) {
+//			Show add facility form
+			else if (request.getParameter("add_facility") != null) {
+				session.setAttribute("list_facility_types", DropdownUtils.getFacilityTypeDropdown());
+				
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/add_facility.jsp").include(request, response);
 				
+			}
+//			Show All Facilities
+			else if (request.getParameter("facility_list") != null) {
+				List<Facility> facilityList = new ArrayList<Facility>();
+				facilityList.addAll(FacilityDAO.getAllFacilities());
+				session.setAttribute("list_facilities", facilityList);
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/facility_list.jsp").include(request, response);
+			}
+//			SHow Facility details
+			else if (request.getParameter("facility_name") != null) {
+				String facilityName = request.getParameter("facility_name");
+				Facility facility = FacilityDAO.getFacilityByFacilityName(facilityName);
+				session.setAttribute("facility", facility);
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/facility_details.jsp").include(request, response);
+			}
+//			Open profile
+			else if (request.getParameter("profile") != null) {
+				User user = UserDAO.getUserByUsername(currentUser.getUsername());
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 			}
 			
 			
@@ -128,23 +160,21 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
-		session.removeAttribute("message");	// single MAR assign message
+		session.removeAttribute("facility");			// single facility object
+		session.removeAttribute("list_facilities");		// list of facility objects
+		session.removeAttribute("message");				// single MAR assign message
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
-		session.removeAttribute("newFacility");			
+		session.removeAttribute("UPDATEUSER");
 
 		
 		String action = request.getParameter("action");
 		session.setAttribute("current_role", "facility_manager");
 		AssignmentMessage assignmentMessage = new AssignmentMessage();
-
-		int count1;
-		
-		AddFacility newFacility = new AddFacility();
-		session.setAttribute("newFacility",newFacility);
-
 		
 //		user not logged in
 		if (currentUser == null) {
@@ -172,6 +202,9 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 					if (AssignmentDAO.getAssignmentCountByDay(assignment.getAssignedTo(), new Date(System.currentTimeMillis())) >= 5) { 
 //						More than 5 in a day, cannot assign
 						assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer today.");
+					} else if (AssignmentDAO.getAssignmentCountByWeek(assignment.getAssignedTo()) >= 10) {
+//						More than 10 in a week, cannot assign
+						assignmentMessage.setErrorMessage("Cannot assign more than 10 MARs to this repairer in this week.");
 					} else {
 //						can assign
 						AssignmentDAO.assignRepairer(assignment);
@@ -256,51 +289,56 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				if (session.getAttribute("current_user") == null)
 					session.setAttribute("current_user", currentUser);
 			}
+			
+			// update profile
+			else if(action.equals("update_profile")) {
+				
+				User updateuser = new User();
+				UserError userErrorMsgs = new UserError();
+
+				updateuser = getUpdateProfileParam(request);
+				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				
+				if (!userErrorMsgs.getErrorMsg().equals("")) {
+ //					if error messages
+					session.setAttribute("error", userErrorMsgs);
+
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				}
+				else {
+//					if no error messages
+
+					//update database except role
+					UserDAO.updateProfile(updateuser); 
+					session.setAttribute("UPDATEUSER", updateuser);
 					
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				}
+				
+			}
+//			add new facility
+			else if(action.equals("add_facility")) {
+				int facilityIndex = Integer.parseInt(request.getParameter("facilityType"));
+				Facility newFacility = DropdownUtils.getFacilityTypeDropdown().get(facilityIndex);
+				
+				int facilityTypeCount = FacilityDAO.getFacilitiesByFacilityType(newFacility.getFacilityType()).size();
+			
+				String newFacilityName = newFacility.getFacilityName() + " " + (facilityTypeCount + 1);
+				newFacility.setFacilityName(newFacilityName);
+				
+				FacilityDAO.insertNewFacility(newFacility);
+				
+				response.sendRedirect("facility_manager?facility_name=" + newFacilityName);
+
+				
+			} 
+			
+
+			if (session.getAttribute("current_user") == null)
+				session.setAttribute("current_user", currentUser);
 		}		
-		
-		if(action.equals("addFacility"))
-		{
-			
-			newFacility.setFacilityType(request.getParameter("facilityType"));
-			System.out.println(request);
-			int count = FacilityDAO.settingFacilityCount(newFacility.getFacilityType());
-			ArrayList<AddFacility> addFacility = new ArrayList<AddFacility>();
-			
-			//int count = addFacility.size() ;
-			
-			count1 = count - 1 ;
-			
-			//System.out.println(count);
-			addFacility = FacilityDAO.settingFacilityAttributes(newFacility.getFacilityType());
-		
-			String newFacilityName = addFacility.get(count1).getFacilityName();
-		
-			//System.out.println(newFacilityName);
-			
-			String incrementedFacilityName = newFacility.incrementFacilityName(newFacilityName, count);
-			
-			FacilityDAO.insertNewFacility(incrementedFacilityName,addFacility.get(count1).getFacilityType(),
-					addFacility.get(count1).getFacilityInterval(),addFacility.get(count1).getFacilityDuration(),
-					addFacility.get(count1).getFacilityVenue());
-			
-			
-			String message = "New facility added successfully";
-			
-			newFacility.setFacilityName(incrementedFacilityName);
-			newFacility.setinterval_hours(addFacility.get(count1).getFacilityInterval());
-			newFacility.setFacilityDuration(addFacility.get(count1).getFacilityDuration());
-			newFacility.setFacilityVenue(addFacility.get(count1).getFacilityVenue());
-			
-			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-			request.getRequestDispatcher("/facility_details.jsp").include(request, response);
-
-			
-		}
-		
-		
-		
-
 	}
 	
 	@Override
@@ -329,4 +367,23 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 		return marSearch; 
 	}
+	
+	private User getUpdateProfileParam(HttpServletRequest request) {
+		
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstname(request.getParameter("firstname"));
+		user.setLastname(request.getParameter("lastname"));
+		user.setUtaId(request.getParameter("utaId"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setStreet(request.getParameter("street"));
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
+		
+		return user;
+	}
+
 }

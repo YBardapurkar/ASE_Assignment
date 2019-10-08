@@ -65,7 +65,7 @@ public class MARDAO {
 			conn.commit(); 
 			
 			//Extracting mar id
-			
+			System.out.println(mar.getDate());
 			
 			stmt = conn.createStatement();
 			String idForMar = "SELECT MAX(mar_id) as recent_id FROM macrepairsys.mar ORDER BY mar_id";
@@ -189,7 +189,7 @@ public class MARDAO {
 	private static ArrayList<MAR> getMARListForUser (String queryWhere) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
 		String querySelect = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name "
+				+ "SELECT mar.mar_id, mar.description, mar.facility_name,mar.creation_date "
 				+ "from mar ";
 		String queryOrder = " order by mar.mar_id;";
 		
@@ -206,7 +206,7 @@ public class MARDAO {
 				mar.setId(Integer.parseInt(result.getString("mar_id")));
 				mar.setDescription(result.getString("description"));
 				mar.setFacilityName(result.getString("facility_name"));
-				
+				mar.setDate(result.getString("creation_date"));
 				marList.add(mar);
 			}
 		} catch (SQLException e) {System.out.println(e.getMessage());}

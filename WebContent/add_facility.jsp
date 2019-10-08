@@ -19,17 +19,10 @@
    <tr>
     <td> Facility Type (*): </td>
   	<td><select name ="facilityType" value = "<c:out value='${newFacility.facilityType}' />">
-		<option>Multipurpose room</option> 
-		<option>Indoor basketball court</option> 
-		<option>Volleyball court</option> 
-		<option>Indoor soccer gymnasium</option> 
-		<option>Racquetball court</option>
-		<option>Badminton court</option>
-		<option>Table Tennis</option>
-		<option>Conference room</option>
-		<option>Outdoor Volleyball Court</option>
-		<option>Outdoor Basketball Court</option>
-		    </select> </td>
+		<c:forEach items="${list_facility_types}" var="item" varStatus="status">
+		<option value="${status.index}"><c:out value="${item.facilityType}" > </c:out></option>
+		</c:forEach>
+	</select> </td>
     <%-- <td> <input name="facilityname" value="<c:out value='${MAR.facilityName}'/>" type="text" maxlength="45" required>  </td> --%>
     </tr>    	
     	
@@ -40,7 +33,7 @@
     <td colspan="2">(*) Mandatory field</td>
     </tr>
     </table>
-    <input name="action" type="hidden" value="addFacility">
+    <input name="action" type="hidden" value="add_facility">
 	<input name= "addFacility" type="submit" value="Add Facility">
 	
     </form>

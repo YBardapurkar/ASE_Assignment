@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 
 import registration.model.Assignment;
+import registration.util.DateUtils;
 import registration.util.SQLConnection;
 
 public class AssignmentDAO {
@@ -24,6 +25,29 @@ public class AssignmentDAO {
 		String day = date.toString().split(" ")[0];
 		String queryString = "SELECT count(*) FROM macrepairsys.assignment "
 				+ "where date(assigned_date) = '" + day + "' and assigned_to = '" + username + "'";
+		try{
+			stmt = conn.createStatement();
+			ResultSet resultSet = stmt.executeQuery(queryString); 
+			resultSet.next();
+			result = resultSet.getInt(1);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+	
+//	get count of mars assigned to a repairer on a given date
+	public static int getAssignmentCountByWeek(String username)
+	{
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		int result = 0;
+		
+		String startDay = DateUtils.getCurrentWeekStart().toString();
+		String endDay = DateUtils.getCurrentWeekEnd().toString();
+		System.out.println(startDay + " " + endDay);
+		String queryString = "SELECT count(*) FROM macrepairsys.assignment "
+				+ "where date(assigned_date) >= '" + startDay + "' and date(assigned_date) <= '" + endDay + "' and assigned_to = '" + username + "'";
 		try{
 			stmt = conn.createStatement();
 			ResultSet resultSet = stmt.executeQuery(queryString); 

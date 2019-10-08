@@ -3,6 +3,7 @@ package registration.util;
 import java.util.ArrayList;
 
 import registration.data.UserDAO;
+import registration.model.Facility;
 
 public class DropdownUtils {
 	
@@ -77,5 +78,21 @@ public class DropdownUtils {
 		states.add("Wisconsin");
 		states.add("Wyoming");
 		return states;
+	}
+	
+//	Facility Type Dropdown
+	public static ArrayList<Facility> getFacilityTypeDropdown() {
+		ArrayList<Facility> facilities = new ArrayList<Facility>();
+		facilities.add(new Facility("MR", "Multipurpose rooms", "1", "Same Day", "Indoor"));
+		facilities.add(new Facility("IBBC", "Indoor basketball courts", "1", "Same Day", "Indoor"));
+		facilities.add(new Facility("IVBC", "Volleyball courts", "1", "Same Day", "Indoor"));
+		facilities.add(new Facility("SCG", "Indoor soccer gymnasium", "2", "Same Day", "Indoor"));
+		facilities.add(new Facility("RBC", "Racquetball courts", "0.5", "Same Day", "Indoor"));
+		facilities.add(new Facility("BMC", "Badminton courts", "0.5", "Same Day", "Indoor"));
+		facilities.add(new Facility("TT", "Table Tennis", "0.5", "Same Day", "Indoor"));
+		facilities.add(new Facility("CR", "Conference rooms", "1", "Same Day", "Indoor"));
+		facilities.add(new Facility("OVBC", "Outdoor Volleyball Courts", "2", "7-Day", "Outdoor"));
+		facilities.add(new Facility("OBBC", "Outdoor Basketball Courts", "2", "7-Day", "Outdoor"));
+		return facilities;
 	}
 }
