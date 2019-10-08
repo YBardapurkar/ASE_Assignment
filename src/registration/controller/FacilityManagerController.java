@@ -115,7 +115,15 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				request.getRequestDispatcher("/add_facility.jsp").include(request, response);
 				
 			}
-			
+//			Show All Facilities
+			else if (request.getParameter("facility_list") != null) {
+				List<Facility> facilityList = new ArrayList<Facility>();
+				facilityList.addAll(FacilityDAO.getAllFacilities());
+				session.setAttribute("list_facilities", facilityList);
+				
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				request.getRequestDispatcher("/facility_list.jsp").include(request, response);
+			}
 //			Open profile
 			else if (request.getParameter("profile") != null) {
 				User user = UserDAO.getUserByUsername(currentUser.getUsername());

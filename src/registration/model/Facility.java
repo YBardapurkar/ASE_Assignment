@@ -13,10 +13,10 @@ public class Facility implements Serializable{
 	  
 	private String facilityName;
 	public String facilityType;
-	private String interval;
+	private String facilityInterval;
 	private String facilityDuration;
 	private String facilityVenue;
-	private int count;
+
 	private String incrementDate[];
 	private String incrementDate1[];
 	private String incrementTime[];
@@ -28,7 +28,7 @@ public class Facility implements Serializable{
 	public Facility(String facilityName, String facilityType, String interval, String facilityDuration, String facilityVenue) {
 		this.facilityName = facilityName;
 		this.facilityType = facilityType;
-		this.interval = interval;
+		this.facilityInterval = interval;
 		this.facilityDuration = facilityDuration;
 		this.facilityVenue = facilityVenue;
 	}
@@ -105,7 +105,7 @@ public class Facility implements Serializable{
 	
 	public void setFacilityInterval(String interval) 
 	{
-		this.interval = interval;
+		this.facilityInterval = interval;
 		if (interval.equals("0.5")) {
 			this.interval_hours = "30 minutes";
 		} else {
@@ -115,7 +115,7 @@ public class Facility implements Serializable{
 
 	public String getFacilityInterval()
 	{
-		return interval;
+		return facilityInterval;
 	}
 
 	

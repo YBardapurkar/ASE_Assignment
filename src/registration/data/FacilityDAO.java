@@ -46,15 +46,6 @@ static int count;
 		Connection conn = SQLConnection.getDBConnection();
 		try{
 			stmt = conn.createStatement();
-			
-			
-			
-			/*String insertfacility = queryString + " VALUES ('"  
-					+ r1.getFacilityName()  +   "','"
-					+ r1.getFacilityType() + "','"		
-					+ r1.getFacilityInterval() + "','"
-					+ r1.getDuration() + "','"
-					+ r1.getVenue() + "')";*/
 			stmt.executeUpdate(queryString);	
 			conn.commit(); 
 		} catch (SQLException e) {
@@ -62,15 +53,15 @@ static int count;
 		}
 	}
 	
-	
-	public static ArrayList<Facility> getFacilitiesByFacilityType(String facilityType)
-	{
-		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
-		
+	public static ArrayList<Facility> getAllFacilities() {
+		return ReturnMatchingFacilitysList(" SELECT * from facility");
 	}
 	
-	public static int settingFacilityCount(String facilityType)
-	{
+	public static ArrayList<Facility> getFacilitiesByFacilityType(String facilityType) {
+		return ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
+	}
+	
+	public static int settingFacilityCount(String facilityType) {
 		ReturnMatchingFacilitysList(" SELECT * from facility WHERE facility_type = '"+facilityType+"' order by length(facility_name),facility_name");
 		return count;
 	}
@@ -81,7 +72,7 @@ static int count;
 				+ facility.getFacilityType() + "', '"
 				+ facility.getFacilityInterval() + "', '"
 				+ facility.getFacilityDuration() + "', '"
-				+ facility.getFacilityVenue()+"')";
+				+ facility.getFacilityVenue() + "')";
 		StoreListinDB(query);
 	}
 
