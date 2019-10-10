@@ -529,13 +529,14 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		user.setPassword(request.getParameter("password"));
 		user.setFirstname(request.getParameter("firstname"));
 		user.setLastname(request.getParameter("lastname"));
-		user.setUtaId(request.getParameter("utaId"));
+		user.setUtaId(request.getParameter("utaid"));
 		user.setPhone(request.getParameter("phone"));
 		user.setEmail(request.getParameter("email"));
 		user.setStreet(request.getParameter("street"));
 		user.setCity(request.getParameter("city"));
 		user.setState(request.getParameter("state"));
 		user.setZipcode(request.getParameter("zipcode"));
+		user.setRole(request.getParameter("role"));
 		
 		return user;
 	}
