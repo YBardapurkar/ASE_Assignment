@@ -410,6 +410,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
     					//update database except role
     					UserDAO.updateProfile(updateuser); 
+    					updateuser.setMessage("Profile has been updated!!!!!!!!");
     					session.setAttribute("UPDATEUSER", updateuser);
     					
     					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);

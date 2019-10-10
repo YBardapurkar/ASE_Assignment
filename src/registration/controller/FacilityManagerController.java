@@ -312,6 +312,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 					//update database except role
 					UserDAO.updateProfile(updateuser); 
+					updateuser.setMessage("Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
 					
 					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
