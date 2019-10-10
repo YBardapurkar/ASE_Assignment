@@ -105,8 +105,6 @@ public static String[] listTimes1(int count) {
 		long time3 = timestamp3.getTime();
 		Timestamp t3 = new Timestamp(time3);
 
-		System.out.println(t1+"timetstamp1");
-		System.out.println(t2+"timetstamp2");
 		/*if(t1.equals(t2))
 		{
 			System.out.println("both are equal" + t1 + t2);
@@ -123,7 +121,6 @@ public static String[] listTimes1(int count) {
 		
 		if(t1.equals(t2) || (t1.after(t2) && t1.before(t3)))
 		{
-			System.out.println("tme slot is after");
 			return true;
 		}
 		

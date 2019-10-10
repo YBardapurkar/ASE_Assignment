@@ -77,20 +77,10 @@ public class Facility implements Serializable{
 	}
 
 
-	public void setNamesList(String namesList[]) 
+		
+	public void setIncrementDate(String incrementDate[]) 
 	{
-		this.namesList = namesList;
-	}
-
-	public String[] getNamesList()
-	{
-		return namesList;
-	}
-
-	
-	public void setIncrementDate(String namesList[]) 
-	{
-		this.namesList = namesList;
+		this.incrementDate = incrementDate;
 	}
 
 	public String[] getIncrementDate()

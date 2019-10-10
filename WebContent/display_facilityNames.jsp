@@ -19,10 +19,10 @@
 	<input name="showFacilityMessage" value="<c:out value='${searchFacility.getShowFacilityMessage()}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30">
     
     
-       <c:forEach items="${namesList}" var="item" varStatus="status">
+       <c:forEach items="${showAllFacilities}" var="item" varStatus="status">
     <tr>
     
-    <td><c:out value="${item}" /></td>
+    <td><c:out value="${item.facilityName}" /></td>
     
     </tr>
     </c:forEach>

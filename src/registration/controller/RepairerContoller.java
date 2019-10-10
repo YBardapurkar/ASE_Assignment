@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Iterator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -264,7 +264,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		//SHWOWING AVAILABLE FACILITIES
     		if(action.equals("search_facility1")) {
     		
-    			session.removeAttribute("namesList");
+    			session.removeAttribute("showAllFacilities");
     			ArrayList<Facility> facilityList = new ArrayList<Facility>();
     			
     			ArrayList<Facility> showAllFacilities = new ArrayList<Facility>();
@@ -277,17 +277,14 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     			searchFacility.setFacilityType(request.getParameter("facilityType"));
     			
     			String prepareTimeStamp = searchFacility.getSearchDate() + " " + searchFacility.getSearchTime();
-    			//+ searchFacility.getSearchTime()
-    			//System.out.println(prepareTimeStamp + "prepared timestamp");
-    		
+    			showAllFacilities = FacilityDAO.getFacilitiesByFacilityType(searchFacility.getFacilityType());
     			
     			facilityList = FacilityDAO.showFacilitiesCalling(searchFacility.getFacilityType());
     			int size = facilityList.size();
-    			//System.out.println(size+"size of the arraylist");
-    			showAllFacilities = FacilityDAO.getFacilitiesByFacilityType(searchFacility.getFacilityType());
     			
     			 
-    			//System.out.println(showAllFacilities.size()+"size");
+    			System.out.println(showAllFacilities.size()+"size");
+    			
     			
     			if(showAllFacilities.size() == 0)
     			{
@@ -302,47 +299,25 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     				for(int i=0;i<size;i++)
     				{
     					boolean check = DateUtils.checkReservedFacilities(prepareTimeStamp, facilityList.get(i).getStartTimestamp(), facilityList.get(i).getEndTimestamp());
-    					System.out.println(check);
-    					String name;
     					if(check == true)
     					{
-    						//name = facilityList.get(i).getFacilityName();
-    						//System.out.println(facilityList.get(i));
-    						//showAllFacilities.remove(name);
-    						//System.out.println(showAllFacilities.indexOf(facilityList.get(i).getFacilityName()));
-    						name = facilityList.get(i).getFacilityName();
+    						String name = facilityList.get(i).getFacilityName();
     						
-    						
-    						
-    						
-    						/*showAllFacilities.forEach(number->{
-    							if(number.getFacilityName().equals(name))
-    									{
-    								
-    									}
-    							
-    							
-    						});*/
-    						
-    						/*for(int j=0; i<showAllFacilities.size(); j++)
-    						{
-    							if(showAllFacilities.get(j).getFacilityName().equals(name));
-    							showAllFacilities.remove(j);
-    							
-    							
-    						}*/
-    						
+    						 //Iterator iter = showAllFacilities.iterator(); 
+    						 Iterator<Facility> iter = showAllFacilities.iterator();  
+    						   while (iter.hasNext())
+    						   {
+    							   Facility f = iter.next();
+    							   if(f.getFacilityName().equals(name))
+    							   {
+    								   iter.remove();
+    							   }
+    						   }
+    						  		          			
     					}
     				}	
     				
-    				String[] namesList = new String[showAllFacilities.size()];
     				
-    				for(int i=0; i < showAllFacilities.size();i++)
-    				{
-    			
-    					namesList[i] = showAllFacilities.get(i).getFacilityName();
-    				}
-        			
         			
         			
         			
@@ -355,8 +330,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     					
     					else
     					{
-    						System.out.println("inside second else");
-    						session.setAttribute("namesList", namesList);
+    						session.setAttribute("showAllFacilities", showAllFacilities);
     						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
     						request.getRequestDispatcher("/display_facilityNames.jsp").include(request, response);
     					}
