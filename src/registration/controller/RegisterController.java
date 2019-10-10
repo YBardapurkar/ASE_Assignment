@@ -58,12 +58,14 @@ public class RegisterController extends HttpServlet{
 			UserDAO.insertUser(newUser);
 //			session.setAttribute("role_dropdown", getRoles());
 			session.setAttribute("user", newUser);	
-			session.setAttribute("errorMsgs", userErrorMsgs);
+			
 			userErrorMsgs.setErrorMsg("Registration is successful, please login to continue");
 //			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 //			request.getRequestDispatcher("/login.jsp").include(request, response);
-			
-			response.sendRedirect("login");
+			session.setAttribute("errorMsgs", userErrorMsgs);
+			//response.sendRedirect("login");
+			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+			request.getRequestDispatcher("/login.jsp").include(request, response);
 		}
 	}
 	
