@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<input name="errMsg"  value="<c:out value='${errorMsgs}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
+<input name="errMsg"  value="<c:out value='${errorMsgs.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
     <div class="mainbar"><div class="submb"></div></div>
       
 	<table border="1" class="myTable"> 

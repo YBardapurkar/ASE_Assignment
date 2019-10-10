@@ -46,6 +46,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	session.removeAttribute("mar");				// list of MAR objects
     	session.removeAttribute("searchFacility");  //search facility object	
     	session.removeAttribute("UPDATEUSER");
+    	session.removeAttribute("errorMsgs");
     	
     	session.setAttribute("current_role", "repairer");
     	
@@ -133,6 +134,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	session.removeAttribute("mar");
     	session.removeAttribute("reservation");
     	session.removeAttribute("UPDATEUSER");
+    	session.removeAttribute("errorMsgs");
 
     	User currentUser = (User) session.getAttribute("current_user");
 
