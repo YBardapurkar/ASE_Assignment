@@ -92,6 +92,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
 			}	
+			
 //			Open profile
 			else if (request.getParameter("profile") != null) {
 				User user = UserDAO.getUserByUsername(currentUser.getUsername());
@@ -102,18 +103,15 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 			}
 			
-//List of facilities
-			
-				else if (request.getParameter("facility_list") != null) {
-					List<Facility> facilityList = new ArrayList<Facility>();
-					facilityList.addAll(FacilityDAO.getAllFacilities());
-					session.setAttribute("list_facilities", facilityList);
-					
-					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-					request.getRequestDispatcher("/facility_list.jsp").include(request, response);
-				}
-//				
-			
+//			List of facilities
+			else if (request.getParameter("facility_list") != null) {
+				List<Facility> facilityList = new ArrayList<Facility>();
+				facilityList.addAll(FacilityDAO.getAllFacilities());
+				session.setAttribute("list_facilities", facilityList);
+				
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/facility_list.jsp").include(request, response);
+			}
 			
 //			Show Repairer Homepage
 			else {
