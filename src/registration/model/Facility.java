@@ -22,6 +22,10 @@ public class Facility implements Serializable{
 	private String incrementTime[];
 	private String searchDate;
 	private String searchTime;
+	private String startTimestamp;
+	private String EndTimestamp;
+	private String showFacilityMessage;
+	private String namesList[];
 	
 	public Facility() {}
 	
@@ -33,12 +37,60 @@ public class Facility implements Serializable{
 		this.facilityVenue = facilityVenue;
 	}
 	
+	
+	
 	private String interval_hours;
 	String message = "New facility added successfully";
 
-	public void setIncrementDate(String incrementDate[]) 
+	public void setStartTimestamp(String startTimestamp) 
 	{
-		this.incrementDate = incrementDate;
+		this.startTimestamp = startTimestamp;
+	}
+
+	public String getStartTimestamp()
+	{
+		return startTimestamp;
+	}
+
+	public void setShowFacilityMessage(String showFacilityMessage) 
+	{
+		this.showFacilityMessage = showFacilityMessage;
+		System.out.println(showFacilityMessage+"inside set method");
+	}
+
+	public String getShowFacilityMessage()
+	{
+		System.out.println(showFacilityMessage);
+		return showFacilityMessage;
+		
+	}
+
+	
+	public void setEndTimestamp(String EndTimestamp) 
+	{
+		this.EndTimestamp = EndTimestamp;
+	}
+
+	public String getEndTimestamp()
+	{
+		return EndTimestamp;
+	}
+
+
+	public void setNamesList(String namesList[]) 
+	{
+		this.namesList = namesList;
+	}
+
+	public String[] getNamesList()
+	{
+		return namesList;
+	}
+
+	
+	public void setIncrementDate(String namesList[]) 
+	{
+		this.namesList = namesList;
 	}
 
 	public String[] getIncrementDate()

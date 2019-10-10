@@ -3,6 +3,7 @@ package registration.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import registration.data.MARDAO;
 import registration.data.ReservationDAO;
+import registration.data.FacilityDAO;
 import registration.data.UserDAO;
 import registration.model.*;
 import registration.util.DateUtils;
@@ -85,6 +87,8 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			else if(request.getParameter("search_facility") != null) {
 				session.setAttribute("list_facility_types", DropdownUtils.getFacilityTypeDropdown());
 				
+				Facility searchFacility = DropdownUtils.getFacilityTypeDropdown().get(0);
+				
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
 			}	
@@ -97,6 +101,19 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 			}
+			
+//List of facilities
+			
+				else if (request.getParameter("facility_list") != null) {
+					List<Facility> facilityList = new ArrayList<Facility>();
+					facilityList.addAll(FacilityDAO.getAllFacilities());
+					session.setAttribute("list_facilities", facilityList);
+					
+					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+					request.getRequestDispatcher("/facility_list.jsp").include(request, response);
+				}
+//				
+			
 			
 //			Show Repairer Homepage
 			else {
@@ -194,22 +211,29 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		
     		
     		else if(action.equals("search_facility")) {
+    			
+    			session.removeAttribute("searchFacility");
+    			
     			int facilityIndex = Integer.parseInt(request.getParameter("facilityType"));
     			
     			Facility searchFacility = DropdownUtils.getFacilityTypeDropdown().get(facilityIndex);		// dummy object
-    	    	
-    			System.out.println("inside the controller");
+    	    	System.out.println(searchFacility.getFacilityType());
+    			
+    			
     			String incrementDate[] = DateUtils.getSevenDays();
-    			//String incrementDate1[] = {incrementDate[0]};
+    			//String incrementDate1[] = {incrementDate[0]};   
     			//incrementDate1[] = {"incrementDate[0]"};
     			searchFacility.setIncrementDate(incrementDate);
     			
     			session.setAttribute("searchFacility", searchFacility);
-    			searchFacility.setSearchTime(request.getParameter("searchDate"));
-    			searchFacility.setSearchDate(request.getParameter("searchTime"));
+    			searchFacility.setSearchTime(request.getParameter("searchTime"));
+    			searchFacility.setSearchDate(request.getParameter("searchDate"));
+    			
+    			System.out.println(searchFacility.getFacilityDuration());
     			
 //    			check if same day or 7 day
-    			if(searchFacility.getFacilityDuration().equals("Same day")) {
+    			if(searchFacility.getFacilityDuration().equals("Same Day")) {
+    				System.out.println("inside same day");
     				String incrementDate1[] = {incrementDate[0]};
     				searchFacility.setIncrementDate1(incrementDate1);
     			} else {
@@ -218,23 +242,135 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     			}
     			
     			if(searchFacility.getFacilityInterval().equals("1")) {
-    				String incrementTime[] = DateUtils.listTimes(17,"1");
+    				String incrementTime[] = DateUtils.listTimes(18,"1");
     				searchFacility.setIncrementTime(incrementTime);
     			}
     			
     			else if(searchFacility.getFacilityInterval().equals("2")) {
-    				String incrementTime[] = DateUtils.listTimes(8,"2");
+    				String incrementTime[] = DateUtils.listTimes(9,"2");
     				searchFacility.setIncrementTime(incrementTime);
     			}
     			
     			else {
-    				String incrementTime[] = DateUtils.listTimes1(34);
+    				String incrementTime[] = DateUtils.listTimes1(36);
     				searchFacility.setIncrementTime(incrementTime);
     			}
     			request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
     			request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
     			
     		}
+    		
+    		
+    		//For showing search facilities
+
+    		//SHWOWING AVAILABLE FACILITIES
+    		if(action.equals("search_facility1")) {
+    		
+    			session.removeAttribute("namesList");
+    			ArrayList<Facility> facilityList = new ArrayList<Facility>();
+    			
+    			ArrayList<Facility> showAllFacilities = new ArrayList<Facility>();
+    			DateUtils DateUtils = new DateUtils();
+    			Facility searchFacility = new Facility();
+    			session.setAttribute("searchFacility", searchFacility);
+    			
+    			searchFacility.setSearchTime(request.getParameter("searchTime"));
+    			searchFacility.setSearchDate(request.getParameter("searchDate"));
+    			searchFacility.setFacilityType(request.getParameter("facilityType"));
+    			
+    			String prepareTimeStamp = searchFacility.getSearchDate() + " " + searchFacility.getSearchTime();
+    			//+ searchFacility.getSearchTime()
+    			//System.out.println(prepareTimeStamp + "prepared timestamp");
+    		
+    			
+    			facilityList = FacilityDAO.showFacilitiesCalling(searchFacility.getFacilityType());
+    			int size = facilityList.size();
+    			//System.out.println(size+"size of the arraylist");
+    			showAllFacilities = FacilityDAO.getFacilitiesByFacilityType(searchFacility.getFacilityType());
+    			
+    			 
+    			//System.out.println(showAllFacilities.size()+"size");
+    			
+    			if(showAllFacilities.size() == 0)
+    			{
+    				searchFacility.setShowFacilityMessage("No facilities available");
+    				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    				request.getRequestDispatcher("/display_facilityNames.jsp").include(request, response);
+    			}
+    			
+    			else
+    			{
+    				
+    				for(int i=0;i<size;i++)
+    				{
+    					boolean check = DateUtils.checkReservedFacilities(prepareTimeStamp, facilityList.get(i).getStartTimestamp(), facilityList.get(i).getEndTimestamp());
+    					System.out.println(check);
+    					String name;
+    					if(check == true)
+    					{
+    						//name = facilityList.get(i).getFacilityName();
+    						//System.out.println(facilityList.get(i));
+    						//showAllFacilities.remove(name);
+    						//System.out.println(showAllFacilities.indexOf(facilityList.get(i).getFacilityName()));
+    						name = facilityList.get(i).getFacilityName();
+    						
+    						
+    						
+    						
+    						/*showAllFacilities.forEach(number->{
+    							if(number.getFacilityName().equals(name))
+    									{
+    								
+    									}
+    							
+    							
+    						});*/
+    						
+    						/*for(int j=0; i<showAllFacilities.size(); j++)
+    						{
+    							if(showAllFacilities.get(j).getFacilityName().equals(name));
+    							showAllFacilities.remove(j);
+    							
+    							
+    						}*/
+    						
+    					}
+    				}	
+    				
+    				String[] namesList = new String[showAllFacilities.size()];
+    				
+    				for(int i=0; i < showAllFacilities.size();i++)
+    				{
+    			
+    					namesList[i] = showAllFacilities.get(i).getFacilityName();
+    				}
+        			
+        			
+        			
+        			
+    					if(showAllFacilities.size() == 0)
+    					{
+    						searchFacility.setShowFacilityMessage("No facilities available");
+    						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    						request.getRequestDispatcher("/display_facilityNames.jsp").include(request, response);
+    					}
+    					
+    					else
+    					{
+    						System.out.println("inside second else");
+    						session.setAttribute("namesList", namesList);
+    						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    						request.getRequestDispatcher("/display_facilityNames.jsp").include(request, response);
+    					}
+    					
+    				}
+    				
+    			
+    				
+    			}
+    		
+
+    		
     		
     		
     		

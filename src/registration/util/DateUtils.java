@@ -13,6 +13,8 @@ public class DateUtils {
 	private static DateFormat timestampFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	private static DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+	private static DateFormat timestampFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 //	get java.sql.Date from value in database
 	public static Date getSqlDate(String dateString) {
@@ -33,7 +35,7 @@ public class DateUtils {
 		Date incrDate = now();
 		Calendar c = Calendar.getInstance();
 		for(int co=0; co<7; co++){
-			incDate[co] = dateFormat.format(c.getTime());
+			incDate[co] = dateFormat1.format(c.getTime());
 		    c.add(Calendar.DATE, 1); 
 		     
 		}
@@ -45,7 +47,7 @@ public class DateUtils {
 	//Loop for time
 	public static String[] listTimes(int count, String hours) { 
 		
-		String customTime1 = "07:00:00";
+		String customTime1 = "06:00:00";
 		String times[] = new String[count];
 		int c = Integer.parseInt(hours);
 
@@ -65,7 +67,7 @@ public class DateUtils {
 
 public static String[] listTimes1(int count) { 
 		
-		String customTime1 = "07:00:00";
+		String customTime1 = "06:00:00";
 		String times1[] = new String[count];
 
 
@@ -82,6 +84,69 @@ public static String[] listTimes1(int count) {
 		return times1;
 		
 	}
+
+
+	
+	public static boolean checkReservedFacilities(String prepareTimeStamp, String startTimestamp, String EndTimestamp)
+	{
+		
+		String prepareTimeStamp1 = prepareTimeStamp + ".0"; 
+		
+		
+		java.sql.Timestamp timestamp1 = java.sql.Timestamp.valueOf(prepareTimeStamp1);
+		long time1 = timestamp1.getTime();
+		Timestamp t1 = new Timestamp(time1);
+		
+		java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(startTimestamp);
+		long time2 = timestamp2.getTime();
+		Timestamp t2 = new Timestamp(time2);
+		
+		java.sql.Timestamp timestamp3 = java.sql.Timestamp.valueOf(EndTimestamp);
+		long time3 = timestamp3.getTime();
+		Timestamp t3 = new Timestamp(time3);
+
+		System.out.println(t1+"timetstamp1");
+		System.out.println(t2+"timetstamp2");
+		/*if(t1.equals(t2))
+		{
+			System.out.println("both are equal" + t1 + t2);
+		}*/
+		
+		  Timestamp ts1 = new Timestamp(10000); 
+	        Timestamp ts2 = new Timestamp(10001); 
+	  
+	      /*  boolean b = t2.after(t1); 
+	        if(b==true){
+	        	System.out.println("working fine");
+	        }*/
+		
+		
+		if(t1.equals(t2) || (t1.after(t2) && t1.before(t3)))
+		{
+			System.out.println("tme slot is after");
+			return true;
+		}
+		
+		else
+		{
+			return false;
+		}
+		
+		
+		
+		
+		
+		/*if (t1.equals(t2)) {
+	        return true;
+	    }
+		
+		else
+		{
+			return false;
+		}*/
+		
+	}
+	
 
 	
 	

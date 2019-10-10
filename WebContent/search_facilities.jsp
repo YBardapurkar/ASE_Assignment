@@ -10,7 +10,7 @@
 
 	<form action="repairer" method="post">
 	
-	<h1>Search User by:</h1>
+	<h1>Search Available Facilities</h1>
 
 	
 <table>	
@@ -32,7 +32,7 @@
 	<input name="action" type="hidden" value="search_facility">
 	<input name= "search_facility" type="submit" value="search">
 	  
-  	<input name="searchErrorMsgs"  value="<c:out value='${userErrors.searchError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60"> 
+  	 
   
 	</form>      
 
