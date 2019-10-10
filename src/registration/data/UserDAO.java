@@ -140,14 +140,16 @@ public class UserDAO {
 			"street = '" + user.getStreet() + "', " + 
 			"city = '" + user.getCity() + "', " +
 			"state = '" + user.getState() + "', " +
-			"zipcode = '" + user.getZipcode() + "' " +
+			"zipcode = '" + user.getZipcode() + "', " +
+			"role = '" + user.getRole() + "', " +
+			"utaId = '" + user.getUtaId() + "' " +
 			"WHERE username = '" + user.getUsername() + "';";
 
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 		try {
 			stmt = conn.createStatement();
-			stmt.executeUpdate(query1);
+		    stmt.executeUpdate(query1);
 			conn.commit();
 			
 		} catch (Exception e) {

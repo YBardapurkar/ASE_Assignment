@@ -174,8 +174,8 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 
 					//update database except role
 					UserDAO.updateProfile(updateuser); 
+					updateuser.setMessage("Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
-					
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 				}
@@ -211,14 +211,14 @@ private User getUpdateProfileParam(HttpServletRequest request) {
 		user.setPassword(request.getParameter("password"));
 		user.setFirstname(request.getParameter("firstname"));
 		user.setLastname(request.getParameter("lastname"));
-		user.setUtaId(request.getParameter("utaId"));
+		user.setUtaId(request.getParameter("utaid"));
 		user.setPhone(request.getParameter("phone"));
 		user.setEmail(request.getParameter("email"));
 		user.setStreet(request.getParameter("street"));
 		user.setCity(request.getParameter("city"));
 		user.setState(request.getParameter("state"));
 		user.setZipcode(request.getParameter("zipcode"));
-		
+		user.setRole(request.getParameter("role"));
 		return user;
 	}
 

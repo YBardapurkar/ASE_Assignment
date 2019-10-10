@@ -7,9 +7,10 @@
 <title>Profile</title>
 </head>
 <body>
+<input name="message" value="<c:out value='${UPDATEUSER.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  readonly maxlength="30"> 
 <h2>Profile </h2>
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:200px" disabled="disabled">
-<input name="message" value="<c:out value='${user.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30"> 
+
 
 <table>
   <tr>
@@ -19,7 +20,8 @@
     <tr>
     
     <td> Username: </td>
-    <td> <input name="username" value="<c:out value='${UPDATEUSER.username}'/>" type="text" readonly > </td>
+    <td> <input name="username" value="<c:out value='${UPDATEUSER.username}'/>" type="text" readonly style = "background-color: grey"> </td>
+    <td>	  <input name=""  value="This field cannot be edited" type="text"  style ="background-color: white; color: blue; border: none; width: 800px"   disabled="disabled" maxlength="60"></td>
     </tr>
 
      <tr>
@@ -42,12 +44,16 @@
 
 	<tr>
     <td> Role: </td>
-    <td> <input name="utaid" value="<c:out value='${UPDATEUSER.role}'/>" type="text" readonly >  </td>
+    <td> <input name="role" value="<c:out value='${UPDATEUSER.role}'/>" type="text"  readonly style = "background-color: grey">
+    <td>	  <input name=""  value="This field cannot be edited" type="text"  style ="background-color: white; color: blue; border: none; width: 800px"   disabled="disabled" maxlength="60"></td>
+
+    
     </tr>
 
 	<tr>
     <td> UTA id: </td>
-    <td> <input name="utaid" value="<c:out value='${UPDATEUSER.utaId}'/>" type="text" readonly>  </td>
+    <td> <input name="utaid" value="<c:out value='${UPDATEUSER.utaId}'/>" type="text" readonly style = "background-color: grey">
+    <td>	  <input name=""  value="This field cannot be edited" type="text"  style ="background-color: white; color: blue; border: none; width: 800px"   disabled="disabled" maxlength="60"></td>
     </tr>
 	
 	<tr>
