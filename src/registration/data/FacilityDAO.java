@@ -17,6 +17,8 @@ public class FacilityDAO {
 		return ReturnMatchingFacilitysList("");
 	}
 	
+
+	
 	public static Facility getFacilityByFacilityName(String facilityName) {
 		Facility facility = new Facility();
 		ArrayList<Facility> facilityList =  ReturnMatchingFacilitysList("WHERE facility_name = '" + facilityName + "' ");
@@ -29,7 +31,7 @@ public class FacilityDAO {
 
 	private static ArrayList<Facility> ReturnMatchingFacilitysList (String queryWhere) {
 		String querySelect = "SELECT * from facility ";
-		String queryOrder = "order by facility_name;";
+		String queryOrder = "order by length(facility_name),facility_name;";
 		
 		ArrayList<Facility> facilityList = new ArrayList<Facility>();
 
@@ -95,5 +97,40 @@ public class FacilityDAO {
 			System.out.println(e.getMessage());
 		}
 		return facilityNames;
-	}	
+	}
+	
+	
+		public static ArrayList<Facility>  showFacilities (String query) {
+	ArrayList<Facility> facilityList = new ArrayList<Facility>();
+	
+	System.out.println(query);
+	
+	
+	Statement stmt = null;
+	Connection conn = SQLConnection.getDBConnection();
+	try {
+		stmt = conn.createStatement();
+		//System.out.println(querySelect + queryWhere + queryOrder);
+		ResultSet result = stmt.executeQuery(query);
+		
+		while (result.next()) {
+			Facility facility = new Facility();
+			
+			facility.setStartTimestamp(result.getString("start_timestamp"));
+			facility.setEndTimestamp(result.getString("end_timestamp"));
+			facility.setFacilityName(result.getString("facility_name"));
+			facilityList.add(facility);
+		}
+	} catch (SQLException e) {System.out.println(e.getMessage());}
+	return facilityList;
 }
+
+		
+		public static ArrayList<Facility> showFacilitiesCalling (String facilityType) 
+		{
+			return showFacilities("SELECT reservation.start_timestamp, reservation.end_timestamp, facility.facility_name from facility inner join mar on mar.facility_name = facility.facility_name INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"+facilityType+"' ");
+	
+		}
+}
+
+

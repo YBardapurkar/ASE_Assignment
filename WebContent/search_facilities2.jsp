@@ -10,7 +10,7 @@
 
 	<form action="repairer" method="post">
 	
-	<h1>Search User by:</h1>
+	<h1>Search Available Facilities</h1>
 
 	
 <table>	
