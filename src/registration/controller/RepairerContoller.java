@@ -399,7 +399,8 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     				
     				if (!userErrorMsgs.getErrorMsg().equals("")) {
      //					if error messages
-    					session.setAttribute("error", userErrorMsgs);
+    					session.setAttribute("errorMsgs", userErrorMsgs);
+    					session.setAttribute("UPDATEUSER", updateuser);
 
     					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
     					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
