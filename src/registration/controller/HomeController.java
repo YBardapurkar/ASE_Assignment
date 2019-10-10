@@ -173,7 +173,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 //					if no error messages
 
 					//update database except role
-					UserDAO.updateProfile(updateuser); 
+					UserDAO.updateProfile(updateuser);
 					updateuser.setMessage("Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
