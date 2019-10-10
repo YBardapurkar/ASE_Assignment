@@ -301,7 +301,8 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
  //					if error messages
-					session.setAttribute("error", userErrorMsgs);
+					session.setAttribute("errorMsgs", userErrorMsgs);
+					session.setAttribute("UPDATEUSER", updateuser);
 
 					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
