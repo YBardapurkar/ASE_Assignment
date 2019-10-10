@@ -164,8 +164,8 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
  //					if error messages
-					session.setAttribute("error", userErrorMsgs);
-
+					session.setAttribute("errorMsgs", userErrorMsgs);
+					session.setAttribute("UPDATEUSER", updateuser);
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 				}

@@ -187,7 +187,7 @@ public class User implements Serializable{
 			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
 			
 			userErrorMsgs.setErrorMsg();
-		} else if (action.equals("update_user")) {
+		} else if (action.equals("update_profile")) {
 			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
 			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
 			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
@@ -271,7 +271,7 @@ public class User implements Serializable{
 			}
 		} 
 //		update profile
-		else if(action.equals("update_user")) {
+		else if(action.equals("update_profile")) {
 			if (password == null || password.equals("")) {
 				result = "Password is a required field";
 			} else {
