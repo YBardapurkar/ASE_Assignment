@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<form action="repairer" method="post">
+	<form action=<c:out value="${current_role}"></c:out> method="post">
 	
 	<h1>Search Available Facilities</h1>
 

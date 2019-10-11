@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<form action="repairer" method="post">
+	<form action="<c:out value="${current_role}"></c:out>" method="post">
 	
 	<h1>Search Available Facilities</h1>
 <input name="showFacilityMessage" value="<c:out value='${searchFacility.getShowFacilityMessage()}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30">
