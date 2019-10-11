@@ -78,7 +78,8 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/user_details.jsp").include(request, response);
-					request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
+					if (!user.getRole().equals("Admin"))
+						request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
 				}
 				
 				else { // determine if Submit button was clicked without selecting a user

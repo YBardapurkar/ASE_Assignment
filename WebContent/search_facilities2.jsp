@@ -11,20 +11,20 @@
 	<form action="repairer" method="post">
 	
 	<h1>Search Available Facilities</h1>
-
+<input name="showFacilityMessage" value="<c:out value='${searchFacility.getShowFacilityMessage()}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30">
 	
 <table>	
 	    <td> Facility Type: </td>
-  		<td><select name ="facilityType" value = "<c:out value='${searchFacility.facilityType}' />">
-		<option><c:out value="${searchFacility.facilityType}" /></option> 
+  		<td><select name ="facilityType" value = "<c:out value='${searchFacility1.facilityType}' />">
+		<option><c:out value="${searchFacility1.facilityType}" /></option> 
 		
     </tr>    	
  
    
 	<tr>
     <td>Date</td>
-    <td><select name ="searchDate" value = "<c:out value='${searchFacility.searchDate}' />">
-       <c:forEach items="${searchFacility.incrementDate1}" var="item" varStatus="status">
+    <td><select name ="searchDate" value = "<c:out value='${searchFacility1.searchDate}' />">
+       <c:forEach items="${searchFacility1.incrementDate1}" var="item" varStatus="status">
     <option><c:out value="${item}" /></option>
     </c:forEach>
  	</select> </td>
@@ -35,8 +35,8 @@
    
    <tr>
    <td>Time</td>
-  		<td><select name ="searchTime" value = "<c:out value='${searchFacility.searchTime}' />">
-       <c:forEach items="${searchFacility.incrementTime}" var="item" varStatus="status">
+  		<td><select name ="searchTime" value = "<c:out value='${searchFacility1.searchTime}' />">
+       <c:forEach items="${searchFacility1.incrementTime}" var="item" varStatus="status">
     <option><c:out value="${item}" /></option>
     </c:forEach>
  	</select> </td>
