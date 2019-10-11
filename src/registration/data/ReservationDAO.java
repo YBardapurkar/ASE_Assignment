@@ -109,5 +109,20 @@ public class ReservationDAO {
 		return reservationList;
 		
 	}
+	
+	public static void cancelReservation(int marId)
+	{
+		
+		String querySelect = "delete FROM macrepairsys.reservation where mar_id = '" + marId +"'";
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();			
+			stmt.executeUpdate(querySelect);
+			} 
+		
+		catch (SQLException e) {System.out.println(e.getMessage());}{
+			}
+	}
 
 }
