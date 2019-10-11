@@ -37,12 +37,9 @@ Repair Estimated Time
 </td>
 <td>
 <select name="estimate">
-	<option value="1">1 hour</option>
-	<option value="2">2 hours</option>
-	<option value="5">5 hours</option>
-	<option value="10">10 hours</option>
-	<option value="18">1 day</option>
-	<option value="36">2 days</option>
+	<c:forEach items="${repair_times}" var="item" varStatus="status">
+		<option value=<c:out value="${item[1]}" ></c:out> > <c:out value="${item[0]}" ></c:out> </option> 
+	</c:forEach> 
 </select>
 </td>
 </tr>

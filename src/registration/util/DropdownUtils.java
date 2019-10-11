@@ -95,4 +95,18 @@ public class DropdownUtils {
 		facilities.add(new Facility("OBBC", "Outdoor Basketball Courts", "2", "7-Day", "Outdoor"));
 		return facilities;
 	}
+	
+//	Repair time by duration
+	public static ArrayList<String[]> getRepairTimeDropdown(String duration) {
+		ArrayList<String[]> repairTimes = new ArrayList<String[]>();
+		repairTimes.add(new String[]{"1 hour", "1" });
+		repairTimes.add(new String[]{"2 hours", "2" });
+		repairTimes.add(new String[]{"5 hours", "5" });
+		repairTimes.add(new String[]{"10 hours", "10" });
+		if (duration.equals("7-Day")) {
+			repairTimes.add(new String[]{"1 day", "18" });
+			repairTimes.add(new String[]{"2 days", "36" });
+		}
+		return repairTimes;
+	}
 }

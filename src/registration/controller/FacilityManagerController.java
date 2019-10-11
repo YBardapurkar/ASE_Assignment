@@ -77,6 +77,11 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				MAR mar = MARDAO.getMARByID(id);
 				session.setAttribute("mar", mar);
 				
+				Facility facility = FacilityDAO.getFacilityByFacilityName(mar.getFacilityName());
+				ArrayList<String[]> repairTimes = DropdownUtils.getRepairTimeDropdown(facility.getFacilityDuration());
+				
+				session.setAttribute("repair_times", repairTimes);
+				
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				if (mar.getAssignedTo() == null) {
 					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
