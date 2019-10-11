@@ -156,7 +156,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	String action = request.getParameter("action");
 
     	Reservation newReservation = new Reservation();
-    	ReservationMessage reservationMessage = new ReservationMessage();
+//    	ReservationMessage reservationMessage = new ReservationMessage();
     	
 //		user not logged in
     	if (currentUser == null) {
@@ -170,6 +170,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
 //    		reserve facility
     		if (action.equals("reserve_facility")) {
+    			ReservationMessage reservationMessage= new ReservationMessage();
     			String validateStartTime = request.getParameter("start_time1");
     			if(validateStartTime.length()==16) {
     			newReservation = getReservationParam(request); //if it is a valid time stamp
@@ -207,7 +208,8 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     	    			MAR mar = MARDAO.getMARByID(id);
     	    			newReservation.setMarId(id);
     	    			ReservationDAO.insertReservation(newReservation);
-        	    		session.setAttribute("reservation", newReservation);	
+        	    		session.setAttribute("reservation", newReservation);
+        	    		reservationMessage.setMessage("Facility Reserved Sucessfully");
         	    		session.setAttribute("errorMsgs", reservationMessage);
     	    			session.setAttribute("mar", mar);
 
@@ -382,6 +384,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
     		
     		else if(action.equals("reserved_selected_facility")) {
     			String validateStartTime = request.getParameter("start_time1");
+    			ReservationMessage reservationMessage= new ReservationMessage();
     			if(validateStartTime.length()==16) {
     			newReservation = getReservationParam(request); //if it is a valid time stamp
     			}
