@@ -129,7 +129,7 @@ public class MARDAO {
 		String querySelect = ""
 				+ "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
 				+ "from mar "
-				+ "join assignment on mar.mar_id = assignment.mar_id ";
+				+ " left outer join assignment on mar.mar_id = assignment.mar_id ";
 		String queryOrder = "order by mar.mar_id;";
 		
 		Statement stmt = null;

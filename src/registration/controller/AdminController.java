@@ -258,6 +258,8 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				updateuser = getUpdateProfileParam(request);
 				updateuser.validateUser(action, updateuser, userErrorMsgs);
 				
+				session.removeAttribute("errorMsgs");
+				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
  //					if error messages
 					session.setAttribute("errorMsgs", userErrorMsgs);
@@ -272,7 +274,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					UserDAO.updateProfile(updateuser); 
 					updateuser.setMessage("Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
-					
+					session.removeAttribute("errorMsgs");
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 				}
@@ -284,6 +286,8 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 
 				updateuser = getUpdateProfileParam(request);
 				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				
+				session.removeAttribute("errorMsgs");
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
  //					if error messages
@@ -299,6 +303,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					UserDAO.updateProfile(updateuser); 
 					updateuser.setMessage("Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
+					session.removeAttribute("errorMsgs");
 					
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/edit_user_form.jsp").include(request, response);
