@@ -27,6 +27,7 @@
 		<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.phone}" /></td>
 		<td class="myTableCell" style="padding-right: 30px; "><c:out value="${item.utaId}" /></td>
 		<td class="myTableCell" style="padding-right: 30px; "><a href="admin?user_details=<c:out value='${item.username}' />">View</a></td>
+		<td class="myTableCell" style="padding-right: 30px; "><a href="admin?edit_user=<c:out value='${item.username}' />">Edit</a></td>
 	</tr>
 	</c:forEach>
 	</table>

@@ -101,6 +101,18 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
 			}
 			
+//			Open edit other users profile
+			else if (request.getParameter("edit_user") != null) {
+				String username = request.getParameter("edit_user");
+				
+				User user = UserDAO.getUserByUsername(username);
+				session.setAttribute("UPDATEUSER", user);
+				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+				
+				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+				request.getRequestDispatcher("/edit_user_form.jsp").include(request, response);
+			}
+ 			
 //			Open Search page
 			else if (request.getParameter("search") != null) {
 				
@@ -263,6 +275,33 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				}
+				
+			} else if(action.equals("edit_user")) {
+				
+				User updateuser = new User();
+				UserError userErrorMsgs = new UserError();
+
+				updateuser = getUpdateProfileParam(request);
+				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				
+				if (!userErrorMsgs.getErrorMsg().equals("")) {
+ //					if error messages
+					session.setAttribute("errorMsgs", userErrorMsgs);
+					session.setAttribute("UPDATEUSER", updateuser);
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/edit_user_form.jsp").include(request, response);
+				}
+				else {
+//					if no error messages
+
+					//update database except role
+					UserDAO.updateProfile(updateuser); 
+					updateuser.setMessage("Profile has been updated!!!!!!!!");
+					session.setAttribute("UPDATEUSER", updateuser);
+					
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/edit_user_form.jsp").include(request, response);
 				}
 				
 			}
