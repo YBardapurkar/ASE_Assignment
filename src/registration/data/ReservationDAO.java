@@ -1,9 +1,11 @@
 package registration.data;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import registration.model.MAR;
 import registration.model.Reservation;
 import registration.model.User;
 import registration.util.SQLConnection;
@@ -54,5 +56,24 @@ public class ReservationDAO {
 			}
 		}
 	}
+	
+	public static boolean reserveCheck(int mard_id)
+	{
+		boolean resultRet = false;
+		String querySelect = "select *  FROM macrepairsys.reservation where mar_id = " + mard_id;
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();			
+			ResultSet result = stmt.executeQuery(querySelect);
+			while (result.next()) {
+				resultRet = true;
+			} 
+		}	
+		catch (SQLException e) {System.out.println(e.getMessage());}{
+			}
+		return resultRet;
+	}
+	
 
 }

@@ -79,7 +79,14 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
 				if (mar.getAssignedTo().equals(currentUser.getUsername())) {
-					request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
+					boolean reserved = ReservationDAO.reserveCheck(mar.getId());
+					if(!reserved) {
+						request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
+					}
+					else
+					{
+						request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response);
+					}
 				}
 			}
 			
