@@ -256,6 +256,18 @@ public class User implements Serializable{
 				result = "";
 			}
 		} 
+//		edit_user
+		else if(action.equals("edit_user")) {
+			System.out.println(username);
+			
+			if (username == null || username.equals("")) {
+				result = "Username is a required field";
+			} else if (!Pattern.matches(pattern, username))
+				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
+			else {
+				result = "";
+			}
+		} 
 //		default
 		else {
 			result = "action not recognized";
@@ -287,6 +299,16 @@ public class User implements Serializable{
 		} 
 //		update profile
 		else if(action.equals("update_profile")) {
+			if (password == null || password.equals("")) {
+				result = "Password is a required field";
+			} else if (!Pattern.matches(pattern, password))
+				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+			else {
+				result = "";
+			}
+		} 
+//		edit_user
+		else if(action.equals("edit_user")) {
 			if (password == null || password.equals("")) {
 				result = "Password is a required field";
 			} else if (!Pattern.matches(pattern, password))
