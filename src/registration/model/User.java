@@ -200,6 +200,19 @@ public class User implements Serializable{
 			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
+		} else if (action.equals("edit_user")) {
+			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
+			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
+			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
+			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
+			userErrorMsgs.setStreetError(validatestreet(user.getStreet()));
+			userErrorMsgs.setCityError(validatecity(user.getCity()));
+			userErrorMsgs.setStateError(validateState(user.getState()));
+			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
+			
+			userErrorMsgs.setErrorMsg();
 		}
 	}
 	
