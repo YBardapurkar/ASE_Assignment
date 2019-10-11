@@ -119,6 +119,11 @@ public class FacilityDAO {
 			facility.setStartTimestamp(result.getString("start_timestamp"));
 			facility.setEndTimestamp(result.getString("end_timestamp"));
 			facility.setFacilityName(result.getString("facility_name"));
+			facility.setFacilityVenue(result.getString("venue"));
+			facility.setFacilityDuration(result.getString("duration"));
+			facility.setFacilityType(result.getString("facility_type"));
+			facility.setFacilityInterval(result.getString("facility_interval"));
+			
 			facilityList.add(facility);
 		}
 	} catch (SQLException e) {System.out.println(e.getMessage());}
@@ -128,7 +133,9 @@ public class FacilityDAO {
 		
 		public static ArrayList<Facility> showFacilitiesCalling (String facilityType) 
 		{
-			return showFacilities("SELECT reservation.start_timestamp, reservation.end_timestamp, facility.facility_name from facility inner join mar on mar.facility_name = facility.facility_name INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"+facilityType+"' ");
+			return showFacilities("SELECT reservation.start_timestamp, reservation.end_timestamp, facility.facility_type, facility.facility_interval, facility.duration, facility.venue, facility.facility_name from facility "
+					+ "inner join mar on mar.facility_name = facility.facility_name "
+					+ "INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"+facilityType+"'");
 	
 		}
 }

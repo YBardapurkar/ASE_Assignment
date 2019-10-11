@@ -144,7 +144,30 @@ public static String[] listTimes1(int count) {
 		
 	}
 	
-
+public static boolean compareTimes(String prepareTimeStamp)
+{
+	String prepareTimeStamp1 = prepareTimeStamp + ".0";
+	String nowTimeStamp= nowTimeStamp();
+	
+	java.sql.Timestamp timestamp1 = java.sql.Timestamp.valueOf(prepareTimeStamp1);
+	long time1 = timestamp1.getTime();
+	Timestamp t1 = new Timestamp(time1);
+	
+	java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(nowTimeStamp);
+	long time2 = timestamp2.getTime();
+	Timestamp t2 = new Timestamp(time2);
+	
+	if(t1.before(t2))
+	{
+		return true;
+	}
+	
+	else
+	{
+		return false;
+	}
+	
+}
 	
 	
 	
