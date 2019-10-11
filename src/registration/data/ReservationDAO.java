@@ -1,11 +1,16 @@
 package registration.data;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
+import registration.model.MAR;
 import registration.model.Reservation;
 import registration.model.User;
+import registration.util.DateUtils;
 import registration.util.SQLConnection;
 
 public class ReservationDAO {
@@ -53,6 +58,38 @@ public class ReservationDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static ArrayList<Reservation> getReservationsOfRepairer(String repairer) {
+		ArrayList<Reservation> reservationList = new ArrayList<>();
+		String query = ""
+				+ "SELECT reservation.*, assignment.*, mar.facility_name  from reservation "
+				+ "inner join assignment on reservation.mar_id = assignment.mar_id "
+				+ "inner join mar on reservation.mar_id = mar.mar_id "
+				+ "where assignment.assigned_to = '" + repairer + "' "
+				+ "order by reservation.reservation_id;";
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			System.out.println(query);
+			ResultSet result = stmt.executeQuery(query);
+			System.out.println(result);
+			while (result.next()) {
+				Reservation reservation = new Reservation();
+				
+				reservation.setReservationId(Integer.parseInt(result.getString("reservation.reservation_id")));
+				reservation.setMarId(Integer.parseInt(result.getString("reservation.mar_id")));
+				reservation.setFacilityName(result.getString("mar.facility_name"));
+				reservation.setStartTime(Timestamp.valueOf(result.getString("reservation.start_timestamp")));
+				reservation.setEndTime(Timestamp.valueOf(result.getString("reservation.end_timestamp")));
+				
+				reservationList.add(reservation);
+			}
+		} catch (SQLException e) {System.out.println(e.getMessage());}
+		return reservationList;
+		
 	}
 
 }
