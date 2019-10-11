@@ -420,6 +420,26 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 	    		}
     	
     			
+    			else if(action.equals("cancel_reserve"))
+    			{
+    				
+    				ReservationMessage reserve = new ReservationMessage();
+	    			int id = Integer.parseInt(request.getParameter("mar_id"));
+	    			
+	    			MAR mar = MARDAO.getMARByID(id);
+	    			newReservation.setMarId(id);
+	    			
+	    			ReservationDAO.cancelReservation(id);
+	    			session.setAttribute("reservation", newReservation);
+	    			reserve.setMessage("Cancellation successful");
+    	    		session.setAttribute("errorMsgs", reserve);
+    	    		session.setAttribute("mar", mar);
+    	    		request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+    	    		request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+    				request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response); //Ajinkya check this
+    			
+    			}
+    		
     			else if(action.equals("update_profile")) {
     				
     				User updateuser = new User();
