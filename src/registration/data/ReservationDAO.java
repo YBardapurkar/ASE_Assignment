@@ -110,19 +110,39 @@ public class ReservationDAO {
 		
 	}
 	
-	public static void cancelReservation(int marId)
-	{
-		
-		String querySelect = "delete FROM macrepairsys.reservation where mar_id = '" + marId +"'";
+	public static void cancelReservation(int reservationId)
+	{		
+		String querySelect = "delete FROM macrepairsys.reservation where reservation_id = '" + reservationId +"'";
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 		try {
 			stmt = conn.createStatement();			
 			stmt.executeUpdate(querySelect);
+			conn.commit();
 			} 
-		
 		catch (SQLException e) {System.out.println(e.getMessage());}{
 			}
+	}
+	
+	
+//	get MAR by mar_id
+	public static int getReservationIDByMarID(int marID) {
+		int reservationId = 0;
+		String query1 = "SELECT reservation_id FROM macrepairsys.reservation where mar_id = '"+ marID + "'";
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query1);
+			while (rs.next()) {
+				reservationId = rs.getInt(1);
+				break;			
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+			}
+		return reservationId;
 	}
 
 }
