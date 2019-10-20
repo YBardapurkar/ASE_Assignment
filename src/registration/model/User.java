@@ -1,7 +1,10 @@
 package registration.model;
 
 import java.io.Serializable;
-import registration.data.UserDAO; 
+import registration.data.UserDAO;
+import registration.util.DropdownUtils;
+
+import java.util.Arrays;
 import java.util.regex.Pattern; 
 
 public class User implements Serializable{
@@ -24,7 +27,6 @@ public class User implements Serializable{
 	private String zipcode;
 	private String message;
 	private String role;
-	public String for_password;
 	
 	public void setuser(String username, String password,String firstname, String lastname, String role, String utaid,
 			String phone, String email, String street, String city, String state, String zipcode) 
@@ -147,18 +149,6 @@ public class User implements Serializable{
 		this.role = role;
 	}
 
-	public String getFor_password() {
-		return for_password;
-	}
-
-	public void setFor_password(String for_password) {
-		this.for_password = for_password;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public void setLoginUser(String username, String password) 
 	{
 		setUsername(username);
@@ -176,10 +166,10 @@ public class User implements Serializable{
 			userErrorMsgs.setRoleError(validateRole(user.getRole()));
 			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
 			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
-			userErrorMsgs.setStreetError(validatestreet(user.getStreet()));
-			userErrorMsgs.setCityError(validatecity(user.getCity()));
+			userErrorMsgs.setStreetError(validateStreet(user.getStreet()));
+			userErrorMsgs.setCityError(validateCity(user.getCity()));
 			userErrorMsgs.setStateError(validateState(user.getState()));
-			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
+			userErrorMsgs.setZipcodeError(validateZipcode(user.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
 		} else if (action.equals(ACTION_LOGIN)) {
@@ -194,10 +184,10 @@ public class User implements Serializable{
 			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
 			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
 			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
-			userErrorMsgs.setStreetError(validatestreet(user.getStreet()));
-			userErrorMsgs.setCityError(validatecity(user.getCity()));
+			userErrorMsgs.setStreetError(validateStreet(user.getStreet()));
+			userErrorMsgs.setCityError(validateCity(user.getCity()));
 			userErrorMsgs.setStateError(validateState(user.getState()));
-			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
+			userErrorMsgs.setZipcodeError(validateZipcode(user.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
 		} else if (action.equals("edit_user")) {
@@ -207,17 +197,27 @@ public class User implements Serializable{
 			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
 			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
 			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
-			userErrorMsgs.setStreetError(validatestreet(user.getStreet()));
-			userErrorMsgs.setCityError(validatecity(user.getCity()));
+			userErrorMsgs.setStreetError(validateStreet(user.getStreet()));
+			userErrorMsgs.setCityError(validateCity(user.getCity()));
 			userErrorMsgs.setStateError(validateState(user.getState()));
-			userErrorMsgs.setZipcodeError(validatezipcode(user.getZipcode()));
+			userErrorMsgs.setZipcodeError(validateZipcode(user.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
+		} else if (action.equals("change_role")) {
+			userErrorMsgs.setUsernameError(validateUsername(action, user.getUsername()));
+			userErrorMsgs.setRoleError(validateRole(user.getRole()));
+			
+			userErrorMsgs.setErrorMsg();
+		} else {
+//			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
+//			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			
+			userErrorMsgs.setErrorMsg("Action not recognized");
 		}
 	}
 	
 	private String validateUsername(String action, String username) {
-		String result;
+		String result = "";
 		String pattern = "[A-Za-z0-9-_]{6,20}";
 		
 //		Validate register
@@ -225,7 +225,7 @@ public class User implements Serializable{
 			if (username.equals("")) {
 				result = "Username is a required field";
 			} else if (!Pattern.matches(pattern, username)) {
-				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
+				result="username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed";
 			} else if (!UserDAO.usernameUnique(username)) {
 				result="username already in database";
 			} else {
@@ -234,49 +234,56 @@ public class User implements Serializable{
 		} 
 //		validate login
 		else if(action.equals(ACTION_LOGIN)) {
-			System.out.println(username);
-			
-			if (username == null || username.equals("")) {
+			if (username.equals("")) {
 				result = "Username is a required field";
 			} else if (!Pattern.matches(pattern, username))
-				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
+				result="username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed";
 			else {
 				result = "";
 			}
 		} 
 //		update profile
 		else if(action.equals("update_profile")) {
-			System.out.println(username);
-			
-			if (username == null || username.equals("")) {
+			if (username.equals("")) {
 				result = "Username is a required field";
 			} else if (!Pattern.matches(pattern, username))
-				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
-			else {
+				result="username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed";
+			else if (UserDAO.usernameUnique(username)) {
+				result="User does not exist";
+			} else {
 				result = "";
 			}
 		} 
 //		edit_user
 		else if(action.equals("edit_user")) {
-			System.out.println(username);
-			
-			if (username == null || username.equals("")) {
+			if (username.equals("")) {
 				result = "Username is a required field";
 			} else if (!Pattern.matches(pattern, username))
-				result="username should be alphanumeric with size between 6 to 20 characters. '-','_' are allowed";
-			else {
+				result="username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed";
+			else if (UserDAO.usernameUnique(username)) {
+				result="User does not exist";
+			} else {
 				result = "";
 			}
 		} 
-//		default
+//		change role
+//		else if (action.equals("change_role")) {
 		else {
-			result = "action not recognized";
+			if (username.equals("")) {
+				result = "Username is a required field";
+			} else {
+				result = "";
+			}
 		}
+//		default
+//		else {
+//			result = "action not recognized";
+//		}
 		return result;
 	}
 	
 	private String validatePassword(String action, String password) {
-		String result;
+		String result = "";
 		String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@*#$%^/?&+=-_])[A-Za-z0-9!@#$%*^?/&+=-_]{6,30}";
 		
 //		Validate register
@@ -284,14 +291,14 @@ public class User implements Serializable{
 			if (password.equals("")) {
 				result = "Password is a required field";
 			} else if (!Pattern.matches(pattern, password))
-				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
 			else {
 				result = "";
 			}
 		} 
 //		validate login
 		else if(action.equals(ACTION_LOGIN)) {
-			if (password == null || password.equals("")) {
+			if (password.equals("")) {
 				result = "Password is a required field";
 			} else {
 				result = "";
@@ -299,28 +306,29 @@ public class User implements Serializable{
 		} 
 //		update profile
 		else if(action.equals("update_profile")) {
-			if (password == null || password.equals("")) {
+			if (password.equals("")) {
 				result = "Password is a required field";
 			} else if (!Pattern.matches(pattern, password))
-				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
 			else {
 				result = "";
 			}
 		} 
 //		edit_user
-		else if(action.equals("edit_user")) {
-			if (password == null || password.equals("")) {
+//		else if(action.equals("edit_user")) {
+		else {
+			if (password.equals("")) {
 				result = "Password is a required field";
 			} else if (!Pattern.matches(pattern, password))
-				result = "the password should contain at least 1 lowercase letter, one uppercase letter, one digit, one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
 			else {
 				result = "";
 			}
 		} 
 //		default
-		else {
-			result = "action not recognized";
-		}
+//		else {
+//			result = "action not recognized";
+//		}
 		
 		return result;		
 	}
@@ -330,10 +338,8 @@ public class User implements Serializable{
 		
 		if (phone.equals("")) {
 			result = "Phone is a required field";
-		} else if (phone.length() != 10)
-			result = "Phone number must be 10 digits in length";
-		else if (!isTextAnInteger(phone)) {
-			result="Phone number must be a number";
+		} else if (!Pattern.matches("[0-9]{10}", phone)) {
+			result = "Phone number must contain exactly 10 digits";
 		} else {
 			result = "";
 		}
@@ -395,13 +401,12 @@ public class User implements Serializable{
 	
 	private String validateUtaId(String utaId) {
 		String result;
-		String a = "100";
 		
 		if (utaId.equals("")) {
 			result = "UTA ID is a required field";
-		} else if (utaId.length()!=10) {
-			result="UTA id must be 10 digits in length";
-		} else if (!utaId.substring(0,3).equals(a)) {
+		} else if (!Pattern.matches("[0-9]{10}", utaId)) {
+			result="UTA id must contain exactly 10 digits";
+		} else if (!utaId.startsWith("100")) {
 			result="UTA id must start with '100'";
 		} else 
 			result = "";
@@ -411,16 +416,14 @@ public class User implements Serializable{
 	
 	private String validateRole(String role) {
 		String result="";
-		String pattern3 = "[/^[A-Za-z\\S]$/]";
-//		boolean b3 = Pattern.matches(pattern3, role);
-		
+		String[] validRoles = new String[]{"Admin", "Facility Manager", "Student", "Faculty", "Repairer"};
 		if (role.equals("")) {
 			result = "Role is a required field";
-		} else if (!stringSize(role,3,30))
-			result="role should be between 3 and 30 characters long";
-		else if (role.matches(pattern3))
-			result="role should not contain digits";
-		else
+		} else if (!Arrays.asList(validRoles).contains(role)) {
+			result = "Role is invalid";
+//		} else if (!DropdownUtils.getRoleDropdown().contains(role)) {
+//			result = "Only one user with that role can be registered";
+		} else
 			result = "";
 		
 		return result;		
@@ -429,31 +432,25 @@ public class User implements Serializable{
 	private String validateState(String state) {
 		String result;
 		
-
-		
 		if (state.equals("")) {
 			result = "State is a required field";
-			return result;	
-		}
-		else
-		{
+		} else if (!DropdownUtils.getStateDropdown().contains(state)) {
+			result = "Invalid State";
+		} else {
 			result = "";
-			return result;
 		}
-		
+		return result;
 	}
 	
-	private String validatecity(String city) {
+	private String validateCity(String city) {
 		String result="";
-		String pattern3 = "[/^[A-Za-z\\S]$/]";
-//		boolean b3 = Pattern.matches(pattern3, city);
 		
 		if (city.equals("")) {
 			result = "City is a required field";
 		} else if (!stringSize(city,2,15))
 			result="city should be between 2 and 15 characters long";
-		else if (city.matches(pattern3))
-			result="city should not contain digits";
+		else if (!Pattern.matches("[a-zA-Z]+", city))
+			result="city name cannot contain digits";
 		else
 			result = "";
 		
@@ -461,28 +458,26 @@ public class User implements Serializable{
 		
 	}
 	
-	private String validatezipcode(String zipcode) {
+	private String validateZipcode(String zipcode) {
 		String result;
 		if (zipcode.equals("")) {
 			result = "Zipcode is a required field";
-		} else if (zipcode.length()!=5)
-			result="zipcode must be 5 digits in length";
-		else if (!isTextAnInteger(zipcode))
-			result="zip code must be a number";
+		} else if (!Pattern.matches("[0-9]{5}", zipcode))
+			result="Zipcode must contain exactly 5 digits";
 		else
 			result = "";
 		return result;		
 	}
 	
-	
-	private String validatestreet(String street) {
+	private String validateStreet(String street) {
 		String result="";
-		if (!stringSize(street,3,100))
-			result="city should be between 3 and 100 characters long";
+		if (street.equals("")) {
+			result = "Street is a required field";
+		} else if (!stringSize(street, 3, 100))
+			result="Street should be between 3 and 100 characters long";
 		return result;		
 		
 	}
-	
 	
 	
 //	This section is for general purpose methods used internally in this class
@@ -490,19 +485,4 @@ public class User implements Serializable{
 	private boolean stringSize(String string, int min, int max) {
 		return string.length()>=min && string.length()<=max;
 	}
-	
-	private boolean isTextAnInteger (String string) {
-        boolean result;
-		try
-        {
-            Long.parseLong(string);
-            result=true;
-        } 
-        catch (NumberFormatException e) 
-        {
-            result=false;
-        }
-		return result;
-	}	
-	
 }

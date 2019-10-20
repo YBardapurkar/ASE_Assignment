@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSessionListener;
 
 import registration.model.User;
 import registration.util.DropdownUtils;
-import registration.model.ChangeRole;
 import registration.model.Search;
 import registration.model.SearchMessage;
 import registration.data.UserDAO;
@@ -199,7 +198,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 			
 //			Change role
 			else if (action.equals("change_role")){
-				ChangeRole changeRole = new ChangeRole();
+				User updatedUser = new User();
 				UserError userErrorMsgs = new UserError();
 				
 				String username, newRole;
@@ -207,8 +206,8 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				
 				session.removeAttribute("errorMsgs");
 				
-				changeRole = getChangeRoleParam(request);
-				changeRole.validateChangeRole(action, changeRole, userErrorMsgs);
+				updatedUser = getChangeRoleParam(request);
+				updatedUser.validateUser(action, updatedUser, userErrorMsgs);
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
 //					if error messages
@@ -220,15 +219,15 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				} else {
 //					if no error messages
 					
-					username = changeRole.getUsername();
-					newRole = changeRole.getRole();
+					username = updatedUser.getUsername();
+					newRole = updatedUser.getRole();
 					user = UserDAO.getUserByUsername(username);
 					
 //					check if facility manager exists
 					if(newRole.equals("Facility Manager") & !UserDAO.getUsersByRole("Facility Manager").isEmpty()) {
-						changeRole.setMessage("A Facility Manager already exists in the system.");
+						updatedUser.setMessage("A Facility Manager already exists in the system.");
 						session.setAttribute("USERS", user);
-						session.setAttribute("change_role", changeRole);
+						session.setAttribute("change_role", updatedUser);
 						
 						request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 						request.getRequestDispatcher("/user_details.jsp").include(request, response);
@@ -237,11 +236,11 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 //					update role
 					else {
 						UserDAO.updateDetails(username, newRole); //update database
-						changeRole.setMessage("role is updated");
+						updatedUser.setMessage("role is updated");
 						user.setRole(newRole);
 						
 						session.setAttribute("USERS", user);
-						session.setAttribute("change_role", changeRole);
+						session.setAttribute("change_role", updatedUser);
 						
 						request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 						request.getRequestDispatcher("/user_details.jsp").include(request, response);
@@ -332,13 +331,13 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		return userSearch; 
 	}
 	
-	private ChangeRole getChangeRoleParam (HttpServletRequest request) {
-		ChangeRole changerole = new ChangeRole();
+	private User getChangeRoleParam (HttpServletRequest request) {
+		User user = new User();
 		
-		changerole.setUsername(request.getParameter("username"));
-		changerole.setRole(request.getParameter("role"));
+		user.setUsername(request.getParameter("username"));
+		user.setRole(request.getParameter("role"));
 				
-		return changerole;
+		return user;
 	}
 	
 	private User getUpdateProfileParam(HttpServletRequest request) {
