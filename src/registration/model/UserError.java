@@ -1,7 +1,7 @@
 package registration.model;
 
 public class UserError {
-
+	private String errorMsg;
 	private String usernameError;
 	private String passwordError;
 	private String firstnameError;
@@ -14,13 +14,9 @@ public class UserError {
 	private String cityError;
 	private String zipcodeError;
 	private String streetError;
-	
-	private String errorMsg;
-	private String message;
 
 	public UserError() {
 		this.errorMsg = "";
-		this.message = "";
 		this.usernameError = "";
 		this.passwordError= "";
 		this.firstnameError= "";
@@ -49,17 +45,6 @@ public class UserError {
 				!emailError.equals("") || !phoneError.equals("") || !stateError.equals("") || 
 				!cityError.equals("") || !zipcodeError.equals("") || !streetError.equals(""))
 			this.setErrorMsg("Please correct the following errors");
-		else {
-			this.setErrorMsg("");
-		}
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	public String getUsernameError() {

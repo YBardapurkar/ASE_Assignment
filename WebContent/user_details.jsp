@@ -10,7 +10,7 @@
 <body>
 
 <h1>User Details</h1>
-<input name="message" value="<c:out value='${changerole.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 800px; size: 30"  disabled="disabled" maxlength="30"> 
+<input name="message" value="<c:out value='${success_message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 800px; size: 30"  disabled="disabled" maxlength="30"> 
 <table>
   <tr>
    <td>

@@ -25,7 +25,6 @@ public class User implements Serializable{
 	private String city;
 	private String state;
 	private String zipcode;
-	private String message;
 	private String role;
 	
 	public void setuser(String username, String password,String firstname, String lastname, String role, String utaid,
@@ -133,14 +132,6 @@ public class User implements Serializable{
 		this.zipcode = zipcode;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -242,20 +233,8 @@ public class User implements Serializable{
 				result = "";
 			}
 		} 
-//		update profile
-		else if(action.equals("update_profile")) {
-			if (username.equals("")) {
-				result = "Username is a required field";
-			} else if (!Pattern.matches(pattern, username))
-				result="username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed";
-			else if (UserDAO.usernameUnique(username)) {
-				result="User does not exist";
-			} else {
-				result = "";
-			}
-		} 
-//		edit_user
-		else if(action.equals("edit_user")) {
+//		update profile, edit user
+		else if(action.equals("update_profile") || action.equals("edit_user")) {
 			if (username.equals("")) {
 				result = "Username is a required field";
 			} else if (!Pattern.matches(pattern, username))
@@ -286,8 +265,8 @@ public class User implements Serializable{
 		String result = "";
 		String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@*#$%^/?&+=-_])[A-Za-z0-9!@#$%*^?/&+=-_]{6,30}";
 		
-//		Validate register
-		if(action.equals(ACTION_SAVE_USER)) {
+//		Validate register, update profile, edit user
+		if(action.equals(ACTION_SAVE_USER) || action.equals("update_profile") || action.equals("edit_user")) {
 			if (password.equals("")) {
 				result = "Password is a required field";
 			} else if (!Pattern.matches(pattern, password))
@@ -297,31 +276,31 @@ public class User implements Serializable{
 			}
 		} 
 //		validate login
-		else if(action.equals(ACTION_LOGIN)) {
-			if (password.equals("")) {
-				result = "Password is a required field";
-			} else {
-				result = "";
-			}
-		} 
-//		update profile
-		else if(action.equals("update_profile")) {
-			if (password.equals("")) {
-				result = "Password is a required field";
-			} else if (!Pattern.matches(pattern, password))
-				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
-			else {
-				result = "";
-			}
-		} 
+//		else if(action.equals(ACTION_LOGIN)) {
+//			if (password.equals("")) {
+//				result = "Password is a required field";
+//			} else {
+//				result = "";
+//			}
+//		} 
+////		update profile
+//		else if(action.equals("update_profile")) {
+//			if (password.equals("")) {
+//				result = "Password is a required field";
+//			} else if (!Pattern.matches(pattern, password))
+//				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+//			else {
+//				result = "";
+//			}
+//		} 
 //		edit_user
 //		else if(action.equals("edit_user")) {
 		else {
 			if (password.equals("")) {
 				result = "Password is a required field";
-			} else if (!Pattern.matches(pattern, password))
-				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
-			else {
+//			} else if (!Pattern.matches(pattern, password)) {
+//				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+			} else {
 				result = "";
 			}
 		} 

@@ -49,6 +49,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		session.removeAttribute("searchFacility"); // search facility object
 		session.removeAttribute("UPDATEUSER");
 		session.removeAttribute("errorMsgs");
+		session.removeAttribute("success_message");
 
 		session.setAttribute("current_role", "repairer");
 
@@ -149,6 +150,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		session.removeAttribute("reservation");
 		session.removeAttribute("UPDATEUSER");
 		session.removeAttribute("errorMsgs");
+		session.removeAttribute("success_message");
 
 		User currentUser = (User) session.getAttribute("current_user");
 
@@ -438,7 +440,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					// if no error messages
 					// update database except role
 					UserDAO.updateProfile(updateuser);
-					updateuser.setMessage("Profile has been updated!!!!!!!!");
+					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
 
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);

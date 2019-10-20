@@ -7,7 +7,7 @@
 <title>Profile</title>
 </head>
 <body>
-<input name="message" value="<c:out value='${UPDATEUSER.message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  readonly maxlength="30"> 
+<input name="message" value="<c:out value='${success_message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  readonly maxlength="30"> 
 <h2>Profile </h2>
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:200px" disabled="disabled">
 

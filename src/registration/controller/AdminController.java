@@ -44,6 +44,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		
 		session.removeAttribute("error");
 		session.removeAttribute("message");
+		session.removeAttribute("success_message");
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
 		session.removeAttribute("user_search");
@@ -138,6 +139,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		
 		session.removeAttribute("error");
 		session.removeAttribute("message");
+		session.removeAttribute("success_message");
 		session.removeAttribute("USERS");
 		session.removeAttribute("change_role");
 		session.removeAttribute("user_search");
@@ -225,7 +227,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					
 //					check if facility manager exists
 					if(newRole.equals("Facility Manager") & !UserDAO.getUsersByRole("Facility Manager").isEmpty()) {
-						updatedUser.setMessage("A Facility Manager already exists in the system.");
+						session.setAttribute("success_message", "A Facility Manager already exists in the system.");
 						session.setAttribute("USERS", user);
 						session.setAttribute("change_role", updatedUser);
 						
@@ -236,7 +238,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 //					update role
 					else {
 						UserDAO.updateDetails(username, newRole); //update database
-						updatedUser.setMessage("role is updated");
+						session.setAttribute("success_message", "role is updated");
 						user.setRole(newRole);
 						
 						session.setAttribute("USERS", user);
@@ -271,7 +273,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 
 					//update database except role
 					UserDAO.updateProfile(updateuser); 
-					updateuser.setMessage("Profile has been updated!!!!!!!!");
+					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
 					session.removeAttribute("errorMsgs");
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
@@ -300,7 +302,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 
 					//update database except role
 					UserDAO.updateProfile(updateuser); 
-					updateuser.setMessage("Profile has been updated!!!!!!!!");
+					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
 					session.removeAttribute("errorMsgs");
 					

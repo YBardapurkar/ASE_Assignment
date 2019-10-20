@@ -59,6 +59,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
 		session.removeAttribute("UPDATEUSER");
+		session.removeAttribute("success_message");
 		
 		session.setAttribute("current_role", "facility_manager");
 		session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
@@ -179,7 +180,6 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 		session.removeAttribute("mar");					// single MAR object
 		session.removeAttribute("list_mar");			// list of MAR objects
 		session.removeAttribute("facility");			// single facility object
@@ -188,7 +188,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 		session.removeAttribute("list_repairers");		// list of repairer users
 		session.removeAttribute("mar_search");			// single mar search object
 		session.removeAttribute("UPDATEUSER");
-
+		session.removeAttribute("success_message");
 		
 		String action = request.getParameter("action");
 		session.setAttribute("current_role", "facility_manager");
@@ -478,7 +478,7 @@ else if(action.equals("search_facility")) {
 
 					//update database except role
 					UserDAO.updateProfile(updateuser); 
-					updateuser.setMessage("Profile has been updated!!!!!!!!");
+					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
 					
 					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);

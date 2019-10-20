@@ -4,7 +4,7 @@
 <input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
 <h3>Change Role</h3>
 
-<p style ="background-color: white; color: blue; height:20px; margin: 0;"><c:out value='${change_role.message}'/></p> 
+<p style ="background-color: white; color: blue; height:20px; margin: 0;"><c:out value='${success_message}'/></p> 
 
 <form name="user_role_form" action="admin?user_details=${USERS.username}" method="post">
 <table style="width: 1200px; ">

@@ -41,6 +41,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		session.removeAttribute("success_message");
 		session.removeAttribute("mar");				// single MAR object
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
@@ -105,6 +106,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		session.removeAttribute("success_message");
 		session.removeAttribute("mar");				// single MAR object
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
@@ -174,7 +176,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 
 					//update database except role
 					UserDAO.updateProfile(updateuser);
-					updateuser.setMessage("Profile has been updated!!!!!!!!");
+					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
 					session.setAttribute("UPDATEUSER", updateuser);
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
