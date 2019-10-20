@@ -34,7 +34,7 @@ public class UserTest {
 			String message, String errorMessage, String description) {
 		
 		user.setuser(username, password, firstname, lastname, role, utaid, phone, email, street, city, state, zipcode);
-		user.validateUser(action, user, userError);
+		userError = user.validateUser(action);
 		
 		assertEquals(username, user.getUsername());
 		assertEquals(password, user.getPassword());
@@ -71,7 +71,7 @@ public class UserTest {
 			String errorMessage, String description) {
 		
 		user.setLoginUser(username, password);
-		user.validateUser(action, user, userError);
+		userError = user.validateUser(action);
 		
 		assertEquals(username, user.getUsername());
 		assertEquals(password, user.getPassword());
@@ -89,10 +89,11 @@ public class UserTest {
 		
 		user.setUsername(username);
 		user.setRole(role);
-		user.validateUser(action, user, userError);
+		userError = user.validateUser(action);
 		
 		assertEquals(username, user.getUsername());
 		assertEquals(role, user.getRole());
+		
 		assertEquals(usernameMessage, userError.getUsernameError());
 		assertEquals(roleMessage, userError.getRoleError());
 		assertEquals(errorMessage, userError.getErrorMsg());
@@ -110,7 +111,7 @@ public class UserTest {
 			String message, String errorMessage, String description) {
 		
 		user.setuser(username, password, firstname, lastname, null, null, phone, email, street, city, state, zipcode);
-		user.validateUser(action, user, userError);
+		userError = user.validateUser(action);
 		
 		assertEquals(username, user.getUsername());
 		assertEquals(password, user.getPassword());
@@ -147,7 +148,7 @@ public class UserTest {
 			String message, String errorMessage, String description) {
 		
 		user.setuser(username, password, firstname, lastname, null, null, phone, email, street, city, state, zipcode);
-		user.validateUser(action, user, userError);
+		userError = user.validateUser(action);
 		
 		assertEquals(username, user.getUsername());
 		assertEquals(password, user.getPassword());

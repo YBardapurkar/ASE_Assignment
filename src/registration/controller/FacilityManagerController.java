@@ -463,7 +463,7 @@ else if(action.equals("search_facility")) {
 				UserError userErrorMsgs = new UserError();
 
 				updateuser = getUpdateProfileParam(request);
-				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				userErrorMsgs = updateuser.validateUser(action);
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
  //					if error messages

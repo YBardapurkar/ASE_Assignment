@@ -428,7 +428,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				User updateuser = new User();
 				UserError userErrorMsgs = new UserError();
 				updateuser = getUpdateProfileParam(request);
-				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				userErrorMsgs = updateuser.validateUser(action);
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
 					// if error messages
 					session.setAttribute("errorMsgs", userErrorMsgs);
