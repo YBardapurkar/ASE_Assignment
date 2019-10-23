@@ -18,6 +18,7 @@ public class FacilityMessage {
 		this.facilityVenueError = "";
 	}
 	
+	
 	public String getErrorMsg() {
 		return errorMsg;
 	}

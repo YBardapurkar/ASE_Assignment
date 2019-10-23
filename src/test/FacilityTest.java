@@ -12,7 +12,6 @@ import registration.model.FacilityMessage;
 import registration.model.User;
 import registration.model.UserError;
 
-
 @RunWith(JUnitParamsRunner.class)
 public class FacilityTest {
 	Facility facility;
