@@ -162,7 +162,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 				UserError userErrorMsgs = new UserError();
 
 				updateuser = getUpdateProfileParam(request);
-				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				userErrorMsgs = updateuser.validateUser(action);
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
  //					if error messages

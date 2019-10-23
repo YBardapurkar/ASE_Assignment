@@ -209,7 +209,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				session.removeAttribute("errorMsgs");
 				
 				updatedUser = getChangeRoleParam(request);
-				updatedUser.validateUser(action, updatedUser, userErrorMsgs);
+				userErrorMsgs = updatedUser.validateUser(action);
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
 //					if error messages
@@ -257,7 +257,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				UserError userErrorMsgs = new UserError();
 
 				updateuser = getUpdateProfileParam(request);
-				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				userErrorMsgs = updateuser.validateUser(action);
 				
 				session.removeAttribute("errorMsgs");
 				
@@ -286,7 +286,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				UserError userErrorMsgs = new UserError();
 
 				updateuser = getUpdateProfileParam(request);
-				updateuser.validateUser(action, updateuser, userErrorMsgs);
+				userErrorMsgs = updateuser.validateUser(action);
 				
 				session.removeAttribute("errorMsgs");
 				

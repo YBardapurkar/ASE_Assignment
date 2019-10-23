@@ -52,7 +52,7 @@ public class LoginController extends HttpServlet {
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(request.getParameter("password"));
 
-		user.validateUser("login", user, userErrorMsgs);
+		userErrorMsgs = user.validateUser("login");
 //		user.setPassword("");
 		session.setAttribute("user", user);
 		if (userErrorMsgs.getErrorMsg().equals("")) {

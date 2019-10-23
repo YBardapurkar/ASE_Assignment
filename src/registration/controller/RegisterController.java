@@ -44,7 +44,7 @@ public class RegisterController extends HttpServlet{
 		UserError userErrorMsgs = new UserError();
 		
 		newUser = getUserParam(request);
-		newUser.validateUser(action, newUser, userErrorMsgs);
+		userErrorMsgs = newUser.validateUser(action);
 		
 		if (!userErrorMsgs.getErrorMsg().equals("")) {
 //			if error messages

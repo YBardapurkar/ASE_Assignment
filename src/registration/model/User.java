@@ -27,6 +27,21 @@ public class User implements Serializable{
 	private String zipcode;
 	private String role;
 	
+	public User() {
+		this.username = "";
+		this.password = "";
+		this.role = "";
+		this.firstname = "";
+		this.lastname = "";
+		this.utaId = "";
+		this.phone = "";
+		this.email = "";
+		this.street = "";
+		this.city = "";
+		this.state = "";
+		this.zipcode = "";
+	}
+	
 	public void setuser(String username, String password,String firstname, String lastname, String role, String utaid,
 			String phone, String email, String street, String city, String state, String zipcode) 
 	{
@@ -147,64 +162,76 @@ public class User implements Serializable{
 	
 	}
 	
-	public void validateUser (String action, User user, UserError userErrorMsgs) {
+	public UserError validateUser (String action) {
+		UserError userErrorMsgs = new UserError();
 		if (action.equals(ACTION_SAVE_USER)) {
-			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
-			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
-			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
-			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
-			userErrorMsgs.setUtaIdError(validateUtaId(user.getUtaId()));
-			userErrorMsgs.setRoleError(validateRole(user.getRole()));
-			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
-			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
-			userErrorMsgs.setStreetError(validateStreet(user.getStreet()));
-			userErrorMsgs.setCityError(validateCity(user.getCity()));
-			userErrorMsgs.setStateError(validateState(user.getState()));
-			userErrorMsgs.setZipcodeError(validateZipcode(user.getZipcode()));
+			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action, this.getPassword()));
+			userErrorMsgs.setFirstnameError(validateFirstname(this.getFirstname()));
+			userErrorMsgs.setLastnameError(validateLastname(this.getLastname()));
+			userErrorMsgs.setUtaIdError(validateUtaId(this.getUtaId()));
+			userErrorMsgs.setRoleError(validateRole(this.getRole()));
+			userErrorMsgs.setEmailError(validateEmail(this.getEmail()));
+			userErrorMsgs.setPhoneError(validatePhone(this.getPhone()));
+			userErrorMsgs.setStreetError(validateStreet(this.getStreet()));
+			userErrorMsgs.setCityError(validateCity(this.getCity()));
+			userErrorMsgs.setStateError(validateState(this.getState()));
+			userErrorMsgs.setZipcodeError(validateZipcode(this.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
 		} else if (action.equals(ACTION_LOGIN)) {
-			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
-			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action, this.getPassword()));
 			
 			userErrorMsgs.setErrorMsg();
 		} else if (action.equals("update_profile")) {
-			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
-			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
-			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
-			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
-			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
-			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
-			userErrorMsgs.setStreetError(validateStreet(user.getStreet()));
-			userErrorMsgs.setCityError(validateCity(user.getCity()));
-			userErrorMsgs.setStateError(validateState(user.getState()));
-			userErrorMsgs.setZipcodeError(validateZipcode(user.getZipcode()));
+			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action, this.getPassword()));
+			userErrorMsgs.setFirstnameError(validateFirstname(this.getFirstname()));
+			userErrorMsgs.setLastnameError(validateLastname(this.getLastname()));
+			userErrorMsgs.setEmailError(validateEmail(this.getEmail()));
+			userErrorMsgs.setPhoneError(validatePhone(this.getPhone()));
+			userErrorMsgs.setStreetError(validateStreet(this.getStreet()));
+			userErrorMsgs.setCityError(validateCity(this.getCity()));
+			userErrorMsgs.setStateError(validateState(this.getState()));
+			userErrorMsgs.setZipcodeError(validateZipcode(this.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
 		} else if (action.equals("edit_user")) {
-			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
-			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
-			userErrorMsgs.setFirstnameError(validateFirstname(user.getFirstname()));
-			userErrorMsgs.setLastnameError(validateLastname(user.getLastname()));
-			userErrorMsgs.setEmailError(validateEmail(user.getEmail()));
-			userErrorMsgs.setPhoneError(validatePhone(user.getPhone()));
-			userErrorMsgs.setStreetError(validateStreet(user.getStreet()));
-			userErrorMsgs.setCityError(validateCity(user.getCity()));
-			userErrorMsgs.setStateError(validateState(user.getState()));
-			userErrorMsgs.setZipcodeError(validateZipcode(user.getZipcode()));
+			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action, this.getPassword()));
+			userErrorMsgs.setFirstnameError(validateFirstname(this.getFirstname()));
+			userErrorMsgs.setLastnameError(validateLastname(this.getLastname()));
+			userErrorMsgs.setEmailError(validateEmail(this.getEmail()));
+			userErrorMsgs.setPhoneError(validatePhone(this.getPhone()));
+			userErrorMsgs.setStreetError(validateStreet(this.getStreet()));
+			userErrorMsgs.setCityError(validateCity(this.getCity()));
+			userErrorMsgs.setStateError(validateState(this.getState()));
+			userErrorMsgs.setZipcodeError(validateZipcode(this.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
 		} else if (action.equals("change_role")) {
-			userErrorMsgs.setUsernameError(validateUsername(action, user.getUsername()));
-			userErrorMsgs.setRoleError(validateRole(user.getRole()));
+			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
+			userErrorMsgs.setRoleError(validateRole(this.getRole()));
 			
 			userErrorMsgs.setErrorMsg();
 		} else {
-//			userErrorMsgs.setUsernameError(validateUsername(action,user.getUsername()));
-//			userErrorMsgs.setPasswordError(validatePassword(action,user.getPassword()));
+			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
+			userErrorMsgs.setPasswordError(validatePassword(action, this.getPassword()));
+			userErrorMsgs.setFirstnameError(validateFirstname(this.getFirstname()));
+			userErrorMsgs.setLastnameError(validateLastname(this.getLastname()));
+			userErrorMsgs.setUtaIdError(validateUtaId(this.getUtaId()));
+			userErrorMsgs.setRoleError(validateRole(this.getRole()));
+			userErrorMsgs.setEmailError(validateEmail(this.getEmail()));
+			userErrorMsgs.setPhoneError(validatePhone(this.getPhone()));
+			userErrorMsgs.setStreetError(validateStreet(this.getStreet()));
+			userErrorMsgs.setCityError(validateCity(this.getCity()));
+			userErrorMsgs.setStateError(validateState(this.getState()));
+			userErrorMsgs.setZipcodeError(validateZipcode(this.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg("Action not recognized");
 		}
+		return userErrorMsgs;
 	}
 	
 	private String validateUsername(String action, String username) {
@@ -246,8 +273,8 @@ public class User implements Serializable{
 			}
 		} 
 //		change role
-//		else if (action.equals("change_role")) {
-		else {
+		else if (action.equals("change_role")) {
+//		else {
 			if (username.equals("")) {
 				result = "Username is a required field";
 			} else {
@@ -255,9 +282,9 @@ public class User implements Serializable{
 			}
 		}
 //		default
-//		else {
-//			result = "action not recognized";
-//		}
+		else {
+			result = "Action not recognized";
+		}
 		return result;
 	}
 	
@@ -266,7 +293,7 @@ public class User implements Serializable{
 		String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@*#$%^/?&+=-_])[A-Za-z0-9!@#$%*^?/&+=-_]{6,30}";
 		
 //		Validate register, update profile, edit user
-		if(action.equals(ACTION_SAVE_USER) || action.equals("update_profile") || action.equals("edit_user")) {
+		if(action.equals(ACTION_SAVE_USER)) {
 			if (password.equals("")) {
 				result = "Password is a required field";
 			} else if (!Pattern.matches(pattern, password))
@@ -276,38 +303,38 @@ public class User implements Serializable{
 			}
 		} 
 //		validate login
-//		else if(action.equals(ACTION_LOGIN)) {
-//			if (password.equals("")) {
-//				result = "Password is a required field";
-//			} else {
-//				result = "";
-//			}
-//		} 
-////		update profile
-//		else if(action.equals("update_profile")) {
-//			if (password.equals("")) {
-//				result = "Password is a required field";
-//			} else if (!Pattern.matches(pattern, password))
-//				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
-//			else {
-//				result = "";
-//			}
-//		} 
-//		edit_user
-//		else if(action.equals("edit_user")) {
-		else {
+		else if(action.equals(ACTION_LOGIN)) {
 			if (password.equals("")) {
 				result = "Password is a required field";
-//			} else if (!Pattern.matches(pattern, password)) {
-//				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+			} else {
+				result = "";
+			}
+		} 
+//		update profile
+		else if(action.equals("update_profile")) {
+			if (password.equals("")) {
+				result = "Password is a required field";
+			} else if (!Pattern.matches(pattern, password))
+				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
+			else {
+				result = "";
+			}
+		} 
+//		edit_user
+		else if(action.equals("edit_user")) {
+//		else {
+			if (password.equals("")) {
+				result = "Password is a required field";
+			} else if (!Pattern.matches(pattern, password)) {
+				result = "the password should contain at least - 1 lowercase letter - one uppercase letter - one digit - one special character(!@#$%*^?/&+=-_) with length between 6 to 30 characters";
 			} else {
 				result = "";
 			}
 		} 
 //		default
-//		else {
-//			result = "action not recognized";
-//		}
+		else {
+			result = "Action not recognized";
+		}
 		
 		return result;		
 	}
