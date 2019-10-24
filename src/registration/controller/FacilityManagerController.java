@@ -256,7 +256,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				SearchMessage marSearchMessage = new SearchMessage();
 				ArrayList<MAR> listMAR = new ArrayList<MAR>();
 				
-				marSearch.validateSearch(action, marSearch, marSearchMessage);
+				marSearchMessage = marSearch.validateSearch(action);
 				
 				if (!marSearchMessage.getSearchErrorMessage().equals("")) {
 //							set error messages
