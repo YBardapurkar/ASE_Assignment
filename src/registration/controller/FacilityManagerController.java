@@ -20,6 +20,7 @@ import registration.data.FacilityDAO;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
 import registration.model.Facility;
+import registration.model.FacilityMessage;
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
 import registration.model.MAR;
@@ -257,7 +258,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				SearchMessage marSearchMessage = new SearchMessage();
 				ArrayList<MAR> listMAR = new ArrayList<MAR>();
 				
-				marSearch.validateSearch(action, marSearch, marSearchMessage);
+				marSearchMessage = marSearch.validateSearch(action);
 				
 				if (!marSearchMessage.getSearchErrorMessage().equals("")) {
 //							set error messages
@@ -498,6 +499,8 @@ else if(action.equals("search_facility")) {
 				String newFacilityName = newFacility.getFacilityName() + " " + (facilityTypeCount + 1);
 				newFacility.setFacilityName(newFacilityName);
 				
+				FacilityMessage facilityMessage = newFacility.validateFacility();
+				session.setAttribute("errorMsg", facilityMessage);
 				FacilityDAO.insertNewFacility(newFacility);
 				
 				response.sendRedirect("facility_manager?facility_name=" + newFacilityName);

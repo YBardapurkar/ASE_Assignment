@@ -10,7 +10,7 @@ public class Search implements Serializable{
 	
 	private String searchText;
 	private String searchFilter;
-
+	
 	public String getSearchText() {
 		return searchText;
 	}
@@ -32,10 +32,11 @@ public class Search implements Serializable{
 		this.setSearchFilter(searchFilter);
 	}
 	
-	public void validateSearch(String action, Search search, SearchMessage searchMessage) {
-		searchMessage.setSearchTextMessage(validateSearchText(action, search.getSearchText(), search.getSearchFilter()));
+	public SearchMessage validateSearch(String action) {
+		SearchMessage searchMessage = new SearchMessage();
+		searchMessage.setSearchTextMessage(validateSearchText(action, this.getSearchText(), this.getSearchFilter()));
 		searchMessage.setSearchErrorMessage();
-		searchMessage.setSearchMessage();
+		return searchMessage;
 	}
 	
 	private String validateSearchText(String action, String searchText, String searchFilter) {
