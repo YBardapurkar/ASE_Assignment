@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- mar form here -->
-<input name="errMsg"  value="<c:out value='${errorMsgs.errorMsg}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
+<input name="message" value="<c:out value='${success_message}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30"> 
 <table>
   <tr>
    <td>

@@ -1,45 +1,23 @@
 package registration.model;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-import registration.data.UserDAO;
 import registration.data.FacilityDAO;
 
 import registration.util.*;
 
-public class MAR {
+public class MAR implements Serializable {
+	
 	public static final String ACTION_SAVE_MAR = "save_mar";
 	private static final long serialVersionUID = 3L;
 	
 	
 	private int id;
 	private String facilityName;
-//	private String urgency;
 	private String description;
 	private String reportedBy;
 	private String date;
-	//private String message;
-//	private String EstimateRepair;
-	
-
-	
-/*
-	public String getEstimateRepair() {
-		return EstimateRepair;
-	}
-	public void setEstimateRepair(String estimateRepair) {
-		EstimateRepair = estimateRepair;
-	}
-/*	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}*/
-//	private Date date;
-	//private String assignedTo;
 	
 	public int getId() {
 		return id;
@@ -53,13 +31,6 @@ public class MAR {
 	public void setFacilityName(String facilityName) {
 		this.facilityName = facilityName;
 	}
-	
-//	public String getUrgency() {
-//		return urgency;
-//	}
-//	public void setUrgency(String urgency) {
-//		this.urgency = urgency;
-//	}
 	public String getDescription() {
 		return description;
 	}
@@ -72,13 +43,6 @@ public class MAR {
 	public void setReportedBy(String reportedBy) {
 		this.reportedBy = reportedBy;
 	}
-//	public Date getDate() {
-//		return date;
-//	}
-//	public void setDate(Date date) {
-//		this.date = date;
-//	}
-	
 	public String getDate() {
 		return date;
 	}
@@ -87,23 +51,14 @@ public class MAR {
 		tempArray = date.split(" ");
 		this.date = tempArray[0];
 	}
-//	public String getAssignedTo() {
-//		return assignedTo;
-//	}
-//	public void setAssignedTo(String assignedTo) {
-//		this.assignedTo = assignedTo;
-//		
-//	}
 	
 	public void  validateMar (MAR mar, MARError marErrorMsgs) {
-			marErrorMsgs.setDescriptionError(validateDescription(this.description));
-			//marErrorMsgs.setUrgencyError(validateUrgency(this.urgency));
-			marErrorMsgs.setIDError(validateid(this.id));
-		//	marErrorMsgs.setAssignedtoError(validateAssignedto(this.assignedTo));
-			marErrorMsgs.setReportedByError(validateReportedBy(this.reportedBy));
-			marErrorMsgs.setFacilityNameError(validateFacilityName(this.facilityName));
-			marErrorMsgs.setDateError(validateDate(this.date));
-		}
+		marErrorMsgs.setIdError(validateid(this.id));
+		marErrorMsgs.setDescriptionError(validateDescription(this.description));
+		marErrorMsgs.setReportedByError(validateReportedBy(this.reportedBy));
+		marErrorMsgs.setFacilityNameError(validateFacilityName(this.facilityName));
+		marErrorMsgs.setDateError(validateDate(this.date));
+	}
 	
 	
 	//validations

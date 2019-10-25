@@ -9,11 +9,6 @@ import org.junit.runner.RunWith;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-
 import registration.model.MAR;
 import registration.model.MARError;
 import registration.util.*;
@@ -52,20 +47,18 @@ public class MARTest {
 			 mar.setDate(date);
 		 }
 		 
+		 mar.validateMar(mar, marError);
+		 
 		 assertEquals(description,mar.getDescription());
 		 assertEquals(id,mar.getId());
 		 assertEquals(reportedBy,mar.getReportedBy());
 		 assertEquals(facilityName,mar.getFacilityName());
 		 assertEquals(date,mar.getDate());
 		 
-		 mar.validateMar(mar, marError);
-		 
 		 assertEquals(expectedMessagedescription, marError.getDescriptionError());
-		 assertEquals(expectedMessageId, marError.getIDError());
+		 assertEquals(expectedMessageId, marError.getIdError());
 		 assertEquals(expectedMessagereportedBy, marError.getReportedByError());
 		 assertEquals(expectedMessagefacilityName, marError.getFacilityNameError()); 
 		 assertEquals(expectedMessageDate, marError.getDateError()); 
 	}
-	
-	
 }

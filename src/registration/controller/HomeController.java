@@ -46,6 +46,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
 		session.removeAttribute("UPDATEUSER");     // profile update object
+		session.removeAttribute("success_message");
 		
 		session.setAttribute("current_role", "home");
     	
@@ -111,6 +112,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
 		session.removeAttribute("UPDATEUSER");      // profile update object
+		session.removeAttribute("success_message");
 		
 		String action = request.getParameter("action");
 		session.setAttribute("current_role", "home");
@@ -150,7 +152,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 					
 					session.setAttribute("mar", newMar);
 					MARError errorMsgs = new MARError();
-					errorMsgs.setMessage("MAR has been created!!");
+					session.setAttribute("success_message", "MAR has been created!!");
 					session.setAttribute("errorMsgs", errorMsgs);
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
