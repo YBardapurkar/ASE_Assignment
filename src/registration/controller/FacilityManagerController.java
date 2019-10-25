@@ -80,13 +80,15 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				MAR mar = MARDAO.getMARByID(id);
 				session.setAttribute("mar", mar);
 				
+				Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
+				
 				Facility facility = FacilityDAO.getFacilityByFacilityName(mar.getFacilityName());
 				ArrayList<String[]> repairTimes = DropdownUtils.getRepairTimeDropdown(facility.getFacilityDuration());
 				
 				session.setAttribute("repair_times", repairTimes);
-				
+				session.setAttribute("assign", assignment);
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				if (mar.getAssignedTo() == null) {
+				if (assignment.getAssignedTo() == null) {
 					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
 				} else {
@@ -237,7 +239,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 //					redirect
 					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 					
-					if (mar.getAssignedTo() == null) {
+					if (assignment.getAssignedTo() == null) {
 						request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 						request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
 					} else {

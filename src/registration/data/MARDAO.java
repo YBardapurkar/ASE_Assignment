@@ -58,7 +58,7 @@ public class MARDAO {
 			String insertmar = queryString + " VALUES ('"
 					+ mar.getDescription()  +   "','"
 					+ mar.getFacilityName()  +   "','"
-					+ mar.getUrgency()  +   "','"
+					//+ mar.getUrgency()  +   "','"
 					+ mar.getDate()  +   "','"										
 					+ mar.getReportedBy() + "')";
 			stmt.executeUpdate(insertmar);	
@@ -84,7 +84,7 @@ public class MARDAO {
 	}
 
 	public static void insertmar(MAR mar) {  
-		StoreListinDB(mar,"INSERT INTO mar(description,facility_name,urgency,creation_date,reported_by) ");
+		StoreListinDB(mar,"INSERT INTO mar(description,facility_name,creation_date,reported_by) ");
 	}
 	
 //	get list of unassigned MAR
@@ -144,9 +144,9 @@ public class MARDAO {
 				
 				mar.setId(Integer.parseInt(result.getString("mar_id")));
 				mar.setDescription(result.getString("description"));
-				mar.setUrgency(result.getString("urgency"));
+			//	mar.setUrgency(result.getString("urgency"));
 				mar.setFacilityName(result.getString("facility_name"));
-				mar.setAssignedTo(result.getString("assigned_to"));
+			//	mar.setAssignedTo(result.getString("assigned_to"));
 				mar.setDate(result.getString("creation_date"));
 				
 				marList.add(mar);
@@ -175,10 +175,10 @@ public class MARDAO {
 				
 				mar.setId(Integer.parseInt(result.getString("mar_id")));
 				mar.setDescription(result.getString("description"));
-				mar.setUrgency(result.getString("urgency"));
+				//mar.setUrgency(result.getString("urgency"));
 				mar.setFacilityName(result.getString("facility_name"));
 				mar.setDate(result.getString("creation_date"));
-				mar.setAssignedTo(result.getString("assigned_to"));
+				//mar.setAssignedTo(result.getString("assigned_to"));
 				
 				marList.add(mar);
 			}

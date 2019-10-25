@@ -134,7 +134,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 	
 				newMar = getMarParam(request);
 				newMar.setReportedBy(currentUser.getUsername());
-				newMar.validateMar(action, newMar, marErrorMsgs);
+				newMar.validateMar(newMar, marErrorMsgs);
 	
 				if (!marErrorMsgs.getDescriptionError().equals("")) {
 					//			if error messages
@@ -146,7 +146,8 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 				}
 				else {
 					//			if no error messages
-					MARDAO.insertmar(newMar);//Insert into database		
+					MARDAO.insertmar(newMar);//Insert into database	
+					
 					session.setAttribute("mar", newMar);
 					MARError errorMsgs = new MARError();
 					errorMsgs.setMessage("MAR has been created!!");
@@ -202,7 +203,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		mar.setFacilityName(request.getParameter("facility_name"));
 		mar.setDescription(request.getParameter("description"));
 		mar.setDate(DateUtils.nowTimeStamp());
-		mar.setUrgency(request.getParameter("urgency"));		
+		//mar.setUrgency(request.getParameter("urgency"));		
 		return mar;
 	}
 	

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import registration.data.MARDAO;
 import registration.data.ReservationDAO;
+import registration.data.AssignmentDAO;
 import registration.data.FacilityDAO;
 import registration.data.UserDAO;
 import registration.model.*;
@@ -78,10 +79,11 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				int id = Integer.parseInt(request.getParameter("mar_id"));
 				MAR mar = MARDAO.getMARByID(id);
 				session.setAttribute("mar", mar);
-
+				Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
+				session.setAttribute("assign", assignment);
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-				if (mar.getAssignedTo().equals(currentUser.getUsername())) {
+				if (assignment.getAssignedTo().equals(currentUser.getUsername())) {
 					boolean reserved = ReservationDAO.reserveCheck(mar.getId());
 					if (!reserved) {
 						request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
@@ -201,13 +203,15 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					// TODO : Create Dao Layer Ajinkya
 
 					String username = currentUser.getUsername();
-
+					
 					ArrayList<MAR> listMAR = new ArrayList<MAR>();
 					listMAR = MARDAO.getMARByAssignedRepairer(username);
 					session.setAttribute("list_mar", listMAR);
 
 					int id = Integer.parseInt(request.getParameter("mar_id"));
 					MAR mar = MARDAO.getMARByID(id);
+					Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
+					session.setAttribute("assign", assignment);
 					newReservation.setMarId(id);
 					ReservationDAO.insertReservation(newReservation);
 					session.setAttribute("reservation", newReservation);
@@ -217,7 +221,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-					if (mar.getAssignedTo().equals(currentUser.getUsername())) {
+					if (assignment.getAssignedTo().equals(currentUser.getUsername())) {
 						request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya
 																												// check
 																												// this
@@ -381,14 +385,15 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				int id = Integer.parseInt(request.getParameter("mar_id"));
 				MAR mar = MARDAO.getMARByID(id);
 				newReservation.setMarId(id);
+				Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
 				ReservationDAO.updateReservation(newReservation);
 				session.setAttribute("reservation", newReservation);
-
+				session.setAttribute("assign", assignment);
 				session.setAttribute("mar", mar);
 
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-				if (mar.getAssignedTo().equals(currentUser.getUsername())) {
+				if (assignment.getAssignedTo().equals(currentUser.getUsername())) {
 					reservationMessage.setMessage("Reservation modified Successfully");
 					session.setAttribute("errorMsgs", reservationMessage);
 					request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya

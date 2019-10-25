@@ -20,7 +20,7 @@ public class DateUtils {
 	public static Date getSqlDate(String dateString) {
         Date sqlDate;
         try {
-			sqlDate = new Date(timestampFormat.parse(dateString).getTime());
+			sqlDate = new Date(timestampFormat1.parse(dateString).getTime());
 		} catch (ParseException e) {
 			e.printStackTrace();
 			sqlDate = now();
