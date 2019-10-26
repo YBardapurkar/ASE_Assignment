@@ -30,12 +30,12 @@
 
 <tr>
 <th>Urgency</th>
-<td><c:out value="${mar.urgency}"></c:out></td>
+<td><c:out value="${assign.urgency}"></c:out></td>
 </tr>
 
 <tr>
 <th>Assigned to</th>
-<td><c:out value="${mar.assignedTo}"></c:out></td>
+<td><c:out value="${assign.assignedTo}"></c:out></td>
 </tr>
 
 </table>

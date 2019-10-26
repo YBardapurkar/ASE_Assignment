@@ -25,7 +25,6 @@
 25,save_user,aaaaaa_unique,Yash@2,Yash,Bardapurkar,Student,1001731650,1111111111,s@.edu,street,City,Texas,12345,,,,,,,,Email address must be between 7 and 45 characters long,,,,,,Please correct the following errors,x
 26,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,abc.uta.edu,street,City,Texas,12345,,,,,,,,Email address needs to contain @,,,,,,Please correct the following errors,x
 27,save_user,aaaaaa_unique,Yash@2,Yash,Bardapurkar,Student,1001731650,1111111111,abc@mavs.uta,street,City,Texas,12345,,,,,,,,Invalid domain name,,,,,,Please correct the following errors,x
-28,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,@b.edu,street,City,Texas,12345,,,,,,,,Email address must be between 7 and 45 characters long,,,,,,Please correct the following errors,x
 29,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,sfdsd@uta.edu,,City,Texas,12345,,,,,,,,,Street is a required field,,,,,Please correct the following errors,x
 30,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,sfdsd@uta.edu,st,City,Texas,12345,,,,,,,,,Street should be between 3 and 100 characters long,,,,,Please correct the following errors,x
 31,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,sfdsd@uta.edu,street,,Texas,12345,,,,,,,,,,City is a required field,,,,Please correct the following errors,x

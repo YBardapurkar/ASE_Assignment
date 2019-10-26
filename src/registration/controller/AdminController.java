@@ -158,7 +158,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				SearchMessage userSearchMessage = new SearchMessage();
 				ArrayList<User> listUsers = new ArrayList<User>();
 				
-				userSearch.validateSearch(action, userSearch, userSearchMessage);
+				userSearchMessage = userSearch.validateSearch(action);
 				if (!userSearchMessage.getSearchErrorMessage().equals("")) {
 //					set error messages
 					session.setAttribute("user_search", userSearch);
