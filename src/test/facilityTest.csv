@@ -1,0 +1,23 @@
+1,Badminton courts,BMC 1,0.5,Same day,Indoor,,,,,
+2,Conference rooms,CR 1,1,Same day,Indoor,,,,,
+3,Indoor basketball courts,IBBC 1,1,Same day,Indoor,,,,,
+4,Volleyball courts,IVBC 1,1,Same day,Indoor,,,,,
+5,Multipurpose rooms,MR 1,1,Same day,Indoor,,,,,
+6,Outdoor Basketball Courts,OBBC 1,2,7-day,Outdoor,,,,,
+7,Outdoor Volleyball Courts,OVBC 1,2,7-day,Outdoor,,,,,
+8,Racquetball courts,RBC 1,0.5,Same day,Indoor,,,,,
+9,Indoor soccer gymnasium,SCG,2,Same day,Indoor,,,,,
+10,Table Tennis,TT1,0.5,Same day,Indoor,,,,,
+11,,TT1,0.5,Same day,Indoor,,Facility Type field is empty,,,
+12,Table Tennis,,0.5,Same day,Indoor,Facility name field is empty,,,,
+13,Table Tennis,TT1,,Same day,Indoor,,,Facility interval field is empty,,
+14,Table Tennis,TT1,0.5,,Indoor,,,,Facility duration field is empty,
+15,Table Tennis,TT1,0.5,Same day,,,,,,Facility venue field is empty
+16,,,0.5,Same day,Indoor,Facility name field is empty,Facility Type field is empty,,,
+17,,,,Same day,Indoor,Facility name field is empty,Facility Type field is empty,Facility interval field is empty,,
+18,,,,,Indoor,Facility name field is empty,Facility Type field is empty,Facility interval field is empty,Facility duration field is empty,
+19,,,,,,Facility name field is empty,Facility Type field is empty,Facility interval field is empty,Facility duration field is empty,Facility venue field is empty
+20,,,,Same day,,Facility name field is empty,Facility Type field is empty,Facility interval field is empty,,Facility venue field is empty
+21,,,0.5,,,Facility name field is empty,Facility Type field is empty,,Facility duration field is empty,Facility venue field is empty
+22,,TT1,,,,,Facility Type field is empty,Facility interval field is empty,Facility duration field is empty,Facility venue field is empty
+23,Table Tennis,,,,,Facility name field is empty,,Facility interval field is empty,Facility duration field is empty,Facility venue field is empty

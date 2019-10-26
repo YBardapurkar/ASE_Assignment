@@ -3,6 +3,7 @@ package registration.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,10 +21,13 @@ import registration.data.FacilityDAO;
 import registration.data.MARDAO;
 import registration.data.UserDAO;
 import registration.model.Facility;
+import registration.model.FacilityErrorMessages;
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
 import registration.model.MAR;
 import registration.model.Search;
+import registration.model.SearchFacility;
+import registration.model.SearchFacilityError;
 import registration.model.SearchMessage;
 import registration.model.User;
 import registration.model.UserError;
@@ -308,153 +312,113 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 					session.setAttribute("current_user", currentUser);
 			}
 			
-else if(action.equals("search_facility")) {
-    			
-    			session.removeAttribute("searchFacility1");
-    			
-    			int facilityIndex = Integer.parseInt(request.getParameter("facilityType"));
-    			
-    			Facility searchFacility1 = DropdownUtils.getFacilityTypeDropdown().get(facilityIndex);		// dummy object
-    	    	
-    			session.setAttribute("searchFacility1", searchFacility1);
-    			
-    			
-    			String incrementDate[] = DateUtils.getSevenDays();
-    			//String incrementDate1[] = {incrementDate[0]};   
-    			//incrementDate1[] = {"incrementDate[0]"};
-    			searchFacility1.setIncrementDate(incrementDate);
-    			
-    			
-    			searchFacility1.setSearchTime(request.getParameter("searchTime"));
-    			searchFacility1.setSearchDate(request.getParameter("searchDate"));
-    			
-    			//System.out.println(searchFacility.getFacilityDuration());
-    			
-//    			check if same day or 7 day
-    			if(searchFacility1.getFacilityDuration().equals("Same Day")) {
-    				System.out.println("inside same day");
-    				String incrementDate1[] = {incrementDate[0]};
-    				searchFacility1.setIncrementDate1(incrementDate1);
-    			} else {
-    				String incrementDate1[] = incrementDate;
-    				searchFacility1.setIncrementDate1(incrementDate1);
-    			}
-    			
-    			if(searchFacility1.getFacilityInterval().equals("1")) {
-    				String incrementTime[] = DateUtils.listTimes(18,"1");
-    				searchFacility1.setIncrementTime(incrementTime);
-    			}
-    			
-    			else if(searchFacility1.getFacilityInterval().equals("2")) {
-    				String incrementTime[] = DateUtils.listTimes(9,"2");
-    				searchFacility1.setIncrementTime(incrementTime);
-    			}
-    			
-    			else {
-    				String incrementTime[] = DateUtils.listTimes1(36);
-    				searchFacility1.setIncrementTime(incrementTime);
-    			}
-    			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-    			request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
-    			
-    		}
-    		
-    		
-    		//For showing search facilities
+			else if (action.equals("search_facility")) {
 
-    		//SHWOWING AVAILABLE FACILITIES
-    		if(action.equals("search_facility1")) {
-    		
-    			session.removeAttribute("showAllFacilities");
-    			ArrayList<Facility> facilityList = new ArrayList<Facility>();
-    			
-    			ArrayList<Facility> showAllFacilities = new ArrayList<Facility>();
-    			DateUtils DateUtils = new DateUtils();
-    			Facility searchFacility = new Facility();
-    			session.setAttribute("searchFacility", searchFacility);
-    			
-    			searchFacility.setSearchTime(request.getParameter("searchTime"));
-    			searchFacility.setSearchDate(request.getParameter("searchDate"));
-    			searchFacility.setFacilityType(request.getParameter("facilityType"));
-    			
-    			String prepareTimeStamp = searchFacility.getSearchDate() + " " + searchFacility.getSearchTime();
-    			showAllFacilities = FacilityDAO.getFacilitiesByFacilityType(searchFacility.getFacilityType());
-    			
-    			facilityList = FacilityDAO.showFacilitiesCalling(searchFacility.getFacilityType());
-    			int size = facilityList.size();
-    			
-    			 
-    			System.out.println(showAllFacilities.size()+"size");
-    			
-    			
-    			boolean compare = DateUtils.compareTimes(prepareTimeStamp);
-    			
-    			//System.out.println("comparing nowtime with selected time"+compare);
-    		if(compare == true)
-    		{
-    			session.setAttribute("searchFacility",searchFacility);
-    			searchFacility.setShowFacilityMessage("Selected time is less than the current time");
-    			request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+				session.removeAttribute("searchFacility1");
+
+				int facilityIndex = Integer.parseInt(request.getParameter("facilityType"));
+				List<String> incrementDate1 ;
+				List<String> incrementTime1 ;
+				Facility facility = DropdownUtils.getFacilityTypeDropdown().get(facilityIndex); // dummy object
+
+				session.setAttribute("facility", facility);
+
+				String incrementDate[] = DateUtils.getSevenDays();
+				SearchFacility searchFacility1 = new SearchFacility();
+				searchFacility1.setFacilityType(facility.getFacilityType());
+				searchFacility1.setSearchTime(request.getParameter("searchTime"));
+				searchFacility1.setSearchDate(request.getParameter("searchDate"));
+				
+				session.setAttribute("searchFacility1", searchFacility1);
+
+				// check if same day or 7 day
+				if (facility.getFacilityDuration().equals("Same Day")) 
+				{
+					 incrementDate1 =  Arrays.asList(incrementDate[0]) ;
+				}
+				
+				else 
+				{
+					incrementDate1 = Arrays.asList(incrementDate);
+				}
+
+				
+				if (facility.getFacilityInterval().equals("1")) 
+				{
+					incrementTime1 = Arrays.asList(DateUtils.listTimes(18, "1"));
+				}
+
+				else if (facility.getFacilityInterval().equals("2")) 
+				{
+					incrementTime1 = Arrays.asList(DateUtils.listTimes(9, "2"));
+				}
+
+				else 
+				{
+					incrementTime1 = Arrays.asList(DateUtils.listTimes1(36));
+				}
+				
+				session.setAttribute("incrementDate", incrementDate1);
+				session.setAttribute("incrementTime", incrementTime1);
+				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 				request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
-    		}
-    		
-    		else
-    		{	
-    			if(showAllFacilities.size() == 0)
-    			{
-    				
-    				searchFacility.setShowFacilityMessage("No facilities available");
-    				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-    				request.getRequestDispatcher("/facility_list.jsp").include(request, response);
-    			}
-    			
-    			else
-    			{
-    				
-    				for(int i=0;i<size;i++)
-    				{
-    					boolean check = DateUtils.checkReservedFacilities(prepareTimeStamp, facilityList.get(i).getStartTimestamp(), facilityList.get(i).getEndTimestamp());
-    					if(check == true)
-    					{
-    						String name = facilityList.get(i).getFacilityName();
-    						
-    						 //Iterator iter = showAllFacilities.iterator(); 
-    						 Iterator<Facility> iter = showAllFacilities.iterator();  
-    						   while (iter.hasNext())
-    						   {
-    							   Facility f = iter.next();
-    							   if(f.getFacilityName().equals(name))
-    							   {
-    								   iter.remove();
-    							   }
-    						   }
-    						  		          			
-    					}
-    				}	
-    				
-    				
-        			
-        			
-        			
-    					if(showAllFacilities.size() == 0)
-    					{
-    						searchFacility.setShowFacilityMessage("No facilities available");
-    						request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-    						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
-    					}
-    					
-    					else
-    					{
-    						session.setAttribute("list_facilities", showAllFacilities);
-    						request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-    						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
-    					}
-    					
-    				}
-    				
-    		}
-    				
-    			}
+
+			}
+
+			// For showing search facilities
+
+			
+			if (action.equals("search_facility1")) {
+
+				session.removeAttribute("showAllFacilities");
+				ArrayList<Facility> facilityList = new ArrayList<Facility>();
+
+//				ArrayList<Facility> showAllFacilities = new ArrayList<Facility>();
+				DateUtils DateUtils = new DateUtils();
+				Facility facility = new Facility(); //facility model
+				SearchFacility searchFacility1 = new SearchFacility(); //search facility model
+				SearchFacilityError facilityError = new SearchFacilityError(); // search facility error message
+
+				searchFacility1.setSearchTime(request.getParameter("searchTime"));
+				searchFacility1.setSearchDate(request.getParameter("searchDate"));
+				searchFacility1.setFacilityType(request.getParameter("facilityType"));
+
+				String prepareTimeStamp = searchFacility1.getSearchDate() + " " + searchFacility1.getSearchTime();
+
+				facilityList = FacilityDAO.showFacilitiesCalling(searchFacility1.getFacilityType(), prepareTimeStamp);
+
+				FacilityErrorMessages facilityErrorMsg = new FacilityErrorMessages(); //facility error messages
+				SearchFacilityError searchErrorMsg = new SearchFacilityError(); 
+								
+				session.setAttribute("facilityErrorMsg", facilityErrorMsg);
+				session.setAttribute("searchFacility1", searchFacility1);
+				session.setAttribute("searchErrorMsg", searchErrorMsg);
+				
+				searchFacility1.validateSearchFacility(prepareTimeStamp);
+				
+				if(!searchErrorMsg.getErrorMsg().equals(""))
+				{
+					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+					request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
+				}
+				
+
+				else if(facilityList.size() == 0)
+				{
+						searchErrorMsg.setShowFacilityMessage("No facilities available");
+						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
+				}	
+					
+				else 
+				{
+						session.setAttribute("list_facilities", facilityList);
+						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
+				}
+
+		}
+
 			
 			// update profile
 			else if(action.equals("update_profile")) {

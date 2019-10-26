@@ -11,10 +11,6 @@
 <input name="errMsg"  value="<c:out value='${errorMsgs}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
     <div class="mainbar"><div class="submb"></div></div>
       
-           <p>The available facilities for the facility Type <b><c:out value="${searchFacility.facilityType}"/> </b>on date <b><c:out value="${searchFacility.searchDate}"/></b>
-      at <b><c:out value="${searchFacility.searchTime}" /></b>
-       </p>
-      
 	<table border="1" class="myTable"> 
 		<tr class="myTableRow"> 
 			<th class="myTableHead" style="padding-right: 30px; text-align: left">Facility Name</th> 

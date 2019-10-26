@@ -1,9 +1,9 @@
 package registration.model;
 
 import java.io.Serializable;
-import registration.data.FacilityDAO;
-import registration.data.UserDAO;
-import java.util.regex.Pattern; 
+//import registration.data.FacilityDAO;
+//import registration.data.UserDAO;
+//import java.util.regex.Pattern; 
 
 
 public class Facility implements Serializable{
@@ -16,99 +16,25 @@ public class Facility implements Serializable{
 	private String facilityInterval;
 	private String facilityDuration;
 	private String facilityVenue;
-
-	private String incrementDate[];
-	private String incrementDate1[];
-	private String incrementTime[];
-	private String searchDate;
-	private String searchTime;
-	private String startTimestamp;
-	private String EndTimestamp;
-	private String showFacilityMessage;
-	private String namesList[];
 	
 	public Facility() {}
 	
 	public Facility(String facilityName, String facilityType, String interval, String facilityDuration, String facilityVenue) {
-		this.facilityName = facilityName;
+		setFacilityType(facilityType);
+		setFacilityName(facilityName);
+		setFacilityInterval(interval);
+		setFacilityDuration(facilityDuration);
+		setFacilityVenue(facilityVenue);
+		
+		/*this.facilityName = facilityName;
 		this.facilityType = facilityType;
 		this.facilityInterval = interval;
 		this.facilityDuration = facilityDuration;
-		this.facilityVenue = facilityVenue;
+		this.facilityVenue = facilityVenue;*/
 	}
 	
 	
 	
-	private String interval_hours;
-	String message = "New facility added successfully";
-
-	public void setStartTimestamp(String startTimestamp) 
-	{
-		this.startTimestamp = startTimestamp;
-	}
-
-	public String getStartTimestamp()
-	{
-		return startTimestamp;
-	}
-
-	public void setShowFacilityMessage(String showFacilityMessage) 
-	{
-		this.showFacilityMessage = showFacilityMessage;
-		System.out.println(showFacilityMessage+"inside set method");
-	}
-
-	public String getShowFacilityMessage()
-	{
-		System.out.println(showFacilityMessage);
-		return showFacilityMessage;
-		
-	}
-
-	
-	public void setEndTimestamp(String EndTimestamp) 
-	{
-		this.EndTimestamp = EndTimestamp;
-	}
-
-	public String getEndTimestamp()
-	{
-		return EndTimestamp;
-	}
-
-
-		
-	public void setIncrementDate(String incrementDate[]) 
-	{
-		this.incrementDate = incrementDate;
-	}
-
-	public String[] getIncrementDate()
-	{
-		return incrementDate;
-	}
-
-	public void setIncrementDate1(String incrementDate1[]) 
-	{
-		this.incrementDate1 = incrementDate1;
-	}
-
-	public String[] getIncrementTime()
-	{
-		return incrementTime;
-	}
-
-	public void setIncrementTime(String incrementTime[]) 
-	{
-		this.incrementTime = incrementTime;
-	}
-
-	
-	public String[] getIncrementDate1()
-	{
-		return incrementDate1;
-	}
-
 	
 	public void setFacilityType(String facilityType) 
 	{
@@ -123,9 +49,9 @@ public class Facility implements Serializable{
 	/***********************************/
 	
 	
-	public void setFacilityName(String FacilityName) 
+	public void setFacilityName(String facilityName) 
 	{
-		this.facilityName = FacilityName;
+		this.facilityName = facilityName;
 	}
 
 	public String getFacilityName()
@@ -133,27 +59,11 @@ public class Facility implements Serializable{
 		return facilityName;
 	}
 
-	public void setinterval_hours(String interval) 
-	{
-		String intervalForDisplay = intervalCalc(interval);
-		this.interval_hours = intervalForDisplay;
-	}
-
-	public String getInterval_hours()
-	{
-		return interval_hours;
-	}
-
-	
 	public void setFacilityInterval(String interval) 
 	{
 		this.facilityInterval = interval;
-		if (interval.equals("0.5")) {
-			this.interval_hours = "30 minutes";
-		} else {
-			this.interval_hours = interval + " hours";
-		}
 	}
+
 
 	public String getFacilityInterval()
 	{
@@ -185,81 +95,119 @@ public class Facility implements Serializable{
 
 	
 	
-	public String incrementFacilityName(String updateFacilityName, int count)
+	
+	
+	public FacilityErrorMessages validateFacility()
 	{
-		//System.out.println("inside the increment" + updateFacilityName);
 		
-		String incrementFacilityName;
-		//str.matches(".*\\d.*")
-		String[] arrOfStr;
-		if(updateFacilityName.matches(".*\\d.*"))
+		FacilityErrorMessages facilityError = new FacilityErrorMessages();
+		
+		facilityError.setFacilityNameError(validateFacilityName(this.getFacilityName()));
+		facilityError.setFacilityTypeError(validateFacilityType(this.getFacilityType()));
+		facilityError.setFacilityIntervalError(validateFacilityInterval(this.getFacilityInterval()));
+		facilityError.setFacilityDurationError(validateFacilityDuration(this.getFacilityDuration()));
+		facilityError.setFacilityVenueError(validateFacilityVenue(this.getFacilityVenue()));
+		
+		return facilityError;
+	}
+
+	public String validateFacilityName(String facilityName)
+	{
+		String result = "";
+		
+		if(facilityName.equals(""))
 		{
-			System.out.println("inside the pattern if");
-	        arrOfStr = updateFacilityName.split("\\s");
-			System.out.println(updateFacilityName);
-	        int a = Integer.parseInt(arrOfStr[1]);
-	        a = a + 1;
-	        arrOfStr[1] = Integer.toString(a);
-	    
-	        incrementFacilityName = arrOfStr[0] + " " +  arrOfStr[1];    
-	        System.out.println("incrementFacilityName");
+			result = "Facility name field is empty";
+			
 		}
 		
 		else
 		{
-			incrementFacilityName = updateFacilityName + " " + "2";
+			result = "";
+			
 		}
 		
-		return incrementFacilityName;
+		return result;
 	}
 
-
-	public String intervalCalc(String interval)
+	public String validateFacilityType(String facilityType)
 	{
-	    if(interval.equals("0.5"))
-	    {
-	    	return "30 minutes";
-	    }
-	    
-	    else if(interval.equals("1"))
-	    {
-	    	return "1 hours";
-	    }
-	    
-	    else
-	    {
-	    	return "2 hours";
-	    }
-	    
-	    
-	}
-	
-	
-	
-	public void setSearchDate(String searchDate) 
-	{
-		this.searchDate = searchDate;
+		String result = "";
+		
+		if(facilityType.equals(""))
+		{
+			result = "Facility Type field is empty";
+			
+		}
+		
+		else
+		{
+			result = "";
+			
+		}
+		
+		return result;
 	}
 
-	public String getSearchDate()
+	public String validateFacilityInterval(String facilityInterval)
 	{
-		return searchDate;
+		String result = "";
+		
+		if(facilityInterval.equals(""))
+		{
+			result = "Facility interval field is empty";
+		
+		}
+		
+		else
+		{
+			result = "";
+		
+		}
+		
+		return result;
 	}
 
-	public void setSearchTime(String searchTime) 
+	public String validateFacilityDuration(String facilityDuration)
 	{
-		this.searchTime = searchTime;
+		String result = "";
+		
+		if(facilityDuration.equals(""))
+		{
+			result = "Facility duration field is empty";
+			
+		}
+		
+		else
+		{
+			result = "";
+			
+		}
+		
+		return result;
 	}
 
-	public String getSearchTime()
+	public String validateFacilityVenue(String facilityVenue)
 	{
-		return searchTime;
+		String result = "";
+		
+		if(facilityVenue.equals(""))
+		{
+			result = "Facility venue field is empty";
+			
+		}
+		
+		else
+		{
+			result = "";
+			
+		}
+
+		return result;
 	}
+
 	
-	
-	
-	
-	private boolean isTextAnInteger (String string) {
+/*	private boolean isTextAnInteger (String string) {
         boolean result;
 		try
         {
@@ -271,7 +219,7 @@ public class Facility implements Serializable{
             result=false;
         }
 		return result;
-	}	
+	}	*/
 
 	
 	

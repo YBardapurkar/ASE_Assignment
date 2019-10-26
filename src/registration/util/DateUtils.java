@@ -85,7 +85,34 @@ public static String[] listTimes1(int count) {
 		
 	}
 
+	public static Timestamp startTimeconvert(String startTimeStamp)
+	{
+		java.sql.Timestamp startTimeconversion = java.sql.Timestamp.valueOf(startTimeStamp);
+		
+		long time1 = startTimeconversion.getTime();
+		Timestamp t1 = new Timestamp(time1);
+		return t1;
+	}
 
+
+//timestamp for reserving
+
+	public static Timestamp reserveStartTime(String startTimeStamp, String interval)
+	{
+		java.sql.Timestamp startTimeStamp1 = java.sql.Timestamp.valueOf(startTimeStamp);
+		
+		long time1 = startTimeStamp1.getTime();
+		Timestamp t1 = new Timestamp(time1);
+		int count = Integer.parseInt(interval);
+		 
+		Calendar calendar = Calendar.getInstance();		    
+		calendar.setTime(t1);
+		        
+		calendar.add(Calendar.HOUR_OF_DAY, count);
+		Timestamp increaseTimeStamp = new Timestamp(calendar.getTime().getTime());
+		  return increaseTimeStamp;
+			     	
+	}
 	
 	public static boolean checkReservedFacilities(String prepareTimeStamp, String startTimestamp, String EndTimestamp)
 	{
@@ -146,6 +173,7 @@ public static String[] listTimes1(int count) {
 	
 public static boolean compareTimes(String prepareTimeStamp)
 {
+	System.out.println("value of timetsmap" + prepareTimeStamp);
 	String prepareTimeStamp1 = prepareTimeStamp + ".0";
 	String nowTimeStamp= nowTimeStamp();
 	
@@ -168,8 +196,36 @@ public static boolean compareTimes(String prepareTimeStamp)
 	}
 	
 }
+
 	
+public static boolean compareTimes1(String startTimeStamp)
+{
 	
+	String timecheck = startTimeStamp;
+	String nowTimeStamp= nowTimeStamp();
+	
+	java.sql.Timestamp timecheck1 = java.sql.Timestamp.valueOf(timecheck);
+	long time1 = timecheck1.getTime();
+	Timestamp t1 = new Timestamp(time1);
+	
+	java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(nowTimeStamp);
+	long time2 = timestamp2.getTime();
+	Timestamp t2 = new Timestamp(time2);
+	
+	if(t2.before(t1))
+	{
+		return true;
+	}
+	
+	else
+	{
+		return false;
+	}
+	
+}
+	
+
+
 	
 	
 	//	get current time in java.sql.Date format
