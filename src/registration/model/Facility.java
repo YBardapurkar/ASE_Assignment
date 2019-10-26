@@ -23,11 +23,6 @@ public class Facility implements Serializable{
 		this.facilityInterval = "";
 		this.facilityDuration = "";
 		this.facilityVenue = "";
-		this.searchDate = "";
-		this.searchTime = "";
-		this.startTimestamp = "";
-		this.EndTimestamp = "";
-		this.showFacilityMessage = "";						
 	}
 	
 	public Facility(String facilityName, String facilityType, String interval, String facilityDuration, String facilityVenue) {
@@ -230,68 +225,5 @@ public class Facility implements Serializable{
 	}	*/
 
 	
-	public FacilityMessage validateFacility() {
-		FacilityMessage facilityMessage = new FacilityMessage();
-		
-		facilityMessage.setFacilityNameError(validateFacilityName(this.getFacilityName()));
-		facilityMessage.setFacilityTypeError(validateFacilityType(this.getFacilityType()));
-		facilityMessage.setFacilityIntervalError(validateFacilityInterval(this.getFacilityInterval()));
-		facilityMessage.setFacilityDurationError(validateFacilityDuration(this.getFacilityDuration()));
-		facilityMessage.setFacilityVenueError(validateFacilityVenue(this.getFacilityVenue()));
-		
-		facilityMessage.setErrorMsg();
-		
-		return facilityMessage;
-	}
-	
-	public String validateFacilityName(String facilityName) {
-		String result = "";
-		if (facilityName.equals("")) {
-			result = "Facility Name is a required field";
-		} else {
-			result = "";
-		}
-		return result;
-	}
-	
-	public String validateFacilityType(String facilityType) {
-		String result = "";
-		if (facilityType.equals("")) {
-			result = "Facility Type is a required field";
-		} else {
-			result = "";
-		}
-		return result;
-	}
-	
-	public String validateFacilityInterval(String facilityInterval) {
-		String result = "";
-		if (facilityInterval.equals("")) {
-			result = "Facility Interval is a required field";
-		} else {
-			result = "";
-		}
-		return result;
-	}
-	
-	public String validateFacilityDuration(String facilityDuration) {
-		String result = "";
-		if (facilityDuration.equals("")) {
-			result = "Facility Duration is a required field";
-		} else {
-			result = "";
-		}
-		return result;
-	}
-	
-	public String validateFacilityVenue(String facilityVenue) {
-		String result = "";
-		if (facilityVenue.equals("")) {
-			result = "Facility Venue is a required field";
-		} else {
-			result = "";
-		}
-		return result;
-	}
 	
 }

@@ -24,7 +24,7 @@ import registration.model.Facility;
 
 import registration.model.FacilityErrorMessages;
 
-import registration.model.FacilityMessage;
+//import registration.model.FacilityMessage;
 
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
@@ -466,7 +466,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				String newFacilityName = newFacility.getFacilityName() + " " + (facilityTypeCount + 1);
 				newFacility.setFacilityName(newFacilityName);
 				
-				FacilityMessage facilityMessage = newFacility.validateFacility();
+				FacilityErrorMessages facilityMessage = newFacility.validateFacility();
 				session.setAttribute("errorMsg", facilityMessage);
 				FacilityDAO.insertNewFacility(newFacility);
 				

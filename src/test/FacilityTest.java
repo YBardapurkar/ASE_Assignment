@@ -67,7 +67,8 @@ public class FacilityTest {
 		
 		
 			}
-import registration.model.FacilityMessage;
+}
+/*import registration.model.FacilityMessage;
 import registration.model.User;
 import registration.model.UserError;
 
@@ -107,4 +108,4 @@ public class FacilityTest {
 	
 	
 
-}
+}*/
