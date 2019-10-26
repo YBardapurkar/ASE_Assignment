@@ -15,15 +15,17 @@ public class Facility implements Serializable{
 	private String facilityDuration;
 	private String facilityVenue;
 	
-	private String errorMsg="";
+	//private String errorMsg="";
 	
-	public Facility() {
-		this.facilityName = "";
+	public Facility() {}
+		/*this.facilityName = "";
 		this.facilityType = "";
 		this.facilityInterval = "";
 		this.facilityDuration = "";
 		this.facilityVenue = "";
-	}
+		
+		*/
+	
 	
 	public Facility(String facilityName, String facilityType, String interval, String facilityDuration, String facilityVenue) {
 		setFacilityType(facilityType);
