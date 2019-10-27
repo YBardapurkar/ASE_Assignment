@@ -47,17 +47,19 @@ public class MAR implements Serializable {
 		return date;
 	}
 	public void setDate(String date) {
-		String[] tempArray;
-		tempArray = date.split(" ");
-		this.date = tempArray[0];
+		this.date = date;
 	}
 	
-	public void  validateMar (MAR mar, MARError marErrorMsgs) {
+	public MARError validateMar (String currentTimestamp) {
+		MARError marErrorMsgs = new MARError();
+		
 		marErrorMsgs.setIdError(validateid(this.id));
 		marErrorMsgs.setDescriptionError(validateDescription(this.description));
 		marErrorMsgs.setReportedByError(validateReportedBy(this.reportedBy));
 		marErrorMsgs.setFacilityNameError(validateFacilityName(this.facilityName));
-		marErrorMsgs.setDateError(validateDate(this.date));
+		marErrorMsgs.setDateError(validateDate(this.date, currentTimestamp));
+		
+		return marErrorMsgs;
 	}
 	
 	
@@ -164,12 +166,11 @@ public class MAR implements Serializable {
 		return result;
 	}
 	
-	private String validateDate(String date)
+	private String validateDate(String date, String currentTimestamp)
 	{
 		//setDate(DateUtils.nowTimeStamp());
-		String expecteddate = DateUtils.nowTimeStamp().split(" ")[0];
 		String result;
-		if(expecteddate.equals(date))
+		if(currentTimestamp.equals(date))
 		{
 			result = "";
 		}

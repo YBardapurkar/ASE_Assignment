@@ -136,7 +136,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 	
 				newMar = getMarParam(request);
 				newMar.setReportedBy(currentUser.getUsername());
-				newMar.validateMar(newMar, marErrorMsgs);
+				newMar.validateMar(newMar.getDate());
 	
 				if (!marErrorMsgs.getDescriptionError().equals("")) {
 					//			if error messages
