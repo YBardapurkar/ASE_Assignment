@@ -308,7 +308,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 					session.setAttribute("current_user", currentUser);
 			}
 			
-else if(action.equals("search_facility")) {
+else if(action.equals("search_facility")) { 
     			
     			session.removeAttribute("searchFacility1");
     			

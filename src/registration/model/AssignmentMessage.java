@@ -1,9 +1,10 @@
 package registration.model;
 
 public class AssignmentMessage {
-	private String assignedToMessage = "";
-	private String urgencyMessage = "";
-	
+	private String assignedToMessage;
+	private String urgencyMessage;
+	private String estimateMessage;
+	private String marIdMessage;
 	String successMessage;
 	String errorMessage;
 	
@@ -20,6 +21,18 @@ public class AssignmentMessage {
 		this.urgencyMessage = urgencyMessage;
 	}
 	
+	public String getMarIdMessage() {
+		return marIdMessage;
+	}
+	public void setMarIdMessage(String marIdMessage) {
+		this.marIdMessage = marIdMessage;
+	}
+	public String getEstimateMessage() {
+		return estimateMessage;
+	}
+	public void setEstimateMessage(String estimateMessage) {
+		this.estimateMessage = estimateMessage;
+	}
 	public String getSuccessMessage() {
 		return successMessage;
 	}
@@ -34,7 +47,7 @@ public class AssignmentMessage {
 	}
 
 	public void setErrorMessage() {
-		if (!this.urgencyMessage.isEmpty() || !this.assignedToMessage.isEmpty()) {
+		if (!this.urgencyMessage.isEmpty() || !this.assignedToMessage.isEmpty() || !this.marIdMessage.isEmpty() || !this.estimateMessage.isEmpty()) {
 			this.errorMessage = "Please correct the following errors";
 		} else {
 			this.errorMessage = "";
