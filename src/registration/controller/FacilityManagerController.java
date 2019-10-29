@@ -216,7 +216,8 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 //			Assign a repairer to a mar
 			if (action.equals("assign_repairer")) {
 				Assignment assignment = getAssignmentParam(request);
-				assignment.validateAssignment("assign_mar", assignmentMessage);
+				assignment.setAssignedDate(DateUtils.now());
+				assignment.validateAssignment("assign_mar", assignmentMessage, assignment.getAssignedDate());
 
 				if (!assignmentMessage.getErrorMessage().equals("")) {
 //					error messages
@@ -236,7 +237,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 					} else {
 //						can assign
 						AssignmentDAO.assignRepairer(assignment);
-						assignmentMessage.setSuccessMessage("MAR Assigned");
+						session.setAttribute("success_message", "MAR Assigned");
 					}
 
 //					save in session

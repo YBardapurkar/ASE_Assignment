@@ -22,7 +22,7 @@ Repairer
 
 <tr>
 <td> Urgency (*): </td>
-<td><select name ="urgency" value = "<c:out value='${mar.urgency}'/>">
+<td><select name ="urgency" value = "<c:out value='${assign.urgency}'/>">
 	<option> Minor </option>
 	<option> Major </option>
 	<option> Unusable </option>

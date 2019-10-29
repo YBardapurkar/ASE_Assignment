@@ -167,7 +167,7 @@ public class MAR implements Serializable {
 	}
 	
 	private String validateDate(String date, String currentTimestamp)
-	{
+	{ 
 		//setDate(DateUtils.nowTimeStamp());
 		String result;
 		if(currentTimestamp.equals(date))

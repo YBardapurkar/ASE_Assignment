@@ -17,7 +17,7 @@ public class AssignmentDAO {
 	
 //	get count of mars assigned to a repairer on a given date
 	public static int getAssignmentCountByDay(String username, Date date)
-	{
+	{ 
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 		int result = 0;

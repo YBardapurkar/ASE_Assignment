@@ -1,13 +1,23 @@
 package registration.model;
 
 public class AssignmentMessage {
+	
+	private String assignmentIdMessage;
 	private String assignedToMessage;
 	private String urgencyMessage;
 	private String estimateMessage;
 	private String marIdMessage;
-	String successMessage;
-	String errorMessage;
+	private String dateErrorMessage;
+//	String successMessage;
+	private String errorMessage;
 	
+	
+	public String getAssignmentIdMessage() {
+		return assignmentIdMessage;
+	}
+	public void setAssignmentIdMessage(String assignmentIdMessage) {
+		this.assignmentIdMessage = assignmentIdMessage;
+	}
 	public String getAssignedToMessage() {
 		return assignedToMessage;
 	}
@@ -33,24 +43,29 @@ public class AssignmentMessage {
 	public void setEstimateMessage(String estimateMessage) {
 		this.estimateMessage = estimateMessage;
 	}
-	public String getSuccessMessage() {
-		return successMessage;
-	}
-	public void setSuccessMessage(String successMessage) {
-		this.successMessage = successMessage;
-	}
+//	public String getSuccessMessage() {
+//		return successMessage;
+//	}
+//	public void setSuccessMessage(String successMessage) {
+//		this.successMessage = successMessage;
+//	}
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-
+	public String getDateErrorMessage() {
+		return dateErrorMessage;
+	}
+	public void setDateErrorMessage(String dateError) {
+		this.dateErrorMessage = dateError;
+	}
 	public void setErrorMessage() {
-		if (!this.urgencyMessage.isEmpty() || !this.assignedToMessage.isEmpty() || !this.marIdMessage.isEmpty() || !this.estimateMessage.isEmpty()) {
-			this.errorMessage = "Please correct the following errors";
+		if (!this.assignmentIdMessage.isEmpty() || !this.urgencyMessage.isEmpty() || !this.assignedToMessage.isEmpty() || !this.marIdMessage.isEmpty() || !this.estimateMessage.isEmpty() || !this.dateErrorMessage.isEmpty()) {
+			this.setErrorMessage("Please correct the following errors");
 		} else {
-			this.errorMessage = "";
+			this.setErrorMessage("");
 		}
 	}
 }
