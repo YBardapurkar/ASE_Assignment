@@ -104,4 +104,35 @@ public static void assignRepairer(Assignment assignment) {
 			System.out.println(e.getMessage());
 		}
 	}
+
+
+
+	public static Assignment getAssignedToByMarId(int marId) {
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		Assignment assign = new Assignment();
+		LocalDateTime now = LocalDateTime.now();
+		Timestamp sqlNow = Timestamp.valueOf(now);
+
+		String queryString = "SELECT * FROM assignment where mar_id='" + marId + "'";
+		try{
+			stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(queryString); 
+			while (result.next()) 
+			{
+
+				assign.setAssignedTo(result.getString("assigned_to"));
+				assign.setAssignmentId(Integer.parseInt(result.getString("assignment_id")));
+				assign.setUrgency(result.getString("urgency"));
+				assign.setEstimate(Integer.parseInt(result.getString("estimate_repair")));
+				assign.setAssignedDate(DateUtils.getSqlDate(result.getString("assigned_date")));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return assign;
+	}
+
 }
+

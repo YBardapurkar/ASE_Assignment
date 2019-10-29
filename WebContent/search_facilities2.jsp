@@ -11,7 +11,7 @@
 	<form action="<c:out value="${current_role}"></c:out>" method="post">
 	
 	<h1>Search Available Facilities</h1>
-<input name="showFacilityMessage" value="<c:out value='${searchFacility.getShowFacilityMessage()}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30">
+<input name="showFacilityMessage" value="<c:out value='${searchErrorMsg.showFacilityMessage}'/>" type="text" style ="background-color: white; color: blue; border: none; width: 200px; size: 50"  disabled="disabled" maxlength="30">
 	
 <table>	
 	    <td> Facility Type: </td>
@@ -24,7 +24,7 @@
 	<tr>
     <td>Date</td>
     <td><select name ="searchDate" value = "<c:out value='${searchFacility1.searchDate}' />">
-       <c:forEach items="${searchFacility1.incrementDate1}" var="item" varStatus="status">
+       <c:forEach items="${incrementDate}" var="item" varStatus="status">
     <option><c:out value="${item}" /></option>
     </c:forEach>
  	</select> </td>
@@ -36,7 +36,7 @@
    <tr>
    <td>Time</td>
   		<td><select name ="searchTime" value = "<c:out value='${searchFacility1.searchTime}' />">
-       <c:forEach items="${searchFacility1.incrementTime}" var="item" varStatus="status">
+       <c:forEach items="${incrementTime}" var="item" varStatus="status">
     <option><c:out value="${item}" /></option>
     </c:forEach>
  	</select> </td>

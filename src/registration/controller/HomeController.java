@@ -46,6 +46,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
 		session.removeAttribute("UPDATEUSER");     // profile update object
+		session.removeAttribute("success_message");
 		
 		session.setAttribute("current_role", "home");
     	
@@ -111,6 +112,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		session.removeAttribute("list_mar");		// list of MAR objects
 		session.removeAttribute("errorMsgs");		// single MAR message object
 		session.removeAttribute("UPDATEUSER");      // profile update object
+		session.removeAttribute("success_message");
 		
 		String action = request.getParameter("action");
 		session.setAttribute("current_role", "home");
@@ -134,7 +136,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 	
 				newMar = getMarParam(request);
 				newMar.setReportedBy(currentUser.getUsername());
-				newMar.validateMar(action, newMar, marErrorMsgs);
+				newMar.validateMar(newMar.getDate());
 	
 				if (!marErrorMsgs.getDescriptionError().equals("")) {
 					//			if error messages
@@ -146,10 +148,11 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 				}
 				else {
 					//			if no error messages
-					MARDAO.insertmar(newMar);//Insert into database		
+					MARDAO.insertmar(newMar);//Insert into database	
+					
 					session.setAttribute("mar", newMar);
 					MARError errorMsgs = new MARError();
-					errorMsgs.setMessage("MAR has been created!!");
+					session.setAttribute("success_message", "MAR has been created!!");
 					session.setAttribute("errorMsgs", errorMsgs);
 					request.getRequestDispatcher("/menu_student.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
@@ -202,7 +205,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		mar.setFacilityName(request.getParameter("facility_name"));
 		mar.setDescription(request.getParameter("description"));
 		mar.setDate(DateUtils.nowTimeStamp());
-		mar.setUrgency(request.getParameter("urgency"));		
+		//mar.setUrgency(request.getParameter("urgency"));		
 		return mar;
 	}
 	

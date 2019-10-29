@@ -1,41 +1,40 @@
 package registration.model;
 
 public class MARError {
+	private String idError;
+	private String FacilityNameError;
 	private String descriptionError;
-	private String errorMsg;
-	private String message;
+	private String ReportedByError;
+	private String dateError;
 	
-	public MARError() {
-		this.descriptionError = "";
+	public String getIdError() {
+		return idError;
 	}
-	
+	public void setIdError(String idError) {
+		this.idError = idError;
+	}
+	public String getFacilityNameError() {
+		return FacilityNameError;
+	}
+	public void setFacilityNameError(String facilityNameError) {
+		FacilityNameError = facilityNameError;
+	}
 	public String getDescriptionError() {
 		return descriptionError;
 	}
-
 	public void setDescriptionError(String descriptionError) {
 		this.descriptionError = descriptionError;
 	}
-
-	public String getErrorMsg() {
-
-		return errorMsg;
-
+	public String getReportedByError() {
+		return ReportedByError;
 	}
-
-	public void setErrorMsg() {
-		if (!descriptionError.equals("")) {
-			this.errorMsg = "Please correct the following errors";
-		}
+	public void setReportedByError(String reportedByError) {
+		ReportedByError = reportedByError;
 	}
-
-	public String getMessage() {
-		return message;
+	public String getDateError() {
+		return dateError;
 	}
-
-	public void setMessage(String message) {
-		this.message = message;
+	public void setDateError(String dateError) {
+		this.dateError = dateError;
 	}
-	
-	
 }

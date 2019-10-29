@@ -17,7 +17,7 @@
 	<tr>
 	    <td> Facility Type: </td>
   		<td>
-  		<select name ="facilityType" value = "<c:out value='${newFacility.facilityType}' />">
+  		<select name ="facilityType" value = "<c:out value='${facility.facilityType}' />">
 			<c:forEach items="${list_facility_types}" var="item" varStatus="status">
 			<option value="${status.index}"><c:out value="${item.facilityType}" > </c:out></option>
 			</c:forEach>

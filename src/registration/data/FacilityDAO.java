@@ -100,7 +100,7 @@ public class FacilityDAO {
 	}
 	
 	
-		public static ArrayList<Facility>  showFacilities (String query) {
+public static ArrayList<Facility>  showFacilities (String query) {
 	ArrayList<Facility> facilityList = new ArrayList<Facility>();
 	
 	System.out.println(query);
@@ -116,8 +116,8 @@ public class FacilityDAO {
 		while (result.next()) {
 			Facility facility = new Facility();
 			
-			facility.setStartTimestamp(result.getString("start_timestamp"));
-			facility.setEndTimestamp(result.getString("end_timestamp"));
+//			facility.setStartTimestamp(result.getString("start_timestamp"));
+//			facility.setEndTimestamp(result.getString("end_timestamp"));
 			facility.setFacilityName(result.getString("facility_name"));
 			facility.setFacilityVenue(result.getString("venue"));
 			facility.setFacilityDuration(result.getString("duration"));
@@ -131,12 +131,21 @@ public class FacilityDAO {
 }
 
 		
-		public static ArrayList<Facility> showFacilitiesCalling (String facilityType) 
+		public static ArrayList<Facility> showFacilitiesCalling (String facilityType, String timestamp) 
 		{
-			return showFacilities("SELECT reservation.start_timestamp, reservation.end_timestamp, facility.facility_type, facility.facility_interval, facility.duration, facility.venue, facility.facility_name from facility "
+			/*return showFacilities("SELECT reservation.start_timestamp, reservation.end_timestamp, facility.facility_type, facility.facility_interval, facility.duration, facility.venue, facility.facility_name from facility "
 					+ "inner join mar on mar.facility_name = facility.facility_name "
-					+ "INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"+facilityType+"'");
+					+ "INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"+facilityType+"'"
+							+ " and reservation.start_timestamp <= '" + timestamp + "' and reservation.end_timestamp >= '" + timestamp + "'");*/
 	
+			
+			return showFacilities("select * from facility where facility_type = '"+facilityType+"'" 
+					+ " and facility_name not in (SELECT facility.facility_name from facility inner join" 
+					+ " mar on mar.facility_name = facility.facility_name" 
+					+ " INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"+facilityType+"'" 
+					+ " and reservation.start_timestamp <= '" + timestamp + "'" 
+					+ " and reservation.end_timestamp >= '" + timestamp + "')");
+
 		}
 }
 
