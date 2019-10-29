@@ -376,6 +376,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 			if (action.equals("search_facility1")) {
 
+				
 				session.removeAttribute("showAllFacilities");
 				ArrayList<Facility> facilityList = new ArrayList<Facility>();
 
@@ -383,7 +384,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				DateUtils DateUtils = new DateUtils();
 				Facility facility = new Facility(); //facility model
 				SearchFacility searchFacility1 = new SearchFacility(); //search facility model
-				SearchFacilityError facilityError = new SearchFacilityError(); // search facility error message
+				SearchFacilityError searchFacilityError = new SearchFacilityError(); // search facility error message
 
 				searchFacility1.setSearchTime(request.getParameter("searchTime"));
 				searchFacility1.setSearchDate(request.getParameter("searchDate"));
@@ -394,6 +395,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				facilityList = FacilityDAO.showFacilitiesCalling(searchFacility1.getFacilityType(), prepareTimeStamp);
 
 				FacilityErrorMessages facilityErrorMsg = new FacilityErrorMessages(); //facility error messages
+
 				SearchFacilityError searchErrorMsg = new SearchFacilityError();
 
 				session.setAttribute("facilityErrorMsg", facilityErrorMsg);
@@ -403,7 +405,9 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				searchFacility1.validateSearchFacility(prepareTimeStamp);
 
 				if(!searchErrorMsg.getErrorMsg().equals(""))
+
 				{
+					session.setAttribute("searchFacilityError", searchFacilityError);
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
 				}
@@ -411,7 +415,8 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 				else if(facilityList.size() == 0)
 				{
-						searchErrorMsg.setShowFacilityMessage("No facilities available");
+						session.setAttribute("searchFacilityError", searchFacilityError);
+						searchFacilityError.setShowFacilityMessage("No facilities available");
 						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
 				}

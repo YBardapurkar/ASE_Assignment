@@ -173,9 +173,11 @@ public static String[] listTimes1(int count) {
 	
 public static boolean compareTimes(String prepareTimeStamp)
 {
-	System.out.println("value of timetsmap" + prepareTimeStamp);
+
 	String prepareTimeStamp1 = prepareTimeStamp + ".0";
 	String nowTimeStamp= nowTimeStamp();
+	
+	
 	
 	java.sql.Timestamp timestamp1 = java.sql.Timestamp.valueOf(prepareTimeStamp1);
 	long time1 = timestamp1.getTime();
@@ -187,15 +189,18 @@ public static boolean compareTimes(String prepareTimeStamp)
 	
 	if(t1.before(t2))
 	{
-		return true;
+		return true; 
+		
 	}
 	
 	else
 	{
-		return false;
+		return true;
 	}
+}	
+
 	
-}
+
 
 	
 public static boolean compareTimes1(String startTimeStamp)

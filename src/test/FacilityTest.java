@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
+import registration.data.FacilityDAO;
 import registration.model.Facility;
 import registration.model.FacilityErrorMessages;
 
@@ -61,7 +62,7 @@ public class FacilityTest {
 		assertEquals(facilityDurationError, facilityErrorMsg.getFacilityDurationError());
 		assertEquals(facilityVenueError, facilityErrorMsg.getFacilityVenueError());
 		
-		
+		//System.out.println(FacilityDAO.getFacilitiesByFacilityType(facilityType).size());	
 //		facilityErrorMsg.setErrorMsg();
 //		assertEquals(errorMsg, facilityErrorMsg.getErrorMsg());
 		

@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="C:/apache-tomcat-9.0.0.M11/lib/servlet-api.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="C:/Users/kiranmai/Documents/ASE/JUnitParams-1.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/apache-tomcat-9.0.0.M11/selenium-server-standalone-3.12.0 (1).jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

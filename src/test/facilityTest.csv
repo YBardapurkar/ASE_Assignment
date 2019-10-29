@@ -21,3 +21,4 @@
 21,,,0.5,,,Facility name field is empty,Facility Type field is empty,,Facility duration field is empty,Facility venue field is empty
 22,,TT1,,,,,Facility Type field is empty,Facility interval field is empty,Facility duration field is empty,Facility venue field is empty
 23,Table Tennis,,,,,Facility name field is empty,,Facility interval field is empty,Facility duration field is empty,Facility venue field is empty
+24,TT,TT1,0.5,Same day,Indoor,,Facility Type does not exist,,,
