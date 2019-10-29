@@ -373,7 +373,6 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 			// For showing search facilities
 
-
 			if (action.equals("search_facility1")) {
 
 				
@@ -405,7 +404,6 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				searchFacility1.validateSearchFacility(prepareTimeStamp);
 
 				if(!searchErrorMsg.getErrorMsg().equals(""))
-
 				{
 					session.setAttribute("searchFacilityError", searchFacilityError);
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);

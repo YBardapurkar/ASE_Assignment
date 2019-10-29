@@ -5,19 +5,19 @@ import java.sql.Date;
 public class Assignment {
 	public static final String ACTION_ASSIGN_MAR = "assign_mar";
 	
-	//private int assignmentId;
+	private int assignmentId;
 	private int marId;
 	private String assignedTo;
-	//private Date assignedDate;
+	private Date assignedDate;
 	private String urgency;
 	private int estimate;
 	 
-	/*public int getAssignmentId() {
+	public int getAssignmentId() {
 		return assignmentId;
 	}
 	public void setAssignmentId(int assignmentId) {
 		this.assignmentId = assignmentId;
-	}*/
+	}
 	public int getMarId() {
 		return marId;
 	}
@@ -30,12 +30,12 @@ public class Assignment {
 	public void setAssignedTo(String assignedTo) {
 		this.assignedTo = assignedTo;
 	}
-	/*public Date getAssignedDate() {
+	public Date getAssignedDate() {
 		return assignedDate;
 	}
 	public void setAssignedDate(Date assignedDate) {
 		this.assignedDate = assignedDate;
-	}*/
+	}
 	public String getUrgency() {
 		return urgency;
 	}
