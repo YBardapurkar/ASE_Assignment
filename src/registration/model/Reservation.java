@@ -45,12 +45,12 @@ public class Reservation {
 		this.endTime = endTime;
 	}
 	
-	public void validateReservation(String action, ReservationMessage reservationMessage, String startTime) {
-		reservationMessage.setStartTimeMessage(validateStartTime(action, this.getStartTime(), startTime));
+	public void validateReservation(ReservationMessage reservationMessage, String startTime) {
+		reservationMessage.setStartTimeMessage(validateStartTime(this.getStartTime(), startTime));
 		reservationMessage.setErrorMessage();
 	}
 	
-	public String validateStartTime(String action, Timestamp startDate , String startTime) {
+	public String validateStartTime(Timestamp startDate , String startTime) {
 		String result;
 		if(startTime.length() != 16 ) {
 			result = "Start time should be in mm/dd/yyyy hh:ss AM/PM format";	

@@ -173,7 +173,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				if (validateStartTime.length() == 16) {
 					newReservation = getReservationParam(request); // if it is a valid time stamp
 				}
-				newReservation.validateReservation(action, reservationMessage, validateStartTime);
+				newReservation.validateReservation(reservationMessage, validateStartTime);
 
 				// TODO this method
 
@@ -237,7 +237,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				if (validateStartTime.length() == 16) {
 					newReservation = getReservationParam(request); // if it is a valid time stamp
 				}
-				newReservation.validateReservation(action, reservationMessage, validateStartTime);
+				newReservation.validateReservation(reservationMessage, validateStartTime);
 				System.out.println("I am in reserved_selected_facility");
 				// Need to verify this
 				String username = currentUser.getUsername();
@@ -349,8 +349,10 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		// reservation.setFacilityName(request.getParameter("facility_name"));
 		// reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time1")));
 		datetimeLocal = request.getParameter("start_time1");
+		
+		System.out.println("Hi Ajinkya ........... datetimeLocal is "+ datetimeLocal);
 		datetimeLocal = datetimeLocal.concat(":00");
-		System.out.println(Timestamp.valueOf(datetimeLocal.replace("T", " ")));
+		//System.out.println(Timestamp.valueOf(datetimeLocal.replace("T", " ")));
 		time_substring = datetimeLocal.substring(11, 13);
 		start_time = Integer.parseInt(time_substring);
 		if (start_time < 10) {
@@ -358,7 +360,9 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			start_time = Integer.parseInt(startTime);
 		}
 		// start_time = Integer.parseInt(startTime);
-		System.out.println("Time_substring " + time_substring);
+		//System.out.println("Time_substring " + time_substring);
+		
+		System.out.println("Final 1 .... "+Timestamp.valueOf(datetimeLocal.replace("T", " ")));
 		reservation.setStartTime(Timestamp.valueOf(datetimeLocal.replace("T", " ")));
 
 		// Logic for multiple day reservation if <=10 then single day otherwise multiple
