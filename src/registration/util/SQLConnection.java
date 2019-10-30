@@ -12,9 +12,9 @@ public class SQLConnection {
 	public static SQLConnection single_instance = null;
 	public SQLConnection() {
 		DB_DRIVER = "com.mysql.jdbc.Driver";
-		DB_CONNECTION = System.getenv("DB_CONNECTION");
-		DB_USER  = System.getenv("DB_USERNAME");
-		DB_PASSWORD = System.getenv("DB_PASSWORD");
+		DB_CONNECTION  = "jdbc:mysql://localhost:3306/macrepairsys?autoReconnect=true&useSSL=false";
+		DB_USER  = "root";
+		DB_PASSWORD = "1234567890";
 	}
 	public static synchronized SQLConnection getInstance() {
         if (single_instance == null)

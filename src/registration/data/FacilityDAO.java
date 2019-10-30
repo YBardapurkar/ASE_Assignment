@@ -26,23 +26,29 @@ public class FacilityDAO {
 	}
 	
 	public static ArrayList<Facility> getFacilitiesByFacilityType(String facilityType) {
+		
 		return ReturnMatchingFacilitysList("WHERE facility_type = '" + facilityType + "' ");
 	}
 
 	private static ArrayList<Facility> ReturnMatchingFacilitysList (String queryWhere) {
 		String querySelect = "SELECT * from facility ";
 		String queryOrder = "order by length(facility_name),facility_name;";
+	//	System.out.println(querySelect + queryWhere + queryOrder);
 		
 		ArrayList<Facility> facilityList = new ArrayList<Facility>();
 
 		Statement stmt = null;
 		Connection conn = SQLConnection.getDBConnection();
 		try {
+			
 			stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(querySelect + queryWhere + queryOrder);
+		
+			
 			
 			while (result.next()) {
 				
+				System.out.println(result.getString("facility_type"));
 				Facility newFacility = new Facility(); 
 				newFacility.setFacilityName(result.getString("facility_name"));
 				newFacility.setFacilityType(result.getString("facility_type"));
@@ -51,6 +57,8 @@ public class FacilityDAO {
 				newFacility.setFacilityVenue(result.getString("venue"));
 				
 				facilityList.add(newFacility);
+				
+				
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

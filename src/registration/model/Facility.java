@@ -1,7 +1,9 @@
 package registration.model;
 
 import java.io.Serializable;
-//import registration.data.FacilityDAO;
+import java.util.ArrayList;
+
+import registration.data.FacilityDAO;
 //import registration.data.UserDAO;
 //import java.util.regex.Pattern; 
 
@@ -114,8 +116,11 @@ public class Facility implements Serializable{
 		facilityError.setFacilityVenueError(validateFacilityVenue(this.getFacilityVenue()));
 		
 		return facilityError;
+		
+		
 	}
 
+	
 	public String validateFacilityName(String facilityName)
 	{
 		String result = "";
@@ -144,10 +149,16 @@ public class Facility implements Serializable{
 			result = "Facility Type field is empty";
 			
 		}
+	
+		else if(FacilityDAO.getFacilitiesByFacilityType(facilityType).size() > 0)
+		{
+			
+			result = "";
+		}
 		
 		else
 		{
-			result = "";
+			result = "Facility Type does not exist";
 			
 		}
 		
