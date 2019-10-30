@@ -51,7 +51,7 @@ public class Assignment {
 	
 	public void validateAssignment (String action, AssignmentMessage assignmentMessage, Date currentDate) {
 	//	if (action.equals(ACTION_ASSIGN_MAR)) { 
-		
+		 
 			assignmentMessage.setAssignmentIdMessage(validateAssignmentId(action, this.getAssignmentId()));
 			assignmentMessage.setUrgencyMessage(validateUrgency(action, this.getUrgency()));
 			assignmentMessage.setAssignedToMessage(validateAssignedTo(action, this.getAssignedTo()));

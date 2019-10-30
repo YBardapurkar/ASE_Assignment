@@ -28,7 +28,7 @@ public class AssignmentTest {
 		assignment = new Assignment();
 		assignmentMessage = new AssignmentMessage();
 		dateUtils = EasyMock.strictMock(DateUtils.class);
-	}
+	}  
 
 	@Test
 	@FileParameters("src/test/AssignmentTestCases.csv")

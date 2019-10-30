@@ -31,7 +31,7 @@ public class FacilityTest {
 	public void testFacility(int testCaseNumber, String facilityType, String facilityName, String facilityInterval, String facilityDuration, String facilityVenue,
 			 String facilityNameError, String facilityTypeError, String facilityIntervalError, String facilityDurationError, String facilityVenueError) 
 
-	{
+	{ 
 		facility = new Facility();
 		facility = new Facility(facilityName, facilityType, facilityInterval, facilityDuration, facilityVenue);
 		String ten = "";
