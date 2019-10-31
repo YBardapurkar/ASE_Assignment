@@ -1,6 +1,6 @@
-1,Badminton courts,2019-10-26,21:00:00,,,,
-2,Conference rooms,2019-10-26,21:00:00,,,,
-3,Outdoor Basketball Courts,2019-10-26,21:00:00,,,,
-4,Badminton courts,2019-10-26,,Time field is empty,,,Please correct the following errors
-5,Badminton courts,,21:00:00,,date field is empty,,Please correct the following errors
-6,Badminton courts,2019-10-26,current,,,,
+1,Badminton courts,2019-10-30,22:00:00,2019-10-30 21:00:00,,,,,
+2,Badminton courts,2019-10-30,,2019-10-30 21:00:00,,,,Time field is empty,Please correct the following errors
+3,Badminton courts,,22:00:00,2019-10-30 21:00:00,,date field is empty,,,Please correct the following errors
+4,,2019-10-30,22:00:00,2019-10-30 21:00:00,,,Facility Type field is empty,,Please correct the following errors
+5,Badminton courts,2019-10-30,20:00:00,2019-10-30 21:00:00,Selected time is less than the current time,,,,Please correct the following errors
+6,BC,2019-10-30,22:00:00,2019-10-30 21:00:00,,,Facility Type does not exist,,Please correct the following errors

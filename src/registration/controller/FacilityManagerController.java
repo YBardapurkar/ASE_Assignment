@@ -392,6 +392,8 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 				String prepareTimeStamp = searchFacility1.getSearchDate() + " " + searchFacility1.getSearchTime();
 
+				System.out.println("length of the prepared time "+prepareTimeStamp.length());
+				
 				facilityList = FacilityDAO.showFacilitiesCalling(searchFacility1.getFacilityType(), prepareTimeStamp);
 
 				FacilityErrorMessages facilityErrorMsg = new FacilityErrorMessages(); //facility error messages
@@ -402,11 +404,14 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				session.setAttribute("searchFacility1", searchFacility1);
 				session.setAttribute("searchErrorMsg", searchErrorMsg);
 
-				searchFacility1.validateSearchFacility(prepareTimeStamp);
+				searchErrorMsg = searchFacility1.validateSearchFacility(prepareTimeStamp ,DateUtils.nowTimeStamp());
+				
+				
 
+				
 				if(!searchErrorMsg.getErrorMsg().equals(""))
 				{
-					session.setAttribute("searchFacilityError", searchFacilityError);
+					session.setAttribute("searchErrorMsg", searchErrorMsg);
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
 				}
@@ -414,7 +419,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 				else if(facilityList.size() == 0)
 				{
-						session.setAttribute("searchFacilityError", searchFacilityError);
+						session.setAttribute("searchErrorMsg", searchErrorMsg);
 						searchFacilityError.setShowFacilityMessage("No facilities available");
 						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
