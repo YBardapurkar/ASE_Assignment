@@ -2,6 +2,7 @@ package registration.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import registration.util.DropdownUtils;
 
 import registration.data.FacilityDAO;
 //import registration.data.UserDAO;
@@ -140,9 +141,18 @@ public class Facility implements Serializable{
 		return result;
 	}
 
+	
+	
 	public String validateFacilityType(String facilityType)
 	{
+		//System.out.println("value of the facility "+facilityType);
+		//FacilityDAO.getFacilitiesByFacilityType(facilityType);
 		String result = "";
+		
+		//ArrayList<Facility> facilitiesList = new ArrayList<Facility>();
+		
+		ArrayList<Facility> facilitiesList;
+		facilitiesList = DropdownUtils.getFacilityTypeDropdown();
 		
 		if(facilityType.equals(""))
 		{
@@ -150,15 +160,21 @@ public class Facility implements Serializable{
 			
 		}
 	
-		else if(FacilityDAO.getFacilitiesByFacilityType(facilityType).size() > 0)
+		
+		
+		
+		else if(facilitiesList.stream().anyMatch(listOfFacilities -> listOfFacilities.getFacilityType().contains(facilityType)))
 		{
 			
 			result = "";
 		}
 		
+		
 		else
 		{
 			result = "Facility Type does not exist";
+			
+			//result = "";
 			
 		}
 		
