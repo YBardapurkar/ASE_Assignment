@@ -171,11 +171,11 @@ public static String[] listTimes1(int count) {
 		
 	}
 	
-public static boolean compareTimes(String prepareTimeStamp)
+public static boolean compareTimes(String prepareTimeStamp, String nowTimeStamp)
 {
 
 	String prepareTimeStamp1 = prepareTimeStamp + ".0";
-	String nowTimeStamp= nowTimeStamp();
+	//String nowTimeStamp= nowTimeStamp();
 	
 	
 	
@@ -183,19 +183,23 @@ public static boolean compareTimes(String prepareTimeStamp)
 	long time1 = timestamp1.getTime();
 	Timestamp t1 = new Timestamp(time1);
 	
+	
 	java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(nowTimeStamp);
 	long time2 = timestamp2.getTime();
 	Timestamp t2 = new Timestamp(time2);
 	
+//	System.out.println(t1 + " " + t2 + "in comparetimes");
+	
 	if(t1.before(t2))
 	{
+		
 		return true; 
 		
 	}
 	
 	else
 	{
-		return true;
+		return false;
 	}
 }	
 
@@ -203,11 +207,11 @@ public static boolean compareTimes(String prepareTimeStamp)
 
 
 	
-public static boolean compareTimes1(String startTimeStamp)
+public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 {
 	
 	String timecheck = startTimeStamp;
-	String nowTimeStamp= nowTimeStamp();
+	//String nowTimeStamp= nowTimeStamp();
 	
 	java.sql.Timestamp timecheck1 = java.sql.Timestamp.valueOf(timecheck);
 	long time1 = timecheck1.getTime();
@@ -251,6 +255,7 @@ public static boolean compareTimes1(String startTimeStamp)
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		return timestamp.toString();
 	}
+		
 	
 //	get next available start time
 	public static Date getStartDate(int duration) {

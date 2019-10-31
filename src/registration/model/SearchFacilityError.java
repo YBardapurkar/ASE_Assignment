@@ -5,26 +5,32 @@ public class SearchFacilityError {
 	private String showFacilityMessage;
 	private String facilityTypeError;
 	private String searchDateError;
-	//private String searchTimeError;
+	private String searchTimeError;
 	private String errorMsg;
 	
 	public SearchFacilityError() {
-		this.facilityTypeError = "";
-		this.searchDateError = "";
-		this.showFacilityMessage = "";
+	//	this.facilityTypeError = "";
+	//	this.searchDateError = "";
+	//	this.showFacilityMessage = "";
 		this.errorMsg = "";
+	//	this.searchTimeError="";
 		
 	}
 	
 	
 	
-	/*public String getSearchTimeError() {
+	public String getSearchTimeError() {
+		
 		return searchTimeError;
+		
+		
 	}
 
 	public void setSearchTimeError(String searchTimeError) {
+		
 		this.searchTimeError = searchTimeError;
-	}*/
+	
+	}
 	
 	public String getErrorMsg() {
 
@@ -34,12 +40,14 @@ public class SearchFacilityError {
 	public void setErrorMsg(String errorMsg) {
 		
 		this.errorMsg = errorMsg;
-			}
+		
+	}
 	
 	public void setErrorMsg() {
 		
-		if (!showFacilityMessage.equals("") || !facilityTypeError.equals("") || !searchDateError.equals(""))
+		if (!showFacilityMessage.equals("") || !facilityTypeError.equals("") || !searchDateError.equals("") || !searchTimeError.equals("")) 
 			this.setErrorMsg("Please correct the following errors");
+	
 	}
 
 	
