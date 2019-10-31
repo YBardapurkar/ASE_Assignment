@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h2>Update Reservation</h2>
-<form action="repairer" method="post" >
+<form action="repairer" method="post" novalidate>
 <table>
 
 <!-- Ajinkya -->

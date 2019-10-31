@@ -3,8 +3,8 @@ package registration.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Iterator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -94,7 +94,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			}
 
 			// SHOW search facilities
-			
+
 			// Open profile
 			else if (request.getParameter("profile") != null) {
 				User user = UserDAO.getUserByUsername(currentUser.getUsername());
@@ -170,10 +170,11 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			if (action.equals("reserve_facility")) {
 				ReservationMessage reservationMessage = new ReservationMessage();
 				String validateStartTime = request.getParameter("start_time1");
-				if (validateStartTime.length() == 16) {
-					newReservation = getReservationParam(request); // if it is a valid time stamp
-				}
-				newReservation.validateReservation(reservationMessage, validateStartTime);
+//				if (validateStartTime.length() == 16) {
+				newReservation = getReservationParam(request); // if it is a valid time stamp
+//				}
+				int interval = Integer.parseInt(request.getParameter("interval"));
+				newReservation.validateReservation(reservationMessage, validateStartTime, interval);
 
 				// TODO this method
 
@@ -196,7 +197,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					// TODO : Create Dao Layer Ajinkya
 
 					String username = currentUser.getUsername();
-					
+
 					ArrayList<MAR> listMAR = new ArrayList<MAR>();
 					listMAR = MARDAO.getMARByAssignedRepairer(username);
 					session.setAttribute("list_mar", listMAR);
@@ -214,11 +215,9 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-					if (assignment.getAssignedTo().equals(currentUser.getUsername())) {
-						request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya
-																												// check
-																												// this
-					}
+					reservationMessage.setMessage("Reservation modified Successfully");
+					session.setAttribute("errorMsgs", reservationMessage);
+					request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya
 
 					// request.getRequestDispatcher("/menu_repairer.jsp").include(request,
 					// response);
@@ -237,32 +236,50 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				if (validateStartTime.length() == 16) {
 					newReservation = getReservationParam(request); // if it is a valid time stamp
 				}
-				newReservation.validateReservation(reservationMessage, validateStartTime);
-				System.out.println("I am in reserved_selected_facility");
-				// Need to verify this
-				String username = currentUser.getUsername();
-				ArrayList<MAR> listMAR = new ArrayList<MAR>();
-				listMAR = MARDAO.getMARByAssignedRepairer(username);
-				session.setAttribute("list_mar", listMAR);
+				int interval = Integer.parseInt(request.getParameter("interval"));
+				newReservation.validateReservation(reservationMessage, validateStartTime, interval);
 
-				int id = Integer.parseInt(request.getParameter("mar_id"));
-				MAR mar = MARDAO.getMARByID(id);
-				newReservation.setMarId(id);
-				Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
-				ReservationDAO.updateReservation(newReservation);
-				session.setAttribute("reservation", newReservation);
-				session.setAttribute("assign", assignment);
-				session.setAttribute("mar", mar);
+				if (!reservationMessage.getErrorMessage().equals("")) {
+					// if error messages
+					session.setAttribute("reservation", newReservation);
+					session.setAttribute("errorMsgs", reservationMessage);
+					request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+					int id = Integer.parseInt(request.getParameter("mar_id"));
+					MAR mar = MARDAO.getMARByID(id);
+					newReservation.setMarId(id);
+					session.setAttribute("mar", mar);
+					session.setAttribute("reservation", newReservation);
 
-				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-				request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-				if (assignment.getAssignedTo().equals(currentUser.getUsername())) {
+					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
+					request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response);
+				} else {
+//					no error
+					System.out.println("I am in reserved_selected_facility");
+					// Need to verify this
+					String username = currentUser.getUsername();
+					ArrayList<MAR> listMAR = new ArrayList<MAR>();
+					listMAR = MARDAO.getMARByAssignedRepairer(username);
+					session.setAttribute("list_mar", listMAR);
+
+					int id = Integer.parseInt(request.getParameter("mar_id"));
+					MAR mar = MARDAO.getMARByID(id);
+					newReservation.setMarId(id);
+					Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
+					ReservationDAO.updateReservation(newReservation);
+					session.setAttribute("reservation", newReservation);
+					session.setAttribute("assign", assignment);
+					session.setAttribute("mar", mar);
+
 					reservationMessage.setMessage("Reservation modified Successfully");
 					session.setAttribute("errorMsgs", reservationMessage);
+					
+					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
 					request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya
-																											// check
-																											// this
-				}
+				} // check
+					// this
+//				}
 
 				// request.getRequestDispatcher("/menu_repairer.jsp").include(request,
 				// response);
@@ -274,9 +291,9 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
 				ReservationMessage reserve = new ReservationMessage();
 				int marId = Integer.parseInt(request.getParameter("mar_id"));
-				
+
 				int reservationId = ReservationDAO.getReservationIDByMarID(marId);
-				
+
 				MAR mar = MARDAO.getMARByID(marId);
 				newReservation.setMarId(marId);
 
@@ -333,95 +350,42 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		// singe day repair
 		int interval = 0;
 		String datetimeLocal = "";
-		String time_substring = "";
-		String end_time_String = "";
-		int start_time = 0;
-		int end_time = 0;
-		String startTime = "";
-		// multiday repair
-		String day_substring = "";
-		int start_date = 0;
-		int end_date = 0;
-		String start_day_String = "";
-		String end_day_String = "";
 
 		reservation.setMarId(Integer.parseInt(request.getParameter("mar_id")));
 		// reservation.setFacilityName(request.getParameter("facility_name"));
 		// reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time1")));
 		datetimeLocal = request.getParameter("start_time1");
-		
-		System.out.println("Hi Ajinkya ........... datetimeLocal is "+ datetimeLocal);
-		datetimeLocal = datetimeLocal.concat(":00");
-		//System.out.println(Timestamp.valueOf(datetimeLocal.replace("T", " ")));
-		time_substring = datetimeLocal.substring(11, 13);
-		start_time = Integer.parseInt(time_substring);
-		if (start_time < 10) {
-			startTime = "0" + start_time; // Append 0
-			start_time = Integer.parseInt(startTime);
-		}
-		// start_time = Integer.parseInt(startTime);
-		//System.out.println("Time_substring " + time_substring);
-		
-		System.out.println("Final 1 .... "+Timestamp.valueOf(datetimeLocal.replace("T", " ")));
-		reservation.setStartTime(Timestamp.valueOf(datetimeLocal.replace("T", " ")));
 
-		// Logic for multiple day reservation if <=10 then single day otherwise multiple
-		// day directly start from next day for those
+		Timestamp st = DateUtils.getTimestampFromDateTime(datetimeLocal);
+		Calendar cal = Calendar.getInstance();
+		System.out.println("before" + st.getTime());
+		cal.setTimeInMillis(st.getTime());
 		interval = Integer.parseInt(request.getParameter("interval"));
-		System.out.println("interval" + interval);
 
-		if (interval <= 10) {
-			// Single day repair
-			end_time = start_time + interval;
-			System.out.println("endtime is " + end_time);
-			end_time_String = datetimeLocal.substring(0, 11) + end_time + datetimeLocal.substring(13); // create a new
-																										// end time
-																										// string
-			System.out.println("end_time_String" + end_time_String);
-			// reservation.setStartTime(Timestamp.valueOf(datetimeLocal.replace("T"," ")));
-			reservation.setEndTime(Timestamp.valueOf(end_time_String.replace("T", " ")));
+		System.out.println(cal.getTime());
+
+		if (interval < 18) {
+			// SingleDay
+			cal.add(Calendar.HOUR_OF_DAY, interval);
 		} else {
-			// Mulitday repair
-			day_substring = datetimeLocal.substring(8, 10);
-			start_date = Integer.parseInt(day_substring);
-			String startDate = "";
-			start_date = start_date + 1; // Start from next day
-			if (start_date < 10) {
-				startDate = "0" + start_date; // Append 0
-				// start_date = Integer.parseInt(startDate);
-			}
-			start_day_String = datetimeLocal.substring(0, 8) + startDate + datetimeLocal.substring(10); // create a new
-																										// start time
-																										// string
-			System.out.println("start_day_String" + start_day_String);
-			reservation.setStartTime(Timestamp.valueOf(start_day_String.replace("T", " ")));
+			// multi-day
+//			cal.add(Calendar.DAY_OF_MONTH, interval/18);
+			cal.set(Calendar.HOUR_OF_DAY, 6);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			st = new Timestamp(cal.getTime().getTime());
 
-			// end date logic
-			String endDate = "";
-			int addDay = 0;
-
-			if (interval == 18) {
-				addDay = 1;
-			} else {
-				addDay = 2;
-			}
-
-			end_date = start_date + addDay;
-			if (end_date < 10) {
-				endDate = "0" + end_date; // Append 0
-				// start_date = Integer.parseInt(startDate);
-			} else {
-				endDate = Integer.toString(end_date);
-
-			}
-			end_day_String = datetimeLocal.substring(0, 8) + endDate + datetimeLocal.substring(10); // create a new
-																									// start time string
-			System.out.println("end_day_String" + end_day_String);
-			reservation.setEndTime(Timestamp.valueOf(end_day_String.replace("T", " ")));
-
+			cal.add(Calendar.DAY_OF_MONTH, interval / 18);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			cal.add(Calendar.MILLISECOND, -1);
 		}
-		// reservation.setEndTime(Timestamp.valueOf(datetimeLocal_udpated.replace("T","
-		// "))); //need to change this
+		reservation.setStartTime(st);
+		Timestamp et = new Timestamp(cal.getTime().getTime());
+		reservation.setEndTime(et);
 		return reservation;
 	}
 

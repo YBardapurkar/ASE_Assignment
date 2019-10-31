@@ -312,4 +312,28 @@ public static boolean compareTimes1(String startTimeStamp)
 		
 		return new Date(c.getTimeInMillis());
 	}
+	
+	
+	//Reapirer DateTime Local to timestamp
+	
+	public static Timestamp getTimestampFromDateTime(String datetimeLocal) {		
+		datetimeLocal = datetimeLocal.concat(":00");
+		Timestamp st = Timestamp.valueOf(datetimeLocal.replace("T", " "));
+		Calendar cal  = Calendar.getInstance();
+		cal.setTimeInMillis(st.getTime());
+		return new Timestamp(cal.getTime().getTime());		
+	}
+	
+	//Check if timestamp is today
+	//TimeDate Today
+	public static boolean isTimeStampToday(String timestamp) {
+		Calendar cal = Calendar.getInstance();
+		Timestamp now = new Timestamp(cal.getTime().getTime());
+		
+		if(timestamp.contains(now.toString().split(" ")[0])) {
+			return true;
+		}
+		
+		return false;
+	}
 }
