@@ -141,7 +141,6 @@ public class Assignment {
 		String result;	
 		
 		ArrayList<String[]> estimateDropDown = DropdownUtils.getRepairTimeDropdown(duration);
-		System.out.println(estimateDropDown+"hddkf.kdfdlws");
 		if(estimateDropDown.stream().anyMatch(estimateArray -> Integer.parseInt(estimateArray[1]) == estimate))
 		{
 				
