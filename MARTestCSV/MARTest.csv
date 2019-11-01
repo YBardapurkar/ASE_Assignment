@@ -1,0 +1,29 @@
+,Description is mandatory field,Minor,,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,,Urgency is mandatory field,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Major,,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Unusable,,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Default,Urgency data is not valid,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,-1,Id cannot be 0 or negative,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,0,Id cannot be 0 or negative,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,,Assigned to cannot be empty,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi_-,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathiwduih-_hitLi,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathidfyuyhjbhkjhkkkjhkj,Assigned to can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,1,Assigned to can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,2.5,Assigned to can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi@,Assigned to can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,psd_s,Assigned to can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,,Reported By cannot be empty,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi_-,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathiwduih-_hitLi,,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathidfyuyhjbhkjhkkkjhkj,Reported By can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,1,Reported By can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,2.5,Reported By can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi@,Reported By can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,psd_s,Reported By can only be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,IVBC 1,,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi,,,Facility name cannot be empty,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi,,MR1,Facility name is not a qualified name,current,,message
+description,,Minor,,1,,Pranathi,,Pranathi,,IVBC 1,,10/22/2019,Date not correct,message
+description,,Minor,,1,,Pranathi,,Pranathi,,IVBC 1,,current,,message

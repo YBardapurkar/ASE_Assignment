@@ -186,4 +186,26 @@ public class UserDAO {
 	public static ArrayList<User> searchUsersByRole(String role) {  
 		return ReturnMatchingUsersList(" SELECT * from registration where role like '%" + role + "%'");
 	}
+	
+	public static ArrayList<String> getRoles()
+	{
+		ArrayList<String> roles = new ArrayList<String>();
+		String query = "SELECT role FROM macrepairsys.registration GROUP BY role";
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		try {
+			stmt = conn.createStatement();
+			ResultSet userList = stmt.executeQuery(query);
+			while(userList.next())
+			{
+				roles.add(userList.getString("role"));
+			}
+		}catch (SQLException e) {
+			System.out.println("this is the error message "+e.getMessage());
+		}
+		
+		return roles;
+		
+	}
+	
 }

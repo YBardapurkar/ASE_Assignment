@@ -1,6 +1,11 @@
 package registration.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import registration.data.UserDAO;
+import registration.model.*;
 
 public class Assignment {
 	public static final String ACTION_ASSIGN_MAR = "assign_mar";
@@ -99,19 +104,36 @@ public class Assignment {
 		String result;
 //		assign mar
 	//	if(action.equals(ACTION_ASSIGN_MAR)) {
-			if (urgency.equals("")) {
-				result="Urgency is a required field";
-			}
-			 else {
-				result = "";
-			}
+		
+
+		
+		if(urgency.equals(""))
+		{
+			result = "Urgency is a required field";
+		}
+		else if(urgency.equals("Minor")|| urgency.equals("Major") || urgency.equals("Unusable"))
+		{
+			result= "";
+		}
+		else
+		{
+			result = "Urgency data is not valid";
+		}
+		
+	return result;
+		
+		
+		
+		
+		
+		
+
 			
 	//	} 
 //		default
 		/*else {
 			result = "action not recognized";
 		}*/
-		return result;
 	}
 	
 	private String validateEstimate(String action, int estimate) {
@@ -151,14 +173,20 @@ public class Assignment {
 	}
 	
 	private String validateAssignedTo(String action, String assignedTo) {
-		String result;
+		String result = "";
+		ArrayList<User> repairers = UserDAO.getUsersByRole("Repairer");
 //		assign mar
 	//	if(action.equals(ACTION_ASSIGN_MAR)) {
 			if (assignedTo.equals("")) {
 				result="Select a Repairer to assign";
 			}
-			 else {
+			
+			else if(repairers.stream().anyMatch(listOfRepairers -> listOfRepairers.getUsername().contains(assignedTo)))
+			{
 				result = "";
+			}
+			 else {
+				result = "Repairer name is not in list of repairers";
 			}
 	//	} 
 //		default
