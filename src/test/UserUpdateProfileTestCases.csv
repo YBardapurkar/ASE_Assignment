@@ -15,10 +15,10 @@
 15,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,12345,sfdsd@uta.edu,street,City,Texas,12345,,,,,Phone number must contain exactly 10 digits,,,,,,,Please correct the following errors,x
 16,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,abcd123456,sfdsd@uta.edu,street,City,Texas,12345,,,,,Phone number must contain exactly 10 digits,,,,,,,Please correct the following errors,x
 17,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,,street,City,Texas,12345,,,,,,Email is a required field,,,,,,Please correct the following errors,x
-18,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,s@.edu,street,City,Texas,12345,,,,,,Email address must be between 7 and 45 characters long,,,,,,Please correct the following errors,x
+18,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,s@.edu,street,City,Texas,12345,,,,,,Email cannot be null or can't be less than 7 or 45 characters,,,,,,Please correct the following errors,x
 19,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,abc.uta.edu,street,City,Texas,12345,,,,,,Email address needs to contain @,,,,,,Please correct the following errors,x
 20,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,abc@mavs.uta,street,City,Texas,12345,,,,,,Invalid domain name,,,,,,Please correct the following errors,x
-21,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,@b.edu,street,City,Texas,12345,,,,,,Email address must be between 7 and 45 characters long,,,,,,Please correct the following errors,x
+21,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,@b.edu,street,City,Texas,12345,,,,,,Email cannot be null or can't be less than 7 or 45 characters,,,,,,Please correct the following errors,x
 22,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,,City,Texas,12345,,,,,,,Street is a required field,,,,,Please correct the following errors,x
 23,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,st,City,Texas,12345,,,,,,,Street should be between 3 and 100 characters long,,,,,Please correct the following errors,x
 24,update_profile,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,street,,Texas,12345,,,,,,,,City is a required field,,,,Please correct the following errors,x

@@ -1,4 +1,5 @@
 1,edit_user,,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,street,City,Texas,12345,Username is a required field,,,,,,,,,,,Please correct the following errors,no username
+1,Invalid,yash,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,street,City,Texas,12345,,,,,,,,,,,,Action not recognized,no username
 2,edit_user,aa,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,street,City,Texas,12345,username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,,,,,,,,,,,Please correct the following errors,username less than 6 characters
 3,edit_user,aaaa@a,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,street,City,Texas,12345,username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,,,,,,,,,,,Please correct the following errors,username with @
 4,edit_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,street,City,Texas,12345,User does not exist,,,,,,,,,,,Please correct the following errors,username exists in database
@@ -15,10 +16,10 @@
 15,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,12345,sfdsd@uta.edu,street,City,Texas,12345,,,,,Phone number must contain exactly 10 digits,,,,,,,Please correct the following errors,x
 16,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,abcd123456,sfdsd@uta.edu,street,City,Texas,12345,,,,,Phone number must contain exactly 10 digits,,,,,,,Please correct the following errors,x
 17,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,,street,City,Texas,12345,,,,,,Email is a required field,,,,,,Please correct the following errors,x
-18,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,s@.edu,street,City,Texas,12345,,,,,,Email address must be between 7 and 45 characters long,,,,,,Please correct the following errors,x
+18,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,s@.edu,street,City,Texas,12345,,,,,,Email cannot be null or can't be less than 7 or 45 characters,,,,,,Please correct the following errors,x
 19,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,abc.uta.edu,street,City,Texas,12345,,,,,,Email address needs to contain @,,,,,,Please correct the following errors,x
 20,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,abc@mavs.uta,street,City,Texas,12345,,,,,,Invalid domain name,,,,,,Please correct the following errors,x
-21,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,@b.edu,street,City,Texas,12345,,,,,,Email address must be between 7 and 45 characters long,,,,,,Please correct the following errors,x
+21,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,@b.edu,street,City,Texas,12345,,,,,,Email cannot be null or can't be less than 7 or 45 characters,,,,,,Please correct the following errors,x
 22,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,,City,Texas,12345,,,,,,,Street is a required field,,,,,Please correct the following errors,x
 23,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,st,City,Texas,12345,,,,,,,Street should be between 3 and 100 characters long,,,,,Please correct the following errors,x
 24,edit_user,aaaaaa,Yash@1,Yash,Bardapurkar,1111111111,sfdsd@uta.edu,street,,Texas,12345,,,,,,,,City is a required field,,,,Please correct the following errors,x

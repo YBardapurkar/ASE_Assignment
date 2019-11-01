@@ -7,7 +7,7 @@
 <title>MAR details</title>
 </head>
 <body>
-<input name="errMsg"  value="<c:out value='${errorMsgs.message}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
+<input name="errMsg"  value="<c:out value='${success_message}'/>" type="text"  style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
 <h2>MAR details</h2>
 
 <table>
