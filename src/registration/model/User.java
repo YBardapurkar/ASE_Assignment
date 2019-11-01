@@ -2,7 +2,6 @@ package registration.model;
 
 import java.io.Serializable;
 
-import registration.data.FacilityDAO;
 import registration.data.UserDAO;
 import registration.util.DropdownUtils;
 
@@ -182,6 +181,13 @@ public class User implements Serializable{
 			userErrorMsgs.setZipcodeError(validateZipcode(this.getZipcode()));
 			
 			userErrorMsgs.setErrorMsg();
+			
+			if (this.getRole().equals("Facility Manager") && !UserDAO.getUsersByRole(this.getRole()).isEmpty()) {
+				userErrorMsgs.setErrorMsg("Cannot create more than one Facility Manager");
+			} else if (this.getRole().equals("Admin") && !UserDAO.getUsersByRole(this.getRole()).isEmpty()) {
+				userErrorMsgs.setErrorMsg("Cannot create more than one Admin");
+			}
+			
 		} else if (action.equals(ACTION_LOGIN)) {
 			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
 			userErrorMsgs.setPasswordError(validatePassword(action, this.getPassword()));
@@ -218,6 +224,16 @@ public class User implements Serializable{
 			userErrorMsgs.setRoleError(validateRole(this.getRole()));
 			
 			userErrorMsgs.setErrorMsg();
+			
+			if (userErrorMsgs.getUsernameError().isEmpty() && 
+					UserDAO.getUserByUsername(this.getUsername()).getRole().equals("Admin")) {
+				userErrorMsgs.setErrorMsg("Cannot change role of Admin");
+			} else if (this.getRole().equals("Admin")) {
+				userErrorMsgs.setErrorMsg("Cannot change role to Admin");
+			} else if (this.getRole().equals("Facility Manager") && !UserDAO.getUsersByRole(this.getRole()).isEmpty()) {
+				userErrorMsgs.setErrorMsg("Cannot create more than one Facility Manager");
+			}
+				
 		} else {
 
 			/*

@@ -159,6 +159,7 @@ public class UserTest {
 		assertEquals(state, user.getState());
 		assertEquals(zipcode, user.getZipcode());
 		assertEquals(errorMessage, userError.getErrorMsg());
+		
 		assertEquals(usernameMessage, userError.getUsernameError());
 		assertEquals(passwordMessage, userError.getPasswordError());
 		assertEquals(firstnameMessage, userError.getFirstnameError());

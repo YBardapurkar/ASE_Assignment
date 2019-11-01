@@ -1,5 +1,8 @@
-1,invalid_action,aaaaaa,Student,,,,Action not recognized,Invalid Action
-2,change_role,,Student,Username is a required field,,,Please correct the following errors,Empty Username
-3,change_role,aaaaaa,,,Role is a required field,,Please correct the following errors,Empty Password
-4,change_role,aaaaaa,InvalidRole,,Role is invalid,,Please correct the following errors,Invalid Role
-5,change_role,aaaaaa,Student,,,,,All valid
+1,invalid_action,ssssss,Repairer,,,,Action not recognized,Invalid Action
+2,change_role,,Repairer,Username is a required field,,,Please correct the following errors,Empty Username
+3,change_role,ssssss,,,Role is a required field,,Please correct the following errors,Empty Password
+4,change_role,ssssss,InvalidRole,,Role is invalid,,Please correct the following errors,Invalid Role
+5,change_role,ssssss,Facility Manager,,,,Cannot create more than one Facility Manager,change role to facility manager
+6,change_role,ssssss,Admin,,,,Cannot change role to Admin,change role to admin
+7,change_role,aaaaaa,Student,,,,Cannot change role of Admin,change admin's role
+8,change_role,ssssss,Student,,,,,All valid

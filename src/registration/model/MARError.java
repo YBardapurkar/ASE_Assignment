@@ -20,12 +20,10 @@ public class MARError {
 		FacilityNameError = facilityNameError;
 	}
 	public String getDescriptionError() {
-		System.out.println(descriptionError);
 		return descriptionError;
 	}
 	public void setDescriptionError(String descriptionError) {
 		this.descriptionError = descriptionError;
-		System.out.println(this.descriptionError);
 	}
 	public String getReportedByError() {
 		return ReportedByError;

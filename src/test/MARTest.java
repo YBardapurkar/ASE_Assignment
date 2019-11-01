@@ -30,7 +30,7 @@ public class MARTest {
 
 	@Test
 	@FileParameters("src/test/MARTest.csv")
-	public void validateMartest(String description,String expectedMessagedescription, 
+	public void testMAR(String description,String expectedMessagedescription, 
 			String urgency,String expectedMessageUrgency ,int id,String expectedMessageId, 
 			String assignedTo, String expectedMessageAssignedto, String reportedBy, String expectedMessagereportedBy, 
 			String facilityName, String expectedMessagefacilityName, String date, String expectedMessageDate, 
@@ -47,16 +47,17 @@ public class MARTest {
 		
 		marError = mar.validateMar(dateUtils.nowTimeStamp());
 		 
-		 assertEquals(description,mar.getDescription());
-		 assertEquals(id,mar.getId());
-		 assertEquals(reportedBy,mar.getReportedBy());
-		 assertEquals(facilityName,mar.getFacilityName());
-		 assertEquals(date, mar.getDate());
+		assertEquals(description,mar.getDescription());
+		assertEquals(id,mar.getId());
+		assertEquals(reportedBy,mar.getReportedBy());
+		assertEquals(facilityName,mar.getFacilityName());
+		assertEquals(date, mar.getDate());
 		 
-		 assertEquals(expectedMessagedescription, marError.getDescriptionError());
-		 assertEquals(expectedMessageId, marError.getIdError());
-		 assertEquals(expectedMessagereportedBy, marError.getReportedByError());
-		 assertEquals(expectedMessagefacilityName, marError.getFacilityNameError()); 
-		 assertEquals(expectedMessageDate, marError.getDateError());
+		assertEquals(expectedMessagedescription, marError.getDescriptionError());
+		assertEquals(expectedMessageId, marError.getIdError());
+		assertEquals(expectedMessagereportedBy, marError.getReportedByError());
+		assertEquals(expectedMessagefacilityName, marError.getFacilityNameError()); 
+		
+		assertEquals(expectedMessageDate, marError.getDateError());
 	}
 }

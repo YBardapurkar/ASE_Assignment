@@ -41,3 +41,5 @@
 42,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,sfdsd@uta.gov,street,City,Texas,12345,,,,,,,,,,,,,,,Valid email extensions
 43,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,sfdsd@uta.edu,street,City,Texas,12345,,,,,,,,,,,,,,,Valid email extensions
 44,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Student,1001731650,1111111111,sfdsd@uta.mil,street,City,Texas,12345,,,,,,,,,,,,,,,Valid email extensions
+45,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Admin,1001731650,1111111111,sfdsd@uta.mil,street,City,Texas,12345,,,,,,,,,,,,,,Cannot create more than one Admin,duplicate admin
+46,save_user,aaaaaa_unique,Yash@1,Yash,Bardapurkar,Facility Manager,1001731650,1111111111,sfdsd@uta.mil,street,City,Texas,12345,,,,,,,,,,,,,,Cannot create more than one Facility Manager,duplicate facility manager
