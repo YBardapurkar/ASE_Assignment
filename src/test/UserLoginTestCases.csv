@@ -4,3 +4,4 @@
 4,login,aaaa@a,Yash@1,username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,,,Please correct the following errors,Invalid Username
 5,login,aaaaaa,,,Password is a required field,,Please correct the following errors,Empty Password
 6,login,aaaaaa,Yash@1,,,,,All valid
+7,,aaaaaa,Yash@1,,,,Action not recognized,Invalid Action

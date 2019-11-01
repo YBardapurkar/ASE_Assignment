@@ -1,14 +1,12 @@
-1,invalid_action,1,1,rrrrrr,Minor,1,2019-10-27,,,,,,,2019-10-27,,Invalid Action
-2,assign_mar,-1,1,rrrrrr,Minor,1,2019-10-27,assignmentId cannot be 0 or negative,,,,,Please correct the following errors,2019-10-27,,Invalid AssignmentId
-3,assign_mar,0,1,rrrrrr,Minor,1,2019-10-27,assignmentId cannot be 0 or negative,,,,,Please correct the following errors,2019-10-27,,Invalid AssignmentId
-4,assign_mar,1,-1,rrrrrr,Minor,1,2019-10-27,,MarId cannot be 0 or negative,,,,Please correct the following errors,2019-10-27,,Invalid MarId
-5,assign_mar,1,0,rrrrrr,Minor,1,2019-10-27,,MarId cannot be 0 or negative,,,,Please correct the following errors,2019-10-27,,Invalid MarId
-6,assign_mar,1,1,,Minor,1,2019-10-27,,,Select a Repairer to assign,,,Please correct the following errors,2019-10-27,,Empty Repairer Name
-6,assign_mar,1,1,aaaaaaa,Minor,1,2019-10-27,,,Repairer name is not in list of repairers,,,Please correct the following errors,2019-10-27,,Empty Repairer Name
-7,assign_mar,1,1,rrrrrr,,1,2019-10-27,,,,Urgency is a required field,,Please correct the following errors,2019-10-27,,Empty Urgency
-8,assign_mar,1,1,rrrrrr,Minor,-1,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate
-8,assign_mar,1,1,rrrrrr,Major,-1,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate
-8,assign_mar,1,1,rrrrrr,Unusable,-1,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate
-8,assign_mar,1,1,rrrrrr,Default,-1,2019-10-27,,,,Urgency data is not valid,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate
-9,assign_mar,1,1,rrrrrr,Minor,0,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate
-10,assign_mar,1,1,rrrrrr,Minor,1,2019-10-26,,,,,,Please correct the following errors,2019-10-27,Date not correct,Invalid Date
+1,invalid_action,1,1,rrrrrr,Minor,1,2019-10-27,,,,,,,2019-10-27,,Invalid Action,Same Day
+2,assign_mar,-1,1,rrrrrr,Minor,1,2019-10-27,assignmentId cannot be 0 or negative,,,,,Please correct the following errors,2019-10-27,,Invalid AssignmentId,Same Day
+3,assign_mar,0,1,rrrrrr,Minor,1,2019-10-27,assignmentId cannot be 0 or negative,,,,,Please correct the following errors,2019-10-27,,Invalid AssignmentId,7-Day
+4,assign_mar,1,-1,rrrrrr,Minor,1,2019-10-27,,MarId cannot be 0 or negative,,,,Please correct the following errors,2019-10-27,,Invalid MarId,Same Day 
+5,assign_mar,1,0,rrrrrr,Minor,1,2019-10-27,,MarId cannot be 0 or negative,,,,Please correct the following errors,2019-10-27,,Invalid MarId,Same Day
+6,assign_mar,1,1,,Minor,1,2019-10-27,,,Select a Repairer to assign,,,Please correct the following errors,2019-10-27,,Empty Repairer Name,Same Day
+6,assign_mar,1,1,aaaaaaa,Minor,1,2019-10-27,,,Repairer name is not in list of repairers,,,Please correct the following errors,2019-10-27,,Empty Repairer Name,Same Day
+7,assign_mar,1,1,rrrrrr,,1,2019-10-27,,,,Urgency is a required field,,Please correct the following errors,2019-10-27,,Empty Urgency,Same Day
+8,assign_mar,1,1,rrrrrr,Minor,-1,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate,Same Day
+8,assign_mar,1,1,rrrrrr,Major,-1,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate,Same Day
+8,assign_mar,1,1,rrrrrr,Unusable,-1,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate,Same Day
+8,assign_mar,1,1,rrrrrr,Default,-1,2019-10-27,,,,Urgency data is not valid,Estimate cannot be 0 or 

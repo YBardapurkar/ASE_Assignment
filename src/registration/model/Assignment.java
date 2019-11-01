@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import registration.data.UserDAO;
+import registration.util.DropdownUtils;
+
 import registration.model.*;
 
 public class Assignment {
@@ -54,13 +56,12 @@ public class Assignment {
 		this.estimate = estimate;
 	}
 	
-	public void validateAssignment (String action, AssignmentMessage assignmentMessage, Date currentDate) {
+	public void validateAssignment (String action, AssignmentMessage assignmentMessage, Date currentDate, String duration) {
 	//	if (action.equals(ACTION_ASSIGN_MAR)) { 
-		 
 			assignmentMessage.setAssignmentIdMessage(validateAssignmentId(action, this.getAssignmentId()));
 			assignmentMessage.setUrgencyMessage(validateUrgency(action, this.getUrgency()));
 			assignmentMessage.setAssignedToMessage(validateAssignedTo(action, this.getAssignedTo()));
-			assignmentMessage.setEstimateMessage(validateEstimate(action, this.getEstimate()));
+			assignmentMessage.setEstimateMessage(validateEstimate(action,duration, this.getEstimate()));
 			assignmentMessage.setMarIdMessage(validateMarId(action, this.getMarId()));
 			assignmentMessage.setDateErrorMessage(validateDate(this.assignedDate, currentDate));
 			assignmentMessage.setErrorMessage();
@@ -136,16 +137,22 @@ public class Assignment {
 		}*/
 	}
 	
-	private String validateEstimate(String action, int estimate) {
-		String result;
-//		assign mar
-	//	if(action.equals(ACTION_ASSIGN_MAR)) {
-			if (estimate <= 0) {
-				result="Estimate cannot be 0 or negative";
-			}
-			 else {
-				result = "";
-			}
+	private String validateEstimate(String action,String duration, int estimate) {
+		String result;	
+		
+		ArrayList<String[]> estimateDropDown = DropdownUtils.getRepairTimeDropdown(duration);
+		System.out.println(estimateDropDown+"hddkf.kdfdlws");
+		if(estimateDropDown.stream().anyMatch(estimateArray -> Integer.parseInt(estimateArray[1]) == estimate))
+		{
+				
+			result = "";
+			
+		}
+		else
+		{
+			result="Estimate is not valid";
+		}
+//		
 	//	} 
 //		default
 		/*else {

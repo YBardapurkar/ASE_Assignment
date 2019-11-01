@@ -33,7 +33,7 @@ public class AssignmentTest {
 	@Test
 	@FileParameters("src/test/AssignmentTestCases.csv")
 	public void testAssignment(int testCaseNumber, String action, int assignmentId, int marId, String assignedTo, String urgency, int estimate,String date, String assignmentIdMessage, String marIdMessage
-			, String assignedToMessage, String urgencyMessage, String estimateMessage, String errorMessage, String today, String dateErrorMessage, String description) {
+			, String assignedToMessage, String urgencyMessage, String estimateMessage, String errorMessage, String today, String dateErrorMessage, String description, String duration) {
 		 
 		EasyMock.expect(dateUtils.now()).andReturn(Date.valueOf(today));
 		EasyMock.replay(dateUtils);
@@ -47,7 +47,7 @@ public class AssignmentTest {
 		assignment.setUrgency(urgency);
 		assignment.setEstimate(estimate);
 		
-		assignment.validateAssignment(action, assignmentMessage, todayDate);
+		assignment.validateAssignment(action, assignmentMessage, todayDate,duration);
 		
 		assertEquals(assignmentId, assignment.getAssignmentId());
 		assertEquals(marId, assignment.getMarId());
