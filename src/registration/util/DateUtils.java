@@ -271,6 +271,30 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		c.set(Calendar.HOUR, hour);
 		return new Date(c.getTimeInMillis());
 	}
+
+//	start of working day today
+	public Timestamp startOfDay(Timestamp nowTimeStamp) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(nowTimeStamp.getTime());
+		cal.set(Calendar.HOUR_OF_DAY, 6);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return new Timestamp(cal.getTimeInMillis());
+	}
+	
+//	EOD of the day after 7 days
+	public Timestamp oneWeekLater(Timestamp nowTimeStamp) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(nowTimeStamp.getTime());
+		cal.add(Calendar.DAY_OF_MONTH, 8);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		cal.add(Calendar.MILLISECOND, -1);
+		return new Timestamp(cal.getTimeInMillis());
+	}
 	
 //	check if string is valid date, yyyy/MM/dd
 	public boolean isValidDate(String dateString) {
@@ -289,7 +313,7 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		Calendar c = Calendar.getInstance(); 
 		c.setTime(startDate); 
 		c.add(Calendar.HOUR, duration);
-		c.add(Calendar.SECOND, -1);
+		c.add(Calendar.MILLISECOND, -1);
 		return new Date(c.getTimeInMillis());
 	}
 	

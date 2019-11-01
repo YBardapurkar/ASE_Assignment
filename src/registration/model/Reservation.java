@@ -87,21 +87,47 @@ public class Reservation {
 //		System.out.println(startDate);
 //		System.out.println(today);
 //		System.out.println();
-		if (durationHours >= 18 && !startTime.contains("06:00:00")) {
-			result = "Start time should be 6AM for multi day reservation";
+		if (durationHours >= 18) {
+//			multi day
+			if (!startTime.contains("06:00:00")) {
+				result = "Start time should be 6AM for multi day reservation";
+			} else if (today.after(startDate)) {
+				result = "Start date cannot be in the past";
+			} else if (startDate.after(dateUtils.oneWeekLater(today))) {
+				result = "Start date cannot more than one week in advance";
+			} else {
+				result = "";
+			}
+		} else {
+//			single day
+			if (!startDate.toString().contains(today.toString().split(" ")[0])) {
+				result = "Start time should be current date for single day reservation";			
+			} else if (startDate.before(dateUtils.startOfDay(today))) {
+				result = "Start time cannot be before 6AM";
+			} else if (today.after(startDate)) {
+				result = "Start date cannot be in the past";
+			} else {
+				result = "";
+			}
 		}
-		else if (durationHours < 18 && !startDate.toString().contains(today.toString().split(" ")[0])) {
-			result = "Start time should be current date for single day reservation";			
-		}
-//		else if(durationHours <18 && !startTime.contains(DateUtils.nowDate().toString())) {
-//			result = "Start time should be current date for single day reservation";
-//		}		
-		else if (today.after(startDate)) {
-			result = "Start date cannot be before current time";
-		}
-		else {
-			result = "";
-		}
+		
+//		
+//		
+//		if (durationHours >= 18 && !startTime.contains("06:00:00")) {
+//			result = "Start time should be 6AM for multi day reservation";
+//		}
+//		else if (durationHours < 18 && !startDate.toString().contains(today.toString().split(" ")[0])) {
+//			result = "Start time should be current date for single day reservation";			
+//		}
+////		else if(durationHours <18 && !startTime.contains(DateUtils.nowDate().toString())) {
+////			result = "Start time should be current date for single day reservation";
+////		}		
+//		else if (today.after(startDate)) {
+//			result = "Start date cannot be before current time";
+//		}
+//		else {
+//			result = "";
+//		}
 		return result;
 	}
 }
