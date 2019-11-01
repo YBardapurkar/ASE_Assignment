@@ -8,4 +8,9 @@ interface DateUtils {
 	
 //	for mocking current date, class java.sql.Date
 	public Date now();
+
+	
+	public String nowDate();
+	
+	public boolean isTimeStampToday();
 }

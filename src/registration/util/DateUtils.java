@@ -17,7 +17,7 @@ public class DateUtils {
 	private static DateFormat timestampFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 //	get java.sql.Date from value in database
-	public static Date getSqlDate(String dateString) {
+	public Date getSqlDate(String dateString) {
         Date sqlDate;
         try {
 			sqlDate = new Date(timestampFormat1.parse(dateString).getTime());
@@ -29,7 +29,7 @@ public class DateUtils {
 	}
 	
 	
-	public static String[] getSevenDays()
+	public String[] getSevenDays()
 	{
 		String incDate[] = new String[7]; 
 		Date incrDate = now();
@@ -45,7 +45,7 @@ public class DateUtils {
 	
 	
 	//Loop for time
-	public static String[] listTimes(int count, String hours) { 
+	public String[] listTimes(int count, String hours) { 
 		
 		String customTime1 = "06:00:00";
 		String times[] = new String[count];
@@ -65,7 +65,7 @@ public class DateUtils {
 		
 	}
 
-public static String[] listTimes1(int count) { 
+public String[] listTimes1(int count) { 
 		
 		String customTime1 = "06:00:00";
 		String times1[] = new String[count];
@@ -85,7 +85,7 @@ public static String[] listTimes1(int count) {
 		
 	}
 
-	public static Timestamp startTimeconvert(String startTimeStamp)
+	public Timestamp startTimeconvert(String startTimeStamp)
 	{
 		java.sql.Timestamp startTimeconversion = java.sql.Timestamp.valueOf(startTimeStamp);
 		
@@ -97,7 +97,7 @@ public static String[] listTimes1(int count) {
 
 //timestamp for reserving
 
-	public static Timestamp reserveStartTime(String startTimeStamp, String interval)
+	public Timestamp reserveStartTime(String startTimeStamp, String interval)
 	{
 		java.sql.Timestamp startTimeStamp1 = java.sql.Timestamp.valueOf(startTimeStamp);
 		
@@ -114,7 +114,7 @@ public static String[] listTimes1(int count) {
 			     	
 	}
 	
-	public static boolean checkReservedFacilities(String prepareTimeStamp, String startTimestamp, String EndTimestamp)
+	public boolean checkReservedFacilities(String prepareTimeStamp, String startTimestamp, String EndTimestamp)
 	{
 		
 		String prepareTimeStamp1 = prepareTimeStamp + ".0"; 
@@ -171,7 +171,7 @@ public static String[] listTimes1(int count) {
 		
 	}
 	
-public static boolean compareTimes(String prepareTimeStamp, String nowTimeStamp)
+public boolean compareTimes(String prepareTimeStamp, String nowTimeStamp)
 {
 
 	String prepareTimeStamp1 = prepareTimeStamp + ".0";
@@ -207,7 +207,7 @@ public static boolean compareTimes(String prepareTimeStamp, String nowTimeStamp)
 
 
 	
-public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
+public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 {
 	
 	String timecheck = startTimeStamp;
@@ -238,12 +238,12 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	
 	
 	//	get current time in java.sql.Date format
-	public static Date now() {
+	public Date now() {
 		return new Date(new java.util.Date().getTime());
 	}
 	
 //get date as String
-	public static String nowDate()
+	public String nowDate()
 	{
 		Date today = now();
 		String strDate = dateFormat.format(today);
@@ -251,14 +251,14 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	}
 
 //	get current timestamp
-	public static String nowTimeStamp() {
+	public String nowTimeStamp() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		return timestamp.toString();
 	}
 		
 	
 //	get next available start time
-	public static Date getStartDate(int duration) {
+	public Date getStartDate(int duration) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(now());
 		c.set(Calendar.MINUTE, 0);
@@ -273,7 +273,7 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	}
 	
 //	check if string is valid date, yyyy/MM/dd
-	public static boolean isValidDate(String dateString) {
+	public boolean isValidDate(String dateString) {
 		boolean isDate = false;
 		try{
 			dateFormat.parse(dateString);
@@ -285,7 +285,7 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	}
 	
 //	get end date for corresponding start time and duration
-	public static Date getEndDate(Date startDate, int duration) {
+	public Date getEndDate(Date startDate, int duration) {
 		Calendar c = Calendar.getInstance(); 
 		c.setTime(startDate); 
 		c.add(Calendar.HOUR, duration);
@@ -294,7 +294,7 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	}
 	
 //	get start of week
-	public static Date getCurrentWeekStart() {
+	public Date getCurrentWeekStart() {
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		c.set(Calendar.HOUR_OF_DAY, 0);
@@ -305,7 +305,7 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		return new Date(c.getTimeInMillis());
 	}
 	
-	public static Date getCurrentWeekEnd() {
+	public Date getCurrentWeekEnd() {
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		c.set(Calendar.HOUR_OF_DAY, 0);
@@ -321,7 +321,7 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	
 	//Reapirer DateTime Local to timestamp
 	
-	public static Timestamp getTimestampFromDateTime(String datetimeLocal) {		
+	public Timestamp getTimestampFromDateTime(String datetimeLocal) {		
 		datetimeLocal = datetimeLocal.concat(":00");
 		Timestamp st = Timestamp.valueOf(datetimeLocal.replace("T", " "));
 		Calendar cal  = Calendar.getInstance();
@@ -331,7 +331,7 @@ public static boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	
 	//Check if timestamp is today
 	//TimeDate Today
-	public static boolean isTimeStampToday(String timestamp) {
+	public boolean isTimeStampToday(String timestamp) {
 		Calendar cal = Calendar.getInstance();
 		Timestamp now = new Timestamp(cal.getTime().getTime());
 		

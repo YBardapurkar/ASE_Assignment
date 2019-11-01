@@ -5,7 +5,7 @@ import java.io.Serializable;
 import registration.util.DateUtils; 
 
 public class Search implements Serializable{
-	
+	private static DateUtils dateUtils = new DateUtils();
 	private static final long serialVersionUID = 3L;
 	
 	private String searchText;
@@ -68,7 +68,7 @@ public class Search implements Serializable{
 			else if (searchFilter.equals("4")) {
 				if(searchText.equals("")) {
 					result = "Search Field is Empty";
-				} else if (!DateUtils.isValidDate(searchText)){
+				} else if (!dateUtils.isValidDate(searchText)){
 					result = "Date should match the format 'yyyy/MM/dd'";
 				} else {
 					result = "";

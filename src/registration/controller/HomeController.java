@@ -28,6 +28,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 	private static final long serialVersionUID = 1L;
 	HttpSession session;
 	User currentUser;
+	DateUtils dateUtils = new DateUtils();
 	
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -204,7 +205,7 @@ public class HomeController extends HttpServlet implements HttpSessionListener {
 		MAR mar = new MAR();
 		mar.setFacilityName(request.getParameter("facility_name"));
 		mar.setDescription(request.getParameter("description"));
-		mar.setDate(DateUtils.nowTimeStamp());
+		mar.setDate(dateUtils.nowTimeStamp());
 		//mar.setUrgency(request.getParameter("urgency"));		
 		return mar;
 	}

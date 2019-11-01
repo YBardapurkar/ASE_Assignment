@@ -14,7 +14,7 @@ import registration.util.DropdownUtils;
 
 public class SearchFacility implements Serializable{
 
-	
+	private static DateUtils dateUtils = new DateUtils();
 	private static final long serialVersionUID = 3L;
 	  
 	public String facilityType;
@@ -93,7 +93,7 @@ public class SearchFacility implements Serializable{
 			//System.out.println(searchTimeStamp+ "searchtimestamp");
 			//System.out.println("inside print length "+searchTimeStamp.length() );
 			
-			if(DateUtils.compareTimes(searchTimeStamp, nowTimeStamp))
+			if(dateUtils.compareTimes(searchTimeStamp, nowTimeStamp))
 			{
 				//System.out.println("inside compare times");
 				result = "Selected time is less than the current time";	

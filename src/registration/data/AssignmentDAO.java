@@ -14,6 +14,7 @@ import registration.util.SQLConnection;
 
 public class AssignmentDAO {
 	static SQLConnection DBMgr = SQLConnection.getInstance();
+	static DateUtils dateUtils = new DateUtils();
 	
 //	get count of mars assigned to a repairer on a given date
 	public static int getAssignmentCountByDay(String username, Date date)
@@ -43,8 +44,8 @@ public class AssignmentDAO {
 		Connection conn = SQLConnection.getDBConnection();
 		int result = 0;
 		
-		String startDay = DateUtils.getCurrentWeekStart().toString();
-		String endDay = DateUtils.getCurrentWeekEnd().toString();
+		String startDay = dateUtils.getCurrentWeekStart().toString();
+		String endDay = dateUtils.getCurrentWeekEnd().toString();
 		System.out.println(startDay + " " + endDay);
 		String queryString = "SELECT count(*) FROM macrepairsys.assignment "
 				+ "where date(assigned_date) >= '" + startDay + "' and date(assigned_date) <= '" + endDay + "' and assigned_to = '" + username + "'";
@@ -126,7 +127,7 @@ public static void assignRepairer(Assignment assignment) {
 				assign.setAssignmentId(Integer.parseInt(result.getString("assignment_id")));
 				assign.setUrgency(result.getString("urgency"));
 				assign.setEstimate(Integer.parseInt(result.getString("estimate_repair")));
-				assign.setAssignedDate(DateUtils.getSqlDate(result.getString("assigned_date")));
+				assign.setAssignedDate(dateUtils.getSqlDate(result.getString("assigned_date")));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

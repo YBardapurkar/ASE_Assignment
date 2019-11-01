@@ -44,6 +44,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 	private static final long serialVersionUID = 1L;
 	HttpSession session;
 	User currentUser;
+	DateUtils dateUtils = new DateUtils();
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -216,7 +217,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 //			Assign a repairer to a mar
 			if (action.equals("assign_repairer")) {
 				Assignment assignment = getAssignmentParam(request);
-				assignment.setAssignedDate(DateUtils.now());
+				assignment.setAssignedDate(dateUtils.now());
 				assignment.validateAssignment("assign_mar", assignmentMessage, assignment.getAssignedDate());
 
 				if (!assignmentMessage.getErrorMessage().equals("")) {
@@ -330,7 +331,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 				session.setAttribute("facility", facility);
 
-				String incrementDate[] = DateUtils.getSevenDays();
+				String incrementDate[] = dateUtils.getSevenDays();
 				SearchFacility searchFacility1 = new SearchFacility();
 				searchFacility1.setFacilityType(facility.getFacilityType());
 				searchFacility1.setSearchTime(request.getParameter("searchTime"));
@@ -352,17 +353,17 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 				if (facility.getFacilityInterval().equals("1"))
 				{
-					incrementTime1 = Arrays.asList(DateUtils.listTimes(18, "1"));
+					incrementTime1 = Arrays.asList(dateUtils.listTimes(18, "1"));
 				}
 
 				else if (facility.getFacilityInterval().equals("2"))
 				{
-					incrementTime1 = Arrays.asList(DateUtils.listTimes(9, "2"));
+					incrementTime1 = Arrays.asList(dateUtils.listTimes(9, "2"));
 				}
 
 				else
 				{
-					incrementTime1 = Arrays.asList(DateUtils.listTimes1(36));
+					incrementTime1 = Arrays.asList(dateUtils.listTimes1(36));
 				}
 
 				session.setAttribute("incrementDate", incrementDate1);

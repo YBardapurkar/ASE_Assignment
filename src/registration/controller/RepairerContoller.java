@@ -29,6 +29,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 	private static final long serialVersionUID = 1L;
 	HttpSession session;
 	User currentUser;
+	DateUtils dateUtils = new DateUtils();
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -174,7 +175,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				newReservation = getReservationParam(request); // if it is a valid time stamp
 //				}
 				int interval = Integer.parseInt(request.getParameter("interval"));
-				newReservation.validateReservation(reservationMessage, validateStartTime, interval);
+				newReservation.validateReservation(reservationMessage, validateStartTime, interval, Timestamp.valueOf(dateUtils.nowTimeStamp()));
 
 				// TODO this method
 
@@ -209,13 +210,15 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					newReservation.setMarId(id);
 					ReservationDAO.insertReservation(newReservation);
 					session.setAttribute("reservation", newReservation);
-					reservationMessage.setMessage("Facility Reserved Sucessfully");
+//					reservationMessage.setMessage("Facility Reserved Sucessfully");
+					session.setAttribute("success_message", "Facility Reserved Sucessfully");
 					session.setAttribute("errorMsgs", reservationMessage);
 					session.setAttribute("mar", mar);
 
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-					reservationMessage.setMessage("Reservation modified Successfully");
+//					reservationMessage.setMessage("Reservation modified Successfully");
+//					session.setAttribute("success_message", "Reservation Modified Sucessfully");
 					session.setAttribute("errorMsgs", reservationMessage);
 					request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya
 
@@ -237,9 +240,9 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					newReservation = getReservationParam(request); // if it is a valid time stamp
 				}
 				int interval = Integer.parseInt(request.getParameter("interval"));
-				newReservation.validateReservation(reservationMessage, validateStartTime, interval);
+				newReservation.validateReservation(reservationMessage, validateStartTime, interval, Timestamp.valueOf(dateUtils.nowTimeStamp()));
 
-				if (!reservationMessage.getErrorMessage().equals("")) {
+				if (!reservationMessage.getErrorMessage().equals("")) { 
 					// if error messages
 					session.setAttribute("reservation", newReservation);
 					session.setAttribute("errorMsgs", reservationMessage);
@@ -271,7 +274,8 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					session.setAttribute("assign", assignment);
 					session.setAttribute("mar", mar);
 
-					reservationMessage.setMessage("Reservation modified Successfully");
+//					reservationMessage.setMessage("Reservation modified Successfully");
+					session.setAttribute("success_message", "Reservation Modified Sucessfully");
 					session.setAttribute("errorMsgs", reservationMessage);
 					
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -299,7 +303,8 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 
 				ReservationDAO.cancelReservation(reservationId);
 				session.setAttribute("reservation", newReservation);
-				reserve.setMessage("Cancellation successful");
+//				reserve.setMessage("Cancellation successful");
+				session.setAttribute("success_message", "Reservation Cancelled");
 				session.setAttribute("errorMsgs", reserve);
 				session.setAttribute("mar", mar);
 				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -356,7 +361,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		// reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time1")));
 		datetimeLocal = request.getParameter("start_time1");
 
-		Timestamp st = DateUtils.getTimestampFromDateTime(datetimeLocal);
+		Timestamp st = dateUtils.getTimestampFromDateTime(datetimeLocal);
 		Calendar cal = Calendar.getInstance();
 		System.out.println("before" + st.getTime());
 		cal.setTimeInMillis(st.getTime());
