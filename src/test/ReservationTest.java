@@ -2,7 +2,6 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.easymock.EasyMock;
@@ -12,11 +11,8 @@ import org.junit.runner.RunWith;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-import registration.model.Assignment;
-import registration.model.AssignmentMessage;
 import registration.model.Reservation;
 import registration.model.ReservationMessage;
-import registration.model.User;
 
 @RunWith(JUnitParamsRunner.class)
 public class ReservationTest {
@@ -34,36 +30,42 @@ public class ReservationTest {
 	}
 
 	@Test
-	@FileParameters("src/test/AssignmentTestCases.csv")
-	public void testAssignment(int testCaseNumber, int reservationId, int marId, String facilityName, String startTime,
-			String endTime, String today, String startTimeMessage, String errorMessage) {
+	@FileParameters("src/test/ReservationTestCases.csv")
+	public void reservationTest(int testCaseNumber, int reservationId, int marId, String facilityName, String startTime,
+			String endTime, int duration, String todayTimestamp, String reservationIdMessage, String marIdMessage, 
+			String facilityNameMessage, String startTimeMessage, String endTimeMessage, String errorMessage, String description) {
 
-//		EasyMock.expect(dateUtils.now()).andReturn(Date.valueOf(today));
-//		EasyMock.replay(dateUtils);
-//
-//		Date todayDate = dateUtils.now();
-		//2019-11-01 14:00:00.0 
+		EasyMock.expect(dateUtils.nowTimeStamp()).andReturn(todayTimestamp);
+		EasyMock.expect(dateUtils.nowDate()).andReturn(todayTimestamp.split(" ")[0]);
+		EasyMock.expect(dateUtils.isTimeStampToday()).andReturn(startTime.split(" ")[0].equals(todayTimestamp.split(" ")[0]));
+		EasyMock.replay(dateUtils);
+		
+//		System.out.println(startTime + " " + todayTimestamp);
+//		System.out.println(startTime.split(" ")[0].equals(todayTimestamp.split(" ")[0]));
+		
+		Timestamp today = Timestamp.valueOf(dateUtils.nowTimeStamp());
+//		2019-11-01 14:00:00.0 
 
 		reservation.setReservationId(reservationId);
 		reservation.setMarId(marId);
-		// Timestamp.valueOf(datetimeLocal.replace("T", " "))
-		reservation.setStartTime(Timestamp.valueOf(startTime)); // check this once it should be correct format
 		reservation.setFacilityName(facilityName);
-		reservation.setEndTime(Timestamp.valueOf(startTime));
-
-		reservation.validateReservation(reservationMessage, startTime);
+		reservation.setStartTime(Timestamp.valueOf(startTime)); // check this once it should be correct format
+		reservation.setEndTime(Timestamp.valueOf(endTime));
+		
+		reservation.validateReservation(reservationMessage, startTime, duration, today);
 
 		assertEquals(reservationId, reservation.getReservationId());
 		assertEquals(marId, reservation.getMarId());
 		assertEquals(facilityName, reservation.getFacilityName());
-		assertEquals(startTime, reservation.getStartTime());
-		assertEquals(endTime, reservation.getEndTime());
+		assertEquals(Timestamp.valueOf(startTime), reservation.getStartTime());
+		assertEquals(Timestamp.valueOf(endTime), reservation.getEndTime());
 
-		// reservationMessage.setMessage("Facility Reserved Sucessfully");
-
+		assertEquals(reservationIdMessage, reservationMessage.getReservationIdMessage());
+		assertEquals(marIdMessage, reservationMessage.getMarIdMessage());
+		assertEquals(facilityNameMessage, reservationMessage.getFacilityNameMessage());
 		assertEquals(startTimeMessage, reservationMessage.getStartTimeMessage());
+		
 		assertEquals(errorMessage, reservationMessage.getErrorMessage());
-
 	}
 
 }

@@ -1,18 +1,20 @@
 package registration.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-import registration.data.FacilityDAO;
+
 import registration.util.DateUtils;
 //import registration.data.FacilityDAO;
 //import registration.data.UserDAO;
 //import java.util.regex.Pattern; 
+import registration.util.DropdownUtils;
 
 
 
 public class SearchFacility implements Serializable{
 
-	
+	private static DateUtils dateUtils = new DateUtils();
 	private static final long serialVersionUID = 3L;
 	  
 	public String facilityType;
@@ -54,39 +56,55 @@ public class SearchFacility implements Serializable{
 	
 
 	
-	public SearchFacilityError validateSearchFacility(String searchTimeStamp)
+	public SearchFacilityError validateSearchFacility(String searchTimeStamp, String nowTimeStamp)
 	{
+		
+		//System.out.println("inside the validate search");
 		SearchFacilityError facilityError = new SearchFacilityError();
 		
-		facilityError.setShowFacilityMessage(validateSearchTime(searchTimeStamp));
-		facilityError.setSearchDateError(validateFacilityType(this.getSearchTime()));
+		facilityError.setShowFacilityMessage(validateSearchTimeStamp(searchTimeStamp, nowTimeStamp));
+		facilityError.setSearchDateError(validateSearchDate(this.getSearchDate()));
 		facilityError.setFacilityTypeError(validateFacilityType(this.getFacilityType()));
+		facilityError.setSearchTimeError(validateSearchTime(this.getSearchTime()));
 		facilityError.setErrorMsg();
 		return facilityError;
 	}
 	
 	
-	public String validateSearchTime(String searchTimeStamp)
+	public String validateSearchTimeStamp(String searchTimeStamp, String nowTimeStamp)
 	{
+		//System.out.println("inside the validate time ");
+		//boolean a = DateUtils.compareTimes(searchTimeStamp, nowTimeStamp);
+		//System.out.println("enter the value of a "+a);
 		
 		String result = "";
 		
-		if(searchTime.equals(""))
+/*		if(searchTimeStamp.equals(""))
 		{
+			System.out.println("inside the searchtime empty");
 			result = "Time field is empty";
 			
 		}
 		
-		else if(searchTimeStamp.length() == 19 && DateUtils.compareTimes(searchTimeStamp))
+*/		
+		
+		if(searchTimeStamp.length() == 19)
+		{
+			//System.out.println(searchTimeStamp+ "searchtimestamp");
+			//System.out.println("inside print length "+searchTimeStamp.length() );
+			
+			if(dateUtils.compareTimes(searchTimeStamp, nowTimeStamp))
 			{
+				//System.out.println("inside compare times");
 				result = "Selected time is less than the current time";	
 			}
+		}	
 		
-			else
-			{
-				result = "";
+		else
+		{
+			result = "";
 			
-			}
+		}
 
 		return result;
 	}
@@ -95,7 +113,14 @@ public class SearchFacility implements Serializable{
 	
 	public String validateFacilityType(String facilityType)
 	{
+		//System.out.println("value of the facility "+facilityType);
+		//FacilityDAO.getFacilitiesByFacilityType(facilityType);
 		String result = "";
+		
+		//ArrayList<Facility> facilitiesList = new ArrayList<Facility>();
+		
+		ArrayList<Facility> facilitiesList;
+		facilitiesList = DropdownUtils.getFacilityTypeDropdown();
 		
 		if(facilityType.equals(""))
 		{
@@ -103,15 +128,19 @@ public class SearchFacility implements Serializable{
 			
 		}
 	
-		else if(FacilityDAO.getFacilitiesByFacilityType(facilityType).size() > 0)
+		
+		else if(facilitiesList.stream().anyMatch(listOfFacilities -> listOfFacilities.getFacilityType().contains(facilityType)))
 		{
 			
 			result = "";
 		}
 		
+		
 		else
 		{
 			result = "Facility Type does not exist";
+			
+			//result = "";
 			
 		}
 		
@@ -121,6 +150,7 @@ public class SearchFacility implements Serializable{
 	public String validateSearchDate(String searchDate)
 	{
 		String result = "";
+		
 		
 		if(searchDate.equals(""))
 		{
@@ -137,9 +167,10 @@ public class SearchFacility implements Serializable{
 		return result;
 	}
 
-	/*public String validateSearchTime(String searchTime)
+	public String validateSearchTime(String searchTime)
 	{
 		String result = "";
+		
 		
 		if(searchTime.equals(""))
 		{
@@ -153,7 +184,7 @@ public class SearchFacility implements Serializable{
 			return result;
 		}
 
-	}*/
+	}
 
 	
 	

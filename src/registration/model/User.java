@@ -6,7 +6,6 @@ import registration.data.FacilityDAO;
 import registration.data.UserDAO;
 import registration.util.DropdownUtils;
 
-import java.util.Arrays;
 import java.util.regex.Pattern; 
 
 public class User implements Serializable{
@@ -29,6 +28,21 @@ public class User implements Serializable{
 	private String zipcode;
 	private String role;
 	
+
+	public User() {
+//		this.username = "";
+//		this.password = "";
+//		this.role = "";
+//		this.firstname = "";
+//		this.lastname = "";
+//		this.utaId = "";
+//		this.phone = "";
+//		this.email = "";
+//		this.street = "";
+//		this.city = "";
+//		this.state = "";
+//		this.zipcode = "";
+	}
 
 	
 	public void setuser(String username, String password,String firstname, String lastname, String role, String utaid,
@@ -205,6 +219,7 @@ public class User implements Serializable{
 			
 			userErrorMsgs.setErrorMsg();
 		} else {
+
 			/*
 			userErrorMsgs.setUsernameError(validateUsername(action, this.getUsername()));
 			userErrorMsgs.setPasswordError(validatePassword(action, this.getPassword()));
@@ -219,6 +234,20 @@ public class User implements Serializable{
 			userErrorMsgs.setStateError(validateState(this.getState()));
 			userErrorMsgs.setZipcodeError(validateZipcode(this.getZipcode()));
 			*/
+
+			//userErrorMsgs.setUsernameError("Action not recognized");
+			//userErrorMsgs.setPasswordError("Action not recognized");
+//			userErrorMsgs.setFirstnameError(validateFirstname(this.getFirstname()));
+//			userErrorMsgs.setLastnameError(validateLastname(this.getLastname()));
+//			userErrorMsgs.setUtaIdError(validateUtaId(this.getUtaId()));
+//			userErrorMsgs.setRoleError(validateRole(this.getRole()));
+//			userErrorMsgs.setEmailError(validateEmail(this.getEmail()));
+//			userErrorMsgs.setPhoneError(validatePhone(this.getPhone()));
+//			userErrorMsgs.setStreetError(validateStreet(this.getStreet()));
+//			userErrorMsgs.setCityError(validateCity(this.getCity()));
+//			userErrorMsgs.setStateError(validateState(this.getState()));
+//			userErrorMsgs.setZipcodeError(validateZipcode(this.getZipcode()));
+
 			
 			userErrorMsgs.setErrorMsg("Action not recognized");
 		}
@@ -226,7 +255,7 @@ public class User implements Serializable{
 	}
 	
 	private String validateUsername(String action, String username) {
-		String result = "";
+		String result;// = "";
 		String pattern = "[A-Za-z0-9-_]{6,20}";
 		
 //		Validate register
@@ -251,7 +280,7 @@ public class User implements Serializable{
 				result = "";
 			}
 		} 
-//		update profile, edit user
+
 		else if(action.equals("update_profile")) {
 			if (username.equals("")) {
 				result = "Username is a required field";
@@ -263,6 +292,7 @@ public class User implements Serializable{
 				result = "";
 			}
 		} 
+
 		else if(action.equals("edit_user")) {
 			if (username.equals("")) {
 				result = "Username is a required field";
@@ -291,7 +321,7 @@ public class User implements Serializable{
 	}
 	
 	private String validatePassword(String action, String password) {
-		String result = "";
+		String result;// = "";
 		String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@*#$%^/?&+=-_])[A-Za-z0-9!@#$%*^?/&+=-_]{6,30}";
 		
 //		Validate register, update profile, edit user
@@ -338,7 +368,7 @@ public class User implements Serializable{
 			result = "Action not recognized";
 		}*/
 		
-		return result;		
+		return result;
 	}
 	
 	private String validatePhone(String phone) {
@@ -361,9 +391,7 @@ public class User implements Serializable{
 			result = "Email is a required field";
 		} else if (!email.contains("@")) {
 			result = "Email address needs to contain @";
-		}/* else if (!stringSize(email,7,45)) {
-			result="Email address must be between 7 and 45 characters long";
-		} */
+		}
 		else if(!Pattern.matches("^(.){7,45}$", email))
 		{
 			result="Email cannot be null or can't be less than 7 or 45 characters";
@@ -384,8 +412,13 @@ public class User implements Serializable{
 		
 		if (firstname.equals("")) {
 			result = "First name is a required field";
+
 		} else if (!Pattern.matches("^(.){3,30}$", firstname))
-			result="firstname should be between 3 and 30 characters long";
+
+		 	result="firstname should be between 3 and 30 characters long";
+		} 
+			
+
 		else if (b3 == false)
 			result="firstname should not contain digits";
 		else
@@ -401,7 +434,8 @@ public class User implements Serializable{
 		
 		if (lastname.equals("")) {
 			result = "Last name is a required field";
-		} else if (!Pattern.matches("^(.){3,30}$", lastname))
+//		} else if (!stringSize(lastname,3,30))
+		} else if (!Pattern.matches("^\\S{3,30}$", lastname))
 			result="lastname should be between 3 and 30 characters long";
 		else if (b3 == false)
 			result="lastname should not contain digits";
@@ -428,14 +462,10 @@ public class User implements Serializable{
 	
 	private String validateRole(String role) {
 		String result="";
-		//String[] validRoles = {"Admin", "Facility Manager", "Student", "Faculty", "Repairer"};
+
 		if (role.equals("")) {
 			result = "Role is a required field";
-		} /*else if (!Arrays.asList(validRoles).contains(role)) {
-			result = "Role is invalid";
-//		} else if (!DropdownUtils.getRoleDropdown().contains(role)) {
-//			result = "Only one user with that role can be registered";
-		}*/		else if (UserDAO.getRoles().contains(role))
+		} else if (UserDAO.getRoles().contains(role))
 		{
 			result = "";
 		}
@@ -463,7 +493,10 @@ public class User implements Serializable{
 		
 		if (city.equals("")) {
 			result = "City is a required field";
-		} else if (!Pattern.matches("^(.){3,30}$", city))
+
+//		} else if (!stringSize(city,2,15))
+		} else if (!Pattern.matches("^\\S{2,15}$", city))
+
 			result="city should be between 2 and 15 characters long";
 		else if (!Pattern.matches("[a-zA-Z]+", city))
 			result="city name cannot contain digits";
@@ -489,7 +522,10 @@ public class User implements Serializable{
 		String result="";
 		if (street.equals("")) {
 			result = "Street is a required field";
-		} else if (!Pattern.matches("^(.){3,30}$", street))
+
+//		} else if (!stringSize(street, 3, 100))
+	} else if (!Pattern.matches("^\\S{3,100}$", street))
+
 			result="Street should be between 3 and 100 characters long";
 		return result;		
 		
@@ -498,7 +534,4 @@ public class User implements Serializable{
 	
 //	This section is for general purpose methods used internally in this class
 	
-/*	private boolean stringSize(String string, int min, int max) {
-		return string.length()>=min && string.length()<=max;
-	}*/
 }

@@ -2,13 +2,12 @@ package registration.model;
 
 public class ReservationMessage {
 	private String startTimeMessage;
-	private String message = "";
-	private String errorMessage = "";
+//	private String message;
+	private String errorMessage;
 
-	private String reservationIdMessage = "";
-	private String marIdMessage = "";
-	private String facilityNameMessage = "";
-	private String endTimeMessage = "";
+	private String reservationIdMessage;
+	private String marIdMessage;
+	private String facilityNameMessage;
 
 	public String getStartTimeMessage() {
 		return startTimeMessage;
@@ -18,13 +17,13 @@ public class ReservationMessage {
 		this.startTimeMessage = startTimeMessage;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
+//	public String getMessage() {
+//		return message;
+//	}
+//
+//	public void setMessage(String message) {
+//		this.message = message;
+//	}
 
 	public String getErrorMessage() {
 		return errorMessage;
@@ -58,17 +57,9 @@ public class ReservationMessage {
 		this.facilityNameMessage = facilityNameMessage;
 	}
 
-	public String getEndTimeMessage() {
-		return endTimeMessage;
-	}
-
-	public void setEndTimeMessage(String endTimeMessage) {
-		this.endTimeMessage = endTimeMessage;
-	}
-
 	public void setErrorMessage() {
 		if (!this.reservationIdMessage.isEmpty() || !this.marIdMessage.isEmpty() || !this.facilityNameMessage.isEmpty()
-				|| !this.startTimeMessage.isEmpty() || !this.endTimeMessage.isEmpty()) {
+				|| !this.startTimeMessage.isEmpty()) {
 			this.setErrorMessage("Please correct the following errors");
 		} else {
 			this.setErrorMessage("");

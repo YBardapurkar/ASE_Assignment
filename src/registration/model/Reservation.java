@@ -2,11 +2,10 @@ package registration.model;
 
 import java.sql.Timestamp;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.UnmarshallingContext.State;
-
 import registration.util.DateUtils;
 
 public class Reservation {
+	private static DateUtils dateUtils = new DateUtils();
 	
 	private int reservationId;
 	private int marId;
@@ -45,17 +44,59 @@ public class Reservation {
 		this.endTime = endTime;
 	}
 	
-	public void validateReservation(ReservationMessage reservationMessage, String startTime) {
-		reservationMessage.setStartTimeMessage(validateStartTime(this.getStartTime(), startTime));
+	public void validateReservation(ReservationMessage reservationMessage, String startTime, int durationHours, Timestamp today) {
+		reservationMessage.setReservationIdMessage(validateReservationId(this.getReservationId()));
+		reservationMessage.setMarIdMessage(validateMarId(this.getMarId()));
+		reservationMessage.setFacilityNameMessage(validateFacilityName(this.getFacilityName()));
+		reservationMessage.setStartTimeMessage(validateStartTime(this.getStartTime(), startTime, durationHours, today));
 		reservationMessage.setErrorMessage();
 	}
 	
-	public String validateStartTime(Timestamp startDate , String startTime) {
+	private String validateReservationId(int reservationId) {
 		String result;
-		if(startTime.length() != 16 ) {
-			result = "Start time should be in mm/dd/yyyy hh:ss AM/PM format";	
+		if (reservationId <= 0) {
+			result = "Assignment Id cannot be 0 or negative";
+		} else {
+			result = "";
 		}
-		else if (DateUtils.now().after(startDate)) {
+		return result;
+	}
+	
+	private String validateMarId(int marId) {
+		String result;
+		if (marId <= 0) {
+			result = "MAR Id cannot be 0 or negative";
+		} else {
+			result = "";
+		}
+		return result;
+	}
+	
+	private String validateFacilityName(String facilityName) {
+		String result;
+		if (facilityName.isEmpty()) {
+			result = "Facility name is required";
+		} else {
+			result = "";
+		}
+		return result;
+	}
+	
+	public String validateStartTime(Timestamp startDate , String startTime, int durationHours, Timestamp today) {
+		String result;
+//		System.out.println(startDate);
+//		System.out.println(today);
+//		System.out.println();
+		if (durationHours >= 18 && !startTime.contains("06:00:00")) {
+			result = "Start time should be 6AM for multi day reservation";
+		}
+		else if (durationHours < 18 && !startDate.toString().contains(today.toString().split(" ")[0])) {
+			result = "Start time should be current date for single day reservation";			
+		}
+//		else if(durationHours <18 && !startTime.contains(DateUtils.nowDate().toString())) {
+//			result = "Start time should be current date for single day reservation";
+//		}		
+		else if (today.after(startDate)) {
 			result = "Start date cannot be before current time";
 		}
 		else {

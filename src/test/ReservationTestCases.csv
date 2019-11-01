@@ -1,10 +1,11 @@
-1,invalid_action,1,1,aaaaaa,Minor,1,2019-10-27,,,,,,,2019-10-27,,Invalid Action
-2,assign_mar,-1,1,aaaaaa,Minor,1,2019-10-27,assignmentId cannot be 0 or negative,,,,,Please correct the following errors,2019-10-27,,Invalid AssignmentId
-3,assign_mar,0,1,aaaaaa,Minor,1,2019-10-27,assignmentId cannot be 0 or negative,,,,,Please correct the following errors,2019-10-27,,Invalid AssignmentId
-4,assign_mar,1,-1,aaaaaa,Minor,1,2019-10-27,,MarId cannot be 0 or negative,,,,Please correct the following errors,2019-10-27,,Invalid MarId
-5,assign_mar,1,0,aaaaaa,Minor,1,2019-10-27,,MarId cannot be 0 or negative,,,,Please correct the following errors,2019-10-27,,Invalid MarId
-6,assign_mar,1,1,,Minor,1,2019-10-27,,,Select a Repairer to assign,,,Please correct the following errors,2019-10-27,,Empty Repairer Name
-7,assign_mar,1,1,aaaaaa,,1,2019-10-27,,,,Urgency is a required field,,Please correct the following errors,2019-10-27,,Empty Urgency
-8,assign_mar,1,1,aaaaaa,Minor,-1,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate
-9,assign_mar,1,1,aaaaaa,Minor,0,2019-10-27,,,,,Estimate cannot be 0 or negative,Please correct the following errors,2019-10-27,,Invalid Estimate
-10,assign_mar,1,1,aaaaaa,Minor,1,2019-10-26,,,,,,Please correct the following errors,2019-10-27,Date not correct,Invalid Date
+1,-1,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,Assignment Id cannot be 0 or negative,,,,,Please correct the following errors,message
+2,0,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,Assignment Id cannot be 0 or negative,,,,,Please correct the following errors,message
+3,1,-1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,MAR Id cannot be 0 or negative,,,,Please correct the following errors,message
+4,1,0,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,MAR Id cannot be 0 or negative,,,,Please correct the following errors,message
+5,1,1,,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,Facility name is required,,,Please correct the following errors,message
+6,1,1,MR 1,2019-10-30 10:30:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,,Start date cannot be before current time,,Please correct the following errors,start date in past
+7,1,1,MR 1,2019-10-31 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,,Start time should be current date for single day reservation,,Please correct the following errors,start date not today for single day repair
+8,1,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,17,2019-10-30 10:45:00,,,,,,,message
+8,1,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start time should be 6AM for multi day reservation,,Please correct the following errors,message
+8,1,1,MR 1,2019-10-30 06:00:00,2019-10-30 13:00:00,19,2019-10-30 10:45:00,,,,Start date cannot be before current time,,Please correct the following errors,message
+9,1,1,MR 1,2019-10-30 06:00:00,2019-10-30 13:00:00,18,2019-10-30 05:00:00,,,,,,,message
