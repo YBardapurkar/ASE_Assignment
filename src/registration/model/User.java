@@ -255,7 +255,7 @@ public class User implements Serializable{
 	}
 	
 	private String validateUsername(String action, String username) {
-		String result;// = "";
+		String result= "";
 		String pattern = "[A-Za-z0-9-_]{6,20}";
 		
 //		Validate register
@@ -414,15 +414,17 @@ public class User implements Serializable{
 			result = "First name is a required field";
 
 		} else if (!Pattern.matches("^(.){3,30}$", firstname))
-
+		{
 		 	result="firstname should be between 3 and 30 characters long";
 		} 
-			
-
 		else if (b3 == false)
+		{
 			result="firstname should not contain digits";
+		}
 		else
+		{
 			result = "";
+		}
 		
 		return result;		
 	}
