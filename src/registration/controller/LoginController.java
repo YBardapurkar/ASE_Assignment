@@ -62,7 +62,7 @@ public class LoginController extends HttpServlet {
 						
 //			User does not exist in the database
 			if (loginUser.getUsername() == null && loginUser.getRole() == null) {
-				String result="Username doesnot exist or Password mismatch, please try again";
+				String result="Username does not exist or Password mismatch";
 				userErrorMsgs.setErrorMsg(result);
 				session.setAttribute("errorMsgs", userErrorMsgs);
 				request.getRequestDispatcher("/menu_login.jsp").include(request, response);

@@ -46,7 +46,7 @@
     <!-- <td> <input name="role" value="<c:out value='${user.role}'/>" type="text" >  </td>  -->
     <td><select name="role">
     	<c:forEach items="${role_dropdown}" var="item" varStatus="status">
-    	<option value="${item}">${item}</option>
+    	<option value="${item}" <c:if test='${item == user.role}'>selected</c:if>>${item}</option>
     	</c:forEach>
 	</select></td>
     <td> <input name="role_error"  value="<c:out value='${errorMsgs.roleError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
@@ -95,7 +95,7 @@
     <td> state (*): </td>
     <td><select name="state" style="width: 100%;">
 		<c:forEach items="${state_dropdown}" var="item" varStatus="status">
-    	<option value="${item}">${item}</option>
+    	<option value="${item}" <c:if test='${item == user.state}'>selected</c:if>>${item}</option>
     	</c:forEach>
 	</select></td>
 	<td> <input name="state_error"  value="<c:out value='${errorMsgs.stateError}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"   disabled="disabled" maxlength="60"> </td>
