@@ -39,6 +39,7 @@ public class RegisterController extends HttpServlet{
 		session.removeAttribute("user");			// single User object
 		session.removeAttribute("current_user");	// logged in user
 		session.removeAttribute("errorMsgs");		// single User message object
+		session.removeAttribute("success_message");
 		
 		User newUser = new User();
 		UserError userErrorMsgs = new UserError();
@@ -57,15 +58,11 @@ public class RegisterController extends HttpServlet{
 //			if no error messages
 			UserDAO.insertUser(newUser);
 //			session.setAttribute("role_dropdown", getRoles());
-			session.setAttribute("user", newUser);	
-			
-			userErrorMsgs.setErrorMsg("Registration is successful, please login to continue");
+			session.setAttribute("user", newUser);
+			session.setAttribute("success_message", "Registration is successful - please login to continue");
+			response.sendRedirect("login");
 //			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 //			request.getRequestDispatcher("/login.jsp").include(request, response);
-			session.setAttribute("errorMsgs", userErrorMsgs);
-			//response.sendRedirect("login");
-			request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-			request.getRequestDispatcher("/login.jsp").include(request, response);
 		}
 	}
 	

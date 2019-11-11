@@ -35,10 +35,10 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		prop = new Properties();
 		prop.load(new FileInputStream("./SharedUIMap/SharedUIMap.properties"));
 		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 	}
 	
-//	@Test
+	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentRegisterTestCases.csv")
 	public void testRegister(int testCaseNumber, String username, String password, String firstname,
 			String lastname, String role, String utaid, String phone, String email, String street, String city, 
@@ -52,25 +52,39 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		register(driver, username, password, firstname, lastname, role, utaid, phone, email, street, city, state, zipcode);
 		
 //		Thread.sleep(1000);
-		assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_ErrorMessage"))).getAttribute("value"));
+//		error in registration
+		try {
+			assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_ErrorMessage"))).getAttribute("value"));
+			
+			assertEquals(usernameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_UsernameError"))).getAttribute("value"));
+			assertEquals(passwordMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_PasswordError"))).getAttribute("value"));
+			assertEquals(firstnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_FisrtnameError"))).getAttribute("value"));
+			assertEquals(lastnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_LastnameError"))).getAttribute("value"));
+			assertEquals(roleMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_RoleError"))).getAttribute("value"));
+			assertEquals(utaidMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_UtaIdError"))).getAttribute("value"));
+			assertEquals(phoneMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_PhoneError"))).getAttribute("value"));
+			assertEquals(emailMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_EmailError"))).getAttribute("value"));
+			assertEquals(streetMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_StreetError"))).getAttribute("value"));
+			assertEquals(cityMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_CityError"))).getAttribute("value"));
+			assertEquals(stateMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_StateError"))).getAttribute("value"));
+			assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_ZipError"))).getAttribute("value"));
+			
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+		}
 		
-		assertEquals(usernameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_UsernameError"))).getAttribute("value"));
-		assertEquals(passwordMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_PasswordError"))).getAttribute("value"));
-		assertEquals(firstnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_FisrtnameError"))).getAttribute("value"));
-		assertEquals(lastnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_LastnameError"))).getAttribute("value"));
-		assertEquals(roleMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_RoleError"))).getAttribute("value"));
-		assertEquals(utaidMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_UtaIdError"))).getAttribute("value"));
-		assertEquals(phoneMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_PhoneError"))).getAttribute("value"));
-		assertEquals(emailMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_EmailError"))).getAttribute("value"));
-		assertEquals(streetMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_StreetError"))).getAttribute("value"));
-		assertEquals(cityMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_CityError"))).getAttribute("value"));
-		assertEquals(stateMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_StateError"))).getAttribute("value"));
-		assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_ZipError"))).getAttribute("value"));
-		
-		takeScreenshot(driver, String.format(new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+//		success in registration
+		try {
+			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Login_SuccessMessage"))).getAttribute("value"));
+			
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
-//	@Test
+	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentLoginTestCases.csv")
 	public void testLogin(int testCaseNumber, String username, String password, String usernameMessage, 
 			String passwordMessage, String message, String errorMessage, String description) throws Exception {
@@ -83,7 +97,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		assertEquals(usernameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Login_UsernameError"))).getAttribute("value"));
 		assertEquals(passwordMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Login_PasswordError"))).getAttribute("value"));
 		
-		takeScreenshot(driver, String.format(new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 	}
 	
 	@Test
@@ -101,7 +115,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		try {
 			assertEquals(descriptionErrorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_NewMAR_DescriptionError"))).getAttribute("value"));
 			
-			takeScreenshot(driver, String.format(new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 		} catch (NoSuchElementException e) {
 			System.out.println(e.getMessage());
 		}
@@ -112,7 +126,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 			assertEquals(facilityName, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_FacilityName"))).getText());
 			assertEquals(description, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_Description"))).getText());
 			
-			takeScreenshot(driver, String.format(new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 		} catch (NoSuchElementException e) {
 			System.out.println(e.getMessage());
 		}

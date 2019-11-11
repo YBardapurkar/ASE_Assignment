@@ -483,7 +483,7 @@ public class User implements Serializable{
 
 		if (role.equals("")) {
 			result = "Role is a required field";
-		} else if (UserDAO.getRoles().contains(role))
+		} else if (DropdownUtils.getRoleDropdown().contains(role))
 		{
 			result = "";
 		}
