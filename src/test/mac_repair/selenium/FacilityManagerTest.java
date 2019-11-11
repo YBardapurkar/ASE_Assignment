@@ -39,7 +39,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
-	@Test
+//	@Test
 	@FileParameters("src/test/mac_repair/selenium/FacilityManagerRegisterTestCases.csv")
 	public void testRegister(int testCaseNumber, String username, String password, String firstname,
 			String lastname, String role, String utaid, String phone, String email, String street, String city, 
@@ -69,6 +69,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 			
 			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 		} catch (NoSuchElementException e) {
+//			success in registration
 			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));
 			
 			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
@@ -76,8 +77,27 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 	}
 	
 	@Test
-	public void testSearchMAR() {
-		
+	@FileParameters("src/test/mac_repair/selenium/FacilityManagerSearchMARTestCases.csv")
+	public void testSearchMAR(int testCaseNumber, String username, String password, int searchFilter, String searchText, 
+			String searchTextMessage, String errorMessage, String text) {
+		driver.get(baseUrl);
+		login(driver, username, password);
+//		go to search page
+		driver.findElement(By.xpath(prop.getProperty("Lnk_FacilityManager_SearchMARs"))).click();
+//		select filter
+		driver.findElement(By.xpath("html/body/form/p/input[" + searchFilter + "]")).click();
+//		enter search text
+		driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchText"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchText"))).sendKeys(searchText);
+//	    search
+	    driver.findElement(By.xpath(prop.getProperty("Btn_SearchMAR_Submit"))).click();
+	    
+	    assertEquals(searchTextMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchTextError"))).getAttribute("value"));
+	    assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_ErrorMessage"))).getAttribute("value"));
+	    
+	    takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+	    
+	    driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
 	}
 	
 	@After
