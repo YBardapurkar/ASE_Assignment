@@ -15,6 +15,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
@@ -30,13 +32,13 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 	@Before
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "c:/ChromeDriver/chromedriver.exe");
-		driver = new ChromeDriver();
+		driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
 		baseUrl = "http://localhost:8080/mac_repair/";
 		
 		prop = new Properties();
 		prop.load(new FileInputStream("./SharedUIMap/SharedUIMap.properties"));
 		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 	}
 	
 //	@Test
@@ -49,7 +51,6 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Register"))).click();
 		register(driver, username, password, firstname, lastname, role, utaid, phone, email, street, city, state, zipcode);
 		
-		Thread.sleep(10_000);
 		try {
 //			error in registration
 			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_ErrorMessage"))).getAttribute("value"));
@@ -76,7 +77,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		}
 	}
 	
-	@Test
+//	@Test
 	@FileParameters("src/test/mac_repair/selenium/FacilityManagerSearchMARTestCases.csv")
 	public void testSearchMAR(int testCaseNumber, String username, String password, int searchFilter, String searchText, 
 			String searchTextMessage, String errorMessage, String text) {
@@ -88,16 +89,84 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath("html/body/form/p/input[" + searchFilter + "]")).click();
 //		enter search text
 		driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchText"))).clear();
-	    driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchText"))).sendKeys(searchText);
-//	    search
-	    driver.findElement(By.xpath(prop.getProperty("Btn_SearchMAR_Submit"))).click();
-	    
-	    assertEquals(searchTextMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchTextError"))).getAttribute("value"));
-	    assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_ErrorMessage"))).getAttribute("value"));
-	    
-	    takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
-	    
-	    driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
+		driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchText"))).sendKeys(searchText);
+//		search
+		driver.findElement(By.xpath(prop.getProperty("Btn_SearchMAR_Submit"))).click();
+		
+		assertEquals(searchTextMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchTextError"))).getAttribute("value"));
+		assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_ErrorMessage"))).getAttribute("value"));
+		
+		takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+		
+		driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
+	}
+	
+	@Test
+	@FileParameters("src/test/mac_repair/selenium/FacilityManagerAssignMARTestCases.csv")
+	public void testAssignMAR(int testCaseNumber, String username, String password, String repairer, 
+			String urgency, String estimate, String repairerError, String errorMessage, 
+			String successMessage, String text) throws Exception {
+		driver.get(baseUrl);
+		login(driver, username, password);
+//		go to search page
+		driver.findElement(By.xpath(prop.getProperty("Lnk_FacilityManager_SearchMARs"))).click();
+//		select filter
+		driver.findElement(By.xpath(prop.getProperty("Rad_SearchMAR_UnassignedFilter"))).click();
+//		search
+		driver.findElement(By.xpath(prop.getProperty("Btn_SearchMAR_Submit"))).click();
+
+//		select repair
+		String marId = driver.findElement(By.xpath("html/body/table/tbody/tr[last()]/td[1]")).getText();
+		String facilityName = driver.findElement(By.xpath("html/body/table/tbody/tr[last()]/td[2]")).getText();
+		String description = driver.findElement(By.xpath("html/body/table/tbody/tr[last()]/td[3]")).getText();
+		String creationDate = driver.findElement(By.xpath("html/body/table/tbody/tr[last()]/td[4]")).getText();
+		
+		driver.findElement(By.xpath("html/body/table/tbody/tr[last()]/td/a")).click();
+		
+//		assert details
+		assertEquals(marId, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_MARId"))).getText());
+		assertEquals(facilityName, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_FacilityName"))).getText());
+		assertEquals(description, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Description"))).getText());
+		assertEquals(creationDate, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_CreationDate"))).getText());
+		
+//		assign repair
+		try {
+//			select repairer
+	    	new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Register_State")))).selectByVisibleText(repairer);
+//	    	select urgency
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Register_State")))).selectByVisibleText(urgency);
+//			select estimate
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Register_State")))).selectByVisibleText(estimate);
+	    } catch (NoSuchElementException e) {
+	    	System.out.println(e.getMessage());
+	    }
+		driver.findElement(By.xpath(prop.getProperty("Btn_AssignMAR_Submit"))).click();
+
+		if (successMessage.isEmpty()) {
+//			not assigned
+			try {
+				assertEquals(repairerError, driver.findElement(By.xpath(prop.getProperty("Txt_AssignMAR_RepairerError"))).getText());
+				assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_AssignMar_Error"))).getText());
+				
+				takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+			} catch (NoSuchElementException e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+//			assigned
+			try {
+				assertEquals(successMessage, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Message"))).getText());
+				
+				assertEquals(urgency, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Urgency"))).getText());
+				assertEquals(repairer, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_AssignedTo"))).getText());
+				
+				takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+			} catch (NoSuchElementException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
 	}
 	
 	@After

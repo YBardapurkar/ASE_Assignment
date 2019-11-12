@@ -2,12 +2,9 @@ package registration.model;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
-
+import registration.data.AssignmentDAO;
 import registration.data.UserDAO;
 import registration.util.DropdownUtils;
-
-import registration.model.*;
 
 public class Assignment {
 	public static final String ACTION_ASSIGN_MAR = "assign_mar";
@@ -58,7 +55,7 @@ public class Assignment {
 	
 	public void validateAssignment (String action, AssignmentMessage assignmentMessage, Date currentDate, String duration) {
 	//	if (action.equals(ACTION_ASSIGN_MAR)) { 
-			assignmentMessage.setAssignmentIdMessage(validateAssignmentId(action, this.getAssignmentId()));
+//			assignmentMessage.setAssignmentIdMessage(validateAssignmentId(action, this.getAssignmentId()));
 			assignmentMessage.setUrgencyMessage(validateUrgency(action, this.getUrgency()));
 			assignmentMessage.setAssignedToMessage(validateAssignedTo(action, this.getAssignedTo()));
 			assignmentMessage.setEstimateMessage(validateEstimate(action,duration, this.getEstimate()));
@@ -185,14 +182,16 @@ public class Assignment {
 	//	if(action.equals(ACTION_ASSIGN_MAR)) {
 			if (assignedTo.equals("")) {
 				result="Select a Repairer to assign";
-			}
-			
-			else if(repairers.stream().anyMatch(listOfRepairers -> listOfRepairers.getUsername().contains(assignedTo)))
-			{
-				result = "";
-			}
-			 else {
+			} else if(!repairers.stream().anyMatch(listOfRepairers -> listOfRepairers.getUsername().contains(assignedTo))) {
 				result = "Repairer name is not in list of repairers";
+			} else if (AssignmentDAO.getAssignmentCountByDay(assignedTo, new Date(System.currentTimeMillis())) >= 5) {
+//				More than 5 in a day, cannot assign
+				result = "Cannot assign more than 5 MARs to this repairer today";
+			} else if (AssignmentDAO.getAssignmentCountByWeek(assignedTo) >= 10) {
+//				More than 10 in a week, cannot assign
+				result = "Cannot assign more than 10 MARs to this repairer in this week.";
+			} else {
+				result = "";
 			}
 	//	} 
 //		default

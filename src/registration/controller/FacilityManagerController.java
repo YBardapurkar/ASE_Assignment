@@ -226,23 +226,29 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				if (!assignmentMessage.getErrorMessage().equals("")) {
 //					error messages
 					session.setAttribute("message", assignmentMessage);
+					MAR mar = MARDAO.getMARByID(assignment.getMarId());
+					session.setAttribute("mar", mar);
+					session.setAttribute("list_repairers", UserDAO.getUsersByRole("Repairer"));
 
 					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_assign_form.jsp").include(request, response);
 				} else {
 //					no error
-					if (AssignmentDAO.getAssignmentCountByDay(assignment.getAssignedTo(), new Date(System.currentTimeMillis())) >= 5) {
-//						More than 5 in a day, cannot assign
-						assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer today.");
-					} else if (AssignmentDAO.getAssignmentCountByWeek(assignment.getAssignedTo()) >= 10) {
-//						More than 10 in a week, cannot assign
-						assignmentMessage.setErrorMessage("Cannot assign more than 10 MARs to this repairer in this week.");
-					} else {
+//					if (AssignmentDAO.getAssignmentCountByDay(assignment.getAssignedTo(), new Date(System.currentTimeMillis())) >= 5) {
+////						More than 5 in a day, cannot assign
+//						assignmentMessage.setErrorMessage("Cannot assign more than 5 MARs to this repairer today.");
+//						assignment.setAssignedTo(null);
+//					} else if (AssignmentDAO.getAssignmentCountByWeek(assignment.getAssignedTo()) >= 10) {
+////						More than 10 in a week, cannot assign
+//						assignmentMessage.setErrorMessage("Cannot assign more than 10 MARs to this repairer in this week.");
+//						assignment.setAssignedTo(null);
+//					} else {
 //						can assign
 						AssignmentDAO.assignRepairer(assignment);
+						session.setAttribute("assign", assignment);
 						session.setAttribute("success_message", "MAR Assigned");
-					}
+//					}
 
 //					save in session
 					MAR mar = MARDAO.getMARByID(assignment.getMarId());
