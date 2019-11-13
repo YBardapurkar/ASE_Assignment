@@ -226,11 +226,11 @@ public class User implements Serializable{
 			userErrorMsgs.setErrorMsg();
 			
 			if (userErrorMsgs.getUsernameError().isEmpty() && 
-					UserDAO.getUserByUsername(this.getUsername()).getRole().equals("Admin")) {
+					UserDAO.getUserByUsername(this.getUsername()).getRole().equalsIgnoreCase("Admin")) {
 				userErrorMsgs.setErrorMsg("Cannot change role of Admin");
-			} else if (this.getRole().equals("Admin")) {
+			} else if (this.getRole().equalsIgnoreCase("Admin")) {
 				userErrorMsgs.setErrorMsg("Cannot change role to Admin");
-			} else if (this.getRole().equals("Facility Manager") && !UserDAO.getUsersByRole(this.getRole()).isEmpty()) {
+			} else if (this.getRole().equalsIgnoreCase("Facility Manager") && !UserDAO.getUsersByRole(this.getRole()).isEmpty()) {
 				userErrorMsgs.setErrorMsg("Cannot create more than one Facility Manager");
 			}
 				
@@ -483,7 +483,7 @@ public class User implements Serializable{
 
 		if (role.equals("")) {
 			result = "Role is a required field";
-		} else if (DropdownUtils.getRoleDropdown().contains(role))
+		} else if (DropdownUtils.getAllRolesDropdown().contains(role))
 		{
 			result = "";
 		}
