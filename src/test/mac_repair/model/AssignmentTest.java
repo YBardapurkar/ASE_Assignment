@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +14,7 @@ import junitparams.JUnitParamsRunner;
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
 import registration.model.User;
+import registration.util.DateUtils;
 
 @RunWith(JUnitParamsRunner.class)
 public class AssignmentTest {
@@ -31,7 +32,7 @@ public class AssignmentTest {
 	}  
 
 	@Test
-	@FileParameters("src/test/AssignmentTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/AssignmentTestCases.csv")
 	public void testAssignment(int testCaseNumber, String action, int assignmentId, int marId, String assignedTo, String urgency, int estimate,String date, String assignmentIdMessage, String marIdMessage
 			, String assignedToMessage, String urgencyMessage, String estimateMessage, String errorMessage, String today, String dateErrorMessage, String description, String duration) {
 		 

@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +24,7 @@ public class UserTest {
 	}
 	
 	@Test
-	@FileParameters("src/test/UserRegisterTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/UserRegisterTestCases.csv")
 	public void testRegister(int testCaseNumber, String action, String username, String password, 
 			String firstname,String lastname, String role, String utaid, String phone, String email, 
 			String street, String city, String state, String zipcode,
@@ -65,7 +65,7 @@ public class UserTest {
 	}
 	
 	@Test
-	@FileParameters("src/test/UserLoginTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/UserLoginTestCases.csv")
 	public void testLogin(int testCaseNumber, String action, String username, String password, 
 			String usernameMessage, String passwordMessage, String message, 
 			String errorMessage, String description) {
@@ -82,7 +82,7 @@ public class UserTest {
 	}
 	
 	@Test
-	@FileParameters("src/test/UserChangeRoleTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/UserChangeRoleTestCases.csv")
 	public void testChangeRole(int testCaseNumber, String action, String username, String role, 
 			String usernameMessage, String roleMessage, String message, 
 			String errorMessage, String description) {
@@ -101,7 +101,7 @@ public class UserTest {
 	}
 	
 	@Test
-	@FileParameters("src/test/UserUpdateProfileTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/UserUpdateProfileTestCases.csv")
 	public void testUpdateProfile(int testCaseNumber, String action, String username, String password, 
 			String firstname, String lastname, String phone, String email,  String street, String city, 
 			String state, String zipcode,
@@ -138,7 +138,7 @@ public class UserTest {
 	}
 	
 	@Test
-	@FileParameters("src/test/UserEditUserTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/UserEditUserTestCases.csv")
 	public void testEditUser(int testCaseNumber, String action, String username, String password, 
 			String firstname, String lastname, String phone, String email,  String street, String city, 
 			String state, String zipcode,

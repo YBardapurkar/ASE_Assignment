@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import java.sql.Date;
 

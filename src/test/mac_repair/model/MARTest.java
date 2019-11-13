@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,7 +29,7 @@ public class MARTest {
 	}
 
 	@Test
-	@FileParameters("src/test/MARTest.csv")
+	@FileParameters("src/test/mac_repair/model/MARTest.csv")
 	public void testMAR(String description,String expectedMessagedescription, 
 			String urgency,String expectedMessageUrgency ,int id,String expectedMessageId, 
 			String assignedTo, String expectedMessageAssignedto, String reportedBy, String expectedMessagereportedBy, 
