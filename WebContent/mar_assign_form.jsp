@@ -2,14 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h2>Assign a Repairer</h2>
-<form action="facility_manager" method="post" >
-<table>
 
+<p style="color: red;"><c:out value='${message.errorMessage}'/></p>
+
+<form action="facility_manager" method="post" >
+
+<table>
 <tr>
-<td>
-Repairer
-</td>
-<td>
+<td> Repairer <td>
 <select name="repairer">
 	<c:forEach items="${list_repairers}" var="item" varStatus="status">
 		<option value="${item.username}">
@@ -18,23 +18,23 @@ Repairer
 	</c:forEach>
 	</select>
 </td>
+<td> <p style="color: red;"><c:out value='${message.assignedToMessage}'/></p> </td>
 </tr>
 
 <tr>
 <td> Urgency (*): </td>
-<td><select name ="urgency" value = "<c:out value='${assign.urgency}'/>">
+<td>
+<select name ="urgency" value="<c:out value='${assign.urgency}'/>">
 	<option> Minor </option>
 	<option> Major </option>
 	<option> Unusable </option>
 </select>
 </td>
-<td> <input name="urgency_error"  value="<c:out value='${message.urgencyMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled"> </td>
+<td> <p style="color: red;"><c:out value='${message.urgencyMessage}'/></p> </td>
 </tr>
 
 <tr>
-<td>
-Repair Estimated Time
-</td>
+<td> Repair Estimated Time </td>
 <td>
 <select name="estimate">
 	<c:forEach items="${repair_times}" var="item" varStatus="status">
@@ -52,9 +52,5 @@ Repair Estimated Time
 </td>
 </tr>
 </table>
-<input name="username_error"  value="<c:out value='${message.errorMessage}'/>" type="text"  style ="background-color: white; color: red; border: none; width: 800px"  disabled="disabled" maxlength="60">
 
 </form>
-
-</body>
-</html>

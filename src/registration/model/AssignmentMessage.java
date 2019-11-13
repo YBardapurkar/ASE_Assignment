@@ -62,7 +62,7 @@ public class AssignmentMessage {
 		this.dateErrorMessage = dateError;
 	}
 	public void setErrorMessage() {
-		if (!this.assignmentIdMessage.isEmpty() || !this.urgencyMessage.isEmpty() || !this.assignedToMessage.isEmpty() || !this.marIdMessage.isEmpty() || !this.estimateMessage.isEmpty() || !this.dateErrorMessage.isEmpty()) {
+		if (/*!this.assignmentIdMessage.isEmpty() || */!this.urgencyMessage.isEmpty() || !this.assignedToMessage.isEmpty() || !this.marIdMessage.isEmpty() || !this.estimateMessage.isEmpty() || !this.dateErrorMessage.isEmpty()) {
 			this.setErrorMessage("Please correct the following errors");
 		} else {
 			this.setErrorMessage("");
