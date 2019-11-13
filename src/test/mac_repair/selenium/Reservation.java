@@ -69,12 +69,12 @@ public class Reservation extends MacRepair_BusinessFunctions{
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_Repairer_Logout"))).click();
 		
-		takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		takeScreenshot(driver, String.format("Repairer_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 	} catch (NoSuchElementException e) {
 //		success in registration
 	//	assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));
 		
-		takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		takeScreenshot(driver, String.format("Repairer_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 	}
   }
   
