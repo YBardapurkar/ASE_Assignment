@@ -33,7 +33,6 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 	private String baseUrl;
 	private StringBuffer verificationErrors = new StringBuffer();
 	
-	
 	@Before
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "c:/ChromeDriver/chromedriver.exe");
@@ -115,7 +114,6 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 
 //		select All Users filter
 		driver.findElement(By.xpath(prop.getProperty("Rad_SearchUser_RoleFilter"))).click();
-		Thread.sleep(1_000);
 
 //		enter search text for role
 		driver.findElement(By.xpath(prop.getProperty("Txt_SearchUser_SearchText"))).clear();

@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +18,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,6 +25,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
+import registration.model.MAR;
+import registration.util.SQLConnection;
 
 @RunWith(JUnitParamsRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -30,6 +35,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 	private WebDriver driver;
 	private String baseUrl;
 	private StringBuffer verificationErrors = new StringBuffer();
+	static SQLConnection DBMgr = SQLConnection.getInstance();
 	
 	@Before
 	public void setUp() throws Exception {
@@ -54,15 +60,14 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 			String state, String zipcode, String usernameMessage, String passwordMessage, String firstnameMessage, 
 			String lastnameMessage, String roleMessage, String utaidMessage, String phoneMessage, String emailMessage, 
 			String streetMessage, String cityMessage, String stateMessage, String zipcodeMessage, String message, 
-			String errorMessage, String description) throws Exception {
+			String errorMessage, String text) throws Exception {
 		
 		driver.get(baseUrl);
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Register"))).click();
 		register(driver, username, password, firstname, lastname, role, utaid, phone, email, street, city, state, zipcode);
 		
-//		Thread.sleep(1000);
-//		error in registration
-		try {
+		if (message.isEmpty()) {
+//			error in registration
 			assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_ErrorMessage"))).getAttribute("value"));
 			
 			assertEquals(usernameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_UsernameError"))).getAttribute("value"));
@@ -78,25 +83,19 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 			assertEquals(stateMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_StateError"))).getAttribute("value"));
 			assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_ZipError"))).getAttribute("value"));
 			
-			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
-		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage());
-		}
-		
-//		success in registration
-		try {
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+		} else {
+//			success in registration
 			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Login_SuccessMessage"))).getAttribute("value"));
 			
-			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
-		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage());
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		}
 	}
 	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentLoginTestCases.csv")
 	public void test2_Login(int testCaseNumber, String username, String password, String usernameMessage, 
-			String passwordMessage, String message, String errorMessage, String description) throws Exception {
+			String passwordMessage, String message, String errorMessage, String text) throws Exception {
 		
 		driver.get(baseUrl);
 		login(driver, username, password);
@@ -106,13 +105,13 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		assertEquals(usernameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Login_UsernameError"))).getAttribute("value"));
 		assertEquals(passwordMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Login_PasswordError"))).getAttribute("value"));
 		
-		takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 	}
 	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentCreateMARTestCases.csv")
 	public void test3_CreateMAR(int testCaseNumber, String username, String password, String facilityName,
-			String description, String descriptionErrorMessage, String message, String notes) {
+			String description, String descriptionErrorMessage, String message, String text) {
 		
 		driver.get(baseUrl);
 		login(driver, "ssssss", "Yash@1");
@@ -120,24 +119,26 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Student_NewMAR"))).click();
 		createMAR(driver, facilityName, description);
 		
-//		in case of error
-		try {
+		if (message.isEmpty()) {
+//			in case of error
 			assertEquals(descriptionErrorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_NewMAR_DescriptionError"))).getAttribute("value"));
 			
-			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
-		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage());
-		}
-		
-//		in case of success
-		try {
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+		} else {
+//			in case of success
 			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_Message"))).getAttribute("value"));
-			assertEquals(facilityName, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_FacilityName"))).getText());
-			assertEquals(description, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_Description"))).getText());
 			
-			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
-		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage());
+			int marId = Integer.parseInt(driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_MARId"))).getText());
+			MAR mar = getMARByMARId(marId);
+			
+			assertEquals(mar.getId(), marId);
+			assertEquals(mar.getFacilityName(), driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_FacilityName"))).getText());
+			assertEquals(mar.getDescription(), driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_Description"))).getText());
+//			precision till minutes
+			assertEquals(mar.getDate().substring(0, 16), driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_CreationDate"))).getText().substring(0, 16));
+			assertEquals(mar.getReportedBy(), username);
+			
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		}
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_Student_Logout"))).click();
@@ -150,5 +151,25 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
 		}
+	}
+	
+	private static MAR getMARByMARId (int marId) {
+
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		MAR mar = new MAR(); 
+		try {
+			stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(" SELECT * from mar where mar_id = '" + marId + "';");
+			while (result.next()) {
+				mar.setId(Integer.parseInt(result.getString("mar_id")));
+				mar.setDescription(result.getString("description"));
+				mar.setFacilityName(result.getString("facility_name"));
+				mar.setDate(result.getString("creation_date"));
+				mar.setReportedBy(result.getString("reported_by"));
+				break;
+			}
+		} catch (SQLException e) {}
+		return mar;
 	}
 }
