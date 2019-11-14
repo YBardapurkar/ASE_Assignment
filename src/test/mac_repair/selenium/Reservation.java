@@ -74,8 +74,7 @@ public class Reservation extends MacRepair_BusinessFunctions{
 //		success in registration
 	//	assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));
 		
-		takeScreenshot(driver, String.format("Repairer_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
-	}
+}
   }
   
 	
@@ -83,19 +82,13 @@ public class Reservation extends MacRepair_BusinessFunctions{
   public void tearDown() throws Exception {
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
+ /*   if (!"".equals(verificationErrorString)) {
       fail(verificationErrorString);
-    }
+      
+    }*/
   }
 
-  private boolean isElementPresent(By by) {
-    try {
-      driver.findElement(by);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
-  }
+
 
   
 
