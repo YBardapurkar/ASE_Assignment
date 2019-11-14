@@ -54,45 +54,21 @@ public class Assignment {
 	}
 	
 	public void validateAssignment (String action, AssignmentMessage assignmentMessage, Date currentDate, String duration) {
-	//	if (action.equals(ACTION_ASSIGN_MAR)) { 
-//			assignmentMessage.setAssignmentIdMessage(validateAssignmentId(action, this.getAssignmentId()));
-			assignmentMessage.setUrgencyMessage(validateUrgency(action, this.getUrgency()));
-			assignmentMessage.setAssignedToMessage(validateAssignedTo(action, this.getAssignedTo()));
-			assignmentMessage.setEstimateMessage(validateEstimate(action,duration, this.getEstimate()));
-			assignmentMessage.setMarIdMessage(validateMarId(action, this.getMarId()));
-			assignmentMessage.setDateErrorMessage(validateDate(this.assignedDate, currentDate));
-			assignmentMessage.setErrorMessage();
-	//	}
-	}
-	
-	private String validateAssignmentId(String action, int assignmentId) {
-		String result;
-//		assign mar
-	//	if(action.equals(ACTION_ASSIGN_MAR)) {
-			if (assignmentId <= 0) {
-				result="assignmentId cannot be 0 or negative";
-			}
-			 else {
-				result = "";
-			}
-		//} 
-//		default
-		/*else {
-			result = "action not recognized";
-		}*/
-		return result;
+		assignmentMessage.setUrgencyMessage(validateUrgency(action, this.getUrgency()));
+		assignmentMessage.setAssignedToMessage(validateAssignedTo(action, this.getAssignedTo()));
+		assignmentMessage.setEstimateMessage(validateEstimate(action,duration, this.getEstimate()));
+		assignmentMessage.setMarIdMessage(validateMarId(action, this.getMarId()));
+		assignmentMessage.setDateErrorMessage(validateDate(this.assignedDate, currentDate));
+		assignmentMessage.setErrorMessage();
 	}
 	 
 	private String validateDate(Date assignedDate, Date currentDate)
 	{ 
 		//setDate(DateUtils.nowTimeStamp());
 		String result;
-		if(currentDate.equals(assignedDate))
-		{
+		if(currentDate.equals(assignedDate)) {
 			result = "";
-		}
-		else
-		{
+		} else {
 			result = "Date not correct";
 		}
 		return result;
@@ -189,7 +165,7 @@ public class Assignment {
 				result = "Cannot assign more than 5 MARs to this repairer today";
 			} else if (AssignmentDAO.getAssignmentCountByWeek(assignedTo) >= 10) {
 //				More than 10 in a week, cannot assign
-				result = "Cannot assign more than 10 MARs to this repairer in this week.";
+				result = "Cannot assign more than 10 MARs to this repairer in this week";
 			} else {
 				result = "";
 			}

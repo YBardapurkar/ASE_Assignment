@@ -17,6 +17,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
@@ -32,8 +34,10 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 	@Before
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "c:/ChromeDriver/chromedriver.exe");
+
 		driver = new ChromeDriver();
 		baseUrl = "http://localhost:8081/mac_repair/";
+
 		
 		prop = new Properties();
 		prop.load(new FileInputStream("./SharedUIMap/SharedUIMap.properties"));
