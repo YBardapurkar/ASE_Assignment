@@ -9,10 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -25,7 +23,6 @@ import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RepairerTest extends MacRepair_BusinessFunctions{
 
 	private WebDriver driver;
@@ -36,7 +33,7 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "c:/ChromeDriver/chromedriver.exe");
 		driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
-		baseUrl = "http://localhost:8081/mac_repair/";
+		baseUrl = "http://localhost:8080/mac_repair/";
 		
 		prop = new Properties();
 		prop.load(new FileInputStream("./SharedUIMap/SharedUIMap.properties"));
@@ -57,17 +54,20 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));			
 		takeScreenshot(driver, String.format("Admin_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));						
 	}
-		
+
   @Test
   @FileParameters("src/test/mac_repair/selenium/RepairerViewAssignedRepairsTestCases.csv")
-  public void test2_ViewAssignedRepairs(int testCaseNumber, String username, String password, String firstname,
+  public void testReservation(int testCaseNumber, String username, String password, String firstname,
 			String lastname, String role, String utaid, String phone, String email, String street, String city, 
 			String state, String zipcode, String message) throws Exception {
 	try {
 		driver.get(baseUrl);
-		//Login
-		login(driver, username, password);	
-		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Assigned_Repairs"))).click();		
+		driver.findElement(By.xpath(prop.getProperty("Txt_Login_Username"))).clear();
+		driver.findElement(By.xpath(prop.getProperty("Txt_Login_Username"))).sendKeys("rrrrrr");
+		driver.findElement(By.xpath(prop.getProperty("Txt_Login_Password"))).clear();
+		driver.findElement(By.xpath(prop.getProperty("Txt_Login_Password"))).sendKeys("Yash@1");
+		driver.findElement(By.xpath(prop.getProperty("Btn_Login_Login"))).click();
+		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Assigned_Repairs"))).click();
 		/*Collect Data*/
 		String marId = driver.findElement(By.xpath("html/body/table/tbody/tr[2]/td[1]")).getText();
 		String facilityName = driver.findElement(By.xpath("html/body/table/tbody/tr[2]/td[2]")).getText();
@@ -83,29 +83,35 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_Repairer_Logout"))).click();
 		
-		takeScreenshot(driver, String.format("Repairer_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 	} catch (NoSuchElementException e) {
 //		success in registration
 	//	assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));
 		
-}
+		//takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+	}
   }
   
 	
   @After
   public void tearDown() throws Exception {
     driver.quit();
-    String verificationErrorString = verificationErrors.toString();
- /*   if (!"".equals(verificationErrorString)) {
+    /*String verificationErrorString = verificationErrors.toString();
+    if (!"".equals(verificationErrorString)) {
       fail(verificationErrorString);
-      
     }*/
   }
 
-
+/*  private boolean isElementPresent(By by) {
+    try {
+      driver.findElement(by);
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }*/
 
   
 
  
   }
-
