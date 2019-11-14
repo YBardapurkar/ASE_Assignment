@@ -38,13 +38,16 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "c:/ChromeDriver/chromedriver.exe");
 		driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
-		baseUrl = "http://localhost:8080/mac_repair/";
-//		baseUrl = "http://localhost:8082/mac_repair/";
 		
 		prop = new Properties();
-		prop.load(new FileInputStream("./SharedUIMap/SharedUIMap.properties"));
+//		load configuration file
+		prop.load(new FileInputStream("./Configuration/Configuration.properties"));
 		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//		load base url, shared ui map
+		baseUrl = prop.getProperty("sAppURL");
+		prop.load(new FileInputStream(prop.getProperty("SharedUIMap")));
+		
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 	}
 	
 	@Test
@@ -57,7 +60,6 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Register"))).click();
 		register(driver, username, password, firstname, lastname, role, utaid, phone, email, street, city, state, zipcode);
 		
-		Thread.sleep(10_000);
 		assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));
 		
 		takeScreenshot(driver, String.format("Admin_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));

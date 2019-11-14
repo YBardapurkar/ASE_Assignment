@@ -34,13 +34,15 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 	@Before
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "c:/ChromeDriver/chromedriver.exe");
-
-		driver = new ChromeDriver();
-		baseUrl = "http://localhost:8081/mac_repair/";
-
+		driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
 		
 		prop = new Properties();
-		prop.load(new FileInputStream("./SharedUIMap/SharedUIMap.properties"));
+//		load configuration file
+		prop.load(new FileInputStream("./Configuration/Configuration.properties"));
+		
+//		load base url, shared ui map
+		baseUrl = prop.getProperty("sAppURL");
+		prop.load(new FileInputStream(prop.getProperty("SharedUIMap")));
 		
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 	}
