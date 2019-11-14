@@ -9,17 +9,22 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StudentTest extends MacRepair_BusinessFunctions{
 
 	private WebDriver driver;
@@ -29,7 +34,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 	@Before
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "c:/ChromeDriver/chromedriver.exe");
-		driver = new ChromeDriver();
+		driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
 		baseUrl = "http://localhost:8080/mac_repair/";
 		
 		prop = new Properties();
@@ -40,7 +45,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentRegisterTestCases.csv")
-	public void testRegister(int testCaseNumber, String username, String password, String firstname,
+	public void test1_Register(int testCaseNumber, String username, String password, String firstname,
 			String lastname, String role, String utaid, String phone, String email, String street, String city, 
 			String state, String zipcode, String usernameMessage, String passwordMessage, String firstnameMessage, 
 			String lastnameMessage, String roleMessage, String utaidMessage, String phoneMessage, String emailMessage, 
@@ -86,7 +91,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentLoginTestCases.csv")
-	public void testLogin(int testCaseNumber, String username, String password, String usernameMessage, 
+	public void test2_Login(int testCaseNumber, String username, String password, String usernameMessage, 
 			String passwordMessage, String message, String errorMessage, String description) throws Exception {
 		
 		driver.get(baseUrl);
@@ -102,7 +107,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentCreateMARTestCases.csv")
-	public void testCreateMAR(int testCaseNumber, String username, String password, String facilityName,
+	public void test3_CreateMAR(int testCaseNumber, String username, String password, String facilityName,
 			String description, String descriptionErrorMessage, String message, String notes) {
 		
 		driver.get(baseUrl);
