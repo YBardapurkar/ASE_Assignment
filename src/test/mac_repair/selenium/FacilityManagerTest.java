@@ -139,38 +139,29 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 //		assign repair
 		try {
 //			select repairer
-	    	new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Register_State")))).selectByVisibleText(repairer);
+	    	new Select(driver.findElement(By.xpath(prop.getProperty("Lst_AssignMAR_Repairer")))).selectByVisibleText(repairer);
 //	    	select urgency
-			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Register_State")))).selectByVisibleText(urgency);
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_AssignMAR_Urgency")))).selectByVisibleText(urgency);
 //			select estimate
-			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Register_State")))).selectByVisibleText(estimate);
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_AssignMAR_Estimate")))).selectByVisibleText(estimate);
 	    } catch (NoSuchElementException e) {
 	    	System.out.println(e.getMessage());
 	    }
 		driver.findElement(By.xpath(prop.getProperty("Btn_AssignMAR_Submit"))).click();
-
-		if (successMessage.isEmpty()) {
+		if (!errorMessage.isEmpty()) {
 //			not assigned
-			try {
-				assertEquals(repairerError, driver.findElement(By.xpath(prop.getProperty("Txt_AssignMAR_RepairerError"))).getText());
-				assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_AssignMar_Error"))).getText());
-				
-				takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
-			} catch (NoSuchElementException e) {
-				System.out.println(e.getMessage());
-			}
+			assertEquals(repairerError, driver.findElement(By.xpath(prop.getProperty("Txt_AssignMAR_RepairerError"))).getText());
+			assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_AssignMar_Error"))).getText());
+			
+			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		} else {
 //			assigned
-			try {
-				assertEquals(successMessage, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Message"))).getText());
-				
-				assertEquals(urgency, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Urgency"))).getText());
-				assertEquals(repairer, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_AssignedTo"))).getText());
-				
-				takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
-			} catch (NoSuchElementException e) {
-				System.out.println(e.getMessage());
-			}
+			assertEquals(successMessage, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Message"))).getAttribute("value"));
+			
+			assertEquals(urgency, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Urgency"))).getText());
+			assertEquals(repairer, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_AssignedTo"))).getText());
+			
+			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		}
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
