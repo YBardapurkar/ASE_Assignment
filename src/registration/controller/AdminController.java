@@ -74,11 +74,11 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				User user = UserDAO.getUserByUsername(request.getParameter("user_details"));
 				if (user != null) {
 					session.setAttribute("USERS", user);
-					session.setAttribute("role_dropdown", DropdownUtils.getRoleDropdown());
 					
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/user_details.jsp").include(request, response);
 					if (!user.getRole().equals("Admin"))
+						session.setAttribute("role_dropdown", DropdownUtils.getAllRolesDropdown());
 						request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
 				}
 				
@@ -213,7 +213,11 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				
 				if (!userErrorMsgs.getErrorMsg().equals("")) {
 //					if error messages
+					username = updatedUser.getUsername();
+					user = UserDAO.getUserByUsername(username);
+					
 					session.setAttribute("errorMsgs", userErrorMsgs);
+					session.setAttribute("USERS", user);
 
 					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
 					request.getRequestDispatcher("/user_details.jsp").include(request, response);
@@ -225,29 +229,16 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 					newRole = updatedUser.getRole();
 					user = UserDAO.getUserByUsername(username);
 					
-//					check if facility manager exists
-					if(newRole.equals("Facility Manager") & !UserDAO.getUsersByRole("Facility Manager").isEmpty()) {
-						session.setAttribute("success_message", "A Facility Manager already exists in the system.");
-						session.setAttribute("USERS", user);
-						session.setAttribute("change_role", updatedUser);
-						
-						request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-						request.getRequestDispatcher("/user_details.jsp").include(request, response);
-						request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
-					} 
-//					update role
-					else {
-						UserDAO.updateDetails(username, newRole); //update database
-						session.setAttribute("success_message", "role is updated");
-						user.setRole(newRole);
-						
-						session.setAttribute("USERS", user);
-						session.setAttribute("change_role", updatedUser);
-						
-						request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-						request.getRequestDispatcher("/user_details.jsp").include(request, response);
-						request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
-					}
+					UserDAO.updateDetails(username, newRole); //update database
+					session.setAttribute("success_message", "role is updated");
+					user.setRole(newRole);
+					
+					session.setAttribute("USERS", user);
+					session.setAttribute("change_role", updatedUser);
+					
+					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
+					request.getRequestDispatcher("/user_details.jsp").include(request, response);
+					request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
 				}
 			}
 

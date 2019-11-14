@@ -26,6 +26,7 @@ public class DropdownUtils {
 //	return dropdown list for all roles
 	public static ArrayList<String> getAllRolesDropdown() {
 		ArrayList<String> roles = new ArrayList<String>();
+		roles.add("");
 		roles.add("Student");
 		roles.add("Faculty");
 		roles.add("Repairer");

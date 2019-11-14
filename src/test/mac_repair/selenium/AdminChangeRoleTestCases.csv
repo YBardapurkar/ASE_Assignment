@@ -1,2 +1,5 @@
-1,aaaaaa,Yash@1,,Role is a required field,Please correct the following errors,Select Role is Empty
-2,aaaaaa,Yash@1,Repairer,,,Select Role is Valid
+1,aaaaaa,Yash@1,Admin,,,,ChangeRole_OfAdmin_NotPossible
+2,aaaaaa,Yash@1,Repairer,,Role is a required field,Please correct the following errors,ChangeRole_ToEmpty
+3,aaaaaa,Yash@1,Repairer,Facility Manager,,Cannot create more than one Facility Manager,ChangeRole_ToFM_Error
+4,aaaaaa,Yash@1,Repairer,Admin,,Cannot change role to Admin,ChangeRole_ToAdmin_Error
+5,aaaaaa,Yash@1,Repairer,Student,,,ChangeRole_Valid
