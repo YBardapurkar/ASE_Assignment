@@ -25,8 +25,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-import registration.model.MAR;
-import registration.util.SQLConnection;
+import mac_repair.model.MAR;
+import mac_repair.util.SQLConnection;
 
 @RunWith(JUnitParamsRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-import registration.model.Reservation;
-import registration.model.ReservationMessage;
+import mac_repair.model.Reservation;
+import mac_repair.model.ReservationMessage;
 
 @RunWith(JUnitParamsRunner.class)
 public class ReservationTest {

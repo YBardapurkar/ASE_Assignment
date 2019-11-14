@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-import registration.model.SearchFacility;
-import registration.model.SearchFacilityError;
+import mac_repair.model.SearchFacility;
+import mac_repair.model.SearchFacilityError;
 
 
 @RunWith(JUnitParamsRunner.class)

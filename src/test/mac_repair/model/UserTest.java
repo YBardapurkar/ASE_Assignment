@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-import registration.model.User;
-import registration.model.UserError;
+import mac_repair.model.User;
+import mac_repair.model.UserError;
 
 @RunWith(JUnitParamsRunner.class)
 public class UserTest {

@@ -9,9 +9,8 @@ import org.junit.runner.RunWith;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-
-import registration.model.MAR;
-import registration.model.MARError;
+import mac_repair.model.MAR;
+import mac_repair.model.MARError;
 
 
 @RunWith(JUnitParamsRunner.class)

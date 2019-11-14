@@ -8,9 +8,9 @@ import org.junit.runner.RunWith;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-import registration.data.FacilityDAO;
-import registration.model.Facility;
-import registration.model.FacilityErrorMessages;
+import mac_repair.data.FacilityDAO;
+import mac_repair.model.Facility;
+import mac_repair.model.FacilityErrorMessages;
 
 
 @RunWith(JUnitParamsRunner.class)

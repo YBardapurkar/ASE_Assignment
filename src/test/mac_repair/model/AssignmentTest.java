@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
-import registration.model.Assignment;
-import registration.model.AssignmentMessage;
+import mac_repair.model.Assignment;
+import mac_repair.model.AssignmentMessage;
 
 @RunWith(JUnitParamsRunner.class)
 public class AssignmentTest {
