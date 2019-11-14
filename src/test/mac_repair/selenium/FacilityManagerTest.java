@@ -44,7 +44,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 	}
 	
-//	@Test
+	@Test
 	@FileParameters("src/test/mac_repair/selenium/FacilityManagerRegisterTestCases.csv")
 	public void test1_Register(int testCaseNumber, String username, String password, String firstname,
 			String lastname, String role, String utaid, String phone, String email, String street, String city, 
@@ -80,7 +80,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		}
 	}
 	
-//	@Test
+	@Test
 	@FileParameters("src/test/mac_repair/selenium/FacilityManagerSearchMARTestCases.csv")
 	public void test2_SearchMAR(int testCaseNumber, String username, String password, int searchFilter, String searchText, 
 			String searchTextMessage, String errorMessage, String text) {
