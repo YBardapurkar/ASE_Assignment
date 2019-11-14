@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import static org.junit.Assert.*;
 
@@ -30,7 +30,7 @@ public class ReservationTest {
 	}
 
 	@Test
-	@FileParameters("src/test/ReservationTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/ReservationTestCases.csv")
 	public void testReservation(int testCaseNumber, int reservationId, int marId, String facilityName, String startTime,
 			String endTime, int duration, String todayTimestamp, String reservationIdMessage, String marIdMessage, 
 			String facilityNameMessage, String startTimeMessage, String endTimeMessage, String errorMessage, String description) {

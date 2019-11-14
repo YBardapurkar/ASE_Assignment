@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +24,7 @@ public class SearchTest {
 	}
 	
 	@Test
-	@FileParameters("src/test/SearchUserTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/SearchUserTestCases.csv")
 	public void testSearchUser(int testCaseNumber, String action, String searchFilter, String searchText, 
 			String searchTextMessage, String searchErrorMessage, String message) {
 		
@@ -39,7 +39,7 @@ public class SearchTest {
 	}
 	
 	@Test
-	@FileParameters("src/test/SearchMARTestCases.csv")
+	@FileParameters("src/test/mac_repair/model/SearchMARTestCases.csv")
 	public void testSearchMAR(int testCaseNumber, String action, String searchFilter, String searchText, 
 			String searchTextMessage, String searchErrorMessage, String message) {
 		

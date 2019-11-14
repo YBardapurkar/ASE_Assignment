@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,7 +28,7 @@ public class FacilityTest {
 	
 	
 	@Test
-	@FileParameters("src/test/facilityTest.csv")
+	@FileParameters("src/test/mac_repair/model/facilityTest.csv")
 	public void testFacility(int testCaseNumber, String facilityType, String facilityName, String facilityInterval, String facilityDuration, String facilityVenue,
 			 String facilityNameError, String facilityTypeError, String facilityIntervalError, String facilityDurationError, String facilityVenueError) 
 

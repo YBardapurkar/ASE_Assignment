@@ -1,3 +1,3 @@
-1,ffffff_new,Yash@1,rrrrrr,Minor,2 hours,Cannot assign more than 5 MARs to this repairer today,Please correct the following errors,,AssignMAR_5MARDayError
-2,ffffff_new,Yash@1,rrrrrr,Minor,2 hours,Cannot assign more than 10 MARs to this repairer in this week,Please correct the following errors,,AssignMAR_10MARWeekError
-3,ffffff_new,Yash@1,rrrrrr2,Minor,2 hours,,,MAR Assigned,AssignMAR_Valid
+1,ffffff,Yash@1,rrrrrr_5marPerDay,Minor,2 hours,Cannot assign more than 5 MARs to this repairer today,Please correct the following errors,,AssignMAR_5MARDayError
+2,ffffff,Yash@1,rrrrrr_10marPerWeek,Minor,2 hours,Cannot assign more than 10 MARs to this repairer in this week,Please correct the following errors,,AssignMAR_10MARWeekError
+3,ffffff,Yash@1,rrrrrr,Minor,2 hours,,,MAR Assigned,AssignMAR_Valid

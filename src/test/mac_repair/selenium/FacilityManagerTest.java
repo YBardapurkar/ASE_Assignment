@@ -9,8 +9,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +25,7 @@ import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 
 	private WebDriver driver;
@@ -41,9 +44,9 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 	}
 	
-//	@Test
+	@Test
 	@FileParameters("src/test/mac_repair/selenium/FacilityManagerRegisterTestCases.csv")
-	public void testRegister(int testCaseNumber, String username, String password, String firstname,
+	public void test1_Register(int testCaseNumber, String username, String password, String firstname,
 			String lastname, String role, String utaid, String phone, String email, String street, String city, 
 			String state, String zipcode, String message, String description) throws Exception {
 		
@@ -77,9 +80,9 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		}
 	}
 	
-//	@Test
+	@Test
 	@FileParameters("src/test/mac_repair/selenium/FacilityManagerSearchMARTestCases.csv")
-	public void testSearchMAR(int testCaseNumber, String username, String password, int searchFilter, String searchText, 
+	public void test2_SearchMAR(int testCaseNumber, String username, String password, int searchFilter, String searchText, 
 			String searchTextMessage, String errorMessage, String text) {
 		driver.get(baseUrl);
 		login(driver, username, password);
@@ -103,7 +106,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/FacilityManagerAssignMARTestCases.csv")
-	public void testAssignMAR(int testCaseNumber, String username, String password, String repairer, 
+	public void test3_AssignMAR(int testCaseNumber, String username, String password, String repairer, 
 			String urgency, String estimate, String repairerError, String errorMessage, 
 			String successMessage, String text) throws Exception {
 		driver.get(baseUrl);

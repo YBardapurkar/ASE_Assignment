@@ -1,4 +1,4 @@
-package test;
+package test.mac_repair.model;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +13,6 @@ import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 import registration.model.Assignment;
 import registration.model.AssignmentMessage;
-import registration.model.User;
 
 @RunWith(JUnitParamsRunner.class)
 public class AssignmentTest {
@@ -31,8 +30,8 @@ public class AssignmentTest {
 	}  
 
 	@Test
-	@FileParameters("src/test/AssignmentTestCases.csv")
-	public void testAssignment(int testCaseNumber, String action, int assignmentId, int marId, String assignedTo, String urgency, int estimate,String date, String assignmentIdMessage, String marIdMessage
+	@FileParameters("src/test/mac_repair/model/AssignmentTestCases.csv")
+	public void testAssignment(int testCaseNumber, String action, int marId, String assignedTo, String urgency, int estimate,String date, String marIdMessage
 			, String assignedToMessage, String urgencyMessage, String estimateMessage, String errorMessage, String today, String dateErrorMessage, String description, String duration) {
 		 
 		EasyMock.expect(dateUtils.now()).andReturn(Date.valueOf(today));
@@ -40,7 +39,6 @@ public class AssignmentTest {
 		
 		Date todayDate = dateUtils.now();
 		
-		assignment.setAssignmentId(assignmentId);
 		assignment.setMarId(marId);
 		assignment.setAssignedTo(assignedTo);
 		assignment.setAssignedDate(Date.valueOf(date));
@@ -49,14 +47,13 @@ public class AssignmentTest {
 		
 		assignment.validateAssignment(action, assignmentMessage, todayDate,duration);
 		
-		assertEquals(assignmentId, assignment.getAssignmentId());
+		assertEquals(0, assignment.getAssignmentId());
 		assertEquals(marId, assignment.getMarId());
 		assertEquals(assignedTo, assignment.getAssignedTo());
 		assertEquals(Date.valueOf(date), assignment.getAssignedDate());
 		assertEquals(urgency, assignment.getUrgency());
 		assertEquals(estimate, assignment.getEstimate());
 		
-		assertEquals(assignmentIdMessage, assignmentMessage.getAssignmentIdMessage());
 		assertEquals(marIdMessage, assignmentMessage.getMarIdMessage());
 		assertEquals(assignedToMessage, assignmentMessage.getAssignedToMessage());
 		assertEquals(urgencyMessage, assignmentMessage.getUrgencyMessage());
