@@ -69,30 +69,11 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Register"))).click();
 		register(driver, username, password, firstname, lastname, role, utaid, phone, email, street, city, state, zipcode);
 		
-		try {
-//			error in registration
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_ErrorMessage"))).getAttribute("value"));
-			
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_UsernameError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_PasswordError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_FisrtnameError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_LastnameError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_RoleError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_UtaIdError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_PhoneError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_EmailError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_StreetError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_CityError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_StateError"))).getAttribute("value"));
-			assertEquals("", driver.findElement(By.xpath(prop.getProperty("Txt_Register_ZipError"))).getAttribute("value"));
-			
-			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
-		} catch (NoSuchElementException e) {
-//			success in registration
-			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));
-			
-			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
-		}
+		
+//		success in registration
+		assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Register_SuccessMessage"))).getAttribute("value"));
+		
+		takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 	}
 	
 	@Test
@@ -170,6 +151,8 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		assertEquals(description, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_Description"))).getText());
 		assertEquals(creationDate, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetailsFull_CreationDate"))).getText());
 		
+		Thread.sleep(500);
+		
 //		assign repair
 		try {
 //			select repairer
@@ -178,7 +161,9 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_AssignMAR_Urgency")))).selectByVisibleText(urgency);
 //			select estimate
 			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_AssignMAR_Estimate")))).selectByVisibleText(estimate);
-	    } catch (NoSuchElementException e) {
+			
+			takeScreenshot(driver, String.format("FacilityManager_TestSelections_%02d_" + text, testCaseNumber));
+		} catch (NoSuchElementException e) {
 	    	System.out.println(e.getMessage());
 	    }
 		driver.findElement(By.xpath(prop.getProperty("Btn_AssignMAR_Submit"))).click();

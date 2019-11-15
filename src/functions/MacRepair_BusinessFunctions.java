@@ -22,8 +22,8 @@ public class MacRepair_BusinessFunctions {
 			FileUtils.copyFile(source, new File("./ScreenShots/" + screenshotName + ".png"));
 		} catch (IOException e) {}
 		try {
-//			Thread.sleep(1_000);
-			Thread.sleep(0);
+			Thread.sleep(1_000);
+//			Thread.sleep(0);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
