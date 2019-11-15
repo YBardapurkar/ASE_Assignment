@@ -73,6 +73,8 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 		driver.get(baseUrl);
 		login(driver, username, password);
 		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_Admin_Home"))).getText().contains("Admin"));
+		
 //		go to search page
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Admin_SearchUsers"))).click();
 		
@@ -108,6 +110,8 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 		
 		driver.get(baseUrl);
 		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_Admin_Home"))).getText().contains("Admin"));
 
 //		go to update role page
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Admin_UpdateRole"))).click();

@@ -1,9 +1,16 @@
 package test.mac_repair.selenium;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +23,7 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
@@ -23,6 +31,8 @@ import org.openqa.selenium.support.ui.Select;
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
+import mac_repair.model.MAR;
+import mac_repair.util.SQLConnection;
 
 @RunWith(JUnitParamsRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -31,6 +41,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 	private WebDriver driver;
 	private String baseUrl;
 	private StringBuffer verificationErrors = new StringBuffer();
+	static SQLConnection DBMgr = SQLConnection.getInstance();
 	
 	@Before
 	public void setUp() throws Exception {
@@ -90,6 +101,9 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 			String searchTextMessage, String errorMessage, String text) {
 		driver.get(baseUrl);
 		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_FacilityManager_Home"))).getText().contains("Facility Manager"));
+		
 //		go to search page
 		driver.findElement(By.xpath(prop.getProperty("Lnk_FacilityManager_SearchMARs"))).click();
 //		select filter
@@ -103,6 +117,23 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		assertEquals(searchTextMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchTextError"))).getAttribute("value"));
 		assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_ErrorMessage"))).getAttribute("value"));
 		
+//		List<MAR> searchResults = searchMARByFilter(searchFilter, searchText);
+		
+//		if (errorMessage.isEmpty()) {
+//			List<WebElement> rows = driver.findElements(By.xpath("html/body/table/tbody/tr"));
+//			assertEquals(searchResults.size(), rows.size());
+//			
+//			System.out.println(searchResults.size());
+//			System.out.println(rows.size());
+//			
+//			for(int i = 2; i < rows.size() + 2; i++) {
+//				assertEquals(searchResults.get(i - 2).getId(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[1]")).getText());
+//				assertEquals(searchResults.get(i - 2).getFacilityName(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[2]")).getText());
+//				assertEquals(searchResults.get(i - 2).getDescription(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[3]")).getText());
+//				assertEquals(searchResults.get(i - 2).getDate(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[4]")).getText());
+//			}
+//		}
+		
 		takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
@@ -115,6 +146,9 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 			String successMessage, String text) throws Exception {
 		driver.get(baseUrl);
 		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_FacilityManager_Home"))).getText().contains("Facility Manager"));
+		
 //		go to search page
 		driver.findElement(By.xpath(prop.getProperty("Lnk_FacilityManager_SearchMARs"))).click();
 //		select filter
@@ -174,5 +208,57 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
 		}
+	}
+	
+	private static List<MAR> searchMARByFilter(int filter, String text) {
+		ArrayList<MAR> marList = new ArrayList<MAR>();
+		
+		Statement stmt = null;
+		Connection conn = SQLConnection.getDBConnection();
+		String query = "";
+		if (filter == 1) {
+			query = "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
+					+ "from mar "
+					+ " left outer join assignment on mar.mar_id = assignment.mar_id "
+					+ "where mar.facility_name like '%" + text + "%' "
+					+ "order by mar.mar_id;";
+		} else if (filter == 2) {
+			query = "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
+					+ "from mar "
+					+ " left outer join assignment on mar.mar_id = assignment.mar_id "
+					+ "where assignment.assigned_to like '%" + text + "%' "
+					+ "order by mar.mar_id;";
+		} else if (filter == 3) {
+			query = "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
+					+ "from mar "
+					+ " left outer join assignment on mar.mar_id = assignment.mar_id "
+					+ "where assignment.assigned_to is null "
+					+ "order by mar.mar_id;";
+		} else if (filter == 4) {
+			query = "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
+					+ "from mar "
+					+ " left outer join assignment on mar.mar_id = assignment.mar_id "
+					+ "where date(mar.creation_date) = '" + text + "' "
+					+ "order by mar.mar_id;";
+		} else {
+			query = "SELECT mar.mar_id, mar.description, mar.facility_name, assignment.urgency, mar.creation_date, assignment.assigned_to "
+					+ "from mar "
+					+ " left outer join assignment on mar.mar_id = assignment.mar_id "
+					+ "order by mar.mar_id;";
+		}
+		try {
+			stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(query);
+			while (result.next()) {
+				MAR mar = new MAR();
+				mar.setId(Integer.parseInt(result.getString("mar_id")));
+				mar.setDescription(result.getString("description"));
+				mar.setFacilityName(result.getString("facility_name"));
+				mar.setDate(result.getString("creation_date"));
+				mar.setReportedBy(result.getString("reported_by"));
+				marList.add(mar);	
+			}
+		} catch (SQLException e) {}
+		return marList;
 	}
 }

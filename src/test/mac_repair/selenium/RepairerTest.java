@@ -1,6 +1,7 @@
 package test.mac_repair.selenium;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.FileInputStream;
@@ -64,6 +65,8 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 
 		driver.get(baseUrl);
 		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_Repairer_Home"))).getText().contains("Repairer"));
 		
 		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Assigned_Repairs"))).click();
 		try {

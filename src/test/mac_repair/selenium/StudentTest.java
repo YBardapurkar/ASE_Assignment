@@ -1,6 +1,7 @@
 package test.mac_repair.selenium;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.FileInputStream;
@@ -114,7 +115,9 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 			String description, String descriptionErrorMessage, String message, String text) {
 		
 		driver.get(baseUrl);
-		login(driver, "ssssss", "Yash@1");
+		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_Student_Home"))).getText().contains("Student"));
 		
 		driver.findElement(By.xpath(prop.getProperty("Lnk_Student_NewMAR"))).click();
 		createMAR(driver, facilityName, description);
