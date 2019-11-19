@@ -27,14 +27,7 @@ public class MARDAO {
 		marList.addAll(getMARListFacilityManager(""));
 		return marList;
 	}
-
-//	Get list of assigned MAR
-	public static ArrayList<MAR> getAssignedMAR () {
-		ArrayList<MAR> marList = new ArrayList<MAR>();
-		marList.addAll(getMARList("where assignment.assigned_to is not null "));
-		return marList;
-	}
-	
+		
 //	Get list of MAR by assigned repairer username
 	public static ArrayList<MAR> getMARByAssignedRepairer (String assignedTo) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
