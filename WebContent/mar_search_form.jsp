@@ -18,7 +18,8 @@
 	<input type="radio" name="search_filter" value="2" <c:if test = "${mar_search.searchFilter == '2'}">checked</c:if> />By Repairer
 	<input type="radio" name="search_filter" value="3" <c:if test = "${mar_search.searchFilter == '3'}">checked</c:if> />Unassigned
 	<input type="radio" name="search_filter" value="4" <c:if test = "${mar_search.searchFilter == '4'}">checked</c:if> />By Date
-	<input type="radio" name="search_filter" value="5" <c:if test = "${mar_search.searchFilter == '5' || empty mar_search.searchFilter}">checked</c:if> />All
+	<input type="radio" name="search_filter" value="5" <c:if test = "${mar_search.searchFilter == '5'}">checked</c:if> />By Assigned Date
+	<input type="radio" name="search_filter" value="6" <c:if test = "${mar_search.searchFilter == '6' || empty mar_search.searchFilter}">checked</c:if> />All
 	</p>
 	
 	<input name="search_text" type="text" value="${mar_search.searchText}">

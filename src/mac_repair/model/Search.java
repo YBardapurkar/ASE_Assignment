@@ -65,7 +65,7 @@ public class Search implements Serializable{
 				result = "";
 			}
 //			by date
-			else if (searchFilter.equals("4")) {
+			else if (searchFilter.equals("4") || searchFilter.equals("5")) {
 				if(searchText.equals("")) {
 					result = "Search Field is Empty";
 				} else if (!dateUtils.isValidDate(searchText)){
@@ -75,7 +75,7 @@ public class Search implements Serializable{
 				}
 			}
 //			all
-			else if(searchFilter.equals("5")) {
+			else if(searchFilter.equals("6")) {
 				result = "";
 			}
 //			default

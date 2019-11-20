@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import mac_repair.model.MAR;
@@ -117,6 +118,15 @@ public class MARDAO {
 		return marList;
 	}
 	
+	//Ajinkya
+	
+//	Get list of MAR by creation date (exact match)
+	public static ArrayList<MAR> getAssignedMARByDate(String dateString) {
+		ArrayList<MAR> marList = new ArrayList<MAR>();
+		marList.addAll(getMARList("where date(assignment.assigned_date) = '" + dateString + "' "));
+		return marList;
+	}
+	
 //	do not remove this yet
 	private static ArrayList<MAR> getMARList (String queryWhere) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
@@ -206,4 +216,5 @@ public class MARDAO {
 		} catch (SQLException e) {System.out.println(e.getMessage());}
 		return marList;
 	}
+	
 }
