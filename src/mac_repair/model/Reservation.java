@@ -45,22 +45,21 @@ public class Reservation {
 	}
 	
 	public void validateReservation(ReservationMessage reservationMessage, String startTime, int durationHours, Timestamp today) {
-		reservationMessage.setReservationIdMessage(validateReservationId(this.getReservationId()));
 		reservationMessage.setMarIdMessage(validateMarId(this.getMarId()));
 		reservationMessage.setFacilityNameMessage(validateFacilityName(this.getFacilityName()));
 		reservationMessage.setStartTimeMessage(validateStartTime(this.getStartTime(), startTime, durationHours, today));
 		reservationMessage.setErrorMessage();
 	}
 	
-	private String validateReservationId(int reservationId) {
-		String result;
-		if (reservationId <= 0) {
-			result = "Assignment Id cannot be 0 or negative";
-		} else {
-			result = "";
-		}
-		return result;
-	}
+//	private String validateReservationId(int reservationId) {
+//		String result;
+//		if (reservationId <= 0) {
+//			result = "Assignment Id cannot be 0 or negative";
+//		} else {
+//			result = "";
+//		}
+//		return result;
+//	}
 	
 	private String validateMarId(int marId) {
 		String result;

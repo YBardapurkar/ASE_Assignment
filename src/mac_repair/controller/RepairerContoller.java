@@ -171,74 +171,56 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			if (action.equals("reserve_facility")) {
 				ReservationMessage reservationMessage = new ReservationMessage();
 				String validateStartTime = request.getParameter("start_time1");
-//				if (validateStartTime.length() == 16) {
 				newReservation = getReservationParam(request); // if it is a valid time stamp
-//				}
+				int marId = newReservation.getMarId();
+				MAR mar = MARDAO.getMARByID(marId);
+				newReservation.setFacilityName(mar.getFacilityName());
 				int interval = Integer.parseInt(request.getParameter("interval"));
 				newReservation.validateReservation(reservationMessage, validateStartTime, interval, Timestamp.valueOf(dateUtils.nowTimeStamp()));
-
-				// TODO this method
 
 				if (!reservationMessage.getErrorMessage().equals("")) {
 					// if error messages
 					session.setAttribute("reservation", newReservation);
 					session.setAttribute("errorMsgs", reservationMessage);
 					request.getRequestDispatcher("/menu_login.jsp").include(request, response);
-					int id = Integer.parseInt(request.getParameter("mar_id"));
-					MAR mar = MARDAO.getMARByID(id);
-					newReservation.setMarId(id);
 					session.setAttribute("mar", mar);
 
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
 					request.getRequestDispatcher("/facility_reservation_form.jsp").include(request, response);
 				}
-
 				else {
-					// TODO : Create Dao Layer Ajinkya
-
 					String username = currentUser.getUsername();
 
 					ArrayList<MAR> listMAR = new ArrayList<MAR>();
 					listMAR = MARDAO.getMARByAssignedRepairer(username);
 					session.setAttribute("list_mar", listMAR);
-
-					int id = Integer.parseInt(request.getParameter("mar_id"));
-					MAR mar = MARDAO.getMARByID(id);
 					Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
 					session.setAttribute("assign", assignment);
-					newReservation.setMarId(id);
+					newReservation.setMarId(marId);
 					ReservationDAO.insertReservation(newReservation);
 					session.setAttribute("reservation", newReservation);
-//					reservationMessage.setMessage("Facility Reserved Sucessfully");
 					session.setAttribute("success_message", "Facility Reserved Sucessfully");
 					session.setAttribute("errorMsgs", reservationMessage);
 					session.setAttribute("mar", mar);
 
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
-//					reservationMessage.setMessage("Reservation modified Successfully");
-//					session.setAttribute("success_message", "Reservation Modified Sucessfully");
 					session.setAttribute("errorMsgs", reservationMessage);
 					request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya
-
-					// request.getRequestDispatcher("/menu_repairer.jsp").include(request,
-					// response);
-					// request.getRequestDispatcher("/mar_list_full.jsp").include(request,
-					// response);
 				}
 			}
 
 			// For udpating reservation facility
-
-			// TODO For udpating reservation facility
-
 			else if (action.equals("reserved_selected_facility")) {
 				String validateStartTime = request.getParameter("start_time1");
 				ReservationMessage reservationMessage = new ReservationMessage();
 				if (validateStartTime.length() == 16) {
 					newReservation = getReservationParam(request); // if it is a valid time stamp
 				}
+				int marId = newReservation.getMarId();
+				MAR mar = MARDAO.getMARByID(marId);
+				newReservation.setFacilityName(mar.getFacilityName());
 				int interval = Integer.parseInt(request.getParameter("interval"));
 				newReservation.validateReservation(reservationMessage, validateStartTime, interval, Timestamp.valueOf(dateUtils.nowTimeStamp()));
 
@@ -248,7 +230,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					session.setAttribute("errorMsgs", reservationMessage);
 					request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 					int id = Integer.parseInt(request.getParameter("mar_id"));
-					MAR mar = MARDAO.getMARByID(id);
 					newReservation.setMarId(id);
 					session.setAttribute("mar", mar);
 					session.setAttribute("reservation", newReservation);
@@ -266,7 +247,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					session.setAttribute("list_mar", listMAR);
 
 					int id = Integer.parseInt(request.getParameter("mar_id"));
-					MAR mar = MARDAO.getMARByID(id);
 					newReservation.setMarId(id);
 					Assignment assignment = AssignmentDAO.getAssignedToByMarId(mar.getId());
 					ReservationDAO.updateReservation(newReservation);
@@ -281,14 +261,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
 					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
 					request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response); // Ajinkya
-				} // check
-					// this
-//				}
-
-				// request.getRequestDispatcher("/menu_repairer.jsp").include(request,
-				// response);
-				// request.getRequestDispatcher("/mar_list_full.jsp").include(request,
-				// response);
+				}
 			}
 
 			else if (action.equals("cancel_reserve")) {
@@ -357,7 +330,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		String datetimeLocal = "";
 
 		reservation.setMarId(Integer.parseInt(request.getParameter("mar_id")));
-		// reservation.setFacilityName(request.getParameter("facility_name"));
+		reservation.setFacilityName(request.getParameter("facility_name"));
 		// reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time1")));
 		datetimeLocal = request.getParameter("start_time1");
 
