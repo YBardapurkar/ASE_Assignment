@@ -152,6 +152,74 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 //		logout
 		driver.findElement(By.xpath(prop.getProperty("Btn_Admin_Logout"))).click();
 	}
+	
+	// Edit repairer Profile
+	@Test
+	@FileParameters("src/test/mac_repair/selenium/AdminEditRepairerProfileTestCases.csv")
+	public void test4_EditAnotherUserprofile(int testCaseNumber, String username, String password, String role, String new_password, String firstname,
+			String lastname, String phone, String email, String street, String city, 
+			String state, String zipcode, String message, String text) throws Exception {
+		
+		driver.get(baseUrl);
+		login(driver, username, password);
+		driver.findElement(By.xpath(prop.getProperty("Lnk_Repairer_Profile"))).click();
+		
+//		rule check for Admin profile--> Admin cannot change it's own profile
+		if(role.equals("Admin")) {
+			takeScreenshot(driver, String.format("Admin_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+		}
+		else {
+			
+//		    password
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Password"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Password"))).sendKeys(new_password);
+		    
+//		    first name
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_FirstName"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_FirstName"))).sendKeys(firstname);
+		    
+//		    last name
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_LastName"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_LastName"))).sendKeys(lastname);
+		    
+//		    phone
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Phone"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Phone"))).sendKeys(phone);
+		    
+//		    email
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Email"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Email"))).sendKeys(email);
+		    
+//		    street
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Street"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Street"))).sendKeys(street);
+		    
+//		    city
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_City"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_City"))).sendKeys(city);
+		    
+//		    state
+		    try {
+		    	new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Editprofile_State")))).selectByVisibleText(state);
+		    } catch (NoSuchElementException e) {
+		    	System.out.println(e.getMessage());
+		    }
+		    
+//		    zip
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Zip"))).clear();
+		    driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_Zip"))).sendKeys(zipcode);
+		    
+//		    update
+		    driver.findElement(By.xpath(prop.getProperty("Btn_Editprofile_Update"))).click();
+		    
+		    assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_SuccessMessage"))).getAttribute("value"));
+			
+			takeScreenshot(driver, String.format("Repairer_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+		}
+		
+//		logout
+		driver.findElement(By.xpath(prop.getProperty("Btn_Repairer_Logout"))).click();
+	}
 		 
 	@After
 	public void tearDown() throws Exception {
