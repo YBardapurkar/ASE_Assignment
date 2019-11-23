@@ -54,6 +54,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 	}
 	
+	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentRegisterTestCases.csv")
 	public void test1_Register(int testCaseNumber, String username, String password, String firstname,
@@ -146,6 +147,46 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_Student_Logout"))).click();
 	}
+	
+	//Edit profile
+	
+	@Test
+	@FileParameters("src/test/mac_repair/selenium/StudentUpdateProfileTestCases.csv")
+	public void test4_EditProfile (int testCaseNumber, String login_username, String login_password, String password, String firstname,
+			String lastname, String phone, String email, String street, String city, 
+			String state, String zipcode, String usernameMessage, String passwordMessage, String firstnameMessage, 
+			String lastnameMessage, String roleMessage, String utaidMessage, String phoneMessage, String emailMessage, 
+			String streetMessage, String cityMessage, String stateMessage, String zipcodeMessage, String message, 
+			String errorMessage, String text) throws Exception {
+		driver.get(baseUrl);		
+		login(driver, login_username, login_password);
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_Student_Home"))).getText().contains("Student"));
+		driver.findElement(By.xpath(prop.getProperty("Lnk_Student_Profile"))).click();
+		updateProfile(driver, password, firstname, lastname, phone, email, street, city, state, zipcode);
+		
+		if (message.isEmpty()) {
+//			error in registration
+			assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_ErrorMessage"))).getAttribute("value"));			
+			assertEquals(usernameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_UsernameError"))).getAttribute("value"));
+			assertEquals(passwordMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_PasswordError"))).getAttribute("value"));
+			assertEquals(firstnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_FisrtnameError"))).getAttribute("value"));
+			assertEquals(lastnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_LastnameError"))).getAttribute("value"));
+			assertEquals(roleMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_RoleError"))).getAttribute("value"));
+			assertEquals(utaidMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_UtaIdError"))).getAttribute("value"));
+			assertEquals(phoneMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_PhoneError"))).getAttribute("value"));
+			assertEquals(emailMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_EmailError"))).getAttribute("value"));
+			assertEquals(streetMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_StreetError"))).getAttribute("value"));
+			assertEquals(cityMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_CityError"))).getAttribute("value"));
+			assertEquals(stateMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_StateError"))).getAttribute("value"));
+			assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Register_ZipError"))).getAttribute("value"));
+			
+			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
+		} 
+		
+	}
+	
+	
+	
 	
 	@After
 	public void tearDown() throws Exception {

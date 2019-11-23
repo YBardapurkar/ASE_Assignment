@@ -103,4 +103,44 @@ public class MacRepair_BusinessFunctions {
 //	    submit
 	    driver.findElement(By.xpath(prop.getProperty("Btn_NewMAR_Submit"))).click();
 	}
+	
+	public void updateProfile(WebDriver driver, String password, String firstName, String lastName, 
+			String phone, String email, String street, String city, String state,
+			String zip) {
+		
+//	    password
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Password"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Password"))).sendKeys(password);
+//	    first name
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Fisrtname"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Fisrtname"))).sendKeys(firstName);
+//	    last name
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Lastname"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Lastname"))).sendKeys(lastName);
+	    
+//	    phone
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Phone"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Phone"))).sendKeys(phone);
+//	    email
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Email"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Email"))).sendKeys(email);
+//	    street
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Street"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Street"))).sendKeys(street);
+//	    city
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_City"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_City"))).sendKeys(city);
+//	    state
+	    try {
+	    	new Select(driver.findElement(By.xpath(prop.getProperty("Lst_Register_State")))).selectByVisibleText(state);
+	    } catch (NoSuchElementException e) {
+	    	System.out.println(e.getMessage());
+	    }
+//	    zip
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Zip"))).clear();
+	    driver.findElement(By.xpath(prop.getProperty("Txt_Register_Zip"))).sendKeys(zip);
+//	    register
+	    driver.findElement(By.xpath(prop.getProperty("Btn_Register_Register"))).click();	    		
+	}
+	
 }
