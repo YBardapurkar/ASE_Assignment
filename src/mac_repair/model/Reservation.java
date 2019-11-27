@@ -88,7 +88,9 @@ public class Reservation {
 //		System.out.println();
 		if (durationHours >= 18) {
 //			multi day
-			if (!startTime.contains("06:00:00")) {
+			if (startDate == null) {
+				result = "Start time is empty or invalid";
+			} else if (!startTime.contains("06:00:00")) {
 				result = "Start time should be 6AM for multi day reservation";
 			} else if (today.after(startDate)) {
 				result = "Start date cannot be in the past";
@@ -99,7 +101,9 @@ public class Reservation {
 			}
 		} else {
 //			single day
-			if (!startDate.toString().contains(today.toString().split(" ")[0])) {
+			if (startDate == null) {
+				result = "Start time is empty or invalid";
+			} else if (!startDate.toString().contains(today.toString().split(" ")[0])) {
 				result = "Start time should be current date for single day reservation";			
 			} else if (startDate.before(dateUtils.startOfDay(today))) {
 				result = "Start time cannot be before 6AM";

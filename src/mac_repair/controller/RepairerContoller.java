@@ -215,9 +215,9 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 			else if (action.equals("reserved_selected_facility")) {
 				String validateStartTime = request.getParameter("start_time1");
 				ReservationMessage reservationMessage = new ReservationMessage();
-				if (validateStartTime.length() == 16) {
+//				if (validateStartTime.length() == 16) {
 					newReservation = getReservationParam(request); // if it is a valid time stamp
-				}
+//				}
 				int marId = newReservation.getMarId();
 				MAR mar = MARDAO.getMARByID(marId);
 				newReservation.setFacilityName(mar.getFacilityName());
@@ -333,7 +333,12 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		reservation.setFacilityName(request.getParameter("facility_name"));
 		// reservation.setStartTime(DateUtils.getSqlDate(request.getParameter("start_time1")));
 		datetimeLocal = request.getParameter("start_time1");
-
+		if (datetimeLocal.isEmpty()) {
+			reservation.setStartTime(null);
+			reservation.setEndTime(null);
+			return reservation;
+		}
+		
 		Timestamp st = dateUtils.getTimestampFromDateTime(datetimeLocal);
 		Calendar cal = Calendar.getInstance();
 		System.out.println("before" + st.getTime());
