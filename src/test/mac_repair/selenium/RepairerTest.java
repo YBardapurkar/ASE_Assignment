@@ -1,6 +1,7 @@
 package test.mac_repair.selenium;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -22,12 +23,18 @@ import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
+
+import org.easymock.EasyMock;
+
+
+
 @RunWith(JUnitParamsRunner.class)
 public class RepairerTest extends MacRepair_BusinessFunctions{
 
 	private WebDriver driver;
 	private String baseUrl;
 	private StringBuffer verificationErrors = new StringBuffer();
+	DateUtils dateUtils;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -43,6 +50,8 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		prop.load(new FileInputStream(prop.getProperty("SharedUIMap")));
 		
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		
+		dateUtils = EasyMock.strictMock(DateUtils.class);
 	}
 	
 	//Register
@@ -70,13 +79,13 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		
 		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Assigned_Repairs"))).click();
 		try {
-			/*Collect Data*/
+
 			String marId = driver.findElement(By.xpath("html/body/table/tbody/tr[2]/td[1]")).getText();
 			String facilityName = driver.findElement(By.xpath("html/body/table/tbody/tr[2]/td[2]")).getText();
 			String description = driver.findElement(By.xpath("html/body/table/tbody/tr[2]/td[3]")).getText();
 			String currentDate = driver.findElement(By.xpath("html/body/table/tbody/tr[2]/td[4]")).getText();
 			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
-			/*Validate data*/
+
 			assertEquals(marId,driver.findElement(By.xpath("html/body/table/tbody/tr[1]/td")).getText());
 			assertEquals(facilityName,driver.findElement(By.xpath("html/body/table/tbody/tr[2]/td")).getText());
 			assertEquals(description,driver.findElement(By.xpath("html/body/table/tbody/tr[3]/td")).getText());
@@ -91,6 +100,59 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath(prop.getProperty("Btn_Repairer_Logout"))).click();
 	}
 
+	@Test
+	@FileParameters("src/test/mac_repair/selenium/ReserveFacility.csv")
+	public void test3_reserveFacilities(int testCaseNumber,String facilityName, String username, String password, String startTime, String expectedMessage) throws Exception {
+		driver.get(baseUrl);
+		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_Repairer_Home"))).getText().contains("Repairer"));
+		
+		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Assigned_Repairs"))).click();
+		if(facilityName.equals("MR1"))
+		{
+			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
+		}
+		else
+		{
+			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Multi_Repair"))).click();
+		}
+		Thread.sleep(10_000);
+		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
+		try {
+			/*Collect Data*/
+			driver.findElement(By.xpath(prop.getProperty("Txt_Start_Time"))).sendKeys(startTime);
+			driver.findElement(By.xpath(prop.getProperty("Btn_Reserve_Facility_Repair"))).click();
+			
+			//Thread.sleep(20_000);
+			/*Validate data*/
+			if(expectedMessage.equals("Reservation Modified Sucessfully"))
+			{
+				//String data = driver.findElement(By.xpath("html/body/form/input[2]")).getAttribute("value");
+				//driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_SuccessMessage"))).getAttribute("value");
+				//String data = driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value");
+				//System.out.println(data+"waste");
+				assertEquals(expectedMessage,driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_SuccessMessage"))).getAttribute("value"));
+			}
+			else{
+				//String data = driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value");
+				//System.out.println(data);
+				assertEquals(expectedMessage,driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value"));
+				
+			}
+			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + startTime, testCaseNumber));
+		}
+			//
+		 catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		driver.findElement(By.xpath("html/body/div[1]/form/input")).click();
+	}	
+	
+	
+	
+	
 	@After
 	public void tearDown() throws Exception {
 		driver.quit();

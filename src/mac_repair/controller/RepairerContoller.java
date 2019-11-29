@@ -176,13 +176,14 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 				MAR mar = MARDAO.getMARByID(marId);
 				newReservation.setFacilityName(mar.getFacilityName());
 				int interval = Integer.parseInt(request.getParameter("interval"));
+				System.out.println(dateUtils.nowTimeStamp()+"in controller");
 				newReservation.validateReservation(reservationMessage, validateStartTime, interval, Timestamp.valueOf(dateUtils.nowTimeStamp()));
 
 				if (!reservationMessage.getErrorMessage().equals("")) {
 					// if error messages
 					session.setAttribute("reservation", newReservation);
 					session.setAttribute("errorMsgs", reservationMessage);
-					request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+					//request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 					session.setAttribute("mar", mar);
 
 					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
@@ -228,7 +229,7 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 					// if error messages
 					session.setAttribute("reservation", newReservation);
 					session.setAttribute("errorMsgs", reservationMessage);
-					request.getRequestDispatcher("/menu_login.jsp").include(request, response);
+					//request.getRequestDispatcher("/menu_login.jsp").include(request, response);
 					int id = Integer.parseInt(request.getParameter("mar_id"));
 					newReservation.setMarId(id);
 					session.setAttribute("mar", mar);
