@@ -51,16 +51,6 @@ public class Reservation {
 		reservationMessage.setErrorMessage();
 	}
 	
-//	private String validateReservationId(int reservationId) {
-//		String result;
-//		if (reservationId <= 0) {
-//			result = "Assignment Id cannot be 0 or negative";
-//		} else {
-//			result = "";
-//		}
-//		return result;
-//	}
-	
 	private String validateMarId(int marId) {
 		String result;
 		if (marId <= 0) {
@@ -83,14 +73,11 @@ public class Reservation {
 	
 	public String validateStartTime(Timestamp startDate , String startTime, int durationHours, Timestamp today) {
 		String result;
-//		System.out.println(startDate);
-//		System.out.println(today);
-//		System.out.println();
 		if (durationHours >= 18) {
 //			multi day
 			if (startDate == null) {
 				result = "Start time is empty or invalid";
-			} else if (!startTime.contains("06:00:00")) {
+			} else if (!this.getStartTime().toString().contains("06:00:00")) {
 				result = "Start time should be 6AM for multi day reservation";
 			} else if (today.after(startDate)) {
 				result = "Start date cannot be in the past";
@@ -113,24 +100,7 @@ public class Reservation {
 				result = "";
 			}
 		}
-		
-//		
-//		
-//		if (durationHours >= 18 && !startTime.contains("06:00:00")) {
-//			result = "Start time should be 6AM for multi day reservation";
-//		}
-//		else if (durationHours < 18 && !startDate.toString().contains(today.toString().split(" ")[0])) {
-//			result = "Start time should be current date for single day reservation";			
-//		}
-////		else if(durationHours <18 && !startTime.contains(DateUtils.nowDate().toString())) {
-////			result = "Start time should be current date for single day reservation";
-////		}		
-//		else if (today.after(startDate)) {
-//			result = "Start date cannot be before current time";
-//		}
-//		else {
-//			result = "";
-//		}
+
 		return result;
 	}
 }
