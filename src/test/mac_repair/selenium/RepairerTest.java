@@ -18,6 +18,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
@@ -112,16 +113,14 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		if(facilityName.equals("MR1"))
 		{
 			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
-		}
-		else
-		{
-			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Multi_Repair"))).click();
-		}
+		
+
 		Thread.sleep(10_000);
 		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
 		try {
 			/*Collect Data*/
 			driver.findElement(By.xpath(prop.getProperty("Txt_Start_Time"))).sendKeys(startTime);
+			new Select(driver.findElement(By.xpath("html/body/form[1]/table/tbody/tr[2]/td[2]/select"))).selectByVisibleText("1 hour");
 			driver.findElement(By.xpath(prop.getProperty("Btn_Reserve_Facility_Repair"))).click();
 			
 			//Thread.sleep(20_000);
@@ -139,13 +138,46 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 				//System.out.println(data);
 				assertEquals(expectedMessage,driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value"));
 				
-			}
-			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + startTime, testCaseNumber));
-		}
-			//
+			}}
 		 catch (NoSuchElementException e) {
 			System.out.println(e.getMessage());
 		}
+		}
+		else
+		{
+			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Multi_Repair"))).click();
+			Thread.sleep(10_000);
+			//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
+			try {
+				/*Collect Data*/
+				driver.findElement(By.xpath(prop.getProperty("Txt_Start_Time"))).sendKeys(startTime);
+				new Select(driver.findElement(By.xpath("html/body/form[1]/table/tbody/tr[2]/td[2]/select"))).selectByVisibleText("1 day");
+				driver.findElement(By.xpath(prop.getProperty("Btn_Reserve_Facility_Repair"))).click();
+				
+				//Thread.sleep(20_000);
+				/*Validate data*/
+				if(expectedMessage.equals("Reservation Modified Sucessfully"))
+				{
+					//String data = driver.findElement(By.xpath("html/body/form/input[2]")).getAttribute("value");
+					//driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_SuccessMessage"))).getAttribute("value");
+					//String data = driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value");
+					//System.out.println(data+"waste");
+					assertEquals(expectedMessage,driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_SuccessMessage"))).getAttribute("value"));
+				}
+				else{
+					//String data = driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value");
+					//System.out.println(data);
+					assertEquals(expectedMessage,driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value"));
+					
+				}}
+			 catch (NoSuchElementException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+			takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + startTime, testCaseNumber));
+		
+			//
+
 		
 		driver.findElement(By.xpath("html/body/div[1]/form/input")).click();
 	}	
