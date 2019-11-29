@@ -35,8 +35,8 @@ Time Slot: (fix this)
 <td>
 <input name="mar_id" type="hidden" value="${mar.id}" >
 <input name="mar_reservation" type="hidden" value="1" > <!--making it hardcode for test--> 
-<input name="action" type="hidden" value="reserved_selected_facility" >
 <input type="submit" value="Update Reservation"> <!-- Update Reservation -->
+<input name="action" type="hidden" value="reserved_selected_facility" >
 </td>
 </tr>
 </table>
