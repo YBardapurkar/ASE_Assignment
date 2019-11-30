@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.FileInputStream;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +19,7 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
@@ -117,11 +119,25 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Assigned_Repairs"))).click();
 
 		try {
-	
-	if(facilityName.equals("IVBC1"))
+			int rowid = 0;
+			List<WebElement> rows= driver.findElement(By.xpath("html/body/table/tbody")).findElements(By.tagName("tr"));
+			System.out.println(rows.size());
+			for (int j=2;j<rows.size() - 1;j++) {
+				System.out.println(driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()); 
+				if((driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()).equals("IVBC 1"))
+				{
+					rowid = j;
+					System.out.println("!!!!!!!!!!"+rowid);
+					break;
+				}
+				  
+			  }
+	System.out.println("!!!!!!!!!!"+rowid);
+	if((driver.findElement(By.xpath("html/body/table/tbody/tr["+rowid+"]/td[2]")).getText()).equals("IVBC 1"))
 	{
-		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair_new"))).click();
-
+		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair_new"))).click();
+				
+		driver.findElement(By.xpath("html/body/table/tbody/tr["+rowid+"]/td[5]/a")).click();
 	//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
 	
 		/*Collect Data*/
@@ -148,9 +164,26 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		
 	}
 	
-	else
+	else 
 	{
-		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Multi_Repair"))).click();
+		int rowid1 = 0;
+		List<WebElement> rows1= driver.findElement(By.xpath("html/body/table/tbody")).findElements(By.tagName("tr"));
+		System.out.println(rows1.size());
+		for (int j=2;j<rows1.size() - 2;j++) {
+			System.out.println(driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()); 
+			if((driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()).equals("OBBC 1"))
+			{
+				rowid1 = j;
+				System.out.println("!!!!!!!!!!"+rowid1);
+				break;
+			}
+			  
+		  }
+		System.out.println("!!!!!!!!!!"+rowid1);
+		
+
+		driver.findElement(By.xpath("html/body/table/tbody/tr["+rowid1+"]/td[5]/a")).click();
+		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Multi_Repair"))).click();
 		//Thread.sleep(10_000);
 		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
 		
@@ -203,10 +236,25 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath(prop.getProperty("Lnk_View_Assigned_Repairs"))).click();
 
 		try {
-		if(facilityName.equals("MR1"))
-		{
-//			single day
-			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
+			int rowid = 0;
+			List<WebElement> rows= driver.findElement(By.xpath("html/body/table/tbody")).findElements(By.tagName("tr"));
+			System.out.println(rows.size());
+			for (int j=2;j<rows.size() - 2;j++) {
+				System.out.println(driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()); 
+				if((driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()).equals("MR 1"))
+				{
+					rowid = j;
+					System.out.println("!!!!!!!!!!"+rowid);
+					break;
+				}
+				  
+			  }
+	System.out.println("!!!!!!!!!!"+rowid);
+	if((driver.findElement(By.xpath("html/body/table/tbody/tr["+rowid+"]/td[2]")).getText()).equals("MR 1"))
+	{
+		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair_new"))).click();
+				
+		driver.findElement(By.xpath("html/body/table/tbody/tr["+rowid+"]/td[5]/a")).click();
 
 		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
 		
@@ -237,7 +285,23 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		
 		else
 		{
-			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Multi_Repair"))).click();
+			int rowid1 = 0;
+			List<WebElement> rows1= driver.findElement(By.xpath("html/body/table/tbody")).findElements(By.tagName("tr"));
+			System.out.println(rows1.size());
+			for (int j=2;j<rows1.size() - 2;j++) {
+				System.out.println(driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()); 
+				if((driver.findElement(By.xpath("html/body/table/tbody/tr["+j+"]/td[2]")).getText()).equals("OBBC 1"))
+				{
+					rowid1 = j;
+					System.out.println("!!!!!!!!!!"+rowid1);
+					break;
+				}
+				  
+			  }
+			System.out.println("!!!!!!!!!!"+rowid1);
+			
+
+			driver.findElement(By.xpath("html/body/table/tbody/tr["+rowid1+"]/td[5]/a")).click();
 			//Thread.sleep(10_000);
 			//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
 			
