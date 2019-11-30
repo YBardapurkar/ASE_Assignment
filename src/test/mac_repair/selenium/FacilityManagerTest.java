@@ -31,7 +31,9 @@ import org.openqa.selenium.support.ui.Select;
 import functions.MacRepair_BusinessFunctions;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
+import mac_repair.model.Facility;
 import mac_repair.model.MAR;
+import mac_repair.util.DropdownUtils;
 import mac_repair.util.SQLConnection;
 
 @RunWith(JUnitParamsRunner.class)
@@ -184,6 +186,97 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		}
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
+	}
+	
+	@Test
+	@FileParameters("src/test/mac_repair/selenium/FacilityManagerSearchFacilityTestCases.csv")
+	public void test4_SearchFacility(int testCaseNumber, String username, String password, String facilityType, 
+			String date, String time, String message, String text) {
+		driver.get(baseUrl);
+		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_FacilityManager_Home"))).getText().contains("Facility Manager"));
+//		Go to search facility page
+		driver.findElement(By.xpath(prop.getProperty("Lnk_FacilityManager_SearchFacilities"))).click();
+//		select facility type
+		try {
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_SearchFacility_FacilityType")))).selectByVisibleText(facilityType);
+		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+		}
+//		submit
+		driver.findElement(By.xpath(prop.getProperty("Btn_SearchFacility_Search"))).click();
+		
+//		Search Facility Next
+//		verify selected facility type
+		String selectedFacilityType = new Select(driver.findElement(By.xpath(prop.getProperty("Lst_SearchFacilityNext_FacilityType")))).getFirstSelectedOption().getText();
+		assertEquals(facilityType, selectedFacilityType);
+//		Select date and time
+		try {
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_SearchFacilityNext_Date")))).selectByVisibleText(date);
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_SearchFacilityNext_Time")))).selectByVisibleText(time);
+		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+		}
+//		submit
+		driver.findElement(By.xpath(prop.getProperty("Btn_SearchFacilityNext_Search"))).click();
+		
+		if (!message.isEmpty()) {
+//			error
+			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityNext_ErrorMessage"))).getAttribute("value"));
+		} else {
+//			no error
+			List<WebElement> rows = driver.findElements(By.xpath("html/body/table/tbody/tr"));
+			
+//			select last
+			String fName = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_FacilityName_Last"))).getText();
+			String fType = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_FacilityType_Last"))).getText();
+			String fInterval = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Interval_Last"))).getText();
+			String fDuration = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Duration_Last"))).getText();
+			String fVenue = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Venue_Last"))).getText();
+			
+			driver.findElement(By.xpath(prop.getProperty("Lnk_SearchFacilityResult_View_Last"))).click();
+			
+//			facility details			
+			assertEquals(fName, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityName"))).getText());
+			assertEquals(fType, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityType"))).getText());
+			assertEquals(fInterval, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Interval"))).getText());
+			assertEquals(fDuration, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Duration"))).getText());
+			assertEquals(fVenue, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Venue"))).getText());
+		}
+		
+//		logout
+		driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
+	}
+	
+	@Test
+	@FileParameters("src/test/mac_repair/selenium/FacilityManagerAddFacilityTestCases.csv")
+	public void test5_AddFacility(int testCaseNumber, String username, String password, String facilityType, String text) {
+		driver.get(baseUrl);
+		login(driver, username, password);
+		
+		assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_FacilityManager_Home"))).getText().contains("Facility Manager"));
+//		Go to search facility page
+		driver.findElement(By.xpath(prop.getProperty("Lnk_FacilityManager_NewFacility"))).click();
+		
+//		Table Tennis
+		try {
+			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_AddFacility_FacilityType")))).selectByVisibleText(facilityType);
+			
+			driver.findElement(By.xpath(prop.getProperty("Btn_AddFacility_Submit"))).click();
+			
+			Facility selectedFacility = DropdownUtils.getFacilityTypeDropdown().stream().filter(x -> x.getFacilityType().equals(facilityType)).findFirst().get();
+			
+//			facility details			
+			assertTrue(driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityName"))).getText().contains(selectedFacility.getFacilityName()));
+			assertEquals(selectedFacility.getFacilityType(), driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityType"))).getText());
+			assertEquals(selectedFacility.getFacilityInterval(), driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Interval"))).getText());
+			assertEquals(selectedFacility.getFacilityDuration(), driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Duration"))).getText());
+			assertEquals(selectedFacility.getFacilityVenue(), driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Venue"))).getText());
+			
+		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@After

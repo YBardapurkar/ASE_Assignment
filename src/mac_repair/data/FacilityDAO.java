@@ -145,7 +145,7 @@ public class FacilityDAO {
 				+ " and facility_name not in (SELECT facility.facility_name from facility inner join"
 				+ " mar on mar.facility_name = facility.facility_name"
 				+ " INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"
-				+ facilityType + "'" + " and reservation.start_timestamp <= '" + timestamp + "'"
-				+ " and reservation.end_timestamp >= '" + timestamp + "')");
+				+ facilityType + "'" + " and not (reservation.start_timestamp <= '" + timestamp + "'"
+				+ " and reservation.end_timestamp >= '" + timestamp + "'))");
 	}
 }
