@@ -27,7 +27,7 @@ import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 import mac_repair.util.DateUtils;
 
-import org.easymock.EasyMock;
+
 
 
 
@@ -38,7 +38,7 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 	private WebDriver driver;
 	private String baseUrl;
 	private StringBuffer verificationErrors = new StringBuffer();
-	DateUtils dateUtils;
+
 	
 	@Before
 	public void setUp() throws Exception {
@@ -54,8 +54,6 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 		prop.load(new FileInputStream(prop.getProperty("SharedUIMap")));
 		
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-		
-		dateUtils = EasyMock.strictMock(DateUtils.class);
 	}
 	
 	//Register
@@ -236,34 +234,6 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 			
 		}
 		
-		/*else if(facilityName.equals("IVBC1"))
-		{
-			driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair_new"))).click();
-
-		//driver.findElement(By.xpath(prop.getProperty("Lnk_View_Each_Repair"))).click();
-		
-			/*Collect Data*//*
-			driver.findElement(By.xpath(prop.getProperty("Txt_Start_Time"))).sendKeys(startTime);
-			new Select(driver.findElement(By.xpath("html/body/form[1]/table/tbody/tr[2]/td[2]/select"))).selectByVisibleText("1 hour");
-			driver.findElement(By.xpath(prop.getProperty("Btn_Reserve_Facility_Repair"))).click();
-
-			/*Validate data*//*
-			if(expectedMessage.equals("Facility Reserved Sucessfully"))
-			{
-				//String data = driver.findElement(By.xpath("html/body/form/input[2]")).getAttribute("value");
-				//driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_SuccessMessage"))).getAttribute("value");
-				//String data = driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value");
-				//System.out.println(data+"waste");
-				assertEquals(expectedMessage,driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_SuccessMessage"))).getAttribute("value"));
-			}
-			else{
-				//String data = driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value");
-				//System.out.println(data);
-				assertEquals(expectedMessage,driver.findElement(By.xpath(prop.getProperty("Txt_Reservation_TimeError"))).getAttribute("value"));
-				
-			}
-			
-		}*/
 		
 		else
 		{
