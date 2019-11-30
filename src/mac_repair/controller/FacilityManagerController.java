@@ -357,7 +357,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 				session.setAttribute("incrementDate", incrementDate1);
 				session.setAttribute("incrementTime", incrementTime1);
-				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
 
 			}
@@ -402,7 +402,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				if(!searchErrorMsg.getErrorMsg().equals(""))
 				{
 					session.setAttribute("searchErrorMsg", searchErrorMsg);
-					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 					request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
 				}
 
@@ -411,14 +411,16 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				{
 						session.setAttribute("searchErrorMsg", searchErrorMsg);
 						searchFacilityError.setShowFacilityMessage("No facilities available");
-						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+						request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+						request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
 						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
 				}
 
 				else
 				{
 						session.setAttribute("list_facilities", facilityList);
-						request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
+						request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
+						request.getRequestDispatcher("/search_facilities2.jsp").include(request, response);
 						request.getRequestDispatcher("/facility_list.jsp").include(request, response);
 				}
 
