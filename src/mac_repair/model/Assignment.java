@@ -63,9 +63,7 @@ public class Assignment {
 		assignmentMessage.setErrorMessage();
 	}
 	 
-	private String validateDate(Date assignedDate, Date currentDate)
-	{ 
-		//setDate(DateUtils.nowTimeStamp());
+	private String validateDate(Date assignedDate, Date currentDate) { 
 		String result;
 		if(currentDate.equals(assignedDate)) {
 			result = "";
@@ -77,38 +75,14 @@ public class Assignment {
 	
 	private String validateUrgency(String action, String urgency) {
 		String result;
-//		assign mar
-	//	if(action.equals(ACTION_ASSIGN_MAR)) {
-		
-
-		
-		if(urgency.equals(""))
-		{
+		if(urgency.equals("")) {
 			result = "Urgency is a required field";
-		}
-		else if(urgency.equals("Minor")|| urgency.equals("Major") || urgency.equals("Unusable"))
-		{
+		} else if(urgency.equals("Minor")|| urgency.equals("Major") || urgency.equals("Unusable")) {
 			result= "";
-		}
-		else
-		{
+		} else {
 			result = "Urgency data is not valid";
 		}
-		
-	return result;
-		
-		
-		
-		
-		
-		
-
-			
-	//	} 
-//		default
-		/*else {
-			result = "action not recognized";
-		}*/
+		return result;
 	}
 	
 	private String validateEstimate(String action,String duration, int estimate) {
@@ -117,64 +91,41 @@ public class Assignment {
 		ArrayList<String[]> estimateDropDown = DropdownUtils.getRepairTimeDropdown(duration);
 		if(estimateDropDown.stream().anyMatch(estimateArray -> Integer.parseInt(estimateArray[1]) == estimate))
 		{
-				
-			result = "";
-			
-		}
-		else
-		{
+			result = "";	
+		} else {
 			result="Estimate is not valid";
 		}
-//		
-	//	} 
-//		default
-		/*else {
-			result = "action not recognized";
-		}*/
 		return result;
 	}
 	
 	private String validateMarId(String action, int marId) {
 		String result;
-//		assign mar
-	//	if(action.equals(ACTION_ASSIGN_MAR)) {
-			if (marId <= 0) {
-				result="MarId cannot be 0 or negative";
-			}
-			 else {
-				result = "";
-			}
-		//} 
-//		default
-		/*else {
-			result = "action not recognized";
-		}*/
+		if (marId <= 0) {
+			result="MarId cannot be 0 or negative";
+		} else {
+			result = "";
+		}
 		return result;
 	}
 	
 	private String validateAssignedTo(String action, String assignedTo) {
 		String result = "";
 		ArrayList<User> repairers = UserDAO.getUsersByRole("Repairer");
-//		assign mar
-	//	if(action.equals(ACTION_ASSIGN_MAR)) {
-			if (assignedTo.equals("")) {
-				result="Select a Repairer to assign";
-			} else if(!repairers.stream().anyMatch(listOfRepairers -> listOfRepairers.getUsername().contains(assignedTo))) {
-				result = "Repairer name is not in list of repairers";
-			} else if (AssignmentDAO.getAssignmentCountByDay(assignedTo, new Date(System.currentTimeMillis())) >= 5) {
-//				More than 5 in a day, cannot assign
-				result = "Cannot assign more than 5 MARs to this repairer today";
-			} else if (AssignmentDAO.getAssignmentCountByWeek(assignedTo) >= 10) {
-//				More than 10 in a week, cannot assign
-				result = "Cannot assign more than 10 MARs to this repairer in this week";
-			} else {
-				result = "";
-			}
-	//	} 
-//		default
-		/*else {
-			result = "action not recognized";
-		}*/
+
+		if (assignedTo.equals("")) {
+			result="Select a Repairer to assign";
+		} else if(!repairers.stream().anyMatch(listOfRepairers -> listOfRepairers.getUsername().contains(assignedTo))) {
+			result = "Repairer name is not in list of repairers";
+		} else if (AssignmentDAO.getAssignmentCountByDay(assignedTo, new Date(System.currentTimeMillis())) >= 5) {
+//			More than 5 in a day, cannot assign
+			result = "Cannot assign more than 5 MARs to this repairer today";
+		} else if (AssignmentDAO.getAssignmentCountByWeek(assignedTo) >= 10) {
+//			More than 10 in a week, cannot assign
+			result = "Cannot assign more than 10 MARs to this repairer in this week";
+		} else {
+			result = "";
+		}
+
 		return result;
 	}
 }

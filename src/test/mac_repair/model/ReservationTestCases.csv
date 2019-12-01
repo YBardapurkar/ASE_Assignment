@@ -1,13 +1,13 @@
-1,-1,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,Assignment Id cannot be 0 or negative,,,,,Please correct the following errors,assignment id negative
-2,0,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,Assignment Id cannot be 0 or negative,,,,,Please correct the following errors,assignment id zero
-3,1,-1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,MAR Id cannot be 0 or negative,,,,Please correct the following errors,mar id negative
-4,1,0,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,MAR Id cannot be 0 or negative,,,,Please correct the following errors,mar id zero
-5,1,1,,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,Facility name is required,,,Please correct the following errors,facility name empty
-6,1,1,MR 1,2019-10-30 10:30:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,,Start date cannot be in the past,,Please correct the following errors,single day - start timestamp in past
-7,1,1,MR 1,2019-10-30 05:00:00,2019-10-30 07:00:00,2,2019-10-30 04:45:00,,,,Start time cannot be before 6AM,,Please correct the following errors,single day - start timestamp before 6AM
-8,1,1,MR 1,2019-10-31 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,,Start time should be current date for single day reservation,,Please correct the following errors,single day - start timestamp not today
-9,1,1,MR 1,2019-10-29 06:00:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start date cannot be in the past,,Please correct the following errors,multi day - start timestamp in past
-10,1,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start time should be 6AM for multi day reservation,,Please correct the following errors,multi day - start timestamp not 6AM for multi day
-11,1,1,MR 1,2019-11-08 06:00:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start date cannot more than one week in advance,,Please correct the following errors,multi day - start timestamp after one week from now
-12,1,1,MR 1,2019-10-30 07:00:00,2019-10-30 09:00:00,2,2019-10-30 05:00:00,,,,,,,single day - no error
-13,1,1,MR 1,2019-10-30 06:00:00,2019-10-30 23:59:59,18,2019-10-30 05:00:00,,,,,,,multi day - no error
+1,-1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,MAR Id cannot be 0 or negative,,,,Please correct the following errors,mar id negative
+2,0,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,MAR Id cannot be 0 or negative,,,,Please correct the following errors,mar id zero
+3,1,,2019-10-30 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,Facility name is required,,,Please correct the following errors,facility name empty
+4,1,MR 1,2019-10-30 10:30,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,,Start time is empty or invalid,,Please correct the following errors,single day - start timestamp empty or invalid
+5,1,MR 1,2019-10-30 10:30:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,,Start date cannot be in the past,,Please correct the following errors,single day - start timestamp in past
+6,1,MR 1,2019-10-30 05:00:00,2019-10-30 07:00:00,2,2019-10-30 04:45:00,,,,Start time cannot be before 6AM,,Please correct the following errors,single day - start timestamp before 6AM
+7,1,MR 1,2019-10-31 11:00:00,2019-10-30 13:00:00,2,2019-10-30 10:45:00,,,,Start time should be current date for single day reservation,,Please correct the following errors,single day - start timestamp not today
+8,1,MR 1,2019-10-29 06:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start time is empty or invalid,,Please correct the following errors,multi day - start timestamp empty or invalid
+9,1,MR 1,2019-10-29 06:00:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start date cannot be in the past,,Please correct the following errors,multi day - start timestamp in past
+10,1,MR 1,2019-10-30 11:00:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start time should be 6AM for multi day reservation,,Please correct the following errors,multi day - start timestamp not 6AM for multi day
+11,1,MR 1,2019-11-08 06:00:00,2019-10-30 13:00:00,18,2019-10-30 10:45:00,,,,Start date cannot more than one week in advance,,Please correct the following errors,multi day - start timestamp after one week from now
+12,1,MR 1,2019-10-30 07:00:00,2019-10-30 09:00:00,2,2019-10-30 05:00:00,,,,,,,single day - no error
+13,1,MR 1,2019-10-30 06:00:00,2019-10-30 23:59:59,18,2019-10-30 05:00:00,,,,,,,multi day - no error

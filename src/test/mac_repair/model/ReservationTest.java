@@ -31,7 +31,7 @@ public class ReservationTest {
 
 	@Test
 	@FileParameters("src/test/mac_repair/model/ReservationTestCases.csv")
-	public void testReservation(int testCaseNumber, int reservationId, int marId, String facilityName, String startTime,
+	public void testReservation(int testCaseNumber, int marId, String facilityName, String startTime,
 			String endTime, int duration, String todayTimestamp, String reservationIdMessage, String marIdMessage, 
 			String facilityNameMessage, String startTimeMessage, String endTimeMessage, String errorMessage, String description) {
 
@@ -46,18 +46,25 @@ public class ReservationTest {
 		Timestamp today = Timestamp.valueOf(dateUtils.nowTimeStamp());
 //		2019-11-01 14:00:00.0 
 
-		reservation.setReservationId(reservationId);
+		reservation.setReservationId(0);
 		reservation.setMarId(marId);
 		reservation.setFacilityName(facilityName);
-		reservation.setStartTime(Timestamp.valueOf(startTime)); // check this once it should be correct format
+		try {
+			reservation.setStartTime(Timestamp.valueOf(startTime)); // check this once it should be correct format
+		} catch (IllegalArgumentException e) {
+			reservation.setStartTime(null);
+		}
 		reservation.setEndTime(Timestamp.valueOf(endTime));
 		
 		reservation.validateReservation(reservationMessage, startTime, duration, today);
 
-		assertEquals(reservationId, reservation.getReservationId());
+		assertEquals(0, reservation.getReservationId());
 		assertEquals(marId, reservation.getMarId());
 		assertEquals(facilityName, reservation.getFacilityName());
-		assertEquals(Timestamp.valueOf(startTime), reservation.getStartTime());
+		try {
+			assertEquals(Timestamp.valueOf(startTime), reservation.getStartTime());
+		} catch (IllegalArgumentException e) {
+		}
 		assertEquals(Timestamp.valueOf(endTime), reservation.getEndTime());
 
 //		assertEquals(reservationIdMessage, reservationMessage.getReservationIdMessage());
