@@ -14,7 +14,7 @@ public class SQLConnection {
 		DB_DRIVER = "com.mysql.jdbc.Driver";
 		DB_CONNECTION = "jdbc:mysql://localhost:3306/macrepairsys?autoReconnect=true&useSSL=false";
 		DB_USER  = "root";
-		DB_PASSWORD = "abcd123456";
+		DB_PASSWORD = "1234567890";
 	}
 	public static synchronized SQLConnection getInstance() {
         if (single_instance == null)
