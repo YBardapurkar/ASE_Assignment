@@ -85,6 +85,7 @@ public String[] listTimes1(int count) {
 		
 	}
 
+//TODO : Delete
 	public Timestamp startTimeconvert(String startTimeStamp)
 	{
 		java.sql.Timestamp startTimeconversion = java.sql.Timestamp.valueOf(startTimeStamp);
@@ -96,7 +97,7 @@ public String[] listTimes1(int count) {
 
 
 //timestamp for reserving
-
+//TODO : Delete
 	public Timestamp reserveStartTime(String startTimeStamp, String interval)
 	{
 		java.sql.Timestamp startTimeStamp1 = java.sql.Timestamp.valueOf(startTimeStamp);
@@ -114,6 +115,7 @@ public String[] listTimes1(int count) {
 			     	
 	}
 	
+//TODO : Delete	
 	public boolean checkReservedFacilities(String prepareTimeStamp, String startTimestamp, String EndTimestamp)
 	{
 		
@@ -206,7 +208,7 @@ public boolean compareTimes(String prepareTimeStamp, String nowTimeStamp)
 	
 
 
-	
+//TODO delete
 public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 {
 	
@@ -243,6 +245,7 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	}
 	
 //get date as String
+//TODO : Delete
 	public String nowDate()
 	{
 		Date today = now();
@@ -257,6 +260,7 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 	}
 		
 	
+//TODO : Delete
 //	get next available start time
 	public Date getStartDate(int duration) {
 		Calendar c = Calendar.getInstance();
@@ -308,6 +312,7 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		return isDate;
 	}
 	
+//TODO : Delete	
 //	get end date for corresponding start time and duration
 	public Date getEndDate(Date startDate, int duration) {
 		Calendar c = Calendar.getInstance(); 
@@ -352,7 +357,8 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		cal.setTimeInMillis(st.getTime());
 		return new Timestamp(cal.getTime().getTime());		
 	}
-	
+
+//TODO : Delete
 	//Check if timestamp is today
 	//TimeDate Today
 	public boolean isTimeStampToday(String timestamp) {
