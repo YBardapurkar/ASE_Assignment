@@ -148,17 +148,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		driver.findElement(By.xpath(prop.getProperty("Btn_Student_Logout"))).click();
 	}
 	
-	//Edit profile
-	
-//	(int testCaseNumber, String username, String password, String role,
-//			String new_password, String firstname, String lastname, String phone, String email, String street,
-//			String city, String state, String zipcode, String passwordMessage, String firstnameMessage, 
-//			String lastnameMessage, String utaidMessage, String phoneMessage, String emailMessage, 
-//			String streetMessage, String cityMessage, String stateMessage, String zipcodeMessage, String message, 
-//			String errorMessage, String text)
-	
-	//removvve role
-	
+	//Update profile	
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/StudentUpdateProfileTestCasesNew.csv")
 	public void test4_UpdateProfile (int testCaseNumber, String login_username, String login_password, String password, String firstname,
@@ -176,19 +166,15 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		if (message.isEmpty()) {
 //			error in registration
 			assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_ErrorMessage"))).getAttribute("value"));			
-			//assertEquals(usernameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_UsernameError"))).getAttribute("value"));
 			assertEquals(passwordMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_PasswordError"))).getAttribute("value"));
 			assertEquals(firstnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_FisrtnameError"))).getAttribute("value"));
-			assertEquals(lastnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_LastnameError"))).getAttribute("value"));
-			//assertEquals(roleMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_RoleError"))).getAttribute("value"));
-			//assertEquals(utaidMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_UtaIdError"))).getAttribute("value"));
+			assertEquals(lastnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_LastnameError"))).getAttribute("value"));						
 			assertEquals(phoneMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_PhoneError"))).getAttribute("value"));
 			assertEquals(emailMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_EmailError"))).getAttribute("value"));
 			assertEquals(streetMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_StreetError"))).getAttribute("value"));
 			assertEquals(cityMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_CityError"))).getAttribute("value"));
 			assertEquals(stateMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_StateError"))).getAttribute("value"));
-			assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_ZipError"))).getAttribute("value"));
-			
+			assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_UpdateProfile_ZipError"))).getAttribute("value"));			
 			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		}
 		

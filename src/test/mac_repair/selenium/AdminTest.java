@@ -249,18 +249,14 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 			
 			assertEquals(passwordMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_PasswordError"))).getAttribute("value"));
 			assertEquals(firstnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_FisrtnameError"))).getAttribute("value"));
-			assertEquals(lastnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_LastnameError"))).getAttribute("value"));
-			//assertEquals(roleMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_RoleError"))).getAttribute("value"));
-			//assertEquals(utaidMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_UtaIdError"))).getAttribute("value"));
+			assertEquals(lastnameMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_LastnameError"))).getAttribute("value"));						
 			assertEquals(phoneMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_PhoneError"))).getAttribute("value"));
 			assertEquals(emailMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_EmailError"))).getAttribute("value"));
 			assertEquals(streetMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_StreetError"))).getAttribute("value"));
 			assertEquals(cityMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_CityError"))).getAttribute("value"));
 			assertEquals(stateMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_StateError"))).getAttribute("value"));
-			assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_ZipError"))).getAttribute("value"));
-			
-			assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_ErrorMessage"))).getAttribute("value"));
-			
+			assertEquals(zipcodeMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_ZipError"))).getAttribute("value"));			
+			assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_ErrorMessage"))).getAttribute("value"));			
 			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_Editprofile_SuccessMessage")))
 					.getAttribute("value"));
 
