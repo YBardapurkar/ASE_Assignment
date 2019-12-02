@@ -331,6 +331,13 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
 		
+		Calendar c2 = Calendar.getInstance();
+		System.out.println(new Date(c2.getTimeInMillis()));
+		
+		if (new Date(c.getTimeInMillis()).compareTo(new Date(c2.getTimeInMillis())) > 0) {
+			c.add(Calendar.DAY_OF_MONTH, -7);
+		}
+
 		return new Date(c.getTimeInMillis());
 	}
 	
@@ -341,6 +348,14 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
+		
+		Calendar c2 = Calendar.getInstance();
+		System.out.println(new Date(c2.getTimeInMillis()));
+		
+		if (new Date(c.getTimeInMillis()).compareTo(new Date(c2.getTimeInMillis())) > 0) {
+			c.add(Calendar.DAY_OF_MONTH, -7);
+		}
+
 		c.add(Calendar.DAY_OF_WEEK, 7);
 		c.add(Calendar.SECOND, -1);
 		
