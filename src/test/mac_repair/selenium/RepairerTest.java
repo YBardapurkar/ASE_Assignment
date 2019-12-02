@@ -109,7 +109,7 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 	
 	
 	@Test
-	@FileParameters("src/test/mac_repair/selenium/ReserveFacility.csv")
+	@FileParameters("src/test/mac_repair/selenium/RepairerCreateReservation.csv")
 	public void test3_reserveFacilities(int testCaseNumber,String facilityName, String username, String password, String startTime, String expectedMessage) throws Exception {
 		driver.get(baseUrl);
 		login(driver, username, password);
@@ -226,7 +226,7 @@ public class RepairerTest extends MacRepair_BusinessFunctions{
 	}		
 
 	@Test
-	@FileParameters("src/test/mac_repair/selenium/UpdateReserveFacility.csv")
+	@FileParameters("src/test/mac_repair/selenium/RepairerUpdateReservation.csv")
 	public void test4_updateReserveFacilities(int testCaseNumber,String facilityName, String username, String password, String startTime, String expectedMessage) throws Exception {
 		driver.get(baseUrl);
 		login(driver, username, password);
