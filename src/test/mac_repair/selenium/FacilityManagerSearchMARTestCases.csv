@@ -6,4 +6,7 @@
 6,ffffff,Yash@1,4,,Search Field is Empty,Please correct the following errors,SearchByDate_EmptyString
 7,ffffff,Yash@1,4,invalidDate,Date should match the format 'yyyy/MM/dd',Please correct the following errors,SearchByDate_InvalidDate
 8,ffffff,Yash@1,4,12/11/2019,,,SearchByDate_Valid
-9,ffffff,Yash@1,5,,,,SearchNoFilter
+9,ffffff,Yash@1,5,,Search Field is Empty,Please correct the following errors,SearchByAssignedDate_EmptyString
+10,ffffff,Yash@1,5,invalidDate,Date should match the format 'yyyy/MM/dd',Please correct the following errors,SearchByAssignedDate_InvalidDate
+11,ffffff,Yash@1,5,12/11/2019,,,SearchByAssignedDate_Valid
+12,ffffff,Yash@1,6,,,,SearchNoFilter
