@@ -1,2 +1,4 @@
 1,ffffff,Yash@1,Racquetball courts,2019-12-01,10:00:00,Selected time is less than the current time,SearchFacility_TimeInPast
 2,ffffff,Yash@1,Racquetball courts,2019-12-01,22:00:00,,SearchFacility_Valid
+3,ffffff,Yash@1,Outdoor Basketball Courts,2019-12-01,22:00:00,,SearchFacility_Valid
+4,ffffff,Yash@1,Outdoor Volleyball Courts,2019-12-01,22:00:00,,SearchFacility_Valid

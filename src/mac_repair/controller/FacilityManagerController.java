@@ -28,7 +28,6 @@ import mac_repair.model.SearchFacility;
 import mac_repair.model.SearchFacilityError;
 import mac_repair.model.SearchMessage;
 import mac_repair.model.User;
-import mac_repair.model.UserError;
 import mac_repair.util.DateUtils;
 import mac_repair.util.DropdownUtils;
 
@@ -98,30 +97,14 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 					request.getRequestDispatcher("/mar_details_full.jsp").include(request, response);
 				}
 			}
-//			Show All MAR
-			else if (request.getParameter("mar_list") != null) {
-				List<MAR> marList = new ArrayList<MAR>();
-				marList.addAll(MARDAO.getAllMAR());
-				session.setAttribute("list_mar", marList);
-
-				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
-			}
+			
 //			Show search MAR page
 			else if (request.getParameter("search_mar") != null) {
 
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/mar_search_form.jsp").include(request, response);
 			}
-//			Show unassigned MAR
-			else if (request.getParameter("unassigned_mar") != null) {
-				List<MAR> marList = new ArrayList<MAR>();
-				marList.addAll(MARDAO.getUnassignedMAR());
-				session.setAttribute("list_mar", marList);
-
-				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				request.getRequestDispatcher("/mar_list_full.jsp").include(request, response);
-			}
+			
 //			Show add facility form
 			else if (request.getParameter("add_facility") != null) {
 				session.setAttribute("list_facility_types", DropdownUtils.getFacilityTypeDropdown());
@@ -130,15 +113,7 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				request.getRequestDispatcher("/add_facility.jsp").include(request, response);
 
 			}
-//			Show All Facilities
-			else if (request.getParameter("facility_list") != null) {
-				List<Facility> facilityList = new ArrayList<Facility>();
-				facilityList.addAll(FacilityDAO.getAllFacilities());
-				session.setAttribute("list_facilities", facilityList);
 
-				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				request.getRequestDispatcher("/facility_list.jsp").include(request, response);
-			}
 //			SHow Facility details
 			else if (request.getParameter("facility_name") != null) {
 				String facilityName = request.getParameter("facility_name");
@@ -158,17 +133,6 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
 				request.getRequestDispatcher("/search_facilities.jsp").include(request, response);
 			}
-
-//			Open profile
-			else if (request.getParameter("profile") != null) {
-				User user = UserDAO.getUserByUsername(currentUser.getUsername());
-				session.setAttribute("UPDATEUSER", user);
-				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
-
-				request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-			}
-
 
 //			Show Facility Manager Homepage
 			else {
@@ -426,37 +390,6 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 
 		}
 
-
-			// update profile
-			else if(action.equals("update_profile")) {
-
-				User updateuser = new User();
-				UserError userErrorMsgs = new UserError();
-
-				updateuser = getUpdateProfileParam(request);
-				userErrorMsgs = updateuser.validateUser(action);
-
-				if (!userErrorMsgs.getErrorMsg().equals("")) {
- //					if error messages
-					session.setAttribute("errorMsgs", userErrorMsgs);
-					session.setAttribute("UPDATEUSER", updateuser);
-
-					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-				}
-				else {
-//					if no error messages
-
-					//update database except role
-					UserDAO.updateProfile(updateuser);
-					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
-					session.setAttribute("UPDATEUSER", updateuser);
-
-					request.getRequestDispatcher("/menu_fm.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-				}
-
-			}
 //			add new facility
 			else if(action.equals("add_facility")) {
 				int facilityIndex = Integer.parseInt(request.getParameter("facilityType"));
@@ -507,25 +440,6 @@ public class FacilityManagerController extends HttpServlet implements HttpSessio
 		marSearch.setSearchFilter(request.getParameter("search_filter"));
 
 		return marSearch;
-	}
-
-	private User getUpdateProfileParam(HttpServletRequest request) {
-
-		User user = new User();
-		user.setUsername(request.getParameter("username"));
-		user.setPassword(request.getParameter("password"));
-		user.setFirstname(request.getParameter("firstname"));
-		user.setLastname(request.getParameter("lastname"));
-		user.setUtaId(request.getParameter("utaid"));
-		user.setPhone(request.getParameter("phone"));
-		user.setEmail(request.getParameter("email"));
-		user.setStreet(request.getParameter("street"));
-		user.setCity(request.getParameter("city"));
-		user.setState(request.getParameter("state"));
-		user.setZipcode(request.getParameter("zipcode"));
-		user.setRole(request.getParameter("role"));
-
-		return user;
 	}
 
 }

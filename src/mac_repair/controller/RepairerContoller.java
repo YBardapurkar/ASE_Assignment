@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +14,11 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import mac_repair.data.AssignmentDAO;
-import mac_repair.data.FacilityDAO;
 import mac_repair.data.MARDAO;
 import mac_repair.data.ReservationDAO;
 import mac_repair.data.UserDAO;
 import mac_repair.model.*;
 import mac_repair.util.DateUtils;
-import mac_repair.util.DropdownUtils;
 
 @WebServlet("/repairer")
 public class RepairerContoller extends HttpServlet implements HttpSessionListener {
@@ -92,28 +89,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 						request.getRequestDispatcher("/facility_reserved_form.jsp").include(request, response);
 					}
 				}
-			}
-
-			// SHOW search facilities
-
-			// Open profile
-			else if (request.getParameter("profile") != null) {
-				User user = UserDAO.getUserByUsername(currentUser.getUsername());
-				session.setAttribute("UPDATEUSER", user);
-				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
-
-				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-			}
-
-			// List of facilities
-			else if (request.getParameter("facility_list") != null) {
-				List<Facility> facilityList = new ArrayList<Facility>();
-				facilityList.addAll(FacilityDAO.getAllFacilities());
-				session.setAttribute("list_facilities", facilityList);
-
-				request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-				request.getRequestDispatcher("/facility_list.jsp").include(request, response);
 			}
 
 			// List of reservations for the repairer

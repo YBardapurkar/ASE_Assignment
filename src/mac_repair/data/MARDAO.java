@@ -4,12 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
 import mac_repair.model.MAR;
 import mac_repair.util.SQLConnection;
 
@@ -17,10 +12,6 @@ import mac_repair.util.SQLConnection;
 public class MARDAO {
 	
 	static SQLConnection DBMgr = SQLConnection.getInstance();
-	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	Date date = new Date();
-	 //2016/11/16 12:08:43
-	//System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
 	
 //	get all mar
 	public static ArrayList<MAR> getAllMAR () {
@@ -100,7 +91,7 @@ public class MARDAO {
 //	get list of MAR created by user
 	public static ArrayList<MAR> getMARSubmittedByUser(String username) {
 		ArrayList<MAR> marList = new ArrayList<MAR>();
-		marList.addAll(getMARListForUser("where mar.reported_by = '" + username + "' "));
+		marList.addAll(getMARList("where mar.reported_by = '" + username + "' "));
 		return marList;
 	}
 	
@@ -184,33 +175,6 @@ public class MARDAO {
 				mar.setDate(result.getString("creation_date"));
 				//mar.setAssignedTo(result.getString("assigned_to"));
 				
-				marList.add(mar);
-			}
-		} catch (SQLException e) {System.out.println(e.getMessage());}
-		return marList;
-	}
-	
-	private static ArrayList<MAR> getMARListForUser (String queryWhere) {
-		ArrayList<MAR> marList = new ArrayList<MAR>();
-		String querySelect = ""
-				+ "SELECT mar.mar_id, mar.description, mar.facility_name,mar.creation_date "
-				+ "from mar ";
-		String queryOrder = " order by mar.mar_id;";
-		
-		Statement stmt = null;
-		Connection conn = SQLConnection.getDBConnection();
-		try {
-			stmt = conn.createStatement();
-			System.out.println(querySelect + queryWhere + queryOrder);
-			ResultSet result = stmt.executeQuery(querySelect + queryWhere + queryOrder);
-			System.out.println(result);
-			while (result.next()) {
-				MAR mar = new MAR();
-				
-				mar.setId(Integer.parseInt(result.getString("mar_id")));
-				mar.setDescription(result.getString("description"));
-				mar.setFacilityName(result.getString("facility_name"));
-				mar.setDate(result.getString("creation_date"));
 				marList.add(mar);
 			}
 		} catch (SQLException e) {System.out.println(e.getMessage());}

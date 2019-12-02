@@ -57,50 +57,22 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 		}
 //		logged in
 		else {
-			
-//			Show List of All Users
-			if (request.getParameter("list_users") != null) {
-				ArrayList<User> listUsers = UserDAO.listUsers();
-				
-				session.setAttribute("USERS", listUsers);
-				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-				request.getRequestDispatcher("/users_list.jsp").include(request, response);
-				
-			}
-			
+
 //			Show Selected User Details
-			else if (request.getParameter("user_details") != null) {
+			if (request.getParameter("user_details") != null) {
 				
 				User user = UserDAO.getUserByUsername(request.getParameter("user_details"));
-				if (user != null) {
-					session.setAttribute("USERS", user);
-					
-					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/user_details.jsp").include(request, response);
-					if (!user.getRole().equals("Admin"))
-						session.setAttribute("role_dropdown", DropdownUtils.getAllRolesDropdown());
-						request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
-				}
-				
-				else { // determine if Submit button was clicked without selecting a user
-					String error =  "User not found";
-					user = new User();
-					session.setAttribute("error",error);
-					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/user_details.jsp").include(request, response);
-					
-				}
-			}
-//			Open profile
-			else if (request.getParameter("profile") != null) {
-				User user = UserDAO.getUserByUsername(currentUser.getUsername());
-				session.setAttribute("UPDATEUSER", user);
-				session.setAttribute("state_dropdown", DropdownUtils.getStateDropdown());
+
+				session.setAttribute("USERS", user);
 				
 				request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-				request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
+				request.getRequestDispatcher("/user_details.jsp").include(request, response);
+				if (!user.getRole().equals("Admin")) {
+					session.setAttribute("role_dropdown", DropdownUtils.getAllRolesDropdown());
+					request.getRequestDispatcher("/user_role_form.jsp").include(request, response);
+				}
 			}
-			
+
 //			Open edit other users profile
 			else if (request.getParameter("edit_user") != null) {
 				String username = request.getParameter("edit_user");
@@ -242,36 +214,7 @@ public class AdminController extends HttpServlet implements HttpSessionListener 
 				}
 			}
 
-			else if(action.equals("update_profile")) {
-				
-				User updateuser = new User();
-				UserError userErrorMsgs = new UserError();
-
-				updateuser = getUpdateProfileParam(request);
-				userErrorMsgs = updateuser.validateUser(action);
-				
-				session.removeAttribute("errorMsgs");
-				
-				if (!userErrorMsgs.getErrorMsg().equals("")) {
- //					if error messages
-					session.setAttribute("errorMsgs", userErrorMsgs);
-					session.setAttribute("UPDATEUSER", updateuser);
-					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-				}
-				else {
-//					if no error messages
-
-					//update database except role
-					UserDAO.updateProfile(updateuser); 
-					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
-					session.setAttribute("UPDATEUSER", updateuser);
-					session.removeAttribute("errorMsgs");
-					request.getRequestDispatcher("/menu_admin.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-				}
-				
-			} else if(action.equals("edit_user")) {
+			else if(action.equals("edit_user")) {
 				
 				User updateuser = new User();
 				UserError userErrorMsgs = new UserError();

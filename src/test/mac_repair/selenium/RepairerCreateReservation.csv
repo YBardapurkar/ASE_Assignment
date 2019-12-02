@@ -1,4 +1,5 @@
-1,IVBC 1,rrrrrr,Yash@1,11302019	1205AM,Start date cannot be in the past
-2,IVBC 1,rrrrrr,Yash@1,,Start time is empty or invalid
-3,IVBC 1,rrrrrr,Yash@1,11252019	1100PM,Start time should be current date for single day reservation
-4,IVBC 1,rrrrrr,Yash@1,11302019	1100PM,Facility Reserved Sucessfully
+1,rrrrrr_10,Yash@1,IVBC,01122019	0800PM,2 hours,Start date cannot be in the past
+2,rrrrrr_10,Yash@1,IVBC,,2 hours,Start time is empty or invalid
+3,rrrrrr_10,Yash@1,IVBC,02122019	0800PM,2 hours,Start time should be current date for single day reservation
+4,rrrrrr_10,Yash@1,IVBC,01122019	1000PM,2 hours,Facility Reserved Sucessfully
+5,rrrrrr_10,Yash@1,OBBC,02122019	0600AM,1 day,Facility Reserved Sucessfully

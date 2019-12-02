@@ -13,10 +13,6 @@ public class FacilityDAO {
 
 	static SQLConnection DBMgr = SQLConnection.getInstance();
 
-	public static ArrayList<Facility> getAllFacilities() {
-		return ReturnMatchingFacilitysList("");
-	}
-
 	public static Facility getFacilityByFacilityName(String facilityName) {
 		Facility facility = new Facility();
 		ArrayList<Facility> facilityList = ReturnMatchingFacilitysList("WHERE facility_name = '" + facilityName + "' ");
@@ -133,14 +129,7 @@ public class FacilityDAO {
 	}
 
 	public static ArrayList<Facility> showFacilitiesCalling(String facilityType, String timestamp) {
-		/*
-		 * return
-		 * showFacilities("SELECT reservation.start_timestamp, reservation.end_timestamp, facility.facility_type, facility.facility_interval, facility.duration, facility.venue, facility.facility_name from facility "
-		 * + "inner join mar on mar.facility_name = facility.facility_name " +
-		 * "INNER JOIN reservation ON mar.mar_id = reservation.mar_id WHERE facility.facility_type = '"
-		 * +facilityType+"'" + " and reservation.start_timestamp <= '" + timestamp +
-		 * "' and reservation.end_timestamp >= '" + timestamp + "'");
-		 */
+
 		return showFacilities("select * from facility where facility_type = '" + facilityType + "'"
 				+ " and facility_name not in (SELECT facility.facility_name from facility inner join"
 				+ " mar on mar.facility_name = facility.facility_name"

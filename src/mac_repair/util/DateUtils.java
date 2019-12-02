@@ -85,116 +85,23 @@ public String[] listTimes1(int count) {
 		
 	}
 
-//TODO : Delete
-	public Timestamp startTimeconvert(String startTimeStamp)
-	{
-		java.sql.Timestamp startTimeconversion = java.sql.Timestamp.valueOf(startTimeStamp);
-		
-		long time1 = startTimeconversion.getTime();
-		Timestamp t1 = new Timestamp(time1);
-		return t1;
-	}
-
-
-//timestamp for reserving
-//TODO : Delete
-	public Timestamp reserveStartTime(String startTimeStamp, String interval)
-	{
-		java.sql.Timestamp startTimeStamp1 = java.sql.Timestamp.valueOf(startTimeStamp);
-		
-		long time1 = startTimeStamp1.getTime();
-		Timestamp t1 = new Timestamp(time1);
-		int count = Integer.parseInt(interval);
-		 
-		Calendar calendar = Calendar.getInstance();		    
-		calendar.setTime(t1);
-		        
-		calendar.add(Calendar.HOUR_OF_DAY, count);
-		Timestamp increaseTimeStamp = new Timestamp(calendar.getTime().getTime());
-		  return increaseTimeStamp;
-			     	
-	}
 	
-//TODO : Delete	
-	public boolean checkReservedFacilities(String prepareTimeStamp, String startTimestamp, String EndTimestamp)
-	{
-		
-		String prepareTimeStamp1 = prepareTimeStamp + ".0"; 
-		
-		
-		java.sql.Timestamp timestamp1 = java.sql.Timestamp.valueOf(prepareTimeStamp1);
-		long time1 = timestamp1.getTime();
-		Timestamp t1 = new Timestamp(time1);
-		
-		java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(startTimestamp);
-		long time2 = timestamp2.getTime();
-		Timestamp t2 = new Timestamp(time2);
-		
-		java.sql.Timestamp timestamp3 = java.sql.Timestamp.valueOf(EndTimestamp);
-		long time3 = timestamp3.getTime();
-		Timestamp t3 = new Timestamp(time3);
-
-		/*if(t1.equals(t2))
-		{
-			System.out.println("both are equal" + t1 + t2);
-		}*/
-		
-		  Timestamp ts1 = new Timestamp(10000); 
-	        Timestamp ts2 = new Timestamp(10001); 
-	  
-	      /*  boolean b = t2.after(t1); 
-	        if(b==true){
-	        	System.out.println("working fine");
-	        }*/
-		
-		
-		if(t1.equals(t2) || (t1.after(t2) && t1.before(t3)))
-		{
-			return true;
-		}
-		
-		else
-		{
-			return false;
-		}
-		
-		
-		
-		
-		
-		/*if (t1.equals(t2)) {
-	        return true;
-	    }
-		
-		else
-		{
-			return false;
-		}*/
-		
-	}
 	
 public boolean compareTimes(String prepareTimeStamp, String nowTimeStamp)
 {
 
 	String prepareTimeStamp1 = prepareTimeStamp + ".0";
-	//String nowTimeStamp= nowTimeStamp();
-	
-	
-	
+
 	java.sql.Timestamp timestamp1 = java.sql.Timestamp.valueOf(prepareTimeStamp1);
 	long time1 = timestamp1.getTime();
 	Timestamp t1 = new Timestamp(time1);
 	
-	
 	java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(nowTimeStamp);
 	long time2 = timestamp2.getTime();
 	Timestamp t2 = new Timestamp(time2);
-	
-//	System.out.println(t1 + " " + t2 + "in comparetimes");
-	
+
 	if(t1.before(t2))
 	{
-		
 		return true; 
 		
 	}
@@ -206,76 +113,17 @@ public boolean compareTimes(String prepareTimeStamp, String nowTimeStamp)
 }	
 
 	
-
-
-//TODO delete
-public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
-{
-	
-	String timecheck = startTimeStamp;
-	//String nowTimeStamp= nowTimeStamp();
-	
-	java.sql.Timestamp timecheck1 = java.sql.Timestamp.valueOf(timecheck);
-	long time1 = timecheck1.getTime();
-	Timestamp t1 = new Timestamp(time1);
-	
-	java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(nowTimeStamp);
-	long time2 = timestamp2.getTime();
-	Timestamp t2 = new Timestamp(time2);
-	
-	if(t2.before(t1))
-	{
-		return true;
-	}
-	
-	else
-	{
-		return false;
-	}
-	
-}
-	
-
-
-	
-	
 	//	get current time in java.sql.Date format
 	public Date now() {
 		return new Date(new java.util.Date().getTime());
 	}
 	
-//get date as String
-//TODO : Delete
-	public String nowDate()
-	{
-		Date today = now();
-		String strDate = dateFormat.format(today);
-		return strDate;
-	}
-
 //	get current timestamp
 	public String nowTimeStamp() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		return timestamp.toString();
 	}
 		
-	
-//TODO : Delete
-//	get next available start time
-	public Date getStartDate(int duration) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(now());
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		c.set(Calendar.MILLISECOND, 0);
-		
-		int hour = c.get(Calendar.HOUR);
-		hour = (hour % 2 == 0) ? hour + 2 : hour + 1;
-		
-		c.set(Calendar.HOUR, hour);
-		return new Date(c.getTimeInMillis());
-	}
-
 //	start of working day today
 	public Timestamp startOfDay(Timestamp nowTimeStamp) {
 		Calendar cal = Calendar.getInstance();
@@ -310,16 +158,6 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 			isDate = false;
 		}
 		return isDate;
-	}
-	
-//TODO : Delete	
-//	get end date for corresponding start time and duration
-	public Date getEndDate(Date startDate, int duration) {
-		Calendar c = Calendar.getInstance(); 
-		c.setTime(startDate); 
-		c.add(Calendar.HOUR, duration);
-		c.add(Calendar.MILLISECOND, -1);
-		return new Date(c.getTimeInMillis());
 	}
 	
 //	get start of week
@@ -371,19 +209,5 @@ public boolean compareTimes1(String startTimeStamp, String nowTimeStamp)
 		Calendar cal  = Calendar.getInstance();
 		cal.setTimeInMillis(st.getTime());
 		return new Timestamp(cal.getTime().getTime());		
-	}
-
-//TODO : Delete
-	//Check if timestamp is today
-	//TimeDate Today
-	public boolean isTimeStampToday(String timestamp) {
-		Calendar cal = Calendar.getInstance();
-		Timestamp now = new Timestamp(cal.getTime().getTime());
-		
-		if(timestamp.contains(now.toString().split(" ")[0])) {
-			return true;
-		}
-		
-		return false;
 	}
 }

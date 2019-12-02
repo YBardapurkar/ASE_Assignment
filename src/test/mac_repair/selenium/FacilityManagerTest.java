@@ -211,22 +211,25 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 //			no error
 			List<WebElement> rows = driver.findElements(By.xpath("html/body/table/tbody/tr"));
 			
-//			select last
-			String fName = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_FacilityName_Last"))).getText();
-			String fType = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_FacilityType_Last"))).getText();
-			String fInterval = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Interval_Last"))).getText();
-			String fDuration = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Duration_Last"))).getText();
-			String fVenue = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Venue_Last"))).getText();
-			
-			driver.findElement(By.xpath(prop.getProperty("Lnk_SearchFacilityResult_View_Last"))).click();
-			
-//			facility details			
-			assertEquals(fName, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityName"))).getText());
-			assertEquals(fType, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityType"))).getText());
-			assertEquals(fInterval, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Interval"))).getText());
-			assertEquals(fDuration, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Duration"))).getText());
-			assertEquals(fVenue, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Venue"))).getText());
-			
+			try {
+//				select last
+				String fName = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_FacilityName_Last"))).getText();
+				String fType = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_FacilityType_Last"))).getText();
+				String fInterval = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Interval_Last"))).getText();
+				String fDuration = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Duration_Last"))).getText();
+				String fVenue = driver.findElement(By.xpath(prop.getProperty("Txt_SearchFacilityResult_Venue_Last"))).getText();
+				
+				driver.findElement(By.xpath(prop.getProperty("Lnk_SearchFacilityResult_View_Last"))).click();
+				
+//				facility details			
+				assertEquals(fName, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityName"))).getText());
+				assertEquals(fType, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_FacilityType"))).getText());
+				assertEquals(fInterval, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Interval"))).getText());
+				assertEquals(fDuration, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Duration"))).getText());
+				assertEquals(fVenue, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Venue"))).getText());
+			} catch (NoSuchElementException e) {
+				
+			}
 		}
 		
 //		logout
