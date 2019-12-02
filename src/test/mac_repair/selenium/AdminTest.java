@@ -96,11 +96,6 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 		assertEquals(errorMessage,
 				driver.findElement(By.xpath(prop.getProperty("Txt_SearchUser_ErrorMessage"))).getAttribute("value"));
 
-//		if (errorMessage.isEmpty()) {
-////			Get all rows
-//			List<WebElement> rows = driver.findElements(By.xpath("html/body/table/tbody/tr"));
-////			assertTrue(rows.size() >= 1);
-//		}
 
 		takeScreenshot(driver, String.format(
 				"Admin_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
@@ -163,7 +158,7 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 		driver.findElement(By.xpath(prop.getProperty("Btn_Admin_Logout"))).click();
 	}
 
-	// Edit repairer Profile
+	// Edit Profile
 	@Test
 	@FileParameters("src/test/mac_repair/selenium/AdminEditRepairerProfileTestCases.csv")	
 	public void test4_EditAnotherUserprofile(int testCaseNumber, String username, String password, String role,
@@ -261,7 +256,7 @@ public class AdminTest extends MacRepair_BusinessFunctions {
 					.getAttribute("value"));
 
 			takeScreenshot(driver, String.format(
-					"Repairer_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
+					"Admin_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d", testCaseNumber));
 		}
 
 //		logout

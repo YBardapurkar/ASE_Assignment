@@ -100,23 +100,6 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 		assertEquals(searchTextMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_SearchTextError"))).getAttribute("value"));
 		assertEquals(errorMessage, driver.findElement(By.xpath(prop.getProperty("Txt_SearchMAR_ErrorMessage"))).getAttribute("value"));
 		
-//		List<MAR> searchResults = searchMARByFilter(searchFilter, searchText);
-		
-//		if (errorMessage.isEmpty()) {
-//			List<WebElement> rows = driver.findElements(By.xpath("html/body/table/tbody/tr"));
-//			assertEquals(searchResults.size(), rows.size());
-//			
-//			System.out.println(searchResults.size());
-//			System.out.println(rows.size());
-//			
-//			for(int i = 2; i < rows.size() + 2; i++) {
-//				assertEquals(searchResults.get(i - 2).getId(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[1]")).getText());
-//				assertEquals(searchResults.get(i - 2).getFacilityName(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[2]")).getText());
-//				assertEquals(searchResults.get(i - 2).getDescription(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[3]")).getText());
-//				assertEquals(searchResults.get(i - 2).getDate(), driver.findElement(By.xpath("html/body/table/tbody/tr[" + i + "]/td[4]")).getText());
-//			}
-//		}
-		
 		takeScreenshot(driver, String.format("FacilityManager_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		
 		driver.findElement(By.xpath(prop.getProperty("Btn_FacilityManager_Logout"))).click();
@@ -243,6 +226,7 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 			assertEquals(fInterval, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Interval"))).getText());
 			assertEquals(fDuration, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Duration"))).getText());
 			assertEquals(fVenue, driver.findElement(By.xpath(prop.getProperty("Txt_FacilityDetails_Venue"))).getText());
+			
 		}
 		
 //		logout
@@ -259,7 +243,6 @@ public class FacilityManagerTest extends MacRepair_BusinessFunctions{
 //		Go to search facility page
 		driver.findElement(By.xpath(prop.getProperty("Lnk_FacilityManager_NewFacility"))).click();
 		
-//		Table Tennis
 		try {
 			new Select(driver.findElement(By.xpath(prop.getProperty("Lst_AddFacility_FacilityType")))).selectByVisibleText(facilityType);
 			

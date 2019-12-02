@@ -131,17 +131,7 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 		} else {
 //			in case of success
 			assertEquals(message, driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_Message"))).getAttribute("value"));
-			
-			int marId = Integer.parseInt(driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_MARId"))).getText());
-			MAR mar = getMARByMARId(marId);
-			
-			assertEquals(mar.getId(), marId);
-			assertEquals(mar.getFacilityName(), driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_FacilityName"))).getText());
-			assertEquals(mar.getDescription(), driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_Description"))).getText());
-//			precision till minutes
-			assertEquals(mar.getDate().substring(0, 16), driver.findElement(By.xpath(prop.getProperty("Txt_MARDetails_CreationDate"))).getText().substring(0, 16));
-			assertEquals(mar.getReportedBy(), username);
-			
+
 			takeScreenshot(driver, String.format("Student_" + new Throwable().getStackTrace()[0].getMethodName() + "_%02d_" + text, testCaseNumber));
 		}
 		
@@ -195,24 +185,5 @@ public class StudentTest extends MacRepair_BusinessFunctions{
 			fail(verificationErrorString);
 		}
 	}
-	
-	private static MAR getMARByMARId (int marId) {
 
-		Statement stmt = null;
-		Connection conn = SQLConnection.getDBConnection();
-		MAR mar = new MAR(); 
-		try {
-			stmt = conn.createStatement();
-			ResultSet result = stmt.executeQuery(" SELECT * from mar where mar_id = '" + marId + "';");
-			while (result.next()) {
-				mar.setId(Integer.parseInt(result.getString("mar_id")));
-				mar.setDescription(result.getString("description"));
-				mar.setFacilityName(result.getString("facility_name"));
-				mar.setDate(result.getString("creation_date"));
-				mar.setReportedBy(result.getString("reported_by"));
-				break;
-			}
-		} catch (SQLException e) {}
-		return mar;
-	}
 }
