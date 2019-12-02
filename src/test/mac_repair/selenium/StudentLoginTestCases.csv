@@ -1,4 +1,2 @@
-1,,Yash@1,Username is a required field,,,Please correct the following errors,UsernameEmpty
-2,aa,Yash@1,username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,,,Please correct the following errors,UsernameInvalid
-3,ssssss,,,Password is a required field,,Please correct the following errors,PasswordEmpty
-4,ssssss,wr0ngP@ssword,,,,Username does not exist or Password mismatch,PasswordIncorrect
+1,,,Username is a required field,Password is a required field,,Please correct the following errors,Invalid1
+2,aa,wr0ngP@ssword,username should be alphanumeric with size between 6 to 20 characters. '-' and '_' are allowed,,,Please correct the following errors,Invalid2
