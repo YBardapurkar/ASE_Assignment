@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSessionListener;
 import mac_repair.data.AssignmentDAO;
 import mac_repair.data.MARDAO;
 import mac_repair.data.ReservationDAO;
-import mac_repair.data.UserDAO;
 import mac_repair.model.*;
 import mac_repair.util.DateUtils;
 
@@ -263,31 +262,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 																											// this
 			}
 
-			else if (action.equals("update_profile")) {
-				User updateuser = new User();
-				UserError userErrorMsgs = new UserError();
-				updateuser = getUpdateProfileParam(request);
-				userErrorMsgs = updateuser.validateUser(action);
-				if (!userErrorMsgs.getErrorMsg().equals("")) {
-					// if error messages
-					session.setAttribute("errorMsgs", userErrorMsgs);
-					session.setAttribute("UPDATEUSER", updateuser);
-
-					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-				} else {
-					// if no error messages
-					// update database except role
-					UserDAO.updateProfile(updateuser);
-					session.setAttribute("success_message", "Profile has been updated!!!!!!!!");
-					session.setAttribute("UPDATEUSER", updateuser);
-
-					request.getRequestDispatcher("/menu_repairer.jsp").include(request, response);
-					request.getRequestDispatcher("/update_profile_form.jsp").include(request, response);
-				}
-
-			}
-
 			if (session.getAttribute("current_user") == null)
 				session.setAttribute("current_user", currentUser);
 		}
@@ -346,25 +320,6 @@ public class RepairerContoller extends HttpServlet implements HttpSessionListene
 		Timestamp et = new Timestamp(cal.getTime().getTime());
 		reservation.setEndTime(et);
 		return reservation;
-	}
-
-	private User getUpdateProfileParam(HttpServletRequest request) {
-
-		User user = new User();
-		user.setUsername(request.getParameter("username"));
-		user.setPassword(request.getParameter("password"));
-		user.setFirstname(request.getParameter("firstname"));
-		user.setLastname(request.getParameter("lastname"));
-		user.setUtaId(request.getParameter("utaid"));
-		user.setPhone(request.getParameter("phone"));
-		user.setEmail(request.getParameter("email"));
-		user.setStreet(request.getParameter("street"));
-		user.setCity(request.getParameter("city"));
-		user.setState(request.getParameter("state"));
-		user.setZipcode(request.getParameter("zipcode"));
-		user.setRole(request.getParameter("role"));
-
-		return user;
 	}
 
 }
